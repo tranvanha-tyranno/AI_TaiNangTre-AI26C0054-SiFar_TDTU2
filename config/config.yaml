@@ -1,0 +1,17 @@
+xlsx_dir: ./Public_data_1/xlsx_files
+queries: ./Public_data_1/queries.json
+output: ./submission.csv
+
+# LLM
+model: qwen/qwen3-7-flash
+base_url: https://openrouter.ai/api/v1
+# Đặt OPENROUTER_API_KEY trong env, không ghi vào đây
+
+# Giới hạn đề thi
+max_chars_per_table: 14000
+max_tokens_answer: 512
+temperature: 0.0
+
+# Pipeline
+mode: hybrid  # hybrid | llm | offline
+concurrency: 4
