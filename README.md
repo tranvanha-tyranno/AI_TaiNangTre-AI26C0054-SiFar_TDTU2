@@ -62,6 +62,8 @@ Preview có thể thiếu dòng để tiết kiệm token; `read` và các công
 ## Nhật ký, token và chi phí
 
 - `questions.jsonl`: retrieval, các kế hoạch và lỗi sửa, từng bước công cụ, ô căn cứ, thời gian từng giai đoạn, mọi lượt API.
+- Lần chạy mới lưu `previews` đúng nội dung Excel đưa cho LLM; mỗi kế hoạch có lỗi kiểm tra và trace nếu đã thực thi được, kể cả kế hoạch sau đó bị từ chối.
+- `run_context.json`: model, cấu hình giới hạn, Git revision và SHA-256 mã nguồn/đầu vào. Fingerprint mã nguồn phân biệt cả sửa chưa commit; chỉ lưu cấu hình được cho phép, không lưu API key.
 - `summary.json`: tổng token vào/ra, tổng token, phí thực tế API báo, ước tính bảng giá, số lượt chưa rõ phí, bộ nhớ đỉnh của tiến trình.
 - Chi phí lấy từ `usage.cost`, hoặc endpoint generation khi thiếu. `estimated_cost_usd` tính theo bảng giá catalog và token, không coi là phí thực tế.
 - Retry hoặc sửa JSON đều được cộng; SDK không retry ngầm. Nếu lượt lỗi không có usage, ghi token/phí chưa rõ và giữ phần ngân sách đã dự phòng, không coi là miễn phí.
@@ -81,7 +83,21 @@ Kiểm tra hợp lệ về cấu trúc/thực thi và định dạng không ch�
 
 Mở http://127.0.0.1:8501, giữ terminal chạy; Ctrl+C để dừng. Cổng bận: thêm `--port 8502`.
 Dashboard có câu hỏi/đáp án, đối chiếu file mẫu, Excel gốc, sáu bước pipeline; chi tiết hiển thị kế hoạch JSON, công cụ, ô căn cứ, token và phí từng lượt.
-Nút Chạy mới dùng dữ liệu công khai và lưu riêng `outputs/runs/`; LLM có phí khi bắt đầu chạy. Mức khớp được tính lại từ nhật ký, không đọc báo cáo đánh giá cũ. API key không hiển thị; server chỉ lắng nghe localhost.
+Nút Chạy mới dùng các bộ đã chọn và lưu riêng `outputs/runs/`; LLM có phí khi bắt đầu chạy. Có thể chọn một câu, nhiều câu bằng checkbox, câu sai/lỗi hoặc toàn bộ bộ dữ liệu. Mức khớp được tính lại từ nhật ký, không đọc báo cáo đánh giá cũ. API key không hiển thị; server chỉ lắng nghe localhost.
+
+Dashboard có biểu đồ kết quả, tổng thời gian từng giai đoạn, nhóm lỗi đã gặp; lọc/sắp xếp/phân trang câu hỏi và xem toàn bộ đáp án trong chi tiết. Lỗi API được phân biệt với đáp án không khớp. Thông báo HTTP 402 dựa vào log lần đang xem, không phải kiểm tra số dư hiện tại.
+
+**Lịch sử & so sánh** hiển thị các lần chạy theo thời điểm bắt đầu. So sánh hai lần để xem câu cải thiện, bị lỗi lại, vẫn sai hoặc lỗi API; chỉ đối chiếu cùng dataset/ID gốc, câu hỏi và tham chiếu không đổi. Biểu đồ lịch sử có thể gồm các lần chạy số câu khác nhau, vì vậy dùng bảng so sánh để đánh giá cùng câu hỏi. Báo cáo JSON tải từ nút đầu trang không chứa CSRF hay API key.
+
+Trong **Dữ liệu Excel**, nhập địa chỉ như `AI2501` để mở vùng bất kỳ (200 dòng × 30 cột mỗi vùng). Bấm ô căn cứ trong chi tiết câu hỏi để mở đúng sheet và đánh dấu ô. Mục chi tiết còn có yêu cầu dạng đáp án, từng lần sửa kế hoạch, trace, preview LLM và lượt API.
+
+Kiểm tra DOM/API cục bộ (chỉ phục vụ phát triển; không gọi LLM, POST chạy mới được mock trong bài kiểm tra):
+
+```powershell
+npm install --prefix outputs/dashboard-ui-test --no-save --package-lock=false jsdom@26.1.0
+$env:DASHBOARD_TEST_URL = "http://127.0.0.1:8501"
+node tests/dashboard_dom.cjs
+```
 
 ## Kiểm tra và đánh giá
 
@@ -93,6 +109,18 @@ Nút Chạy mới dùng dữ liệu công khai và lưu riêng `outputs/runs/`; 
 ```
 
 File mẫu chưa được xác minh độc lập là đáp án chuẩn. Chỉ báo cáo mức khớp với file mẫu, không coi là điểm trên tập ẩn.
+
+Phân tích và so sánh các lần chạy dashboard:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/analyze_run.py --run outputs/runs/<lan-moi> --previous outputs/runs/<lan-cu>
+```
+
+Lưu `analysis.json` trong thư mục lần chạy: câu sai, lỗi sửa kế hoạch, trạng thái, chi phí, câu cải thiện và câu bị lỗi lại. Chỉ so sánh câu hỏi và đáp án tham chiếu không đổi. Log cũ giữ snapshot đáp án tại thời điểm chạy; sửa đáp án mẫu không tự thay snapshot.
+
+Pipeline có `sum_columns` để cộng ngang một dòng theo cột chỉ định. Kiểm tra phạm vi chỉ phát hiện một số kế hoạch scalar thiếu cột khi câu hỏi nói tất cả ngành và bảng không có cột Total riêng; không phải bộ kiểm chứng ngữ nghĩa tổng quát. Công cụ sum từ chối cộng dòng Total cùng chi tiết, yêu cầu kế hoạch chọn lại phạm vi. `unpivot.keep_columns` giữ các nhãn dòng cần dùng sau chuyển bảng; schema có các trường bắt buộc riêng cho từng công cụ. Câu hỏi Yes/No trả số sẽ bị từ chối và yêu cầu sửa phép so sánh.
+
+`answer_contract` được suy ra từ câu hỏi, đưa vào prompt và lưu trong log: một giá trị hay danh sách, số phần tử, vị trí xếp hạng, phép tổng/trung bình/đếm và số chữ số thập phân. Hỗ trợ các cách viết như `Answer only`, `Chỉ trả số nguyên`, vị trí K và top K. Câu hỏi tổng trả các dòng chưa cộng hoặc xếp hạng trả quá nhiều phần tử sẽ bị từ chối để LLM sửa kế hoạch. Không tự cắt đáp án, không lấy đáp án mẫu để quyết định kết quả. `output.limit/offset` báo lỗi rõ ràng; phải dùng bước `take` với vị trí bắt đầu từ 0. Việc nhận diện vẫn là heuristic, không bảo đảm hiểu mọi cách diễn đạt.
 Exit code: 0 khi tất cả câu có đáp án; 2 cho cấu hình/đầu vào lỗi; 3 khi có câu không trả lời được (vẫn xuất đủ dòng, đáp án lỗi để trống).
 
 ## Cấu trúc

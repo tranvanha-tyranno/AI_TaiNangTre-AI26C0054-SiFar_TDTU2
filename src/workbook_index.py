@@ -48,6 +48,14 @@ class Region:
             included = all_rows
         else:
             included = sorted(set(all_rows[:10] + all_rows[-3:] + ranked[:max_rows-13]))
+        # Retain merged ranges explicitly while sending the anchor text once.
+        # Expanded values remain available to the executor.
+        merged_bounds=[range_boundaries(region) for region in self.merged]
+        def preview_cells(row):
+            return {get_column_letter(c):text(self.cells[(row,c)])[:500]
+                    for c in range(self.start_col,self.end_col+1) if (row,c) in self.cells
+                    and not any(c1<=c<=c2 and r1<=row<=r2 and (row,c)!=(r1,c1)
+                                for c1,r1,c2,r2 in merged_bounds)}
         return {"table_id": self.id, "sheet": self.sheet, "range": self.bounds,
                 "context": self.context, "header_rows": self.header_rows,
                 "whole_sheet": self.whole_sheet,
@@ -56,7 +64,7 @@ class Region:
                 "merged_ranges": self.merged, "total_rows": len(all_rows),
                 "preview_is_complete": len(included) == len(all_rows),
                 "columns": [get_column_letter(c) for c in range(self.start_col,self.end_col+1)],
-                "rows": [{"row":r,"cells":{get_column_letter(c):text(self.cells[(r,c)])[:500] for c in range(self.start_col,self.end_col+1) if (r,c) in self.cells}} for r in included]}
+                "rows": [{"row":r,"cells":preview_cells(r)} for r in included]}
 
 
 def spans(indices):

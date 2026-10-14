@@ -5,12 +5,16 @@ from .workbook_index import load_regions, retrieve
 from .planner import messages, parse_plan
 from .tools.executor import execute, PlanError
 from .usage import UsageLedger, BudgetError
+from .scope_validation import validate_aggregate_scope
+from .answer_contract import infer_answer_contract, validate_answer_contract
 
 
 def answer_with_tools(path, question, client, record, settings):
     ledger=UsageLedger(limit_usd=settings.get('max_cost_per_question',.10),max_calls=settings.get('max_api_calls',4),
         seconds=settings.get('question_timeout',115),prompt_cap=client.prompt_cap,completion_cap=client.completion_cap)
     record.update(stage='parse',pipeline_version='tools-v1',plans=[],timings={})
+    contract=infer_answer_contract(question)
+    record['answer_contract']=contract
     try:
         start=time.monotonic()
         regions=load_regions(path,settings.get('max_workbook_cells',200000))
@@ -22,6 +26,7 @@ def answer_with_tools(path, question, client, record, settings):
         record['timings']['retrieve']=time.monotonic()-start
         if not selected: raise PlanError("Workbook has no usable regions")
         previews=[r.preview(question,settings.get('preview_rows',45)) for r in selected]
+        record['previews']=previews
         correction=None
         for attempt in range(settings.get('max_plan_repairs',2)+1):
             record['stage']='plan'
@@ -35,18 +40,10 @@ def answer_with_tools(path, question, client, record, settings):
                 record['stage']='execute'
                 start=time.monotonic()
                 result=execute(plan,selected)
+                record['plans'][-1]['tool_trace']=result['trace']
+                validate_aggregate_scope(question,plan,selected)
                 query=question.lower()
-                expected_count=None
-                if re.search(r'two integers|men, women|as\s+[`\"\']?men,\s*women',query): expected_count=2
-                elif 'three sector names' in query: expected_count=3
-                elif 'answer with only' in query or 'answer with the' in query: expected_count=1
-                if expected_count is not None and result['value_count']!=expected_count:
-                    raise PlanError(f'Question requires {expected_count} final value(s), got {result["value_count"]}. For multiple scalar cells use collect, then output columns=[value].')
-                if 'two decimal' in query or 'exactly two' in query:
-                    if any(not re.fullmatch(r'-?\d+\.\d{2}',value) for value in result['values']):
-                        raise PlanError('Question requires exactly two decimals for each numeric answer; set output.decimals=2')
-                if 'integer' in query and any(not re.fullmatch(r'-?\d+',v) for v in result['values']):
-                    raise PlanError('Question requires integers without commas or units')
+                validate_answer_contract(contract,plan,result)
                 if any(term in query for term in ('sector names','industry name','category name','last name')):
                     if any(re.fullmatch(r'-?\d+(\.\d+)?',v) for v in result['values']):
                         raise PlanError('Question asks for NAME labels, not numeric scores. Sort by values but output the corresponding name column, using aliases for short labels in the question.')
@@ -64,6 +61,8 @@ def answer_with_tools(path, question, client, record, settings):
                               evidence_count=result['evidence_count'],validated=True)
                 return result['answer']
             except (PlanError,ValueError,TypeError,KeyError,AttributeError) as error:
+                if record['plans'] and record['plans'][-1]['attempt']==attempt+1:
+                    record['plans'][-1]['validation_error']=str(error)[:500]
                 record['validation_errors']=record.get('validation_errors',[])+[str(error)[:500]]
                 if attempt>=settings.get('max_plan_repairs',2):
                     raise PlanError(str(error)) from None

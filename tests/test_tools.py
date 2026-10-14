@@ -18,6 +18,35 @@ def table():
 
 
 class ToolTest(unittest.TestCase):
+    def test_unpivot_preserves_requested_row_labels_and_sources(self):
+        plan={'steps':[{'id':'rows','op':'read','table':'t1','start_row':2,'end_row':4},
+                       {'id':'long','op':'unpivot','input':'rows','columns':['D'],'keep_columns':['A']},
+                       {'id':'person','op':'filter','input':'long','where':{'eq':[{'col':'A'},{'value':'Second'}]}}],
+              'output':{'step':'person','columns':['value']}}
+        result=execute(plan,[table()])
+        self.assertEqual(result['answer'],'70')
+        self.assertIn('People!A4',result['evidence'])
+        self.assertIn('People!D4',result['evidence'])
+
+    def test_missing_aggregate_input_has_actionable_error(self):
+        plan={'steps':[{'id':'people','op':'read','table':'t1','start_row':2},
+                       {'id':'average','op':'aggregate','metric':'mean','expr':{'col':'D'}}],
+              'output':{'step':'average'}}
+        with self.assertRaisesRegex(PlanError,"average.*missing required fields.*input.*people"):
+            execute(plan,[table()])
+    def test_sum_rejects_total_plus_detail_but_accepts_either_scope(self):
+        region=Region('t1','Example',1,4,1,2,
+            {(1,1):'Group',(1,2):'Value',(2,1):'Total, all ages',(2,2):35,
+             (3,1):'Younger',(3,2):16,(4,1):'Older',(4,2):19},[],[],[1])
+        plan={'steps':[{'id':'r','op':'read','table':'t1','start_row':2,'end_row':4},
+                       {'id':'s','op':'aggregate','input':'r','metric':'sum','expr':{'col':'B'}}],
+              'output':{'step':'s'}}
+        with self.assertRaisesRegex(PlanError,'Example!B2'): execute(plan,[region])
+        plan['steps'][0]['start_row']=3
+        self.assertEqual(execute(plan,[region])['answer'],'35')
+        plan['steps'][0].update(start_row=2,end_row=2)
+        self.assertEqual(execute(plan,[region])['answer'],'35')
+
     def test_second_youngest_uses_age_not_admission_chronology(self):
         plan={'steps':[
             {'id':'data','op':'read','table':'t1','start_row':2,'end_row':4},
