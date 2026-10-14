@@ -1,0 +1,102 @@
+[
+  {
+    "id": "p4_q001",
+    "file_name": "p4_t01.xlsx",
+    "query": "Who was the second-youngest person on their admission date? Answer with only the last name."
+  },
+  {
+    "id": "p4_q002",
+    "file_name": "p4_t01.xlsx",
+    "query": "What score did the second-oldest person receive? Answer with only the integer score."
+  },
+  {
+    "id": "p4_q003",
+    "file_name": "p4_t01.xlsx",
+    "query": "Among the ten youngest people, what was the highest score? Answer with only the integer score."
+  },
+  {
+    "id": "p4_q004",
+    "file_name": "p4_t02.xlsx",
+    "query": "Is the agricultural export value for the fiscal year-to-date 2024 greater than that for the fiscal year-to-date 2023? Answer with only Yes or No."
+  },
+  {
+    "id": "p4_q005",
+    "file_name": "p4_t03.xlsx",
+    "query": "Considering all categories, infer which category experienced the highest absolute change in \"Unadjusted percent change\" between September 2024 and October 2024. Answer with only the category name."
+  },
+  {
+    "id": "p4_q006",
+    "file_name": "p4_t04.xlsx",
+    "query": "What is the absolute difference between civilian noninstitutional population and civilian labor force for women with 'Some college, no degree'? Answer with only the integer, without commas or units."
+  },
+  {
+    "id": "p4_q007",
+    "file_name": "p4_t04.xlsx",
+    "query": "What was the average unemployment rate across all education levels for women? Answer with only the number rounded to two decimal places."
+  },
+  {
+    "id": "p4_q008",
+    "file_name": "p4_t05.xlsx",
+    "query": "How many more employed people were aged 20 to 24 than aged 16 to 19 across all industries? Answer with only the integer, without commas or units."
+  },
+  {
+    "id": "p4_q009",
+    "file_name": "p4_t05.xlsx",
+    "query": "What is the total number of employed persons aged 20 to 24 years in the Construction and Manufacturing industries combined? Answer with only the integer, without commas or units."
+  },
+  {
+    "id": "p4_q010",
+    "file_name": "p4_t05.xlsx",
+    "query": "Identify the industry with the highest number of employed persons aged 16 to 19 years. Answer with only the industry name."
+  },
+  {
+    "id": "p4_q011",
+    "file_name": "p4_t05.xlsx",
+    "query": "For persons aged 20 years and over, does employment in Financial Activities exceed that in Transportation and Utilities? Provide 'Yes' or 'No'. Answer with only Yes or No."
+  },
+  {
+    "id": "p4_q012",
+    "file_name": "p4_t06.xlsx",
+    "query": "Calculate the total number of unpaid family workers across all age groups in the agricultural sector. What is the final sum? Answer with only the integer, without commas or units."
+  },
+  {
+    "id": "p4_q013",
+    "file_name": "p4_t07.xlsx",
+    "query": "Rank the following sectors by the number of employees in 'Transportation and Material Moving': Agriculture, Manufacturing, and Construction. Answer with the three sector names in descending order, separated by a comma and one space, without numbering."
+  },
+  {
+    "id": "p4_q014",
+    "file_name": "p4_t07.xlsx",
+    "query": "Calculate the combined total of employees in 'Protective service occupations' and 'Service occupations, except protective' for the Manufacturing sector. Answer with only the integer, without commas or units."
+  },
+  {
+    "id": "p4_q015",
+    "file_name": "p4_t08.xlsx",
+    "query": "What is the number of persons at work in all industries who work 5-14 hours and in agriculture? Answer with only the integer, without commas or units."
+  },
+  {
+    "id": "p4_q016",
+    "file_name": "p4_t08.xlsx",
+    "query": "Which hour category had the highest percentage of agricultural workers? Answer with only the hour category."
+  },
+  {
+    "id": "p4_q017",
+    "file_name": "p4_t09.xlsx",
+    "query": "What is the absolute difference in the total number of people working in Manufacturing and Construction industries in 2023? Answer with only the integer, without commas or units."
+  },
+  {
+    "id": "p4_q018",
+    "file_name": "p4_t10.xlsx",
+    "query": "Based on the dataset, what are number of people who worked 1 to 34 hours and worked 35 hours or more. Answer as two integers in the order `1 to 34 hours, 35 hours or more`, separated by a comma and one space, without thousands separators or units."
+  },
+  {
+    "id": "p4_q019",
+    "file_name": "p4_t10.xlsx",
+    "query": "What are the \"Average hours\" worked by widowed, divorced, or separated men and women aged 16 years and over? Answer as `men, women`, using exactly two decimal places and separating the values with a comma and one space."
+  },
+  {
+    "id": "p4_q020",
+    "file_name": "p4_t10.xlsx",
+    "query": "What is the number of workers in \"Total, 16 years and over\"? Answer with only the integer, without commas or units."
+  }
+]
