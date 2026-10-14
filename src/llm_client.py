@@ -11,6 +11,13 @@ import time
 from typing import Optional
 
 try:
+    from dotenv import load_dotenv
+    # Load the project-local .env when present; real environment variables win.
+    load_dotenv()
+except ImportError:
+    pass
+
+try:
     from openai import OpenAI
 except ImportError:
     OpenAI = None  # sẽ báo lỗi thân thiện khi gọi
