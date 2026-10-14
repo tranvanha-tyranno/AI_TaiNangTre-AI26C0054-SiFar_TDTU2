@@ -1,140 +1,117 @@
-﻿# Excel QA pipeline
+# Excel QA — LLM + công cụ
 
-Pipeline cho đề **Hỏi đáp trên bảng tính Excel**. Chương trình nhận một thư mục
-`.xlsx` và `queries.json`, sau đó ghi `submission.csv` với đúng hai cột `id,answer`.
+Pipeline chính: **đọc Excel → retrieval vùng bảng → LLM tạo kế hoạch JSON → công cụ Python thực hiện → kiểm tra/sửa → CSV**.
+LLM không trả lời số liệu trực tiếp. Không dùng đáp án mẫu trong bộ giải, không thực thi Python/SQL do LLM sinh.
 
 ## Cài đặt
 
-### Dashboard trực quan (chạy cục bộ)
+Python 3.12, kiểm tra trên Windows. Trong Git Bash tại thư mục repo:
 
-Trong Git Bash, tại thư mục repo:
+```bash
+python -m venv .venv
+python -m pip --python .venv/Scripts/python.exe install -r requirements.txt
+```
+
+Nếu ensurepip lỗi nhưng `.venv/Scripts/python.exe` đã được tạo, dòng cài đặt thứ hai vẫn dùng pip hệ thống để cài vào venv.
+`requirements-lock.txt` lưu phiên bản đã cài của môi trường hiện tại, có thể dùng thay requirements.txt.
+
+Copy `.env.example` thành `.env` rồi điền khóa OpenRouter. Biến môi trường được ưu tiên hơn `.env`, sau đó YAML. Không commit khóa.
+
+```dotenv
+OPENROUTER_API_KEY=<khóa riêng của bạn>
+MODEL_NAME=qwen/qwen3.7-flash
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+```
+
+**Mã model:** văn bản đề và cấu hình mặc định ghi `qwen/qwen3-7-flash`; danh sách OpenRouter thực tế có `qwen/qwen3.7-flash` (dấu chấm). `.env` dùng ID hợp lệ để phát triển. Cần BTC xác nhận mã chính thức khi chấm; hỗ trợ thay model qua ENV, không sửa mã nguồn.
+
+## Chạy pipeline chính
+
+```bash
+./.venv/Scripts/python.exe main.py \
+  --mode llm \
+  --xlsx_dir Public_data_1/xlsx_files \
+  --queries Public_data_1/queries.json \
+  --output outputs/submission.csv \
+  --log-dir outputs/logs
+```
+
+Đường dẫn đều thay được. `--config config/config.yaml` dùng cấu hình mặc định; `--concurrency 1` mặc định để giới hạn bộ nhớ.
+`llm` và `hybrid` đều chạy pipeline mới (hybrid chỉ là tên CLI tương thích, không còn tự giải bằng quy tắc trước LLM).
+`--mode offline` giữ bộ giải cũ chỉ để so sánh I/O; không phải pipeline LLM và có những quy tắc chưa đúng ý nghĩa câu hỏi. Không dùng kết quả offline 20/20 để khẳng định khả năng tổng quát.
+
+## Công cụ LLM được phép dùng
+
+Model gọi `execute_spreadsheet_plan` với schema JSON. Bộ thực thi kiểm tra tên công cụ, tham số, cột, phạm vi và kiểu dữ liệu:
+
+| Công cụ | Công việc |
+|---|---|
+| read / cell | Đọc đầy đủ vùng dữ liệu / lấy ô gốc |
+| filter / derive | Lọc dòng / tính cột mới (số học, ngày và tuổi) |
+| sort / take / select | Sắp xếp, lấy thứ hạng và chọn cột |
+| aggregate / group | Đếm, tổng, trung bình, min/max và nhóm |
+| join / concat | Ghép theo khóa / nối các vùng |
+| unpivot | Chuyển nhiều cột thành dòng để tính trung bình hoặc xếp hạng |
+| calculate / collect | Tính từ kết quả công cụ / gom nhiều đáp án theo thứ tự |
+
+Ví dụ tuổi tại nhập học: read → derive `Admission - Birth` theo ngày → sort tăng dần → take offset=1 → chọn họ. Không sắp xếp ngày nhập học thay tuổi.
+
+Parser giữ ô gộp, tọa độ và định dạng phần trăm; không tự điền mọi ô trống. Vùng tách theo hàng/cột trống, cùng vùng toàn sheet cho câu hỏi qua nhiều khối. Tiêu đề nhiều tầng được giữ trong các hàng gốc và ngữ cảnh, thay vì xóa mất. Retrieval dựa từ khóa; header inference và bảng ứng viên là heuristic, chưa bảo đảm mọi file mới.
+Preview có thể thiếu dòng để tiết kiệm token; `read` và các công cụ dùng toàn bộ vùng được chỉ định. Preview giữ nhãn dòng để chọn đúng section. Không cần vector database.
+
+## Nhật ký, token và chi phí
+
+- `questions.jsonl`: retrieval, các kế hoạch và lỗi sửa, từng bước công cụ, ô căn cứ, thời gian từng giai đoạn, mọi lượt API.
+- `summary.json`: tổng token vào/ra, tổng token, phí thực tế API báo, ước tính bảng giá, số lượt chưa rõ phí, bộ nhớ đỉnh của tiến trình.
+- Chi phí lấy từ `usage.cost`, hoặc endpoint generation khi thiếu. `estimated_cost_usd` tính theo bảng giá catalog và token, không coi là phí thực tế.
+- Retry hoặc sửa JSON đều được cộng; SDK không retry ngầm. Nếu lượt lỗi không có usage, ghi token/phí chưa rõ và giữ phần ngân sách đã dự phòng, không coi là miễn phí.
+- Nhật ký cũ không có số liệu không thể suy ngược chính xác; cần chạy lại.
+
+Ngân sách trong YAML: ≤ $0.10/câu, ≤ 4 lượt gọi/câu gồm retry, ≤ 2 lần sửa kế hoạch, 115 giây/câu và 2400 giây/lần chạy. Trước mỗi lượt, tính dự phòng theo số byte prompt và output tối đa; OpenRouter giới hạn giá provider qua `max_price`. Phí thực tế được trừ khi có số liệu; không tiếp tục nếu vượt ngân sách. Giới hạn token và provider có thể khiến model đắt hơn không được gọi.
+Giới hạn parser 200000 ô, ZIP Excel giải nén 40 MB, intermediate tool cells 500000, join output 10000 dòng. Đây là giới hạn bảo vệ tài nguyên, file lớn hơn sẽ báo lỗi; không phải bằng chứng mọi dữ liệu ẩn đều xử lý được.
+`peak_memory_mb` là bộ nhớ đỉnh tiến trình Python trong lần chạy, không phải toàn hệ thống. Bộ nhớ của dashboard không thuộc phép đo CLI.
+
+Kiểm tra hợp lệ về cấu trúc/thực thi và định dạng không chứng minh LLM chọn đúng ý nghĩa câu hỏi. `validated=true` không có nghĩa đã đúng chuẩn BTC.
+
+## Dashboard
 
 ```bash
 ./.venv/Scripts/python.exe dashboard.py
 ```
 
-Mở `http://127.0.0.1:8501`. Giữ terminal chạy; Ctrl+C để dừng.
-Nếu cổng đang dùng, thêm `--port 8502` và mở địa chỉ tương ứng.
+Mở http://127.0.0.1:8501, giữ terminal chạy; Ctrl+C để dừng. Cổng bận: thêm `--port 8502`.
+Dashboard có câu hỏi/đáp án, đối chiếu file mẫu, Excel gốc, sáu bước pipeline; chi tiết hiển thị kế hoạch JSON, công cụ, ô căn cứ, token và phí từng lượt.
+Nút Chạy mới dùng dữ liệu công khai và lưu riêng `outputs/runs/`; LLM có phí khi bắt đầu chạy. Mức khớp được tính lại từ nhật ký, không đọc báo cáo đánh giá cũ. API key không hiển thị; server chỉ lắng nghe localhost.
 
-Dashboard đọc nhật ký hiện có; hiển thị câu hỏi, đáp án, mức khớp file mẫu,
-thời gian và nhánh xử lý. Chọn câu để xem chi tiết; mục Dữ liệu Excel cho xem
-sheet gốc với địa chỉ dòng/cột. Mục Luồng xử lý giải thích phần đã có và phần
-RAG/planner/công cụ chưa triển khai.
+## Kiểm tra và đánh giá
 
-Nút Chạy mới cho chọn LLM, offline hoặc hybrid và một câu/toàn bộ bộ công khai.
-LLM dùng khóa trong .env và có thể phát sinh phí khi bấm Bắt đầu chạy.
-Mỗi lần chạy lưu riêng ở `outputs/runs/`; đáp án cập nhật sau mỗi câu hoàn thành.
-Dashboard tính lại mức khớp từ nhật ký của lần đang xem, không dùng báo cáo
-evaluation.json cũ. Token và chi phí hiển thị chưa đo, không phải số 0.
-Dashboard không hiển thị khóa API và chỉ lắng nghe trên localhost.
-
-### Môi trường Python
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
+```bash
+./.venv/Scripts/python.exe -m unittest discover -s tests -v
+./.venv/Scripts/python.exe scripts/evaluate.py \
+  --prediction outputs/submission.csv \
+  --reference Public_data_1/sample_submission.csv
 ```
 
-## Chạy thử offline
+File mẫu chưa được xác minh độc lập là đáp án chuẩn. Chỉ báo cáo mức khớp với file mẫu, không coi là điểm trên tập ẩn.
+Exit code: 0 khi tất cả câu có đáp án; 2 cho cấu hình/đầu vào lỗi; 3 khi có câu không trả lời được (vẫn xuất đủ dòng, đáp án lỗi để trống).
 
-Chế độ này dùng bộ giải quyết định lượng cho các dạng bảng đã nhận diện, không
-cần API key và phù hợp để kiểm tra I/O:
+## Cấu trúc
 
-```powershell
-python main.py `
-  --xlsx_dir .\Public_data_1\xlsx_files `
-  --queries .\Public_data_1\queries.json `
-  --output .\submission.csv `
-  --mode offline
+```text
+main.py                  CLI, điều phối và CSV
+config/config.yaml       Giới hạn và cấu hình
+src/workbook_index.py    Đọc Excel, vùng bảng và retrieval
+src/planner.py           Hướng dẫn và schema gọi công cụ
+src/llm_client.py        OpenRouter, theo dõi từng request
+src/tools/executor.py    Bộ công cụ cố định, kiểm tra và provenance
+src/pipeline.py          Plan/execute/repair và định dạng
+src/usage.py             Token, phí, ngân sách và bộ nhớ
+dashboard.py             Server dashboard cục bộ
+dashboard/dist/          Giao diện
+scripts/evaluate.py      So sánh CSV độc lập với bộ giải
+tests/                   Kiểm tra công cụ, ngân sách, CLI và dashboard
+docs/IMPLEMENTATION.md   Trạng thái triển khai
+outputs/                 Kết quả sinh ra, không commit
 ```
 
-Đã chạy bản offline trên dữ liệu công khai: đủ 20 dòng và khớp 20/20
-với `Public_data_1/sample_submission.csv`. Đây là so sánh với file mẫu,
-chưa chứng minh độ chính xác trên tập ẩn hoặc xác minh độc lập đáp án chuẩn.
-
-## Chạy hybrid với Qwen qua OpenRouter
-
-Hybrid thử trả lời bằng bộ tính toán cục bộ trước. Câu chưa nhận diện sẽ được
-gửi tới `qwen/qwen3-7-flash`; API key chỉ đọc từ biến môi trường:
-
-```powershell
-$env:OPENROUTER_API_KEY = "sk-or-..."
-python main.py --config .\config\config.yaml
-```
-
-Có thể truyền đường dẫn khác bằng `--xlsx_dir`, `--queries`, `--output`. Dùng
-`--mode llm` để buộc gọi LLM cho mọi câu, hoặc `--mode offline` để không gọi
-API. Nếu dùng Linux/macOS, thay cú pháp đặt biến môi trường bằng
-`export OPENROUTER_API_KEY=...`.
-
-## Thiết kế
-
-- `src/deterministic_qa.py`: đọc trực tiếp ma trận Excel, mở rộng ô gộp,
-  nhận diện tiêu đề nhiều dòng và thực hiện lookup/tính toán số học.
-- `src/excel_parser.py`: chuyển bảng thành Markdown để đưa vào prompt khi cần
-  LLM.
-- `src/llm_client.py`: OpenAI-compatible client cho OpenRouter, model mặc định
-  `qwen/qwen3-7-flash`, có retry một lần.
-- `main.py`: CLI, chạy song song, giữ nguyên thứ tự câu hỏi và ghi CSV UTF-8.
-
-Không có API key nào được lưu trong mã nguồn. Khi mở rộng cho bảng mới, thêm
-resolver vào `src/deterministic_qa.py`; các câu còn lại tự động rơi xuống LLM
-trong chế độ hybrid.
-
-## Môi trường đã thiết lập và lần chạy đầu
-
-Không cần kích hoạt môi trường; có thể chạy trực tiếp:
-
-```powershell
-.\.venv\Scripts\python.exe main.py --mode offline --output outputs/submission.csv
-.\.venv\Scripts\python.exe scripts/evaluate.py --prediction outputs/submission.csv --reference Public_data_1/sample_submission.csv
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-```
-
-Nếu tạo venv báo lỗi ensurepip nhưng đã có `.venv/Scripts/python.exe`, dùng pip của Python hệ thống:
-
-```powershell
-python -m pip --python .venv/Scripts/python.exe install -r requirements.txt
-```
-
-`requirements-lock.txt` lưu phiên bản đã cài và kiểm tra trong lần chạy này;
-có thể dùng file đó thay `requirements.txt` để tái tạo môi trường.
-
-Copy `.env.example` thành `.env` và điền OPENROUTER_API_KEY để chạy online.
-Chương trình đọc `.env`, giữ ưu tiên biến môi trường hiện có. `.env`, `.venv`
-và `outputs/` được bỏ qua bởi Git.
-
-Nhật ký ở `outputs/logs/questions.jsonl`: câu hỏi, nhánh xử lý, trạng thái và
-thời gian từng câu. Tổng kết ở `outputs/logs/summary.json`; báo cáo so sánh ở
-`outputs/evaluation.json`. Dùng `--log-dir` để đổi thư mục nhật ký.
-
-Exit code 0 khi đủ đáp án; 2 cho đầu vào không hợp lệ hoặc thiếu API ở mode llm;
-3 nếu có câu lỗi/chưa trả lời (CSV vẫn được xuất với đáp án trống).
-
-## Phạm vi bản đầu
-
-Cập nhật kiểm tra lại: khóa mới hợp lệ và OpenRouter có ID
-`qwen/qwen3.7-flash` (dấu chấm). `.env` đã dùng ID này để thử phát triển.
-Một câu online đã trả đáp án, nhưng khác file mẫu; kết nối thành công chưa
-đồng nghĩa trả lời đúng. Cần BTC xác nhận ID chính thức khi chấm vì văn bản đề
-ghi `qwen/qwen3-7-flash`.
-
-Kiểm tra online ngày 14/10/2026: OpenRouter trả HTTP 400,
-`qwen/qwen3-7-flash is not a valid model ID`. Giữ nguyên mã model theo đề;
-cần xác nhận với BTC trước khi đánh giá online. Có thể đổi `MODEL_NAME`
-cho phát triển nếu đã xác định model phù hợp, nhưng phải đáp ứng model khi chấm.
-
-Nhánh LLM hiện trả lời trực tiếp từ văn bản Excel có thể bị cắt ngắn, chưa có
-RAG cấp bảng + planner JSON + bộ công cụ tổng quát. Xem `docs/IMPLEMENTATION.md`.
-Chức năng codegen cũ trong qa_engine không được dùng bởi CLI.
-
-API timeout 45 giây/lượt, tối đa hai lần thử ở nhánh trực tiếp, đã tắt retry
-tự động của SDK. Chưa đo đủ token, chi phí thực tế và bộ nhớ đỉnh; chưa xác minh
-các giới hạn online. Các cấu hình max_chars/max_tokens/temperature trong YAML
-hiện chưa được nối vào CLI, không nên dùng chúng để khẳng định kiểm soát ngân sách.
-
-Thư mục bổ sung: `scripts/` cho đánh giá, `tests/` cho kiểm tra CLI,
-`docs/` cho trạng thái triển khai, `outputs/` cho kết quả và nhật ký.
-Giới hạn đề lưu ở `COMPETITION_CONSTRAINTS.md`. Không đưa `.venv`, `.env`,
-dữ liệu công khai và `outputs` vào ZIP nộp bài.
+`src/deterministic_qa.py`, `src/excel_parser.py`, `src/qa_engine.py` là mã cũ; pipeline chính không dùng chúng để trả lời. Giới hạn đề lưu tại COMPETITION_CONSTRAINTS.md. ZIP nộp ≤100 MB; bỏ `.venv`, `.env`, outputs và dữ liệu công khai khỏi gói nộp.

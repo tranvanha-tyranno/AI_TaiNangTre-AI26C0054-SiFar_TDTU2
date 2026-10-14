@@ -15,6 +15,7 @@ import threading
 import time
 from urllib.parse import parse_qs, urlparse
 from zoneinfo import ZoneInfo
+from src.usage import summarize_usage
 
 ROOT = Path(__file__).resolve().parent
 STATIC = ROOT / "dashboard" / "dist"
@@ -83,7 +84,9 @@ def build_state(selected=None):
     directories = run_dirs()
     if selected and selected not in directories:
         raise ValueError("Không tìm thấy lần chạy")
-    selected = selected or ("latest" if "latest" in directories else next(iter(directories), None))
+    preferred = next((key for key,directory in directories.items()
+                      if read_json(directory / 'summary.json',{}).get('pipeline_version') == 'tools-v1'),None)
+    selected = selected or preferred or ("latest" if "latest" in directories else next(iter(directories), None))
     path = directories.get(selected)
     data = records(path) if path else {}
     meta = read_json(path / "metadata.json", {}) if path else {}
@@ -121,12 +124,15 @@ def build_state(selected=None):
                         "label": information.get("label") or ("Nhật ký lần gần nhất" if key == "latest" else "Thử một câu LLM")})
     matched = sum(row["match"] is True for row in rows)
     compared = sum(row["match"] is not None for row in rows)
+    measured_usage = summarize_usage([row for row in rows if row['status'] != 'pending'])
     return {"csrf": TOKEN, "config": safe_config(), "runs": choices, "selected": selected,
             "rows": rows, "job": job, "running": running,
             "summary": {**summary, "mode": meta.get("mode") or summary.get("mode", "unknown"),
                 "questions": len(rows), "completed": sum(row["status"] != "pending" for row in rows),
                 "answered": sum(row["status"] == "ok" and bool(row["answer"]) for row in rows),
-                "matched": matched, "compared": compared, "elapsed_seconds": elapsed},
+                "matched": matched, "compared": compared, "elapsed_seconds": elapsed,
+                "pipeline_version": summary.get('pipeline_version') or next((row.get('pipeline_version') for row in rows if row.get('pipeline_version')),None),
+                "usage": measured_usage},
             "catalog": queries(), "files": sorted({q["file_name"] for q in queries()})}
 
 
@@ -246,9 +252,9 @@ class Handler(BaseHTTPRequestHandler):
                 writer.writerow(["id", "answer"])
                 writer.writerows((row["id"], row["answer"]) for row in state["rows"])
                 self.send(buffer.getvalue().encode("utf-8-sig"), "text/csv; charset=utf-8")
-            elif parsed.path in {"/", "/app.js", "/style.css"}:
-                name = {"/": "index.html", "/app.js": "app.js", "/style.css": "style.css"}[parsed.path]
-                mime = {"index.html": "text/html", "app.js": "text/javascript", "style.css": "text/css"}[name]
+            elif parsed.path in {"/", "/app.js", "/style.css", "/details.css"}:
+                name = {"/": "index.html", "/app.js": "app.js", "/style.css": "style.css", "/details.css": "details.css"}[parsed.path]
+                mime = {"index.html": "text/html", "app.js": "text/javascript", "style.css": "text/css", "details.css": "text/css"}[name]
                 self.send((STATIC / name).read_bytes(), mime + "; charset=utf-8")
             else:
                 self.send({"error": "Không tìm thấy"}, status=404)

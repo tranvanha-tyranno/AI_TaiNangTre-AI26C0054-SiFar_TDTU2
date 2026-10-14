@@ -26,7 +26,8 @@ function render() {
   const sum = state.summary;
   $('runSelect').innerHTML = state.runs.length ? state.runs.map(run => `<option value="${escapeHTML(run.id)}">${escapeHTML(run.label)} · ${escapeHTML(run.mode)}</option>`).join('') : '<option>Chưa có lần chạy</option>';
   $('runSelect').value = selected;
-  $('modeBadge').textContent = modes[sum.mode] || sum.mode;
+  const toolPipeline = sum.pipeline_version === 'tools-v1';
+  $('modeBadge').textContent = toolPipeline ? 'LLM + Tools · OpenRouter' : (modes[sum.mode] || sum.mode);
   $('modeBadge').className = 'badge ' + (sum.mode === 'offline' ? 'gray' : '');
   $('runStatus').textContent = state.running ? '● Đang xử lý…' : `${sum.completed} / ${sum.questions} câu đã xử lý`;
   $('answered').innerHTML = `${sum.answered}<span class="denom"> / ${sum.questions}</span>`;
@@ -35,7 +36,15 @@ function render() {
   $('matched').innerHTML = `${sum.matched}<span class="denom"> / ${sum.compared}</span>`;
   $('elapsed').textContent = duration(sum.elapsed_seconds);
   $('average').textContent = sum.completed ? `${(sum.elapsed_seconds / sum.completed).toFixed(2)}s / câu đã xử lý${state.running ? ' · tạm tính' : ''}` : 'Chưa có thời gian';
-  $('contextText').textContent = sum.mode === 'offline' ? 'Lần chạy này dùng quy tắc Python để đọc và tính dữ liệu. Không có lời gọi LLM.' : sum.mode === 'hybrid' ? 'Hybrid thử quy tắc cục bộ trước. Chỉ câu chưa giải được mới gọi LLM; xem chi tiết từng câu.' : 'Lần chạy này gọi LLM trực tiếp. RAG và kế hoạch JSON chưa được triển khai; đáp án cần đối chiếu.';
+  $('contextText').textContent = toolPipeline ? 'RAG chọn vùng bảng → LLM gọi công cụ bằng kế hoạch JSON → Python tính trên đủ dữ liệu → kiểm tra và xuất đáp án. Chọn câu để xem từng bước.' : sum.mode === 'offline' ? 'Lần chạy cũ dùng quy tắc Python để đọc và tính dữ liệu. Không có lời gọi LLM.' : 'Nhật ký cũ: LLM trả lời trực tiếp, chưa dùng công cụ. Lần chạy mới dùng pipeline LLM + Tools.';
+  const usage=sum.usage;
+  if(usage && (usage.api_calls || (sum.mode === 'offline' && usage.cost_complete))) {
+    $('costValue').textContent = '$'+usage.actual_cost_usd.toFixed(6)+(usage.cost_complete ? '' : '+');
+    $('tokenValue').textContent = `${usage.total_tokens.toLocaleString('vi-VN')} token${usage.tokens_complete ? '' : ' đã ghi nhận'} · ${usage.api_calls} lượt API`;
+    $('usageNote').textContent = usage.cost_complete ? 'Chi phí API báo · Đã cộng lượt sửa / retry' : `Chi phí đã xác nhận; ${usage.unknown_cost_calls} lượt chưa rõ phí. Ước tính theo bảng giá: $${usage.estimated_cost_usd.toFixed(6)}`;
+  } else {
+    $('costValue').textContent='Chưa đo'; $('tokenValue').textContent='Nhật ký cũ không có số liệu API'; $('usageNote').textContent='Không thể coi chi phí chưa ghi nhận là $0.';
+  }
   $('openRun').disabled = state.job.running;
   $('openRun').textContent = state.job.running ? 'Đang chạy…' : '＋ Chạy mới';
   $('download').href = '/api/download' + (selected ? '?run='+encodeURIComponent(selected) : '');
@@ -66,6 +75,13 @@ function renderRows() {
   $('empty').classList.toggle('hidden', !!rows.length);
 }
 function renderPipeline() {
+  if(state.summary.pipeline_version === 'tools-v1') {
+    const steps=[['Đọc và chuẩn hóa','Giữ sheet, ô gộp, tọa độ và vùng dữ liệu.'],['RAG tìm bảng','Xếp hạng theo sheet, tiêu đề, cột và nội dung; có vùng toàn sheet.'],['LLM lập kế hoạch','Gọi execute_spreadsheet_plan với JSON theo schema công cụ.'],['Công cụ Python','Lọc, tính tuổi, đếm, tổng, nhóm, ghép và sắp xếp trên đủ dữ liệu.'],['Kiểm tra & sửa','Kiểm tra cột, phạm vi, kiểu dữ liệu và kết quả; tối đa hai lượt sửa kế hoạch.'],['Xuất & ghi nhận','Chuẩn hóa đáp án; lưu ô căn cứ, token và chi phí mọi lượt gọi.']];
+    $('pipelineSteps').innerHTML=steps.map((step,index)=>`<div class="step"><div class="step-number">0${index+1}</div><h3>${step[0]}</h3><p>${step[1]}</p></div>`).join('');
+    document.querySelector('.future').innerHTML='<span class="badge green">ĐANG SỬ DỤNG</span><h3>LLM chọn thao tác, chương trình thực hiện</h3><p>Kế hoạch được kiểm tra về cấu trúc và khả năng thực thi. Điều này chưa bảo đảm LLM hiểu đúng mọi câu hỏi; đối chiếu dữ liệu và file mẫu để đánh giá độ chính xác.</p>';
+    return;
+  }
+  document.querySelector('.future').innerHTML='<span class="badge amber">NHẬT KÝ CŨ</span><h3>Lần chạy này chưa dùng pipeline công cụ</h3><p>Chạy mới ở chế độ LLM để dùng RAG, kế hoạch JSON, công cụ Python và theo dõi token/chi phí.</p>';
   const mode = state.summary.mode;
   const middle = mode === 'offline' ? ['Quy tắc cục bộ','Nhận diện dạng câu hỏi trong bộ giải hiện có.'] : mode === 'hybrid' ? ['Cục bộ → LLM','Nếu quy tắc chưa trả lời được, gọi LLM trực tiếp.'] : ['LLM trực tiếp','Gửi văn bản Excel và câu hỏi tới OpenRouter.'];
   const last = mode === 'offline' ? ['Tính toán','Python tra cứu hoặc thực hiện phép tính theo quy tắc.'] : ['Chuẩn hóa đáp án','Làm sạch văn bản trả về; chưa có kiểm chứng tính toán tự động.'];
@@ -78,8 +94,21 @@ function detail(id) {
   $('detailQuestion').textContent = detailRow.query;
   $('detailAnswer').textContent = detailRow.answer || 'Chưa có đáp án';
   $('detailReference').textContent = detailRow.reference ?? 'Không có';
-  const stage = {llm_direct:'Gọi LLM trực tiếp', deterministic:'Bộ quy tắc Python'}[detailRow.stage] || 'Chưa xử lý';
+  const stage = {llm_direct:'Gọi LLM trực tiếp (cũ)', deterministic:'Bộ quy tắc Python (cũ)',parse:'Đọc Excel',retrieve:'Tìm bảng',plan:'LLM lập kế hoạch',execute:'Thực hiện công cụ',validated:'Đã kiểm tra kế hoạch và thực hiện công cụ'}[detailRow.stage] || 'Chưa xử lý';
   $('detailMeta').innerHTML = `${statusBadge(detailRow)}<br>Nhánh xử lý: ${escapeHTML(stage)}<br>Thời gian: ${duration(detailRow.elapsed_seconds)}${detailRow.error_type ? '<br>Loại lỗi: '+escapeHTML(detailRow.error_type) : ''}`;
+  const usage=detailRow.usage;
+  if(usage) $('detailMeta').innerHTML += `<br>Token vào / ra: ${usage.prompt_tokens} / ${usage.completion_tokens} · ${usage.api_calls} lượt API<br>Chi phí API báo: $${usage.actual_cost_usd.toFixed(6)}${usage.cost_complete ? '' : ' (chưa đủ)'} · Ước tính bảng giá: $${usage.estimated_cost_usd.toFixed(6)}`;
+  const operations={read:'Đọc vùng bảng',cell:'Lấy giá trị ô',concat:'Nối các vùng',collect:'Gom đáp án',unpivot:'Chuyển cột thành dòng',filter:'Lọc dòng',derive:'Tính cột mới',sort:'Sắp xếp',take:'Lấy vị trí',select:'Chọn cột',aggregate:'Tính tổng hợp',group:'Nhóm dữ liệu',join:'Ghép bảng',calculate:'Tính kết quả'};
+  let html='';
+  if(detailRow.retrieval) html += '<h3 class="detail-section">Vùng dữ liệu đã tìm</h3><div class="evidence">'+detailRow.retrieval.filter(r=>r.selected).map(r=>`<span>${escapeHTML(r.sheet)}!${escapeHTML(r.range)}</span>`).join('')+'</div>';
+  if(detailRow.tool_trace) html += '<h3 class="detail-section">Công cụ đã thực hiện</h3><div class="tool-trace">'+detailRow.tool_trace.map((step,index)=>`<div><b>${index+1}. ${operations[step.op] || escapeHTML(step.op)}</b><span>${step.row_count != null ? step.row_count+' dòng' : escapeHTML(step.scalar)} · ${duration(step.elapsed_seconds)}</span></div>`).join('')+'</div>';
+  if(detailRow.timings) html += '<div class="detail-meta">Thời gian: '+Object.entries(detailRow.timings).map(([key,val])=>`${escapeHTML(key)} ${duration(val)}`).join(' · ')+'</div>';
+  if(detailRow.evidence) html += '<h3 class="detail-section">Ô dùng làm căn cứ ('+detailRow.evidence_count+')</h3><div class="evidence">'+detailRow.evidence.slice(0,20).map(cell=>`<span>${escapeHTML(cell)}</span>`).join('')+'</div>';
+  if(usage?.calls.length) html += '<h3 class="detail-section">Các lượt gọi API</h3><div class="tool-trace">'+usage.calls.map(call=>`<div><b>#${call.attempt} · ${call.purpose === 'repair' ? 'Sửa kế hoạch' : 'Lập kế hoạch'} · ${escapeHTML(call.status)}</b><span>${call.total_tokens ?? '?'} token · ${call.actual_cost_usd != null ? '$'+call.actual_cost_usd.toFixed(6) : 'Chưa rõ phí'}</span></div>`).join('')+'</div>';
+  if(detailRow.validation_errors) html+='<h3 class="detail-section">Lỗi kiểm tra kế hoạch</h3><p class="detail-note">'+detailRow.validation_errors.map(escapeHTML).join('<br>')+'</p>';
+  if(detailRow.plan || detailRow.plans) html += '<details class="plan"><summary>Xem kế hoạch JSON</summary><pre>'+escapeHTML(JSON.stringify(detailRow.plan || detailRow.plans,null,2))+'</pre></details>';
+  $('toolDetails').innerHTML=html;
+  $('detailNote').textContent=detailRow.pipeline_version === 'tools-v1' ? 'Công cụ xử lý toàn bộ vùng được chọn, kể cả dòng không có trong bản xem trước. Kiểm tra kế hoạch hợp lệ chưa bảo đảm chọn đúng ý nghĩa của câu hỏi. File mẫu chưa được xác minh độc lập là đáp án chuẩn.' : 'Nhật ký cũ chưa có kế hoạch công cụ và số liệu sử dụng đầy đủ. Chạy lại với pipeline mới để xem căn cứ tính toán.';
   $('detailDialog').showModal();
 }
 async function loadWorkbook(sheet) {
@@ -105,7 +134,7 @@ $('fileSelect').onchange = () => loadWorkbook(); $('sheetSelect').onchange = () 
 $('openRun').onclick = () => { $('runDialog').showModal(); };
 $('closeRun').onclick = $('cancelRun').onclick = () => $('runDialog').close();
 $('scope').onchange = () => $('questionSelect').classList.toggle('hidden', $('scope').value === 'all');
-$('mode').onchange = () => { $('apiNote').textContent = $('mode').value === 'offline' ? 'Chế độ này dùng quy tắc cục bộ và không gọi API. Đây không phải kết quả LLM.' : 'Chạy LLM có thể phát sinh phí API. Chưa có bộ giới hạn chi phí tự động. Mỗi lần chạy được lưu riêng.'; };
+$('mode').onchange = () => { $('apiNote').textContent = $('mode').value === 'offline' ? 'Chế độ cũ dùng quy tắc cục bộ, không gọi API. Đây không phải kết quả pipeline LLM.' : 'LLM lập kế hoạch và gọi công cụ. Ghi nhận token/chi phí gồm retry; kiểm tra ngân sách trước mỗi lượt gọi. Tối đa $0.10/câu.'; };
 $('runForm').onsubmit = async event => {
   event.preventDefault(); $('submitRun').disabled = true;
   try {

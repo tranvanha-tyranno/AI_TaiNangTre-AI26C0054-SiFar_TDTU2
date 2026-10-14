@@ -1,5 +1,10 @@
 # Mốc chạy đầu tiên
 
+## Trạng thái hiện tại: pipeline công cụ đã triển khai
+
+`main.py --mode llm` hiện chạy đọc Excel → retrieval → native tool calling kế hoạch JSON → công cụ Python → kiểm tra/sửa → CSV. `hybrid` là alias pipeline mới; offline chỉ giữ mã cũ để so sánh.
+Token và phí thực tế được ghi ở usage trong nhật ký và summary, gồm retry/sửa. Ước tính bảng giá được ghi riêng. Dashboard hiển thị kế hoạch, công cụ, ô căn cứ và số liệu sử dụng. Các mục bên dưới là lịch sử bản đầu, không phải trạng thái hiện tại.
+
 ## Đã có
 - CLI nhận đường dẫn Excel, câu hỏi và đầu ra.
 - Bộ giải cục bộ cho các dạng dữ liệu công khai hiện tại.
