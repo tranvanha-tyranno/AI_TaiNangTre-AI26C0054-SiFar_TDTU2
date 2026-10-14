@@ -25,10 +25,10 @@ from pathlib import Path
 # cho phép chạy cả khi src là package hoặc script lẻ
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.excel_parser import parse_and_serialize
-from src.qa_engine import post_process
-from src.llm_client import ask_llm, get_client
+from src.llm_client import get_client, PlannerClient
 from src.deterministic_qa import answer_deterministic
+from src.pipeline import answer_with_tools
+from src.usage import UsageLedger, summarize_usage, peak_memory_mb
 
 
 def load_config(path: Path) -> dict:
@@ -43,16 +43,8 @@ def load_config(path: Path) -> dict:
         return {}
 
 
-def answer_one_file(xlsx_path: Path, question: str, max_chars: int = 14000) -> str:
-    _, table_text = parse_and_serialize(xlsx_path)
-    # cắt ngắn nếu cần (parse_and_serialize đã cắt 14000)
-    if len(table_text) > max_chars:
-        table_text = table_text[:max_chars]
-    raw = ask_llm(question, table_text)
-    return post_process(raw, question)
-
-
 def main():
+    run_started = time.monotonic()
     # Keep progress logging usable on Windows consoles with a legacy codepage.
     for stream in (sys.stdout, sys.stderr):
         try:
@@ -65,10 +57,10 @@ def main():
     ap.add_argument("--output", type=str, default=None, help="Đường dẫn submission.csv")
     ap.add_argument("--log-dir", default="outputs/logs", help="Nhật ký từng câu")
     ap.add_argument("--config", type=str, default="config/config.yaml", help="File config yaml (optional)")
-    ap.add_argument("--concurrency", type=int, default=4)
+    ap.add_argument("--concurrency", type=int, default=None)
     ap.add_argument("--no-llm", action="store_true", help="Chạy offline: chỉ dùng bộ giải quyết định lượng")
     ap.add_argument("--mode", choices=["hybrid", "llm", "offline"], default=None,
-                    help="hybrid (mặc định), llm, hoặc offline")
+                    help="llm: planner + tools; hybrid: alias cho pipeline LLM; offline: bộ giải cũ")
     args = ap.parse_args()
     try:
         from dotenv import load_dotenv
@@ -83,8 +75,8 @@ def main():
     xlsx_dir = Path(args.xlsx_dir or cfg.get("xlsx_dir") or "./Public_data_1/xlsx_files")
     queries_path = Path(args.queries or cfg.get("queries") or "./Public_data_1/queries.json")
     output_path = Path(args.output or cfg.get("output") or "./submission.csv")
-    concurrency = args.concurrency if args.concurrency != 4 else cfg.get("concurrency", 4)
-    mode = args.mode or cfg.get("mode") or "hybrid"
+    concurrency = args.concurrency if args.concurrency is not None else cfg.get("concurrency", 1)
+    mode = args.mode or cfg.get("mode") or "llm"
     if args.no_llm:
         mode = "offline"
     if not isinstance(concurrency, int) or concurrency < 1 or concurrency > 6:
@@ -121,13 +113,21 @@ def main():
     print(f"[INFO] {len(queries)} queries | xlsx_dir={xlsx_dir} | output={output_path}")
     print(f"[INFO] mode={mode} | LLM model={os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash'} | concurrency={concurrency}")
 
-    # Hybrid/offline can run without credentials when the deterministic resolver
-    # covers the query.  Only fail early for explicit LLM mode.
-    if mode == "llm" and get_client() is None:
+    if mode != "offline" and get_client() is None:
         print("[ERROR] Chưa cấu hình OPENROUTER_API_KEY. Đặt biến môi trường rồi chạy lại:", file=sys.stderr)
         print("        export OPENROUTER_API_KEY=sk-or-...", file=sys.stderr)
         print("   hoặc tạo file .env với dòng OPENROUTER_API_KEY=...", file=sys.stderr)
         print("   Lấy key tại https://openrouter.ai/", file=sys.stderr)
+        sys.exit(2)
+    if not 0 < float(cfg.get('max_cost_per_question', .10)) <= .10:
+        ap.error("max_cost_per_question phải > 0 và <= 0.10 USD")
+    try:
+        planner = None if mode == 'offline' else PlannerClient(
+            prompt_cap=cfg.get('max_prompt_price_per_million', 1.0),
+            completion_cap=cfg.get('max_completion_price_per_million', 4.0),
+            max_tokens=cfg.get('max_tokens_plan', 2000))
+    except Exception as error:
+        print(f"[ERROR] Không khởi tạo được planner: {error}", file=sys.stderr)
         sys.exit(2)
 
     results: dict[str, str] = {}
@@ -141,24 +141,27 @@ def main():
     def task(q):
         started = time.perf_counter()
         record = {"id": q["id"], "file_name": q["file_name"], "query": q["query"],
-                  "stage": "deterministic", "status": "ok", "mode": mode}
+                  "stage": "deterministic" if mode == 'offline' else 'parse', "status": "ok", "mode": mode}
         xlsx_path = xlsx_dir / q["file_name"]
-        if not xlsx_path.exists():
-            return q["id"], ""
         try:
+            if time.monotonic()-run_started >= cfg.get('run_timeout',2400):
+                raise RuntimeError('Run deadline exceeded; no more API calls')
             ans = None
-            if mode in {"hybrid", "offline"}:
+            if mode == "offline":
                 ans = answer_deterministic(xlsx_path, q["query"])
-            if ans is None and mode != "offline":
-                record["stage"] = "llm_direct"
-                ans = answer_one_file(xlsx_path, q["query"])
+                record['usage'] = UsageLedger().summary()
+            else:
+                settings = dict(cfg)
+                settings['question_timeout'] = min(cfg.get('question_timeout',115),
+                    max(.1,cfg.get('run_timeout',2400)-(time.monotonic()-run_started)))
+                ans = answer_with_tools(xlsx_path, q['query'], planner, record, settings)
             if ans is None or ans == "":
                 record["status"] = "unanswered"
             ans = ans or ""
             record.update(answer=ans, elapsed_seconds=round(time.perf_counter() - started, 4))
             return q["id"], ans, record
         except Exception as e:
-            print(f"[WARN] {q['id']} lỗi: {e}", file=sys.stderr)
+            print(f"[WARN] {q['id']} lỗi: {type(e).__name__}", file=sys.stderr)
             record.update(status="error", error_type=type(e).__name__, answer="",
                           elapsed_seconds=round(time.perf_counter() - started, 4))
             return q["id"], "", record
@@ -190,10 +193,16 @@ def main():
     records.sort(key=lambda item: order[str(item['id'])])
     (log_dir / "questions.jsonl").write_text(
         "\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n", encoding="utf-8")
+    usage = summarize_usage(records)
+    memory = peak_memory_mb()
+    elapsed = time.monotonic() - run_started
     summary = {"questions": len(queries), "answered": sum(r['status'] == 'ok' for r in records),
                "elapsed_seconds": elapsed, "mode": mode,
                "model": os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash',
-               "cost_verified": False, "memory_verified": False}
+               "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=1024,
+               "peak_memory_mb": memory,
+               "pipeline_version": 'legacy-offline' if mode == 'offline' else 'tools-v1',
+               "usage": usage}
     (log_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # cảnh báo giới hạn đề thi

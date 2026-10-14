@@ -8,10 +8,19 @@ base_url: https://openrouter.ai/api/v1
 # Đặt OPENROUTER_API_KEY trong env, không ghi vào đây
 
 # Giới hạn đề thi
-max_chars_per_table: 14000
-max_tokens_answer: 512
-temperature: 0.0
+max_tokens_plan: 3000
+max_cost_per_question: 0.10
+max_api_calls: 4
+max_plan_repairs: 2
+question_timeout: 115
+run_timeout: 2400
+# Provider price caps in USD per million tokens; API rejects more expensive routes.
+max_prompt_price_per_million: 1.0
+max_completion_price_per_million: 4.0
+max_workbook_cells: 200000
+retrieval_top_k: 4
+preview_rows: 45
 
 # Pipeline
-mode: hybrid  # hybrid | llm | offline
-concurrency: 4
+mode: llm  # llm/hybrid: planner + tools; offline: legacy rules for comparison only
+concurrency: 1

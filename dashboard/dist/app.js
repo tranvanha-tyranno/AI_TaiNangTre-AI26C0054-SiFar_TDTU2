@@ -1,5 +1,6 @@
 const $ = id => document.getElementById(id);
 let state = null, selected = '', dataset = 'public', detailRow = null, activeView = 'overview', polling = false;
+let dialogRevision = 0;
 const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const duration = value => value >= 60 ? `${Math.floor(value / 60)}m ${Math.floor(value % 60)}s` : `${Number(value || 0).toFixed(1)}s`;
 const modes = {llm:'LLM · OpenRouter', offline:'Offline · Không gọi AI', hybrid:'Hybrid · Cục bộ + LLM', unknown:'Chưa có dữ liệu'};
@@ -28,16 +29,24 @@ function setDataset(ids) {
 }
 async function refresh() {
   if(polling) return; polling = true;
+  const requestedDataset = dataset, requestedRun = selected;
   try {
     const qs = new URLSearchParams();
     if(selected) qs.set('run', selected);
     if(dataset) qs.set('dataset', dataset);
-    state = await getJSON('/api/state' + (qs.toString() ? '?' + qs.toString() : ''));
+    const next = await getJSON('/api/state' + (qs.toString() ? '?' + qs.toString() : ''));
+    if(dataset !== requestedDataset || selected !== requestedRun) return;
+    const changedDataset = !state || state.dataset !== next.dataset;
+    state = next;
     selected = state.selected || '';
     if(state.dataset) dataset = state.dataset;
     render(); $('connection').textContent = '● Đã kết nối';
+    if(changedDataset && activeView === 'data') loadWorkbook();
   } catch (error) { $('connection').textContent = 'Mất kết nối'; notice(error.message); }
-  finally { polling = false; }
+  finally {
+    polling = false;
+    if(dataset !== requestedDataset || selected !== requestedRun) refresh();
+  }
 }
 function render() {
   const sum = state.summary;
@@ -62,14 +71,10 @@ function render() {
     chips.innerHTML = datasetList().map(id => `<span class="chip">${escapeHTML(id)} <button data-rm="${escapeHTML(id)}" aria-label="Bỏ ${escapeHTML(id)}">×</button></span>`).join('');
     chips.querySelectorAll('[data-rm]').forEach(b=> b.onclick = () => { const ids = datasetList().filter(x=>x!==b.dataset.rm); setDataset(ids); });
   }
-  // dialog checks
-  const dlg = $('datasetDialog');
-  if(dlg) {
-    dlg.innerHTML = dsList.map(d => `<label class="multi-option"><input type="checkbox" value="${escapeHTML(d.id)}" ${chosen.has(d.id)?'checked':''}> ${escapeHTML(d.label)}</label>`).join('');
-  }
-  $('runSelect').innerHTML = state.runs.length ? state.runs.map(run => `<option value="${escapeHTML(run.id)}">${escapeHTML(run.label)} · ${escapeHTML(run.mode)}${run.dataset ? ' · ' + escapeHTML(run.dataset) : ''}</option>`).join('') : '<option>Chưa có lần chạy</option>';
+  $('runSelect').innerHTML = '<option value="">Chọn lần chạy / Chưa chạy bộ đang chọn</option>' + state.runs.map(run => `<option value="${escapeHTML(run.id)}">${escapeHTML(run.label)} · ${escapeHTML(run.mode)}${run.dataset ? ' · ' + escapeHTML(run.dataset) : ''}</option>`).join('');
   $('runSelect').value = selected;
-  $('modeBadge').textContent = modes[sum.mode] || sum.mode;
+  const toolPipeline = sum.pipeline_version === 'tools-v1';
+  $('modeBadge').textContent = toolPipeline ? 'LLM + Tools · OpenRouter' : (modes[sum.mode] || sum.mode);
   $('modeBadge').className = 'badge ' + (sum.mode === 'offline' ? 'gray' : '');
   $('runStatus').textContent = state.running ? '● Đang xử lý…' : `${sum.completed} / ${sum.questions} câu đã xử lý`;
   $('answered').innerHTML = `${sum.answered}<span class="denom"> / ${sum.questions}</span>`;
@@ -78,7 +83,15 @@ function render() {
   $('matched').innerHTML = `${sum.matched}<span class="denom"> / ${sum.compared}</span>`;
   $('elapsed').textContent = duration(sum.elapsed_seconds);
   $('average').textContent = sum.completed ? `${(sum.elapsed_seconds / sum.completed).toFixed(2)}s / câu đã xử lý${state.running ? ' · tạm tính' : ''}` : 'Chưa có thời gian';
-  $('contextText').textContent = sum.mode === 'offline' ? 'Lần chạy này dùng quy tắc Python để đọc và tính dữ liệu. Không có lời gọi LLM.' : sum.mode === 'hybrid' ? 'Hybrid thử quy tắc cục bộ trước. Chỉ câu chưa giải được mới gọi LLM; xem chi tiết từng câu.' : 'Lần chạy này gọi LLM trực tiếp. RAG và kế hoạch JSON chưa được triển khai; đáp án cần đối chiếu.';
+  $('contextText').textContent = toolPipeline ? 'RAG chọn vùng bảng → LLM gọi công cụ bằng kế hoạch JSON → Python tính trên đủ dữ liệu → kiểm tra và xuất đáp án. Chọn câu để xem từng bước.' : sum.mode === 'offline' ? 'Lần chạy cũ dùng quy tắc Python để đọc và tính dữ liệu. Không có lời gọi LLM.' : 'Nhật ký cũ: LLM trả lời trực tiếp, chưa dùng công cụ. Lần chạy mới dùng pipeline LLM + Tools.';
+  const usage=sum.usage;
+  if(usage && (usage.api_calls || (sum.mode === 'offline' && usage.cost_complete))) {
+    $('costValue').textContent = '$'+usage.actual_cost_usd.toFixed(6)+(usage.cost_complete ? '' : '+');
+    $('tokenValue').textContent = `${usage.total_tokens.toLocaleString('vi-VN')} token${usage.tokens_complete ? '' : ' đã ghi nhận'} · ${usage.api_calls} lượt API`;
+    $('usageNote').textContent = usage.cost_complete ? 'Chi phí API báo · Đã cộng lượt sửa / retry' : `Chi phí đã xác nhận; ${usage.unknown_cost_calls} lượt chưa rõ phí. Ước tính theo bảng giá: $${usage.estimated_cost_usd.toFixed(6)}`;
+  } else {
+    $('costValue').textContent='Chưa đo'; $('tokenValue').textContent='Nhật ký cũ không có số liệu API'; $('usageNote').textContent='Không thể coi chi phí chưa ghi nhận là $0.';
+  }
   $('openRun').disabled = state.job.running;
   $('openRun').textContent = state.job.running ? 'Đang chạy…' : '＋ Chạy mới';
   const dl = new URLSearchParams(); if(selected) dl.set('run', selected); if(dataset) dl.set('dataset', dataset);
@@ -88,11 +101,20 @@ function render() {
   const currentFile = $('fileSelect').value;
   $('fileSelect').innerHTML = state.files.map(file => `<option>${escapeHTML(file)}</option>`).join('');
   if(state.files.includes(currentFile)) $('fileSelect').value = currentFile;
-  const currentQuestion = $('questionSelect').value;
-  const catalog = state.catalog || state.rows;
-  $('questionSelect').innerHTML = catalog.map(row => `<option value="${escapeHTML(row.id)}">${escapeHTML(row.id)} · ${escapeHTML(row.query.slice(0,85))}</option>`).join('');
-  if(catalog.some(row => String(row.id) === currentQuestion)) $('questionSelect').value = currentQuestion;
   renderRows(); renderPipeline(); renderTestSuites();
+}
+async function loadDialogCatalog() {
+  const revision = ++dialogRevision;
+  const ids = [...$('datasetDialog').querySelectorAll('input:checked')].map(input => input.value);
+  $('submitRun').disabled = true;
+  $('questionSelect').innerHTML = '';
+  if(!ids.length) return;
+  try {
+    const data = await getJSON('/api/catalog?' + new URLSearchParams({dataset:ids.join(',')}));
+    if(revision !== dialogRevision) return;
+    $('questionSelect').innerHTML = data.catalog.map(row => `<option value="${escapeHTML(row.id)}">${escapeHTML(row.id)} · ${escapeHTML(row.query.slice(0,85))}</option>`).join('');
+    $('submitRun').disabled = !data.catalog.length;
+  } catch(error) { if(revision === dialogRevision) notice(error.message); }
 }
 function statusBadge(row) {
   if(row.status === 'pending') return '<span class="badge gray">Đang chờ</span>';
@@ -110,6 +132,13 @@ function renderRows() {
   $('empty').classList.toggle('hidden', !!rows.length);
 }
 function renderPipeline() {
+  if(state.summary.pipeline_version === 'tools-v1') {
+    const steps=[['Đọc và chuẩn hóa','Giữ sheet, ô gộp, tọa độ và vùng dữ liệu.'],['RAG tìm bảng','Xếp hạng theo sheet, tiêu đề, cột và nội dung; có vùng toàn sheet.'],['LLM lập kế hoạch','Gọi execute_spreadsheet_plan với JSON theo schema công cụ.'],['Công cụ Python','Lọc, tính tuổi, đếm, tổng, nhóm, ghép và sắp xếp trên đủ dữ liệu.'],['Kiểm tra & sửa','Kiểm tra cột, phạm vi, kiểu dữ liệu và kết quả; tối đa hai lượt sửa kế hoạch.'],['Xuất & ghi nhận','Chuẩn hóa đáp án; lưu ô căn cứ, token và chi phí mọi lượt gọi.']];
+    $('pipelineSteps').innerHTML=steps.map((step,index)=>`<div class="step"><div class="step-number">0${index+1}</div><h3>${step[0]}</h3><p>${step[1]}</p></div>`).join('');
+    document.querySelector('.future').innerHTML='<span class="badge green">ĐANG SỬ DỤNG</span><h3>LLM chọn thao tác, chương trình thực hiện</h3><p>Kế hoạch được kiểm tra về cấu trúc và khả năng thực thi. Điều này chưa bảo đảm LLM hiểu đúng mọi câu hỏi; đối chiếu dữ liệu và file mẫu để đánh giá độ chính xác.</p>';
+    return;
+  }
+  document.querySelector('.future').innerHTML='<span class="badge amber">NHẬT KÝ CŨ</span><h3>Lần chạy này chưa dùng pipeline công cụ</h3><p>Chạy mới ở chế độ LLM để dùng RAG, kế hoạch JSON, công cụ Python và theo dõi token/chi phí.</p>';
   const mode = state.summary.mode;
   const middle = mode === 'offline' ? ['Quy tắc cục bộ','Nhận diện dạng câu hỏi trong bộ giải hiện có.'] : mode === 'hybrid' ? ['Cục bộ → LLM','Nếu quy tắc chưa trả lời được, gọi LLM trực tiếp.'] : ['LLM trực tiếp','Gửi văn bản Excel và câu hỏi tới OpenRouter.'];
   const last = mode === 'offline' ? ['Tính toán','Python tra cứu hoặc thực hiện phép tính theo quy tắc.'] : ['Chuẩn hóa đáp án','Làm sạch văn bản trả về; chưa có kiểm chứng tính toán tự động.'];
@@ -128,7 +157,7 @@ function renderTestSuites() {
     '05_truncation_perf':'500 dòng · cắt 60/40 · hiệu năng',
   };
   const chosen = new Set(datasetList());
-  el.innerHTML = suites.map(s => `<div class="step ${chosen.has(s.id)?'active':''}" style="cursor:pointer" data-dataset="${escapeHTML(s.id)}"><div class="step-number">${chosen.has(s.id)?'✓':'▦'}</div><h3>${escapeHTML(s.id)}</h3><p>${escapeHTML(blurbs[s.id] || s.label)}</p><p style="margin-top:8px"><span class="badge ${chosen.has(s.id)?'green':'gray'}">${chosen.has(s.id)?'Đang chọn':'Chưa chọn'}</span></p></div>`).join('');
+  el.innerHTML = suites.map(s => `<button type="button" class="step ${chosen.has(s.id)?'active':''}" aria-pressed="${chosen.has(s.id)}" data-dataset="${escapeHTML(s.id)}"><div class="step-number">${chosen.has(s.id)?'✓':'▦'}</div><h3>${escapeHTML(s.id)}</h3><p>${escapeHTML(blurbs[s.id] || s.label)}</p><p><span class="badge ${chosen.has(s.id)?'green':'gray'}">${chosen.has(s.id)?'Đang chọn':'Chưa chọn'}</span></p></button>`).join('');
   el.querySelectorAll('[data-dataset]').forEach(card => card.onclick = () => {
     const id = card.dataset.dataset;
     const ids = datasetList();
@@ -142,8 +171,21 @@ function detail(id) {
   $('detailQuestion').textContent = detailRow.query;
   $('detailAnswer').textContent = detailRow.answer || 'Chưa có đáp án';
   $('detailReference').textContent = detailRow.reference ?? 'Không có';
-  const stage = {llm_direct:'Gọi LLM trực tiếp', deterministic:'Bộ quy tắc Python'}[detailRow.stage] || 'Chưa xử lý';
+  const stage = {llm_direct:'Gọi LLM trực tiếp (cũ)', deterministic:'Bộ quy tắc Python (cũ)',parse:'Đọc Excel',retrieve:'Tìm bảng',plan:'LLM lập kế hoạch',execute:'Thực hiện công cụ',validated:'Đã kiểm tra kế hoạch và thực hiện công cụ'}[detailRow.stage] || 'Chưa xử lý';
   $('detailMeta').innerHTML = `${statusBadge(detailRow)}<br>Nhánh xử lý: ${escapeHTML(stage)}<br>Thời gian: ${duration(detailRow.elapsed_seconds)}${detailRow.error_type ? '<br>Loại lỗi: '+escapeHTML(detailRow.error_type) : ''}`;
+  const usage=detailRow.usage;
+  if(usage) $('detailMeta').innerHTML += `<br>Token vào / ra: ${usage.prompt_tokens} / ${usage.completion_tokens} · ${usage.api_calls} lượt API<br>Chi phí API báo: $${usage.actual_cost_usd.toFixed(6)}${usage.cost_complete ? '' : ' (chưa đủ)'} · Ước tính bảng giá: $${usage.estimated_cost_usd.toFixed(6)}`;
+  const operations={read:'Đọc vùng bảng',cell:'Lấy giá trị ô',concat:'Nối các vùng',collect:'Gom đáp án',unpivot:'Chuyển cột thành dòng',filter:'Lọc dòng',derive:'Tính cột mới',sort:'Sắp xếp',take:'Lấy vị trí',select:'Chọn cột',aggregate:'Tính tổng hợp',group:'Nhóm dữ liệu',join:'Ghép bảng',calculate:'Tính kết quả'};
+  let html='';
+  if(detailRow.retrieval) html += '<h3 class="detail-section">Vùng dữ liệu đã tìm</h3><div class="evidence">'+detailRow.retrieval.filter(r=>r.selected).map(r=>`<span>${escapeHTML(r.sheet)}!${escapeHTML(r.range)}</span>`).join('')+'</div>';
+  if(detailRow.tool_trace) html += '<h3 class="detail-section">Công cụ đã thực hiện</h3><div class="tool-trace">'+detailRow.tool_trace.map((step,index)=>`<div><b>${index+1}. ${operations[step.op] || escapeHTML(step.op)}</b><span>${step.row_count != null ? step.row_count+' dòng' : escapeHTML(step.scalar)} · ${duration(step.elapsed_seconds)}</span></div>`).join('')+'</div>';
+  if(detailRow.timings) html += '<div class="detail-meta">Thời gian: '+Object.entries(detailRow.timings).map(([key,val])=>`${escapeHTML(key)} ${duration(val)}`).join(' · ')+'</div>';
+  if(detailRow.evidence) html += '<h3 class="detail-section">Ô dùng làm căn cứ ('+detailRow.evidence_count+')</h3><div class="evidence">'+detailRow.evidence.slice(0,20).map(cell=>`<span>${escapeHTML(cell)}</span>`).join('')+'</div>';
+  if(usage?.calls.length) html += '<h3 class="detail-section">Các lượt gọi API</h3><div class="tool-trace">'+usage.calls.map(call=>`<div><b>#${call.attempt} · ${call.purpose === 'repair' ? 'Sửa kế hoạch' : 'Lập kế hoạch'} · ${escapeHTML(call.status)}</b><span>${call.total_tokens ?? '?'} token · ${call.actual_cost_usd != null ? '$'+call.actual_cost_usd.toFixed(6) : 'Chưa rõ phí'}</span></div>`).join('')+'</div>';
+  if(detailRow.validation_errors) html+='<h3 class="detail-section">Lỗi kiểm tra kế hoạch</h3><p class="detail-note">'+detailRow.validation_errors.map(escapeHTML).join('<br>')+'</p>';
+  if(detailRow.plan || detailRow.plans) html += '<details class="plan"><summary>Xem kế hoạch JSON</summary><pre>'+escapeHTML(JSON.stringify(detailRow.plan || detailRow.plans,null,2))+'</pre></details>';
+  $('toolDetails').innerHTML=html;
+  $('detailNote').textContent=detailRow.pipeline_version === 'tools-v1' ? 'Công cụ xử lý toàn bộ vùng được chọn, kể cả dòng không có trong bản xem trước. Kiểm tra kế hoạch hợp lệ chưa bảo đảm chọn đúng ý nghĩa của câu hỏi. File mẫu chưa được xác minh độc lập là đáp án chuẩn.' : 'Nhật ký cũ chưa có kế hoạch công cụ và số liệu sử dụng đầy đủ. Chạy lại với pipeline mới để xem căn cứ tính toán.';
   $('detailDialog').showModal();
 }
 async function loadWorkbook(sheet) {
@@ -167,22 +209,24 @@ $('answerRows').onkeydown = event => {if(event.key === 'Enter') { const row=even
 $('closeDetail').onclick = () => $('detailDialog').close();
 $('detailData').onclick = () => { $('detailDialog').close(); $('fileSelect').value = detailRow.file_name; view('data'); };
 $('fileSelect').onchange = () => loadWorkbook(); $('sheetSelect').onchange = () => loadWorkbook($('sheetSelect').value);
-$('datasetButton').onclick = () => { const m=$('datasetMenu'); const open=m.classList.contains('hidden'); m.classList.toggle('hidden', !open); $('datasetButton').setAttribute('aria-expanded', open?'false':'true'); };
+$('datasetButton').onclick = () => { const m=$('datasetMenu'); const open=m.classList.contains('hidden'); m.classList.toggle('hidden', !open); $('datasetButton').setAttribute('aria-expanded', String(open)); };
 document.addEventListener('click', e=>{ const picker=$('datasetPicker'); if(picker && !picker.contains(e.target)) { $('datasetMenu').classList.add('hidden'); $('datasetButton').setAttribute('aria-expanded','false'); }});
 $('clearDatasets').onclick = () => setDataset(['public']);
 $('openRun').onclick = () => {
-  // sync dialog checks with current selection
   const chosen = new Set(datasetList());
-  const dlg = $('datasetDialog'); if(dlg) dlg.querySelectorAll('input').forEach(cb=> cb.checked = chosen.has(cb.value));
+  $('datasetDialog').innerHTML = state.datasets.map(d => `<label class="multi-option"><input type="checkbox" value="${escapeHTML(d.id)}" ${chosen.has(d.id)?'checked':''}> ${escapeHTML(d.label)}</label>`).join('');
   $('runDialog').showModal();
+  loadDialogCatalog();
 };
+$('datasetDialog').onchange = loadDialogCatalog;
 $('closeRun').onclick = $('cancelRun').onclick = () => $('runDialog').close();
 $('scope').onchange = () => $('questionSelect').classList.toggle('hidden', $('scope').value === 'all');
-$('mode').onchange = () => { $('apiNote').textContent = $('mode').value === 'offline' ? 'Chế độ này dùng quy tắc cục bộ và không gọi API. Đây không phải kết quả LLM.' : 'Chạy LLM có thể phát sinh phí API. Chưa có bộ giới hạn chi phí tự động. Mỗi lần chạy được lưu riêng.'; };
+$('mode').onchange = () => { $('apiNote').textContent = $('mode').value === 'offline' ? 'Chế độ cũ dùng quy tắc cục bộ, không gọi API. Đây không phải kết quả pipeline LLM.' : 'LLM lập kế hoạch và gọi công cụ. Ghi nhận token/chi phí gồm retry; kiểm tra ngân sách trước mỗi lượt gọi. Tối đa $0.10/câu.'; };
 $('runForm').onsubmit = async event => {
   event.preventDefault(); $('submitRun').disabled = true;
   try {
-    const chosenDataset = [...$('datasetDialog').querySelectorAll('input:checked')].map(i=>i.value).join(',') || dataset;
+    const chosenDataset = [...$('datasetDialog').querySelectorAll('input:checked')].map(i=>i.value).join(',');
+    if(!chosenDataset) throw new Error('Chọn ít nhất một dataset');
     const data = await getJSON('/api/run', {method:'POST', headers:{'Content-Type':'application/json','X-Dashboard-Token':state.csrf}, body:JSON.stringify({mode:$('mode').value, dataset: chosenDataset, ids:$('scope').value === 'all' ? null : [$('questionSelect').value]})});
     selected = data.run_id; dataset = chosenDataset; $('runDialog').close(); notice('Đã bắt đầu lần chạy mới. Kết quả sẽ tự cập nhật; dữ liệu các lần trước được giữ lại.'); view('overview'); await refresh();
   } catch(error) { notice(error.message); $('runDialog').close(); }

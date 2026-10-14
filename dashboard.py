@@ -15,6 +15,7 @@ import sys
 import threading
 import time
 from urllib.parse import parse_qs, urlparse
+from src.usage import summarize_usage
 
 ROOT = Path(__file__).resolve().parent
 STATIC = ROOT / "dashboard" / "dist"
@@ -117,7 +118,8 @@ def queries(dataset_id: str | None = None):
 
 
 def reference(dataset_id: str | None = None):
-    if dataset_id and "," in str(dataset_id):
+    dataset_id = ",".join(parse_dataset_ids(dataset_id))
+    if "," in dataset_id:
         merged: dict[str, str] = {}
         for ds in datasets_for(dataset_id):
             try:
@@ -223,13 +225,16 @@ def build_state(selected=None, dataset_id: str | None = None):
                         "dataset": information.get("dataset") or DATASET_DEFAULT})
     matched = sum(row["match"] is True for row in rows)
     compared = sum(row["match"] is not None for row in rows)
+    measured_usage = summarize_usage([row for row in rows if row['status'] != 'pending'])
     return {"csrf": TOKEN, "config": safe_config(), "datasets": datasets(), "dataset": effective_dataset,
             "runs": choices, "selected": selected,
             "rows": rows, "job": job, "running": running,
             "summary": {**summary, "mode": meta.get("mode") or summary.get("mode", "unknown"),
                 "questions": len(rows), "completed": sum(row["status"] != "pending" for row in rows),
                 "answered": sum(row["status"] == "ok" and bool(row["answer"]) for row in rows),
-                "matched": matched, "compared": compared, "elapsed_seconds": elapsed},
+                "matched": matched, "compared": compared, "elapsed_seconds": elapsed,
+                "pipeline_version": summary.get('pipeline_version') or next((row.get('pipeline_version') for row in rows if row.get('pipeline_version')),None),
+                "usage": measured_usage},
             "catalog": queries(effective_dataset), "files": sorted({q["file_name"] for q in all_queries})}
 
 
@@ -292,13 +297,14 @@ def start_run(mode, ids, dataset_id: str | None = None):
                 "--output", str(directory / "submission.csv"), "--log-dir", str(directory)],
                 cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                 encoding="utf-8", errors="replace", creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
-            for line in process.stdout:
-                # Keep UI messages free of credentials and provider account details.
-                if "[WARN]" in line:
-                    line = "Có câu gặp lỗi. Xem trạng thái và loại lỗi ở chi tiết câu hỏi."
-                with LOCK:
-                    JOB["messages"].append(line.strip())
-                    JOB["messages"] = JOB["messages"][-100:]
+            with process.stdout:
+                for line in process.stdout:
+                    # Keep UI messages free of credentials and provider account details.
+                    if "[WARN]" in line:
+                        line = "Có câu gặp lỗi. Xem trạng thái và loại lỗi ở chi tiết câu hỏi."
+                    with LOCK:
+                        JOB["messages"].append(line.strip())
+                        JOB["messages"] = JOB["messages"][-100:]
             code = process.wait()
         except Exception:
             with LOCK:
@@ -380,9 +386,9 @@ class Handler(BaseHTTPRequestHandler):
                 self.send({"catalog": queries(params.get("dataset", [None])[0])})
             elif parsed.path == "/api/datasets":
                 self.send({"datasets": datasets(), "default": DATASET_DEFAULT})
-            elif parsed.path in {"/", "/app.js", "/style.css"}:
-                name = {"/": "index.html", "/app.js": "app.js", "/style.css": "style.css"}[parsed.path]
-                mime = {"index.html": "text/html", "app.js": "text/javascript", "style.css": "text/css"}[name]
+            elif parsed.path in {"/", "/app.js", "/style.css", "/details.css"}:
+                name = {"/": "index.html", "/app.js": "app.js", "/style.css": "style.css", "/details.css": "details.css"}[parsed.path]
+                mime = {"index.html": "text/html", "app.js": "text/javascript", "style.css": "text/css", "details.css": "text/css"}[name]
                 self.send((STATIC / name).read_bytes(), mime + "; charset=utf-8")
             else:
                 self.send({"error": "Không tìm thấy"}, status=404)
