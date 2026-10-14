@@ -1,0 +1,177 @@
+[
+  {
+    "id": "12_q001",
+    "file_name": "data.xlsx",
+    "query": "In Big, what is Value for ID 1? Answer only the integer."
+  },
+  {
+    "id": "12_q002",
+    "file_name": "data.xlsx",
+    "query": "In Big, what is Value for ID 100? Answer only the integer."
+  },
+  {
+    "id": "12_q003",
+    "file_name": "data.xlsx",
+    "query": "In Big, what is Value for ID 501? Answer only the integer."
+  },
+  {
+    "id": "12_q004",
+    "file_name": "data.xlsx",
+    "query": "In Big, what is Value for ID 999? Answer only the integer."
+  },
+  {
+    "id": "12_q005",
+    "file_name": "data.xlsx",
+    "query": "In Big, what is Value for ID 1250? Answer only the integer."
+  },
+  {
+    "id": "12_q006",
+    "file_name": "data.xlsx",
+    "query": "In Big, what is Value for ID 1703? Answer only the integer."
+  },
+  {
+    "id": "12_q007",
+    "file_name": "data.xlsx",
+    "query": "In Big, what is Value for ID 1996? Answer only the integer."
+  },
+  {
+    "id": "12_q008",
+    "file_name": "data.xlsx",
+    "query": "In Big, what is Value for ID 2000? Answer only the integer."
+  },
+  {
+    "id": "12_q009",
+    "file_name": "data.xlsx",
+    "query": "In Big, what is Value for ID 2499? Answer only the integer."
+  },
+  {
+    "id": "12_q010",
+    "file_name": "data.xlsx",
+    "query": "In Big, what is Value for ID 2500? Answer only the integer."
+  },
+  {
+    "id": "12_q011",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Value for Group G0 across all 2500 data rows, including negatives? Answer only the integer."
+  },
+  {
+    "id": "12_q012",
+    "file_name": "data.xlsx",
+    "query": "How many rows in Group G0 have Value > 800? Scan the full table. Answer only the integer."
+  },
+  {
+    "id": "12_q013",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Value for Group G1 across all 2500 data rows, including negatives? Answer only the integer."
+  },
+  {
+    "id": "12_q014",
+    "file_name": "data.xlsx",
+    "query": "How many rows in Group G1 have Value > 800? Scan the full table. Answer only the integer."
+  },
+  {
+    "id": "12_q015",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Value for Group G2 across all 2500 data rows, including negatives? Answer only the integer."
+  },
+  {
+    "id": "12_q016",
+    "file_name": "data.xlsx",
+    "query": "How many rows in Group G2 have Value > 800? Scan the full table. Answer only the integer."
+  },
+  {
+    "id": "12_q017",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Value for Group G3 across all 2500 data rows, including negatives? Answer only the integer."
+  },
+  {
+    "id": "12_q018",
+    "file_name": "data.xlsx",
+    "query": "How many rows in Group G3 have Value > 800? Scan the full table. Answer only the integer."
+  },
+  {
+    "id": "12_q019",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Value for Group G4 across all 2500 data rows, including negatives? Answer only the integer."
+  },
+  {
+    "id": "12_q020",
+    "file_name": "data.xlsx",
+    "query": "How many rows in Group G4 have Value > 800? Scan the full table. Answer only the integer."
+  },
+  {
+    "id": "12_q021",
+    "file_name": "data.xlsx",
+    "query": "What is Secret Value in column AI for ID 501? Answer only the integer."
+  },
+  {
+    "id": "12_q022",
+    "file_name": "data.xlsx",
+    "query": "What is Secret Value in column AI for ID 1250? Answer only the integer."
+  },
+  {
+    "id": "12_q023",
+    "file_name": "data.xlsx",
+    "query": "What is Secret Value in column AI for ID 2000? Answer only the integer."
+  },
+  {
+    "id": "12_q024",
+    "file_name": "data.xlsx",
+    "query": "What is Secret Value in column AI for ID 2500? Answer only the integer."
+  },
+  {
+    "id": "12_q025",
+    "file_name": "data.xlsx",
+    "query": "What is the total Value across all 2500 data rows? Include negative values. Answer only the integer."
+  },
+  {
+    "id": "12_q026",
+    "file_name": "data.xlsx",
+    "query": "What is average Value across all 2500 rows? Answer exactly 2 decimal places."
+  },
+  {
+    "id": "12_q027",
+    "file_name": "data.xlsx",
+    "query": "How many rows have Flag Rare? Answer only the integer."
+  },
+  {
+    "id": "12_q028",
+    "file_name": "data.xlsx",
+    "query": "What is total Value for Flag Rare? Answer only the integer."
+  },
+  {
+    "id": "12_q029",
+    "file_name": "data.xlsx",
+    "query": "List all IDs with Flag Rare in ID ascending order, separated by comma and one space."
+  },
+  {
+    "id": "12_q030",
+    "file_name": "data.xlsx",
+    "query": "Which ID has the highest Value? Break ties by numeric ID ascending. Answer only the integer ID."
+  },
+  {
+    "id": "12_q031",
+    "file_name": "data.xlsx",
+    "query": "List the 3 IDs with lowest Value, breaking ties by numeric ID ascending. Separate with comma and one space."
+  },
+  {
+    "id": "12_q032",
+    "file_name": "data.xlsx",
+    "query": "What is total Value for IDs 2001 through 2500 inclusive? Answer only the integer."
+  },
+  {
+    "id": "12_q033",
+    "file_name": "data.xlsx",
+    "query": "How many IDs from 1001 through 2000 inclusive have Value below 0? Answer only the integer."
+  },
+  {
+    "id": "12_q034",
+    "file_name": "data.xlsx",
+    "query": "How many rows have Value > 1000? Answer only the integer, including 0."
+  },
+  {
+    "id": "12_q035",
+    "file_name": "data.xlsx",
+    "query": "What is total Secret Value in column AI over all 2500 data rows? Answer only the integer."
+  }
+]

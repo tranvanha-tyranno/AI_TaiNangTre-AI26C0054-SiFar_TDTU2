@@ -1,0 +1,561 @@
+[
+  {
+    "id": "10_q001",
+    "category": "age",
+    "expression": {
+      "age": [
+        {
+          "cell": "Projects!B2"
+        },
+        {
+          "cell": "Projects!C2"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "23"
+  },
+  {
+    "id": "10_q002",
+    "category": "age",
+    "expression": {
+      "age": [
+        {
+          "cell": "Projects!B3"
+        },
+        {
+          "cell": "Projects!C3"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "22"
+  },
+  {
+    "id": "10_q003",
+    "category": "age",
+    "expression": {
+      "age": [
+        {
+          "cell": "Projects!B4"
+        },
+        {
+          "cell": "Projects!C4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "25"
+  },
+  {
+    "id": "10_q004",
+    "category": "age",
+    "expression": {
+      "age": [
+        {
+          "cell": "Projects!B5"
+        },
+        {
+          "cell": "Projects!C5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "24"
+  },
+  {
+    "id": "10_q005",
+    "category": "age",
+    "expression": {
+      "age": [
+        {
+          "cell": "Projects!B6"
+        },
+        {
+          "cell": "Projects!C6"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "23"
+  },
+  {
+    "id": "10_q006",
+    "category": "age",
+    "expression": {
+      "age": [
+        {
+          "cell": "Projects!B7"
+        },
+        {
+          "cell": "Projects!C7"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "24"
+  },
+  {
+    "id": "10_q007",
+    "category": "date_diff",
+    "expression": {
+      "days": [
+        {
+          "cell": "Projects!C2"
+        },
+        {
+          "cell": "Projects!D2"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "2"
+  },
+  {
+    "id": "10_q008",
+    "category": "date_diff",
+    "expression": {
+      "days": [
+        {
+          "cell": "Projects!C3"
+        },
+        {
+          "cell": "Projects!D3"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "10"
+  },
+  {
+    "id": "10_q009",
+    "category": "date_diff",
+    "expression": {
+      "days": [
+        {
+          "cell": "Projects!C4"
+        },
+        {
+          "cell": "Projects!D4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1"
+  },
+  {
+    "id": "10_q010",
+    "category": "date_diff",
+    "expression": {
+      "days": [
+        {
+          "cell": "Projects!C5"
+        },
+        {
+          "cell": "Projects!D5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "30"
+  },
+  {
+    "id": "10_q011",
+    "category": "date_diff",
+    "expression": {
+      "days": [
+        {
+          "cell": "Projects!C6"
+        },
+        {
+          "cell": "Projects!D6"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1"
+  },
+  {
+    "id": "10_q012",
+    "category": "date_diff",
+    "expression": {
+      "days": [
+        {
+          "cell": "Projects!C7"
+        },
+        {
+          "cell": "Projects!D7"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "16"
+  },
+  {
+    "id": "10_q013",
+    "category": "date_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Projects",
+              "columns": {
+                "id": "A",
+                "birth": "B",
+                "start": "C",
+                "end": "D",
+                "budget": "E"
+              },
+              "first": 2,
+              "last": 21
+            }
+          },
+          "conditions": {
+            "start": {
+              "ge": "2024-01-01",
+              "lt": "2024-02-01"
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "1"
+  },
+  {
+    "id": "10_q014",
+    "category": "date_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Projects",
+              "columns": {
+                "id": "A",
+                "birth": "B",
+                "start": "C",
+                "end": "D",
+                "budget": "E"
+              },
+              "first": 2,
+              "last": 21
+            }
+          },
+          "conditions": {
+            "start": {
+              "ge": "2024-02-01",
+              "lt": "2024-03-01"
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "2"
+  },
+  {
+    "id": "10_q015",
+    "category": "date_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Projects",
+              "columns": {
+                "id": "A",
+                "birth": "B",
+                "start": "C",
+                "end": "D",
+                "budget": "E"
+              },
+              "first": 2,
+              "last": 21
+            }
+          },
+          "conditions": {
+            "start": {
+              "ge": "2024-03-01",
+              "lt": "2024-04-01"
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "0"
+  },
+  {
+    "id": "10_q016",
+    "category": "date_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Projects",
+              "columns": {
+                "id": "A",
+                "birth": "B",
+                "start": "C",
+                "end": "D",
+                "budget": "E"
+              },
+              "first": 2,
+              "last": 21
+            }
+          },
+          "conditions": {
+            "start": {
+              "ge": "2024-06-01",
+              "lt": "2024-07-01"
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "4"
+  },
+  {
+    "id": "10_q017",
+    "category": "date_filter",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Projects",
+                  "columns": {
+                    "id": "A",
+                    "birth": "B",
+                    "start": "C",
+                    "end": "D",
+                    "budget": "E"
+                  },
+                  "first": 2,
+                  "last": 21
+                }
+              },
+              "conditions": {
+                "start": {
+                  "ge": "2024-01-01",
+                  "lt": "2024-07-01"
+                }
+              }
+            }
+          },
+          "name": "budget"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "1330"
+  },
+  {
+    "id": "10_q018",
+    "category": "date_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Projects",
+              "columns": {
+                "id": "A",
+                "birth": "B",
+                "start": "C",
+                "end": "D",
+                "budget": "E"
+              },
+              "first": 2,
+              "last": 21
+            }
+          },
+          "conditions": {
+            "start": {
+              "lt": "2024-03-01"
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "3"
+  },
+  {
+    "id": "10_q019",
+    "category": "date_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Projects",
+              "columns": {
+                "id": "A",
+                "birth": "B",
+                "start": "C",
+                "end": "D",
+                "budget": "E"
+              },
+              "first": 2,
+              "last": 21
+            }
+          },
+          "conditions": {
+            "start": "2024-02-29"
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "1"
+  },
+  {
+    "id": "10_q020",
+    "category": "date_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Projects",
+              "columns": {
+                "id": "A",
+                "birth": "B",
+                "start": "C",
+                "end": "D",
+                "budget": "E"
+              },
+              "first": 2,
+              "last": 21
+            }
+          },
+          "conditions": {
+            "end": {
+              "ge": "2025-01-01",
+              "lt": "2026-01-01"
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "3"
+  },
+  {
+    "id": "10_q021",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Projects",
+            "columns": {
+              "id": "A",
+              "birth": "B",
+              "start": "C",
+              "end": "D",
+              "budget": "E"
+            },
+            "first": 2,
+            "last": 21
+          }
+        },
+        "by": [
+          [
+            "start",
+            "asc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "D04"
+  },
+  {
+    "id": "10_q022",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Projects",
+            "columns": {
+              "id": "A",
+              "birth": "B",
+              "start": "C",
+              "end": "D",
+              "budget": "E"
+            },
+            "first": 2,
+            "last": 21
+          }
+        },
+        "by": [
+          [
+            "end",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "D20"
+  },
+  {
+    "id": "10_q023",
+    "category": "date_lookup",
+    "expression": {
+      "cell": "Projects!D4"
+    },
+    "decimals": null,
+    "answer": "2025-01-01"
+  },
+  {
+    "id": "10_q024",
+    "category": "date_lookup",
+    "expression": {
+      "cell": "Projects!C3"
+    },
+    "decimals": null,
+    "answer": "2024-02-29"
+  },
+  {
+    "id": "10_q025",
+    "category": "comparison",
+    "expression": {
+      "lt": [
+        {
+          "cell": "Projects!C6"
+        },
+        "2024-06-15"
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  }
+]

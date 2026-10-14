@@ -1,0 +1,127 @@
+[
+  {
+    "id": "11_q001",
+    "file_name": "data.xlsx",
+    "query": "What is the exact Name for Code 001? Preserve spelling, accents and punctuation. Answer only the name."
+  },
+  {
+    "id": "11_q002",
+    "file_name": "data.xlsx",
+    "query": "What is the exact Name for Code 003? Preserve spelling, accents and punctuation. Answer only the name."
+  },
+  {
+    "id": "11_q003",
+    "file_name": "data.xlsx",
+    "query": "What is the exact Name for Code 004? Preserve spelling, accents and punctuation. Answer only the name."
+  },
+  {
+    "id": "11_q004",
+    "file_name": "data.xlsx",
+    "query": "What is the exact Name for Code 005? Preserve spelling, accents and punctuation. Answer only the name."
+  },
+  {
+    "id": "11_q005",
+    "file_name": "data.xlsx",
+    "query": "What is the exact Name for Code 012? Preserve spelling, accents and punctuation. Answer only the name."
+  },
+  {
+    "id": "11_q006",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Value for Group A? Ignore blank Values, include zero and negatives. Answer only the integer."
+  },
+  {
+    "id": "11_q007",
+    "file_name": "data.xlsx",
+    "query": "What is the average Value for Group A? Ignore blank Values but include zero and negatives. Answer exactly 2 decimal places."
+  },
+  {
+    "id": "11_q008",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Value for Group B? Ignore blank Values, include zero and negatives. Answer only the integer."
+  },
+  {
+    "id": "11_q009",
+    "file_name": "data.xlsx",
+    "query": "What is the average Value for Group B? Ignore blank Values but include zero and negatives. Answer exactly 2 decimal places."
+  },
+  {
+    "id": "11_q010",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Value for Group C? Ignore blank Values, include zero and negatives. Answer only the integer."
+  },
+  {
+    "id": "11_q011",
+    "file_name": "data.xlsx",
+    "query": "What is the average Value for Group C? Ignore blank Values but include zero and negatives. Answer exactly 2 decimal places."
+  },
+  {
+    "id": "11_q012",
+    "file_name": "data.xlsx",
+    "query": "How many Records have a blank Value? Do not count numeric zero as blank. Answer only the integer."
+  },
+  {
+    "id": "11_q013",
+    "file_name": "data.xlsx",
+    "query": "How many Records have numeric Value equal to 0? Ignore blanks. Answer only the integer."
+  },
+  {
+    "id": "11_q014",
+    "file_name": "data.xlsx",
+    "query": "How many Records have Value below 0? Ignore blanks. Answer only the integer."
+  },
+  {
+    "id": "11_q015",
+    "file_name": "data.xlsx",
+    "query": "How many Records have a nonblank Value, including zero? Answer only the integer."
+  },
+  {
+    "id": "11_q016",
+    "file_name": "data.xlsx",
+    "query": "Which Code has the highest Score? Break the tie by Code ascending. Preserve leading zeros. Answer only the Code."
+  },
+  {
+    "id": "11_q017",
+    "file_name": "data.xlsx",
+    "query": "List the Codes with the top 3 Scores, ties by Code ascending. Preserve leading zeros. Separate with comma and one space."
+  },
+  {
+    "id": "11_q018",
+    "file_name": "data.xlsx",
+    "query": "How many rows have Name exactly Lê Mai? Count rows, not distinct names. Answer only the integer."
+  },
+  {
+    "id": "11_q019",
+    "file_name": "data.xlsx",
+    "query": "Tổng Value của các dòng có Name Lê Mai là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "11_q020",
+    "file_name": "data.xlsx",
+    "query": "How many distinct Name values are in Records? Answer only the integer."
+  },
+  {
+    "id": "11_q021",
+    "file_name": "data.xlsx",
+    "query": "What is the minimum nonblank Value? Answer only the integer, including the minus sign."
+  },
+  {
+    "id": "11_q022",
+    "file_name": "data.xlsx",
+    "query": "What is the maximum nonblank Value? Answer only the integer."
+  },
+  {
+    "id": "11_q023",
+    "file_name": "data.xlsx",
+    "query": "How many rows have blank Remark? Answer only the integer."
+  },
+  {
+    "id": "11_q024",
+    "file_name": "data.xlsx",
+    "query": "How many rows have Score strictly greater than 100? Answer only the integer."
+  },
+  {
+    "id": "11_q025",
+    "file_name": "data.xlsx",
+    "query": "What is total Value across all Records? Ignore blank Values. Answer only the integer."
+  }
+]

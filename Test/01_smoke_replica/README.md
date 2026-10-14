@@ -1,6 +1,8 @@
 # 01_smoke_replica — Smoke nhanh (3 cau)
 
-Kiem tra I/O, merged header Name/Date of, va nhanh fiscal Yes/No ma khong can LLM.
+Kiểm tra I/O, tiêu đề Name/Date of có ô gộp và so sánh fiscal Yes/No. Chạy LLM để đánh giá đáp án; offline có thể trả chưa trả lời.
+
+`smoke_q001` có đáp án `Dang`: Mai trẻ nhất tại nhập học (gần 19 tuổi), Ha đứng thứ hai (20 tuổi), Linh gần 21 tuổi. Phải dùng chênh lệch Birth–Admission của từng người, không xếp theo ngày sinh đơn thuần.
 
 ```powershell
 ./.venv/Scripts/python.exe main.py --mode offline --xlsx_dir ./Test/01_smoke_replica/xlsx_files --queries ./Test/01_smoke_replica/queries.json --output ./Test/01_smoke_replica/submission.csv

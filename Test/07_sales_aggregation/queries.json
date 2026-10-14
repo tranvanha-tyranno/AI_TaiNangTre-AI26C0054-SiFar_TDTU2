@@ -1,0 +1,152 @@
+[
+  {
+    "id": "07_q001",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue in Region North, including negative returned transactions? Answer only the integer."
+  },
+  {
+    "id": "07_q002",
+    "file_name": "data.xlsx",
+    "query": "What is total Units in Region North, including negative returned transactions? Answer only the integer."
+  },
+  {
+    "id": "07_q003",
+    "file_name": "data.xlsx",
+    "query": "What is total Cost in Region North, including negative returned transactions? Answer only the integer."
+  },
+  {
+    "id": "07_q004",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue in Region Central, including negative returned transactions? Answer only the integer."
+  },
+  {
+    "id": "07_q005",
+    "file_name": "data.xlsx",
+    "query": "What is total Units in Region Central, including negative returned transactions? Answer only the integer."
+  },
+  {
+    "id": "07_q006",
+    "file_name": "data.xlsx",
+    "query": "What is total Cost in Region Central, including negative returned transactions? Answer only the integer."
+  },
+  {
+    "id": "07_q007",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue in Region South, including negative returned transactions? Answer only the integer."
+  },
+  {
+    "id": "07_q008",
+    "file_name": "data.xlsx",
+    "query": "What is total Units in Region South, including negative returned transactions? Answer only the integer."
+  },
+  {
+    "id": "07_q009",
+    "file_name": "data.xlsx",
+    "query": "What is total Cost in Region South, including negative returned transactions? Answer only the integer."
+  },
+  {
+    "id": "07_q010",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue for Product Laptop with Status Completed? Answer only the integer."
+  },
+  {
+    "id": "07_q011",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue for Product Phone with Status Completed? Answer only the integer."
+  },
+  {
+    "id": "07_q012",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue for Product Tablet with Status Completed? Answer only the integer."
+  },
+  {
+    "id": "07_q013",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue for Product Monitor with Status Completed? Answer only the integer."
+  },
+  {
+    "id": "07_q014",
+    "file_name": "data.xlsx",
+    "query": "Tổng Revenue trong Month 1, bao gồm trả hàng âm, là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "07_q015",
+    "file_name": "data.xlsx",
+    "query": "Tổng Revenue trong Month 2, bao gồm trả hàng âm, là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "07_q016",
+    "file_name": "data.xlsx",
+    "query": "Tổng Revenue trong Month 3, bao gồm trả hàng âm, là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "07_q017",
+    "file_name": "data.xlsx",
+    "query": "Tổng Revenue trong Month 4, bao gồm trả hàng âm, là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "07_q018",
+    "file_name": "data.xlsx",
+    "query": "Tổng Revenue trong Month 5, bao gồm trả hàng âm, là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "07_q019",
+    "file_name": "data.xlsx",
+    "query": "Tổng Revenue trong Month 6, bao gồm trả hàng âm, là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "07_q020",
+    "file_name": "data.xlsx",
+    "query": "What is profit (total Revenue minus total Cost) for Region North, including returns? Answer only the integer."
+  },
+  {
+    "id": "07_q021",
+    "file_name": "data.xlsx",
+    "query": "What is profit (total Revenue minus total Cost) for Region Central, including returns? Answer only the integer."
+  },
+  {
+    "id": "07_q022",
+    "file_name": "data.xlsx",
+    "query": "What is profit (total Revenue minus total Cost) for Region South, including returns? Answer only the integer."
+  },
+  {
+    "id": "07_q023",
+    "file_name": "data.xlsx",
+    "query": "Among Completed sales, what is the unit-weighted average Unit Price (sum Revenue / sum Units)? Answer exactly 2 decimal places."
+  },
+  {
+    "id": "07_q024",
+    "file_name": "data.xlsx",
+    "query": "How many orders have negative Units? Answer only the integer."
+  },
+  {
+    "id": "07_q025",
+    "file_name": "data.xlsx",
+    "query": "What is total net Revenue over every Sales data row, including returns? Answer only the integer."
+  },
+  {
+    "id": "07_q026",
+    "file_name": "data.xlsx",
+    "query": "Which Order ID has the highest Revenue? Break ties by Order ID ascending. Answer only the ID."
+  },
+  {
+    "id": "07_q027",
+    "file_name": "data.xlsx",
+    "query": "List the 3 Order IDs with lowest Revenue, breaking ties by Order ID ascending. Separate with comma and one space."
+  },
+  {
+    "id": "07_q028",
+    "file_name": "data.xlsx",
+    "query": "How many Completed orders have Revenue from 100 to 300 inclusive? Answer only the integer."
+  },
+  {
+    "id": "07_q029",
+    "file_name": "data.xlsx",
+    "query": "What percent of all orders have Status Returned? Answer exactly 2 decimal places without %."
+  },
+  {
+    "id": "07_q030",
+    "file_name": "data.xlsx",
+    "query": "Is total Revenue for South greater than total Revenue for North, including returns? Answer only Yes or No."
+  }
+]

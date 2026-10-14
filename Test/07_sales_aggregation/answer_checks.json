@@ -1,0 +1,1349 @@
+[
+  {
+    "id": "07_q001",
+    "category": "group_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "region": "North"
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5675"
+  },
+  {
+    "id": "07_q002",
+    "category": "group_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "region": "North"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "115"
+  },
+  {
+    "id": "07_q003",
+    "category": "group_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "region": "North"
+              }
+            }
+          },
+          "name": "cost"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "4755"
+  },
+  {
+    "id": "07_q004",
+    "category": "group_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "region": "Central"
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "6865"
+  },
+  {
+    "id": "07_q005",
+    "category": "group_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "region": "Central"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "134"
+  },
+  {
+    "id": "07_q006",
+    "category": "group_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "region": "Central"
+              }
+            }
+          },
+          "name": "cost"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5793"
+  },
+  {
+    "id": "07_q007",
+    "category": "group_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "region": "South"
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "7825"
+  },
+  {
+    "id": "07_q008",
+    "category": "group_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "region": "South"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "164"
+  },
+  {
+    "id": "07_q009",
+    "category": "group_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "region": "South"
+              }
+            }
+          },
+          "name": "cost"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "6513"
+  },
+  {
+    "id": "07_q010",
+    "category": "filter_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "product": "Laptop",
+                "status": "Completed"
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5225"
+  },
+  {
+    "id": "07_q011",
+    "category": "filter_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "product": "Phone",
+                "status": "Completed"
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5245"
+  },
+  {
+    "id": "07_q012",
+    "category": "filter_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "product": "Tablet",
+                "status": "Completed"
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5190"
+  },
+  {
+    "id": "07_q013",
+    "category": "filter_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "product": "Monitor",
+                "status": "Completed"
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5555"
+  },
+  {
+    "id": "07_q014",
+    "category": "period_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "month": 1
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "3335"
+  },
+  {
+    "id": "07_q015",
+    "category": "period_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "month": 2
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "3945"
+  },
+  {
+    "id": "07_q016",
+    "category": "period_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "month": 3
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "3175"
+  },
+  {
+    "id": "07_q017",
+    "category": "period_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "month": 4
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "3710"
+  },
+  {
+    "id": "07_q018",
+    "category": "period_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "month": 5
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "3245"
+  },
+  {
+    "id": "07_q019",
+    "category": "period_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              },
+              "conditions": {
+                "month": 6
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "2955"
+  },
+  {
+    "id": "07_q020",
+    "category": "profit",
+    "expression": {
+      "sub": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "region": "North"
+                  }
+                }
+              },
+              "name": "revenue"
+            }
+          }
+        },
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "region": "North"
+                  }
+                }
+              },
+              "name": "cost"
+            }
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "920"
+  },
+  {
+    "id": "07_q021",
+    "category": "profit",
+    "expression": {
+      "sub": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "region": "Central"
+                  }
+                }
+              },
+              "name": "revenue"
+            }
+          }
+        },
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "region": "Central"
+                  }
+                }
+              },
+              "name": "cost"
+            }
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1072"
+  },
+  {
+    "id": "07_q022",
+    "category": "profit",
+    "expression": {
+      "sub": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "region": "South"
+                  }
+                }
+              },
+              "name": "revenue"
+            }
+          }
+        },
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "region": "South"
+                  }
+                }
+              },
+              "name": "cost"
+            }
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1312"
+  },
+  {
+    "id": "07_q023",
+    "category": "weighted_average",
+    "expression": {
+      "div": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "status": "Completed"
+                  }
+                }
+              },
+              "name": "revenue"
+            }
+          }
+        },
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "status": "Completed"
+                  }
+                }
+              },
+              "name": "units"
+            }
+          }
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "49.00"
+  },
+  {
+    "id": "07_q024",
+    "category": "negative",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Sales",
+              "columns": {
+                "id": "A",
+                "region": "B",
+                "product": "C",
+                "month": "D",
+                "units": "E",
+                "price": "F",
+                "revenue": "G",
+                "cost": "H",
+                "status": "I"
+              },
+              "first": 2,
+              "last": 97
+            }
+          },
+          "conditions": {
+            "units": {
+              "lt": 0
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "8"
+  },
+  {
+    "id": "07_q025",
+    "category": "total",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "table": {
+              "sheet": "Sales",
+              "columns": {
+                "id": "A",
+                "region": "B",
+                "product": "C",
+                "month": "D",
+                "units": "E",
+                "price": "F",
+                "revenue": "G",
+                "cost": "H",
+                "status": "I"
+              },
+              "first": 2,
+              "last": 97
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "20365"
+  },
+  {
+    "id": "07_q026",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Sales",
+            "columns": {
+              "id": "A",
+              "region": "B",
+              "product": "C",
+              "month": "D",
+              "units": "E",
+              "price": "F",
+              "revenue": "G",
+              "cost": "H",
+              "status": "I"
+            },
+            "first": 2,
+            "last": 97
+          }
+        },
+        "by": [
+          [
+            "revenue",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "O089"
+  },
+  {
+    "id": "07_q027",
+    "category": "top_k",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Sales",
+            "columns": {
+              "id": "A",
+              "region": "B",
+              "product": "C",
+              "month": "D",
+              "units": "E",
+              "price": "F",
+              "revenue": "G",
+              "cost": "H",
+              "status": "I"
+            },
+            "first": 2,
+            "last": 97
+          }
+        },
+        "by": [
+          [
+            "revenue",
+            "asc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 3
+      }
+    },
+    "decimals": null,
+    "answer": "O022, O011, O033"
+  },
+  {
+    "id": "07_q028",
+    "category": "range_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Sales",
+              "columns": {
+                "id": "A",
+                "region": "B",
+                "product": "C",
+                "month": "D",
+                "units": "E",
+                "price": "F",
+                "revenue": "G",
+                "cost": "H",
+                "status": "I"
+              },
+              "first": 2,
+              "last": 97
+            }
+          },
+          "conditions": {
+            "status": "Completed",
+            "revenue": {
+              "ge": 100,
+              "le": 300
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "42"
+  },
+  {
+    "id": "07_q029",
+    "category": "percentage",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "count": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "status": "Returned"
+                  }
+                }
+              }
+            },
+            {
+              "count": {
+                "table": {
+                  "sheet": "Sales",
+                  "columns": {
+                    "id": "A",
+                    "region": "B",
+                    "product": "C",
+                    "month": "D",
+                    "units": "E",
+                    "price": "F",
+                    "revenue": "G",
+                    "cost": "H",
+                    "status": "I"
+                  },
+                  "first": 2,
+                  "last": 97
+                }
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "8.33"
+  },
+  {
+    "id": "07_q030",
+    "category": "comparison",
+    "expression": {
+      "gt": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "region": "South"
+                  }
+                }
+              },
+              "name": "revenue"
+            }
+          }
+        },
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Sales",
+                      "columns": {
+                        "id": "A",
+                        "region": "B",
+                        "product": "C",
+                        "month": "D",
+                        "units": "E",
+                        "price": "F",
+                        "revenue": "G",
+                        "cost": "H",
+                        "status": "I"
+                      },
+                      "first": 2,
+                      "last": 97
+                    }
+                  },
+                  "conditions": {
+                    "region": "North"
+                  }
+                }
+              },
+              "name": "revenue"
+            }
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  }
+]

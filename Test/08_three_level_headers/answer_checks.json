@@ -1,0 +1,350 @@
+[
+  {
+    "id": "08_q001",
+    "category": "header_lookup",
+    "expression": {
+      "cell": "Indicators!H4"
+    },
+    "decimals": null,
+    "answer": "149"
+  },
+  {
+    "id": "08_q002",
+    "category": "header_lookup",
+    "expression": {
+      "cell": "Indicators!B4"
+    },
+    "decimals": null,
+    "answer": "113"
+  },
+  {
+    "id": "08_q003",
+    "category": "header_lookup",
+    "expression": {
+      "cell": "Indicators!H5"
+    },
+    "decimals": null,
+    "answer": "168"
+  },
+  {
+    "id": "08_q004",
+    "category": "header_lookup",
+    "expression": {
+      "cell": "Indicators!B5"
+    },
+    "decimals": null,
+    "answer": "126"
+  },
+  {
+    "id": "08_q005",
+    "category": "header_lookup",
+    "expression": {
+      "cell": "Indicators!H6"
+    },
+    "decimals": null,
+    "answer": "187"
+  },
+  {
+    "id": "08_q006",
+    "category": "header_lookup",
+    "expression": {
+      "cell": "Indicators!B6"
+    },
+    "decimals": null,
+    "answer": "139"
+  },
+  {
+    "id": "08_q007",
+    "category": "header_lookup",
+    "expression": {
+      "cell": "Indicators!H7"
+    },
+    "decimals": null,
+    "answer": "206"
+  },
+  {
+    "id": "08_q008",
+    "category": "header_lookup",
+    "expression": {
+      "cell": "Indicators!B7"
+    },
+    "decimals": null,
+    "answer": "152"
+  },
+  {
+    "id": "08_q009",
+    "category": "header_lookup",
+    "expression": {
+      "cell": "Indicators!H8"
+    },
+    "decimals": null,
+    "answer": "225"
+  },
+  {
+    "id": "08_q010",
+    "category": "header_lookup",
+    "expression": {
+      "cell": "Indicators!B8"
+    },
+    "decimals": null,
+    "answer": "165"
+  },
+  {
+    "id": "08_q011",
+    "category": "percentage_format",
+    "expression": {
+      "mul": [
+        {
+          "cell": "Indicators!G4"
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "7.00"
+  },
+  {
+    "id": "08_q012",
+    "category": "percentage_format",
+    "expression": {
+      "mul": [
+        {
+          "cell": "Indicators!G5"
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "8.00"
+  },
+  {
+    "id": "08_q013",
+    "category": "percentage_format",
+    "expression": {
+      "mul": [
+        {
+          "cell": "Indicators!G6"
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "9.00"
+  },
+  {
+    "id": "08_q014",
+    "category": "percentage_format",
+    "expression": {
+      "mul": [
+        {
+          "cell": "Indicators!G7"
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "10.00"
+  },
+  {
+    "id": "08_q015",
+    "category": "sum",
+    "expression": {
+      "sum": {
+        "range": {
+          "sheet": "Indicators",
+          "column": "B",
+          "first": 4,
+          "last": 11
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "1268"
+  },
+  {
+    "id": "08_q016",
+    "category": "sum",
+    "expression": {
+      "sum": {
+        "range": {
+          "sheet": "Indicators",
+          "column": "D",
+          "first": 4,
+          "last": 11
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "1492"
+  },
+  {
+    "id": "08_q017",
+    "category": "sum",
+    "expression": {
+      "sum": {
+        "range": {
+          "sheet": "Indicators",
+          "column": "F",
+          "first": 4,
+          "last": 11
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "1516"
+  },
+  {
+    "id": "08_q018",
+    "category": "sum",
+    "expression": {
+      "sum": {
+        "range": {
+          "sheet": "Indicators",
+          "column": "H",
+          "first": 4,
+          "last": 11
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "1724"
+  },
+  {
+    "id": "08_q019",
+    "category": "difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Indicators!H4"
+        },
+        {
+          "cell": "Indicators!D4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "22"
+  },
+  {
+    "id": "08_q020",
+    "category": "difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Indicators!H5"
+        },
+        {
+          "cell": "Indicators!D5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "24"
+  },
+  {
+    "id": "08_q021",
+    "category": "difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Indicators!H6"
+        },
+        {
+          "cell": "Indicators!D6"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "26"
+  },
+  {
+    "id": "08_q022",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Indicators",
+            "columns": {
+              "sector": "A",
+              "count": "H",
+              "rate": "I"
+            },
+            "first": 4,
+            "last": 11
+          }
+        },
+        "by": [
+          [
+            "count",
+            "desc"
+          ],
+          [
+            "sector",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "sector"
+        ],
+        "offset": 0,
+        "limit": 8
+      }
+    },
+    "decimals": null,
+    "answer": "Technology, Health, Retail, Education, Transport, Construction, Manufacturing, Agriculture"
+  },
+  {
+    "id": "08_q023",
+    "category": "comparison",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Indicators!F8"
+        },
+        {
+          "cell": "Indicators!B8"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  },
+  {
+    "id": "08_q024",
+    "category": "units",
+    "expression": {
+      "mul": [
+        {
+          "sum": {
+            "range": {
+              "sheet": "Indicators",
+              "column": "H",
+              "first": 4,
+              "last": 11
+            }
+          }
+        },
+        1000
+      ]
+    },
+    "decimals": null,
+    "answer": "1724000"
+  },
+  {
+    "id": "08_q025",
+    "category": "ratio",
+    "expression": {
+      "div": [
+        {
+          "cell": "Indicators!H11"
+        },
+        {
+          "cell": "Indicators!D11"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "1.15"
+  }
+]

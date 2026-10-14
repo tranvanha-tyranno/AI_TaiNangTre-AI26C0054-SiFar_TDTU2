@@ -1,0 +1,825 @@
+[
+  {
+    "id": "12_q001",
+    "category": "long_lookup",
+    "expression": {
+      "cell": "Big!C2"
+    },
+    "decimals": null,
+    "answer": "-63"
+  },
+  {
+    "id": "12_q002",
+    "category": "long_lookup",
+    "expression": {
+      "cell": "Big!C101"
+    },
+    "decimals": null,
+    "answer": "600"
+  },
+  {
+    "id": "12_q003",
+    "category": "long_lookup",
+    "expression": {
+      "cell": "Big!C502"
+    },
+    "decimals": null,
+    "answer": "437"
+  },
+  {
+    "id": "12_q004",
+    "category": "long_lookup",
+    "expression": {
+      "cell": "Big!C1000"
+    },
+    "decimals": null,
+    "answer": "863"
+  },
+  {
+    "id": "12_q005",
+    "category": "long_lookup",
+    "expression": {
+      "cell": "Big!C1251"
+    },
+    "decimals": null,
+    "answer": "150"
+  },
+  {
+    "id": "12_q006",
+    "category": "long_lookup",
+    "expression": {
+      "cell": "Big!C1704"
+    },
+    "decimals": null,
+    "answer": "-89"
+  },
+  {
+    "id": "12_q007",
+    "category": "long_lookup",
+    "expression": {
+      "cell": "Big!C1997"
+    },
+    "decimals": null,
+    "answer": "752"
+  },
+  {
+    "id": "12_q008",
+    "category": "long_lookup",
+    "expression": {
+      "cell": "Big!C2001"
+    },
+    "decimals": null,
+    "answer": "-100"
+  },
+  {
+    "id": "12_q009",
+    "category": "long_lookup",
+    "expression": {
+      "cell": "Big!C2500"
+    },
+    "decimals": null,
+    "answer": "363"
+  },
+  {
+    "id": "12_q010",
+    "category": "long_lookup",
+    "expression": {
+      "cell": "Big!C2501"
+    },
+    "decimals": null,
+    "answer": "400"
+  },
+  {
+    "id": "12_q011",
+    "category": "full_scan_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Big",
+                  "columns": {
+                    "id": "A",
+                    "group": "B",
+                    "value": "C",
+                    "flag": "D",
+                    "secret": "AI"
+                  },
+                  "first": 2,
+                  "last": 2501
+                }
+              },
+              "conditions": {
+                "group": "G0"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "199250"
+  },
+  {
+    "id": "12_q012",
+    "category": "full_scan_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "conditions": {
+            "group": "G0",
+            "value": {
+              "gt": 800
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "49"
+  },
+  {
+    "id": "12_q013",
+    "category": "full_scan_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Big",
+                  "columns": {
+                    "id": "A",
+                    "group": "B",
+                    "value": "C",
+                    "flag": "D",
+                    "secret": "AI"
+                  },
+                  "first": 2,
+                  "last": 2501
+                }
+              },
+              "conditions": {
+                "group": "G1"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "200250"
+  },
+  {
+    "id": "12_q014",
+    "category": "full_scan_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "conditions": {
+            "group": "G1",
+            "value": {
+              "gt": 800
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "51"
+  },
+  {
+    "id": "12_q015",
+    "category": "full_scan_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Big",
+                  "columns": {
+                    "id": "A",
+                    "group": "B",
+                    "value": "C",
+                    "flag": "D",
+                    "secret": "AI"
+                  },
+                  "first": 2,
+                  "last": 2501
+                }
+              },
+              "conditions": {
+                "group": "G2"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "200750"
+  },
+  {
+    "id": "12_q016",
+    "category": "full_scan_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "conditions": {
+            "group": "G2",
+            "value": {
+              "gt": 800
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "51"
+  },
+  {
+    "id": "12_q017",
+    "category": "full_scan_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Big",
+                  "columns": {
+                    "id": "A",
+                    "group": "B",
+                    "value": "C",
+                    "flag": "D",
+                    "secret": "AI"
+                  },
+                  "first": 2,
+                  "last": 2501
+                }
+              },
+              "conditions": {
+                "group": "G3"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "199250"
+  },
+  {
+    "id": "12_q018",
+    "category": "full_scan_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "conditions": {
+            "group": "G3",
+            "value": {
+              "gt": 800
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "50"
+  },
+  {
+    "id": "12_q019",
+    "category": "full_scan_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Big",
+                  "columns": {
+                    "id": "A",
+                    "group": "B",
+                    "value": "C",
+                    "flag": "D",
+                    "secret": "AI"
+                  },
+                  "first": 2,
+                  "last": 2501
+                }
+              },
+              "conditions": {
+                "group": "G4"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "200750"
+  },
+  {
+    "id": "12_q020",
+    "category": "full_scan_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "conditions": {
+            "group": "G4",
+            "value": {
+              "gt": 800
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "51"
+  },
+  {
+    "id": "12_q021",
+    "category": "wide_lookup",
+    "expression": {
+      "cell": "Big!AI502"
+    },
+    "decimals": null,
+    "answer": "6520"
+  },
+  {
+    "id": "12_q022",
+    "category": "wide_lookup",
+    "expression": {
+      "cell": "Big!AI1251"
+    },
+    "decimals": null,
+    "answer": "16257"
+  },
+  {
+    "id": "12_q023",
+    "category": "wide_lookup",
+    "expression": {
+      "cell": "Big!AI2001"
+    },
+    "decimals": null,
+    "answer": "26007"
+  },
+  {
+    "id": "12_q024",
+    "category": "wide_lookup",
+    "expression": {
+      "cell": "Big!AI2501"
+    },
+    "decimals": null,
+    "answer": "32507"
+  },
+  {
+    "id": "12_q025",
+    "category": "full_scan_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "1000250"
+  },
+  {
+    "id": "12_q026",
+    "category": "full_scan_average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "400.10"
+  },
+  {
+    "id": "12_q027",
+    "category": "rare_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "conditions": {
+            "flag": "Rare"
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5"
+  },
+  {
+    "id": "12_q028",
+    "category": "rare_filter",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Big",
+                  "columns": {
+                    "id": "A",
+                    "group": "B",
+                    "value": "C",
+                    "flag": "D",
+                    "secret": "AI"
+                  },
+                  "first": 2,
+                  "last": 2501
+                }
+              },
+              "conditions": {
+                "flag": "Rare"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "2445"
+  },
+  {
+    "id": "12_q029",
+    "category": "rare_filter",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "table": {
+                "sheet": "Big",
+                "columns": {
+                  "id": "A",
+                  "group": "B",
+                  "value": "C",
+                  "flag": "D",
+                  "secret": "AI"
+                },
+                "first": 2,
+                "last": 2501
+              }
+            },
+            "conditions": {
+              "flag": "Rare"
+            }
+          }
+        },
+        "by": [
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 2500
+      }
+    },
+    "decimals": null,
+    "answer": "499, 998, 1497, 1996, 2495"
+  },
+  {
+    "id": "12_q030",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Big",
+            "columns": {
+              "id": "A",
+              "group": "B",
+              "value": "C",
+              "flag": "D",
+              "secret": "AI"
+            },
+            "first": 2,
+            "last": 2501
+          }
+        },
+        "by": [
+          [
+            "value",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "27"
+  },
+  {
+    "id": "12_q031",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Big",
+            "columns": {
+              "id": "A",
+              "group": "B",
+              "value": "C",
+              "flag": "D",
+              "secret": "AI"
+            },
+            "first": 2,
+            "last": 2501
+          }
+        },
+        "by": [
+          [
+            "value",
+            "asc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 3
+      }
+    },
+    "decimals": null,
+    "answer": "1000, 2000, 973"
+  },
+  {
+    "id": "12_q032",
+    "category": "late_range",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Big",
+                  "columns": {
+                    "id": "A",
+                    "group": "B",
+                    "value": "C",
+                    "flag": "D",
+                    "secret": "AI"
+                  },
+                  "first": 2,
+                  "last": 2501
+                }
+              },
+              "conditions": {
+                "id": {
+                  "ge": 2001,
+                  "le": 2500
+                }
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "201250"
+  },
+  {
+    "id": "12_q033",
+    "category": "late_range",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "conditions": {
+            "id": {
+              "ge": 1001,
+              "le": 2000
+            },
+            "value": {
+              "lt": 0
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "100"
+  },
+  {
+    "id": "12_q034",
+    "category": "empty_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "conditions": {
+            "value": {
+              "gt": 1000
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "0"
+  },
+  {
+    "id": "12_q035",
+    "category": "wide_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "table": {
+              "sheet": "Big",
+              "columns": {
+                "id": "A",
+                "group": "B",
+                "value": "C",
+                "flag": "D",
+                "secret": "AI"
+              },
+              "first": 2,
+              "last": 2501
+            }
+          },
+          "name": "secret"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "40658750"
+  }
+]

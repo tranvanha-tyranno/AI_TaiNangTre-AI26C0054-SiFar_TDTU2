@@ -1,0 +1,700 @@
+[
+  {
+    "id": "11_q001",
+    "category": "text_lookup",
+    "expression": {
+      "cell": "Records!B2"
+    },
+    "decimals": null,
+    "answer": "Nguyễn An"
+  },
+  {
+    "id": "11_q002",
+    "category": "text_lookup",
+    "expression": {
+      "cell": "Records!B4"
+    },
+    "decimals": null,
+    "answer": "O'Neil, Jr."
+  },
+  {
+    "id": "11_q003",
+    "category": "text_lookup",
+    "expression": {
+      "cell": "Records!B5"
+    },
+    "decimals": null,
+    "answer": "Công ty \"Ánh Dương\""
+  },
+  {
+    "id": "11_q004",
+    "category": "text_lookup",
+    "expression": {
+      "cell": "Records!B6"
+    },
+    "decimals": null,
+    "answer": "Lê Mai"
+  },
+  {
+    "id": "11_q005",
+    "category": "text_lookup",
+    "expression": {
+      "cell": "Records!B13"
+    },
+    "decimals": null,
+    "answer": "Dương Hòa"
+  },
+  {
+    "id": "11_q006",
+    "category": "missing_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Records",
+                  "columns": {
+                    "code": "A",
+                    "name": "B",
+                    "group": "C",
+                    "value": "D",
+                    "score": "E",
+                    "remark": "F"
+                  },
+                  "first": 2,
+                  "last": 13
+                }
+              },
+              "conditions": {
+                "group": "A"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "-10"
+  },
+  {
+    "id": "11_q007",
+    "category": "missing_average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Records",
+                  "columns": {
+                    "code": "A",
+                    "name": "B",
+                    "group": "C",
+                    "value": "D",
+                    "score": "E",
+                    "remark": "F"
+                  },
+                  "first": 2,
+                  "last": 13
+                }
+              },
+              "conditions": {
+                "group": "A"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "-3.33"
+  },
+  {
+    "id": "11_q008",
+    "category": "missing_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Records",
+                  "columns": {
+                    "code": "A",
+                    "name": "B",
+                    "group": "C",
+                    "value": "D",
+                    "score": "E",
+                    "remark": "F"
+                  },
+                  "first": 2,
+                  "last": 13
+                }
+              },
+              "conditions": {
+                "group": "B"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "10"
+  },
+  {
+    "id": "11_q009",
+    "category": "missing_average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Records",
+                  "columns": {
+                    "code": "A",
+                    "name": "B",
+                    "group": "C",
+                    "value": "D",
+                    "score": "E",
+                    "remark": "F"
+                  },
+                  "first": 2,
+                  "last": 13
+                }
+              },
+              "conditions": {
+                "group": "B"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "3.33"
+  },
+  {
+    "id": "11_q010",
+    "category": "missing_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Records",
+                  "columns": {
+                    "code": "A",
+                    "name": "B",
+                    "group": "C",
+                    "value": "D",
+                    "score": "E",
+                    "remark": "F"
+                  },
+                  "first": 2,
+                  "last": 13
+                }
+              },
+              "conditions": {
+                "group": "C"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "90"
+  },
+  {
+    "id": "11_q011",
+    "category": "missing_average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Records",
+                  "columns": {
+                    "code": "A",
+                    "name": "B",
+                    "group": "C",
+                    "value": "D",
+                    "score": "E",
+                    "remark": "F"
+                  },
+                  "first": 2,
+                  "last": 13
+                }
+              },
+              "conditions": {
+                "group": "C"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "30.00"
+  },
+  {
+    "id": "11_q012",
+    "category": "missing_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "conditions": {
+            "value": null
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "3"
+  },
+  {
+    "id": "11_q013",
+    "category": "zero_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "conditions": {
+            "value": 0
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "2"
+  },
+  {
+    "id": "11_q014",
+    "category": "negative_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "conditions": {
+            "value": {
+              "lt": 0
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "2"
+  },
+  {
+    "id": "11_q015",
+    "category": "nonblank_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "conditions": {
+            "value": {
+              "not_blank": true
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "9"
+  },
+  {
+    "id": "11_q016",
+    "category": "ties",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Records",
+            "columns": {
+              "code": "A",
+              "name": "B",
+              "group": "C",
+              "value": "D",
+              "score": "E",
+              "remark": "F"
+            },
+            "first": 2,
+            "last": 13
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "code",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "code"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "005"
+  },
+  {
+    "id": "11_q017",
+    "category": "ties",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Records",
+            "columns": {
+              "code": "A",
+              "name": "B",
+              "group": "C",
+              "value": "D",
+              "score": "E",
+              "remark": "F"
+            },
+            "first": 2,
+            "last": 13
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "code",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "code"
+        ],
+        "offset": 0,
+        "limit": 3
+      }
+    },
+    "decimals": null,
+    "answer": "005, 006, 001"
+  },
+  {
+    "id": "11_q018",
+    "category": "duplicate_name",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "conditions": {
+            "name": "Lê Mai"
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "2"
+  },
+  {
+    "id": "11_q019",
+    "category": "duplicate_name",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Records",
+                  "columns": {
+                    "code": "A",
+                    "name": "B",
+                    "group": "C",
+                    "value": "D",
+                    "score": "E",
+                    "remark": "F"
+                  },
+                  "first": 2,
+                  "last": 13
+                }
+              },
+              "conditions": {
+                "name": "Lê Mai"
+              }
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "50"
+  },
+  {
+    "id": "11_q020",
+    "category": "distinct",
+    "expression": {
+      "distinct_count": {
+        "column": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "name": "name"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "11"
+  },
+  {
+    "id": "11_q021",
+    "category": "min",
+    "expression": {
+      "min": {
+        "column": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "-10"
+  },
+  {
+    "id": "11_q022",
+    "category": "max",
+    "expression": {
+      "max": {
+        "column": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "40"
+  },
+  {
+    "id": "11_q023",
+    "category": "missing_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "conditions": {
+            "remark": null
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "2"
+  },
+  {
+    "id": "11_q024",
+    "category": "empty_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 100
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "0"
+  },
+  {
+    "id": "11_q025",
+    "category": "sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "table": {
+              "sheet": "Records",
+              "columns": {
+                "code": "A",
+                "name": "B",
+                "group": "C",
+                "value": "D",
+                "score": "E",
+                "remark": "F"
+              },
+              "first": 2,
+              "last": 13
+            }
+          },
+          "name": "value"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "90"
+  }
+]

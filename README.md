@@ -119,6 +119,7 @@ outputs/                 Kết quả sinh ra, không commit
 ## Dataset và bộ kiểm thử mới
 
 Dashboard tự quét `Public_data_1` và các thư mục trong `Test/` có `queries.json` cùng `xlsx_files/`.
+`Test/` hiện có **12 bộ, 212 câu**, gồm 200 câu mới cho lọc/nhóm, tiêu đề 3 cấp, ghép sheet, ngày biên, ô trống/Unicode và bảng 2.500 dòng. Xem [Test/README.md](Test/README.md) để chọn nhóm và kiểm chứng đáp án.
 Chọn một hoặc nhiều bộ trong **Dataset**, rồi bấm **Chạy mới**; có thể chạy một câu hoặc toàn bộ câu hỏi của các bộ đã chọn.
 Kết quả vẫn hiển thị đáp án, đối chiếu, thời gian, token/chi phí và Excel gốc. Bộ Test dùng `expected_submission.csv` để đối chiếu (hoặc `sample_submission.csv` nếu có); bộ chưa chạy hiển thị câu hỏi đang chờ.
 Mỗi lần chạy lưu riêng dataset, câu hỏi và đáp án tham chiếu trong metadata. Khi chạy nhiều bộ, CSV dùng ID `dataset::id` và file Excel được tách theo thư mục dataset để tránh trùng tên; chạy một bộ giữ nguyên ID gốc.

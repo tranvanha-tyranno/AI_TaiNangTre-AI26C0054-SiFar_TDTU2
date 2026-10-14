@@ -155,9 +155,16 @@ function renderTestSuites() {
     '03_multisheet_multitable':'Nhiều sheet & nhiều bảng trên 1 sheet',
     '04_robustness':'CSV quoting, ô rỗng, ID trùng, traversal',
     '05_truncation_perf':'500 dòng · cắt 60/40 · hiệu năng',
+    '06_people_filters':'Ô gộp · lọc nhiều điều kiện · tuổi và xếp hạng',
+    '07_sales_aggregation':'Tổng theo nhóm · số âm · trung bình có trọng số',
+    '08_three_level_headers':'Tiêu đề 3 cấp · phần trăm · đơn vị nghìn',
+    '09_multisheet_join':'Ghép dữ liệu giữa sheet · nhiều bảng · tránh cộng đôi',
+    '10_dates_boundaries':'Năm nhuận · sinh nhật · lọc khoảng ngày',
+    '11_missing_ties_unicode':'Ô trống và 0 · đồng điểm · Unicode · mã 001',
+    '12_large_full_scan':'2.500 dòng · lọc toàn bảng · dữ liệu cuối bảng và cột AI',
   };
   const chosen = new Set(datasetList());
-  el.innerHTML = suites.map(s => `<button type="button" class="step ${chosen.has(s.id)?'active':''}" aria-pressed="${chosen.has(s.id)}" data-dataset="${escapeHTML(s.id)}"><div class="step-number">${chosen.has(s.id)?'✓':'▦'}</div><h3>${escapeHTML(s.id)}</h3><p>${escapeHTML(blurbs[s.id] || s.label)}</p><p><span class="badge ${chosen.has(s.id)?'green':'gray'}">${chosen.has(s.id)?'Đang chọn':'Chưa chọn'}</span></p></button>`).join('');
+  el.innerHTML = suites.map(s => `<button type="button" class="step ${chosen.has(s.id)?'active':''}" aria-pressed="${chosen.has(s.id)}" data-dataset="${escapeHTML(s.id)}"><div class="step-number">${chosen.has(s.id)?'✓':'▦'}</div><h3>${escapeHTML(s.id)}</h3><p>${s.question_count ?? '—'} câu · ${escapeHTML(blurbs[s.id] || s.label)}</p><p><span class="badge ${chosen.has(s.id)?'green':'gray'}">${chosen.has(s.id)?'Đang chọn':'Chưa chọn'}</span></p></button>`).join('');
   el.querySelectorAll('[data-dataset]').forEach(card => card.onclick = () => {
     const id = card.dataset.dataset;
     const ids = datasetList();

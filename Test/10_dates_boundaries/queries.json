@@ -1,0 +1,127 @@
+[
+  {
+    "id": "10_q001",
+    "file_name": "data.xlsx",
+    "query": "What is D01's age in completed years on Start? For a Feb 29 birthday in a non-leap year, treat Mar 1 as the birthday. Answer only the integer."
+  },
+  {
+    "id": "10_q002",
+    "file_name": "data.xlsx",
+    "query": "What is D02's age in completed years on Start? For a Feb 29 birthday in a non-leap year, treat Mar 1 as the birthday. Answer only the integer."
+  },
+  {
+    "id": "10_q003",
+    "file_name": "data.xlsx",
+    "query": "What is D03's age in completed years on Start? For a Feb 29 birthday in a non-leap year, treat Mar 1 as the birthday. Answer only the integer."
+  },
+  {
+    "id": "10_q004",
+    "file_name": "data.xlsx",
+    "query": "What is D04's age in completed years on Start? For a Feb 29 birthday in a non-leap year, treat Mar 1 as the birthday. Answer only the integer."
+  },
+  {
+    "id": "10_q005",
+    "file_name": "data.xlsx",
+    "query": "What is D05's age in completed years on Start? For a Feb 29 birthday in a non-leap year, treat Mar 1 as the birthday. Answer only the integer."
+  },
+  {
+    "id": "10_q006",
+    "file_name": "data.xlsx",
+    "query": "What is D06's age in completed years on Start? For a Feb 29 birthday in a non-leap year, treat Mar 1 as the birthday. Answer only the integer."
+  },
+  {
+    "id": "10_q007",
+    "file_name": "data.xlsx",
+    "query": "How many elapsed calendar days are between Start and End for D01? Compute End minus Start, do not add 1. Answer only the integer."
+  },
+  {
+    "id": "10_q008",
+    "file_name": "data.xlsx",
+    "query": "How many elapsed calendar days are between Start and End for D02? Compute End minus Start, do not add 1. Answer only the integer."
+  },
+  {
+    "id": "10_q009",
+    "file_name": "data.xlsx",
+    "query": "How many elapsed calendar days are between Start and End for D03? Compute End minus Start, do not add 1. Answer only the integer."
+  },
+  {
+    "id": "10_q010",
+    "file_name": "data.xlsx",
+    "query": "How many elapsed calendar days are between Start and End for D04? Compute End minus Start, do not add 1. Answer only the integer."
+  },
+  {
+    "id": "10_q011",
+    "file_name": "data.xlsx",
+    "query": "How many elapsed calendar days are between Start and End for D05? Compute End minus Start, do not add 1. Answer only the integer."
+  },
+  {
+    "id": "10_q012",
+    "file_name": "data.xlsx",
+    "query": "How many elapsed calendar days are between Start and End for D06? Compute End minus Start, do not add 1. Answer only the integer."
+  },
+  {
+    "id": "10_q013",
+    "file_name": "data.xlsx",
+    "query": "How many projects start in 2024-01? Include the month's first and last calendar day. Answer only the integer."
+  },
+  {
+    "id": "10_q014",
+    "file_name": "data.xlsx",
+    "query": "How many projects start in 2024-02? Include the month's first and last calendar day. Answer only the integer."
+  },
+  {
+    "id": "10_q015",
+    "file_name": "data.xlsx",
+    "query": "How many projects start in 2024-03? Include the month's first and last calendar day. Answer only the integer."
+  },
+  {
+    "id": "10_q016",
+    "file_name": "data.xlsx",
+    "query": "How many projects start in 2024-06? Include the month's first and last calendar day. Answer only the integer."
+  },
+  {
+    "id": "10_q017",
+    "file_name": "data.xlsx",
+    "query": "What is total Budget for projects starting on or after 2024-01-01 and before 2024-07-01? Answer only the integer."
+  },
+  {
+    "id": "10_q018",
+    "file_name": "data.xlsx",
+    "query": "How many projects have Start strictly before 2024-03-01? Answer only the integer."
+  },
+  {
+    "id": "10_q019",
+    "file_name": "data.xlsx",
+    "query": "How many projects start exactly on 2024-02-29? Answer only the integer."
+  },
+  {
+    "id": "10_q020",
+    "file_name": "data.xlsx",
+    "query": "How many projects have End in 2025? Answer only the integer."
+  },
+  {
+    "id": "10_q021",
+    "file_name": "data.xlsx",
+    "query": "Which project has the earliest Start? Break ties by ID ascending. Answer only its ID."
+  },
+  {
+    "id": "10_q022",
+    "file_name": "data.xlsx",
+    "query": "Which project has the latest End? Break ties by ID ascending. Answer only its ID."
+  },
+  {
+    "id": "10_q023",
+    "file_name": "data.xlsx",
+    "query": "What is the End date for D03? Answer only YYYY-MM-DD."
+  },
+  {
+    "id": "10_q024",
+    "file_name": "data.xlsx",
+    "query": "Ngày Start của D02 là ngày nào? Chỉ trả YYYY-MM-DD."
+  },
+  {
+    "id": "10_q025",
+    "file_name": "data.xlsx",
+    "query": "Does D05 start before its 24th birthday? Answer only Yes or No."
+  }
+]

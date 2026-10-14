@@ -1,0 +1,973 @@
+[
+  {
+    "id": "06_q001",
+    "category": "lookup",
+    "expression": {
+      "cell": "People!F3"
+    },
+    "decimals": null,
+    "answer": "62"
+  },
+  {
+    "id": "06_q002",
+    "category": "lookup",
+    "expression": {
+      "cell": "People!F9"
+    },
+    "decimals": null,
+    "answer": "52"
+  },
+  {
+    "id": "06_q003",
+    "category": "lookup",
+    "expression": {
+      "cell": "People!F15"
+    },
+    "decimals": null,
+    "answer": "98"
+  },
+  {
+    "id": "06_q004",
+    "category": "lookup",
+    "expression": {
+      "cell": "People!F26"
+    },
+    "decimals": null,
+    "answer": "61"
+  },
+  {
+    "id": "06_q005",
+    "category": "lookup",
+    "expression": {
+      "cell": "People!F42"
+    },
+    "decimals": null,
+    "answer": "53"
+  },
+  {
+    "id": "06_q006",
+    "category": "count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "People",
+              "columns": {
+                "id": "A",
+                "name": "B",
+                "dept": "C",
+                "birth": "D",
+                "admission": "E",
+                "score": "F",
+                "attendance": "G",
+                "city": "H",
+                "status": "I"
+              },
+              "first": 3,
+              "last": 42
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 60
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "29"
+  },
+  {
+    "id": "06_q007",
+    "category": "count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "People",
+              "columns": {
+                "id": "A",
+                "name": "B",
+                "dept": "C",
+                "birth": "D",
+                "admission": "E",
+                "score": "F",
+                "attendance": "G",
+                "city": "H",
+                "status": "I"
+              },
+              "first": 3,
+              "last": 42
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 70
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "22"
+  },
+  {
+    "id": "06_q008",
+    "category": "count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "People",
+              "columns": {
+                "id": "A",
+                "name": "B",
+                "dept": "C",
+                "birth": "D",
+                "admission": "E",
+                "score": "F",
+                "attendance": "G",
+                "city": "H",
+                "status": "I"
+              },
+              "first": 3,
+              "last": 42
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 80
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "14"
+  },
+  {
+    "id": "06_q009",
+    "category": "count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "People",
+              "columns": {
+                "id": "A",
+                "name": "B",
+                "dept": "C",
+                "birth": "D",
+                "admission": "E",
+                "score": "F",
+                "attendance": "G",
+                "city": "H",
+                "status": "I"
+              },
+              "first": 3,
+              "last": 42
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 90
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "8"
+  },
+  {
+    "id": "06_q010",
+    "category": "count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "People",
+              "columns": {
+                "id": "A",
+                "name": "B",
+                "dept": "C",
+                "birth": "D",
+                "admission": "E",
+                "score": "F",
+                "attendance": "G",
+                "city": "H",
+                "status": "I"
+              },
+              "first": 3,
+              "last": 42
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 100
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "0"
+  },
+  {
+    "id": "06_q011",
+    "category": "conditional_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "name": "B",
+                    "dept": "C",
+                    "birth": "D",
+                    "admission": "E",
+                    "score": "F",
+                    "attendance": "G",
+                    "city": "H",
+                    "status": "I"
+                  },
+                  "first": 3,
+                  "last": 42
+                }
+              },
+              "conditions": {
+                "dept": "Engineering",
+                "status": "Active"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "560"
+  },
+  {
+    "id": "06_q012",
+    "category": "conditional_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "name": "B",
+                    "dept": "C",
+                    "birth": "D",
+                    "admission": "E",
+                    "score": "F",
+                    "attendance": "G",
+                    "city": "H",
+                    "status": "I"
+                  },
+                  "first": 3,
+                  "last": 42
+                }
+              },
+              "conditions": {
+                "dept": "Business",
+                "status": "Active"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "616"
+  },
+  {
+    "id": "06_q013",
+    "category": "conditional_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "name": "B",
+                    "dept": "C",
+                    "birth": "D",
+                    "admission": "E",
+                    "score": "F",
+                    "attendance": "G",
+                    "city": "H",
+                    "status": "I"
+                  },
+                  "first": 3,
+                  "last": 42
+                }
+              },
+              "conditions": {
+                "dept": "Design",
+                "status": "Active"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "616"
+  },
+  {
+    "id": "06_q014",
+    "category": "conditional_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "name": "B",
+                    "dept": "C",
+                    "birth": "D",
+                    "admission": "E",
+                    "score": "F",
+                    "attendance": "G",
+                    "city": "H",
+                    "status": "I"
+                  },
+                  "first": 3,
+                  "last": 42
+                }
+              },
+              "conditions": {
+                "dept": "Science",
+                "status": "Active"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "616"
+  },
+  {
+    "id": "06_q015",
+    "category": "average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "name": "B",
+                    "dept": "C",
+                    "birth": "D",
+                    "admission": "E",
+                    "score": "F",
+                    "attendance": "G",
+                    "city": "H",
+                    "status": "I"
+                  },
+                  "first": 3,
+                  "last": 42
+                }
+              },
+              "conditions": {
+                "dept": "Engineering"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "71.20"
+  },
+  {
+    "id": "06_q016",
+    "category": "average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "name": "B",
+                    "dept": "C",
+                    "birth": "D",
+                    "admission": "E",
+                    "score": "F",
+                    "attendance": "G",
+                    "city": "H",
+                    "status": "I"
+                  },
+                  "first": 3,
+                  "last": 42
+                }
+              },
+              "conditions": {
+                "dept": "Business"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "71.40"
+  },
+  {
+    "id": "06_q017",
+    "category": "average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "name": "B",
+                    "dept": "C",
+                    "birth": "D",
+                    "admission": "E",
+                    "score": "F",
+                    "attendance": "G",
+                    "city": "H",
+                    "status": "I"
+                  },
+                  "first": 3,
+                  "last": 42
+                }
+              },
+              "conditions": {
+                "dept": "Design"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "77.20"
+  },
+  {
+    "id": "06_q018",
+    "category": "average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "name": "B",
+                    "dept": "C",
+                    "birth": "D",
+                    "admission": "E",
+                    "score": "F",
+                    "attendance": "G",
+                    "city": "H",
+                    "status": "I"
+                  },
+                  "first": 3,
+                  "last": 42
+                }
+              },
+              "conditions": {
+                "dept": "Science"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "71.80"
+  },
+  {
+    "id": "06_q019",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "People",
+            "columns": {
+              "id": "A",
+              "name": "B",
+              "dept": "C",
+              "birth": "D",
+              "admission": "E",
+              "score": "F",
+              "attendance": "G",
+              "city": "H",
+              "status": "I"
+            },
+            "first": 3,
+            "last": 42
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "P023"
+  },
+  {
+    "id": "06_q020",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "People",
+            "columns": {
+              "id": "A",
+              "name": "B",
+              "dept": "C",
+              "birth": "D",
+              "admission": "E",
+              "score": "F",
+              "attendance": "G",
+              "city": "H",
+              "status": "I"
+            },
+            "first": 3,
+            "last": 42
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 1,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "P013"
+  },
+  {
+    "id": "06_q021",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "People",
+            "columns": {
+              "id": "A",
+              "name": "B",
+              "dept": "C",
+              "birth": "D",
+              "admission": "E",
+              "score": "F",
+              "attendance": "G",
+              "city": "H",
+              "status": "I"
+            },
+            "first": 3,
+            "last": 42
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 2,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "P036"
+  },
+  {
+    "id": "06_q022",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "People",
+            "columns": {
+              "id": "A",
+              "name": "B",
+              "dept": "C",
+              "birth": "D",
+              "admission": "E",
+              "score": "F",
+              "attendance": "G",
+              "city": "H",
+              "status": "I"
+            },
+            "first": 3,
+            "last": 42
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 4,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "P026"
+  },
+  {
+    "id": "06_q023",
+    "category": "top_k",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "table": {
+                "sheet": "People",
+                "columns": {
+                  "id": "A",
+                  "name": "B",
+                  "dept": "C",
+                  "birth": "D",
+                  "admission": "E",
+                  "score": "F",
+                  "attendance": "G",
+                  "city": "H",
+                  "status": "I"
+                },
+                "first": 3,
+                "last": 42
+              }
+            },
+            "conditions": {
+              "status": "Active"
+            }
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 3
+      }
+    },
+    "decimals": null,
+    "answer": "P023, P013, P036"
+  },
+  {
+    "id": "06_q024",
+    "category": "multi_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "People",
+              "columns": {
+                "id": "A",
+                "name": "B",
+                "dept": "C",
+                "birth": "D",
+                "admission": "E",
+                "score": "F",
+                "attendance": "G",
+                "city": "H",
+                "status": "I"
+              },
+              "first": 3,
+              "last": 42
+            }
+          },
+          "conditions": {
+            "city": "Ha Noi",
+            "score": {
+              "ge": 80
+            },
+            "status": "Active"
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "6"
+  },
+  {
+    "id": "06_q025",
+    "category": "multi_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "People",
+              "columns": {
+                "id": "A",
+                "name": "B",
+                "dept": "C",
+                "birth": "D",
+                "admission": "E",
+                "score": "F",
+                "attendance": "G",
+                "city": "H",
+                "status": "I"
+              },
+              "first": 3,
+              "last": 42
+            }
+          },
+          "conditions": {
+            "city": "Da Nang",
+            "score": {
+              "ge": 80
+            },
+            "status": "Active"
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "4"
+  },
+  {
+    "id": "06_q026",
+    "category": "multi_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "People",
+              "columns": {
+                "id": "A",
+                "name": "B",
+                "dept": "C",
+                "birth": "D",
+                "admission": "E",
+                "score": "F",
+                "attendance": "G",
+                "city": "H",
+                "status": "I"
+              },
+              "first": 3,
+              "last": 42
+            }
+          },
+          "conditions": {
+            "city": "Ho Chi Minh City",
+            "score": {
+              "ge": 80
+            },
+            "status": "Active"
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "4"
+  },
+  {
+    "id": "06_q027",
+    "category": "age",
+    "expression": {
+      "age": [
+        {
+          "cell": "People!D3"
+        },
+        {
+          "cell": "People!E3"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "34"
+  },
+  {
+    "id": "06_q028",
+    "category": "age",
+    "expression": {
+      "age": [
+        {
+          "cell": "People!D9"
+        },
+        {
+          "cell": "People!E9"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "28"
+  },
+  {
+    "id": "06_q029",
+    "category": "percentage",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "count": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "People",
+                      "columns": {
+                        "id": "A",
+                        "name": "B",
+                        "dept": "C",
+                        "birth": "D",
+                        "admission": "E",
+                        "score": "F",
+                        "attendance": "G",
+                        "city": "H",
+                        "status": "I"
+                      },
+                      "first": 3,
+                      "last": 42
+                    }
+                  },
+                  "conditions": {
+                    "status": "Active"
+                  }
+                }
+              }
+            },
+            40
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "80.00"
+  },
+  {
+    "id": "06_q030",
+    "category": "empty_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "People",
+              "columns": {
+                "id": "A",
+                "name": "B",
+                "dept": "C",
+                "birth": "D",
+                "admission": "E",
+                "score": "F",
+                "attendance": "G",
+                "city": "H",
+                "status": "I"
+              },
+              "first": 3,
+              "last": 42
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 100
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "0"
+  }
+]

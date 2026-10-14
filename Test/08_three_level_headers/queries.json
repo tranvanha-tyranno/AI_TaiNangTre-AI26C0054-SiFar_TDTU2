@@ -1,0 +1,127 @@
+[
+  {
+    "id": "08_q001",
+    "file_name": "data.xlsx",
+    "query": "For Agriculture, what is Count in 2024 Q2 (not Rate)? Answer only the integer in the table's thousands unit."
+  },
+  {
+    "id": "08_q002",
+    "file_name": "data.xlsx",
+    "query": "For Agriculture, what is Count in 2023 Q1? Answer only the integer in the table's thousands unit."
+  },
+  {
+    "id": "08_q003",
+    "file_name": "data.xlsx",
+    "query": "For Manufacturing, what is Count in 2024 Q2 (not Rate)? Answer only the integer in the table's thousands unit."
+  },
+  {
+    "id": "08_q004",
+    "file_name": "data.xlsx",
+    "query": "For Manufacturing, what is Count in 2023 Q1? Answer only the integer in the table's thousands unit."
+  },
+  {
+    "id": "08_q005",
+    "file_name": "data.xlsx",
+    "query": "For Construction, what is Count in 2024 Q2 (not Rate)? Answer only the integer in the table's thousands unit."
+  },
+  {
+    "id": "08_q006",
+    "file_name": "data.xlsx",
+    "query": "For Construction, what is Count in 2023 Q1? Answer only the integer in the table's thousands unit."
+  },
+  {
+    "id": "08_q007",
+    "file_name": "data.xlsx",
+    "query": "For Transport, what is Count in 2024 Q2 (not Rate)? Answer only the integer in the table's thousands unit."
+  },
+  {
+    "id": "08_q008",
+    "file_name": "data.xlsx",
+    "query": "For Transport, what is Count in 2023 Q1? Answer only the integer in the table's thousands unit."
+  },
+  {
+    "id": "08_q009",
+    "file_name": "data.xlsx",
+    "query": "For Education, what is Count in 2024 Q2 (not Rate)? Answer only the integer in the table's thousands unit."
+  },
+  {
+    "id": "08_q010",
+    "file_name": "data.xlsx",
+    "query": "For Education, what is Count in 2023 Q1? Answer only the integer in the table's thousands unit."
+  },
+  {
+    "id": "08_q011",
+    "file_name": "data.xlsx",
+    "query": "For Agriculture, what is Rate in 2024 Q1 as percentage points (multiply stored fraction by 100)? Answer exactly 2 decimal places, without %."
+  },
+  {
+    "id": "08_q012",
+    "file_name": "data.xlsx",
+    "query": "For Manufacturing, what is Rate in 2024 Q1 as percentage points (multiply stored fraction by 100)? Answer exactly 2 decimal places, without %."
+  },
+  {
+    "id": "08_q013",
+    "file_name": "data.xlsx",
+    "query": "For Construction, what is Rate in 2024 Q1 as percentage points (multiply stored fraction by 100)? Answer exactly 2 decimal places, without %."
+  },
+  {
+    "id": "08_q014",
+    "file_name": "data.xlsx",
+    "query": "For Transport, what is Rate in 2024 Q1 as percentage points (multiply stored fraction by 100)? Answer exactly 2 decimal places, without %."
+  },
+  {
+    "id": "08_q015",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Count across the 8 sectors in 2023 Q1? Ignore the note. Answer only the integer in thousands."
+  },
+  {
+    "id": "08_q016",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Count across the 8 sectors in 2023 Q2? Ignore the note. Answer only the integer in thousands."
+  },
+  {
+    "id": "08_q017",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Count across the 8 sectors in 2024 Q1? Ignore the note. Answer only the integer in thousands."
+  },
+  {
+    "id": "08_q018",
+    "file_name": "data.xlsx",
+    "query": "What is the sum of Count across the 8 sectors in 2024 Q2? Ignore the note. Answer only the integer in thousands."
+  },
+  {
+    "id": "08_q019",
+    "file_name": "data.xlsx",
+    "query": "For Agriculture, how much did Count change from 2023 Q2 to 2024 Q2 (2024 minus 2023)? Answer only the integer in thousands."
+  },
+  {
+    "id": "08_q020",
+    "file_name": "data.xlsx",
+    "query": "For Manufacturing, how much did Count change from 2023 Q2 to 2024 Q2 (2024 minus 2023)? Answer only the integer in thousands."
+  },
+  {
+    "id": "08_q021",
+    "file_name": "data.xlsx",
+    "query": "For Construction, how much did Count change from 2023 Q2 to 2024 Q2 (2024 minus 2023)? Answer only the integer in thousands."
+  },
+  {
+    "id": "08_q022",
+    "file_name": "data.xlsx",
+    "query": "Rank all sectors by 2024 Q2 Count descending, ties alphabetically. Return sector names separated by comma and one space."
+  },
+  {
+    "id": "08_q023",
+    "file_name": "data.xlsx",
+    "query": "Is Education's 2024 Q1 Count greater than Education's 2023 Q1 Count? Answer Yes or No."
+  },
+  {
+    "id": "08_q024",
+    "file_name": "data.xlsx",
+    "query": "Convert the total 2024 Q2 Count across all sectors from thousands into individual people. Answer only the integer, no commas."
+  },
+  {
+    "id": "08_q025",
+    "file_name": "data.xlsx",
+    "query": "What is Technology's 2024 Q2 Count divided by its 2023 Q2 Count? Answer exactly 2 decimal places."
+  }
+]

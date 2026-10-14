@@ -1,0 +1,152 @@
+[
+  {
+    "id": "09_q001",
+    "file_name": "data.xlsx",
+    "query": "What is total Units ordered for product Item 01? Join Orders.Product ID to Products.Product ID. Answer only the integer."
+  },
+  {
+    "id": "09_q002",
+    "file_name": "data.xlsx",
+    "query": "For Item 01, what is total cost of ordered units (sum Orders.Units times Products.Unit Cost)? Answer only the integer."
+  },
+  {
+    "id": "09_q003",
+    "file_name": "data.xlsx",
+    "query": "What is total Units ordered for product Item 02? Join Orders.Product ID to Products.Product ID. Answer only the integer."
+  },
+  {
+    "id": "09_q004",
+    "file_name": "data.xlsx",
+    "query": "For Item 02, what is total cost of ordered units (sum Orders.Units times Products.Unit Cost)? Answer only the integer."
+  },
+  {
+    "id": "09_q005",
+    "file_name": "data.xlsx",
+    "query": "What is total Units ordered for product Item 03? Join Orders.Product ID to Products.Product ID. Answer only the integer."
+  },
+  {
+    "id": "09_q006",
+    "file_name": "data.xlsx",
+    "query": "For Item 03, what is total cost of ordered units (sum Orders.Units times Products.Unit Cost)? Answer only the integer."
+  },
+  {
+    "id": "09_q007",
+    "file_name": "data.xlsx",
+    "query": "What is total Units ordered for product Item 04? Join Orders.Product ID to Products.Product ID. Answer only the integer."
+  },
+  {
+    "id": "09_q008",
+    "file_name": "data.xlsx",
+    "query": "For Item 04, what is total cost of ordered units (sum Orders.Units times Products.Unit Cost)? Answer only the integer."
+  },
+  {
+    "id": "09_q009",
+    "file_name": "data.xlsx",
+    "query": "What is total Units ordered for product Item 05? Join Orders.Product ID to Products.Product ID. Answer only the integer."
+  },
+  {
+    "id": "09_q010",
+    "file_name": "data.xlsx",
+    "query": "For Item 05, what is total cost of ordered units (sum Orders.Units times Products.Unit Cost)? Answer only the integer."
+  },
+  {
+    "id": "09_q011",
+    "file_name": "data.xlsx",
+    "query": "What is total Units ordered for product Item 06? Join Orders.Product ID to Products.Product ID. Answer only the integer."
+  },
+  {
+    "id": "09_q012",
+    "file_name": "data.xlsx",
+    "query": "For Item 06, what is total cost of ordered units (sum Orders.Units times Products.Unit Cost)? Answer only the integer."
+  },
+  {
+    "id": "09_q013",
+    "file_name": "data.xlsx",
+    "query": "What is total Units ordered for product Item 07? Join Orders.Product ID to Products.Product ID. Answer only the integer."
+  },
+  {
+    "id": "09_q014",
+    "file_name": "data.xlsx",
+    "query": "For Item 07, what is total cost of ordered units (sum Orders.Units times Products.Unit Cost)? Answer only the integer."
+  },
+  {
+    "id": "09_q015",
+    "file_name": "data.xlsx",
+    "query": "What is total Units ordered for product Item 08? Join Orders.Product ID to Products.Product ID. Answer only the integer."
+  },
+  {
+    "id": "09_q016",
+    "file_name": "data.xlsx",
+    "query": "For Item 08, what is total cost of ordered units (sum Orders.Units times Products.Unit Cost)? Answer only the integer."
+  },
+  {
+    "id": "09_q017",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue from Orders for Products in Category Hardware? Do not add Summary.TOTAL. Answer only the integer."
+  },
+  {
+    "id": "09_q018",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue from Orders for Products in Category Accessory? Do not add Summary.TOTAL. Answer only the integer."
+  },
+  {
+    "id": "09_q019",
+    "file_name": "data.xlsx",
+    "query": "In Summary, what is Stock minus Returns for warehouse North? Use the two side-by-side tables. Answer only the integer."
+  },
+  {
+    "id": "09_q020",
+    "file_name": "data.xlsx",
+    "query": "In Summary, what is Stock minus Returns for warehouse Central? Use the two side-by-side tables. Answer only the integer."
+  },
+  {
+    "id": "09_q021",
+    "file_name": "data.xlsx",
+    "query": "In Summary, what is Stock minus Returns for warehouse South? Use the two side-by-side tables. Answer only the integer."
+  },
+  {
+    "id": "09_q022",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue across Orders only? Summary.TOTAL repeats it and must not be added. Answer only the integer."
+  },
+  {
+    "id": "09_q023",
+    "file_name": "data.xlsx",
+    "query": "Does Summary.TOTAL equal the sum of Orders.Revenue? Answer only Yes or No."
+  },
+  {
+    "id": "09_q024",
+    "file_name": "data.xlsx",
+    "query": "Tổng Stock của ba kho trong bảng bên trái sheet Summary là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "09_q025",
+    "file_name": "data.xlsx",
+    "query": "What is total Returns in the right-hand Summary table? Answer only the integer."
+  },
+  {
+    "id": "09_q026",
+    "file_name": "data.xlsx",
+    "query": "How many Orders rows refer to Category Hardware? Answer only the integer."
+  },
+  {
+    "id": "09_q027",
+    "file_name": "data.xlsx",
+    "query": "How many distinct Product IDs exist in Orders? Answer only the integer."
+  },
+  {
+    "id": "09_q028",
+    "file_name": "data.xlsx",
+    "query": "Which Order ID has the largest Revenue? Break ties by Order ID ascending. Answer only the ID."
+  },
+  {
+    "id": "09_q029",
+    "file_name": "data.xlsx",
+    "query": "What is the product Name for order R017? Join by Product ID and answer only the Name."
+  },
+  {
+    "id": "09_q030",
+    "file_name": "data.xlsx",
+    "query": "What is total Revenue divided by total Units in Orders? Answer exactly 2 decimal places."
+  }
+]

@@ -1,0 +1,152 @@
+[
+  {
+    "id": "06_q001",
+    "file_name": "data.xlsx",
+    "query": "In People, what is the score of P001? Answer only the integer."
+  },
+  {
+    "id": "06_q002",
+    "file_name": "data.xlsx",
+    "query": "In People, what is the score of P007? Answer only the integer."
+  },
+  {
+    "id": "06_q003",
+    "file_name": "data.xlsx",
+    "query": "In People, what is the score of P013? Answer only the integer."
+  },
+  {
+    "id": "06_q004",
+    "file_name": "data.xlsx",
+    "query": "In People, what is the score of P024? Answer only the integer."
+  },
+  {
+    "id": "06_q005",
+    "file_name": "data.xlsx",
+    "query": "In People, what is the score of P040? Answer only the integer."
+  },
+  {
+    "id": "06_q006",
+    "file_name": "data.xlsx",
+    "query": "How many people have Score strictly greater than 60? Answer only the integer."
+  },
+  {
+    "id": "06_q007",
+    "file_name": "data.xlsx",
+    "query": "How many people have Score strictly greater than 70? Answer only the integer."
+  },
+  {
+    "id": "06_q008",
+    "file_name": "data.xlsx",
+    "query": "How many people have Score strictly greater than 80? Answer only the integer."
+  },
+  {
+    "id": "06_q009",
+    "file_name": "data.xlsx",
+    "query": "How many people have Score strictly greater than 90? Answer only the integer."
+  },
+  {
+    "id": "06_q010",
+    "file_name": "data.xlsx",
+    "query": "How many people have Score strictly greater than 100? Answer only the integer."
+  },
+  {
+    "id": "06_q011",
+    "file_name": "data.xlsx",
+    "query": "Tổng Score của những người thuộc Department Engineering và Status Active là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "06_q012",
+    "file_name": "data.xlsx",
+    "query": "Tổng Score của những người thuộc Department Business và Status Active là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "06_q013",
+    "file_name": "data.xlsx",
+    "query": "Tổng Score của những người thuộc Department Design và Status Active là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "06_q014",
+    "file_name": "data.xlsx",
+    "query": "Tổng Score của những người thuộc Department Science và Status Active là bao nhiêu? Chỉ trả số nguyên."
+  },
+  {
+    "id": "06_q015",
+    "file_name": "data.xlsx",
+    "query": "What is the average Score for Department Engineering? Include all statuses. Answer to exactly 2 decimal places."
+  },
+  {
+    "id": "06_q016",
+    "file_name": "data.xlsx",
+    "query": "What is the average Score for Department Business? Include all statuses. Answer to exactly 2 decimal places."
+  },
+  {
+    "id": "06_q017",
+    "file_name": "data.xlsx",
+    "query": "What is the average Score for Department Design? Include all statuses. Answer to exactly 2 decimal places."
+  },
+  {
+    "id": "06_q018",
+    "file_name": "data.xlsx",
+    "query": "What is the average Score for Department Science? Include all statuses. Answer to exactly 2 decimal places."
+  },
+  {
+    "id": "06_q019",
+    "file_name": "data.xlsx",
+    "query": "Sort all people by Score descending, breaking ties by ID ascending. What is the ID at position 1 (1-based)? Answer only the ID."
+  },
+  {
+    "id": "06_q020",
+    "file_name": "data.xlsx",
+    "query": "Sort all people by Score descending, breaking ties by ID ascending. What is the ID at position 2 (1-based)? Answer only the ID."
+  },
+  {
+    "id": "06_q021",
+    "file_name": "data.xlsx",
+    "query": "Sort all people by Score descending, breaking ties by ID ascending. What is the ID at position 3 (1-based)? Answer only the ID."
+  },
+  {
+    "id": "06_q022",
+    "file_name": "data.xlsx",
+    "query": "Sort all people by Score descending, breaking ties by ID ascending. What is the ID at position 5 (1-based)? Answer only the ID."
+  },
+  {
+    "id": "06_q023",
+    "file_name": "data.xlsx",
+    "query": "List the IDs of the top 3 Active people by Score descending, ties by ID ascending. Separate IDs with comma and one space."
+  },
+  {
+    "id": "06_q024",
+    "file_name": "data.xlsx",
+    "query": "How many people in Ha Noi have Score >= 80 and Status Active? Answer only the integer."
+  },
+  {
+    "id": "06_q025",
+    "file_name": "data.xlsx",
+    "query": "How many people in Da Nang have Score >= 80 and Status Active? Answer only the integer."
+  },
+  {
+    "id": "06_q026",
+    "file_name": "data.xlsx",
+    "query": "How many people in Ho Chi Minh City have Score >= 80 and Status Active? Answer only the integer."
+  },
+  {
+    "id": "06_q027",
+    "file_name": "data.xlsx",
+    "query": "What was P001's age in completed years on their Admission date? Use Birth and Admission, not the current date. Answer only the integer."
+  },
+  {
+    "id": "06_q028",
+    "file_name": "data.xlsx",
+    "query": "What was P007's age in completed years on their Admission date? Use Birth and Admission, not the current date. Answer only the integer."
+  },
+  {
+    "id": "06_q029",
+    "file_name": "data.xlsx",
+    "query": "What percentage of all 40 people are Active? Answer with exactly 2 decimal places, without the percent sign."
+  },
+  {
+    "id": "06_q030",
+    "file_name": "data.xlsx",
+    "query": "How many people have Score greater than 100? Answer only the integer, including 0 if none."
+  }
+]

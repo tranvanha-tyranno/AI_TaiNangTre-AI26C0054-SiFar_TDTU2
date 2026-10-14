@@ -1,0 +1,1334 @@
+[
+  {
+    "id": "09_q001",
+    "category": "join_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "join": {
+                  "left": {
+                    "table": {
+                      "sheet": "Orders",
+                      "columns": {
+                        "id": "A",
+                        "product": "B",
+                        "units": "C",
+                        "revenue": "D"
+                      },
+                      "first": 2,
+                      "last": 33
+                    }
+                  },
+                  "right": {
+                    "table": {
+                      "sheet": "Products",
+                      "columns": {
+                        "product": "A",
+                        "name": "B",
+                        "category": "C",
+                        "cost": "D"
+                      },
+                      "first": 2,
+                      "last": 9
+                    }
+                  },
+                  "key": "product"
+                }
+              },
+              "conditions": {
+                "product": "K01"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "12"
+  },
+  {
+    "id": "09_q002",
+    "category": "join_calculation",
+    "expression": {
+      "mul": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "join": {
+                      "left": {
+                        "table": {
+                          "sheet": "Orders",
+                          "columns": {
+                            "id": "A",
+                            "product": "B",
+                            "units": "C",
+                            "revenue": "D"
+                          },
+                          "first": 2,
+                          "last": 33
+                        }
+                      },
+                      "right": {
+                        "table": {
+                          "sheet": "Products",
+                          "columns": {
+                            "product": "A",
+                            "name": "B",
+                            "category": "C",
+                            "cost": "D"
+                          },
+                          "first": 2,
+                          "last": 9
+                        }
+                      },
+                      "key": "product"
+                    }
+                  },
+                  "conditions": {
+                    "product": "K01"
+                  }
+                }
+              },
+              "name": "units"
+            }
+          }
+        },
+        {
+          "cell": "Products!D2"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "156"
+  },
+  {
+    "id": "09_q003",
+    "category": "join_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "join": {
+                  "left": {
+                    "table": {
+                      "sheet": "Orders",
+                      "columns": {
+                        "id": "A",
+                        "product": "B",
+                        "units": "C",
+                        "revenue": "D"
+                      },
+                      "first": 2,
+                      "last": 33
+                    }
+                  },
+                  "right": {
+                    "table": {
+                      "sheet": "Products",
+                      "columns": {
+                        "product": "A",
+                        "name": "B",
+                        "category": "C",
+                        "cost": "D"
+                      },
+                      "first": 2,
+                      "last": 9
+                    }
+                  },
+                  "key": "product"
+                }
+              },
+              "conditions": {
+                "product": "K02"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "14"
+  },
+  {
+    "id": "09_q004",
+    "category": "join_calculation",
+    "expression": {
+      "mul": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "join": {
+                      "left": {
+                        "table": {
+                          "sheet": "Orders",
+                          "columns": {
+                            "id": "A",
+                            "product": "B",
+                            "units": "C",
+                            "revenue": "D"
+                          },
+                          "first": 2,
+                          "last": 33
+                        }
+                      },
+                      "right": {
+                        "table": {
+                          "sheet": "Products",
+                          "columns": {
+                            "product": "A",
+                            "name": "B",
+                            "category": "C",
+                            "cost": "D"
+                          },
+                          "first": 2,
+                          "last": 9
+                        }
+                      },
+                      "key": "product"
+                    }
+                  },
+                  "conditions": {
+                    "product": "K02"
+                  }
+                }
+              },
+              "name": "units"
+            }
+          }
+        },
+        {
+          "cell": "Products!D3"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "224"
+  },
+  {
+    "id": "09_q005",
+    "category": "join_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "join": {
+                  "left": {
+                    "table": {
+                      "sheet": "Orders",
+                      "columns": {
+                        "id": "A",
+                        "product": "B",
+                        "units": "C",
+                        "revenue": "D"
+                      },
+                      "first": 2,
+                      "last": 33
+                    }
+                  },
+                  "right": {
+                    "table": {
+                      "sheet": "Products",
+                      "columns": {
+                        "product": "A",
+                        "name": "B",
+                        "category": "C",
+                        "cost": "D"
+                      },
+                      "first": 2,
+                      "last": 9
+                    }
+                  },
+                  "key": "product"
+                }
+              },
+              "conditions": {
+                "product": "K03"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "12"
+  },
+  {
+    "id": "09_q006",
+    "category": "join_calculation",
+    "expression": {
+      "mul": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "join": {
+                      "left": {
+                        "table": {
+                          "sheet": "Orders",
+                          "columns": {
+                            "id": "A",
+                            "product": "B",
+                            "units": "C",
+                            "revenue": "D"
+                          },
+                          "first": 2,
+                          "last": 33
+                        }
+                      },
+                      "right": {
+                        "table": {
+                          "sheet": "Products",
+                          "columns": {
+                            "product": "A",
+                            "name": "B",
+                            "category": "C",
+                            "cost": "D"
+                          },
+                          "first": 2,
+                          "last": 9
+                        }
+                      },
+                      "key": "product"
+                    }
+                  },
+                  "conditions": {
+                    "product": "K03"
+                  }
+                }
+              },
+              "name": "units"
+            }
+          }
+        },
+        {
+          "cell": "Products!D4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "228"
+  },
+  {
+    "id": "09_q007",
+    "category": "join_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "join": {
+                  "left": {
+                    "table": {
+                      "sheet": "Orders",
+                      "columns": {
+                        "id": "A",
+                        "product": "B",
+                        "units": "C",
+                        "revenue": "D"
+                      },
+                      "first": 2,
+                      "last": 33
+                    }
+                  },
+                  "right": {
+                    "table": {
+                      "sheet": "Products",
+                      "columns": {
+                        "product": "A",
+                        "name": "B",
+                        "category": "C",
+                        "cost": "D"
+                      },
+                      "first": 2,
+                      "last": 9
+                    }
+                  },
+                  "key": "product"
+                }
+              },
+              "conditions": {
+                "product": "K04"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "16"
+  },
+  {
+    "id": "09_q008",
+    "category": "join_calculation",
+    "expression": {
+      "mul": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "join": {
+                      "left": {
+                        "table": {
+                          "sheet": "Orders",
+                          "columns": {
+                            "id": "A",
+                            "product": "B",
+                            "units": "C",
+                            "revenue": "D"
+                          },
+                          "first": 2,
+                          "last": 33
+                        }
+                      },
+                      "right": {
+                        "table": {
+                          "sheet": "Products",
+                          "columns": {
+                            "product": "A",
+                            "name": "B",
+                            "category": "C",
+                            "cost": "D"
+                          },
+                          "first": 2,
+                          "last": 9
+                        }
+                      },
+                      "key": "product"
+                    }
+                  },
+                  "conditions": {
+                    "product": "K04"
+                  }
+                }
+              },
+              "name": "units"
+            }
+          }
+        },
+        {
+          "cell": "Products!D5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "352"
+  },
+  {
+    "id": "09_q009",
+    "category": "join_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "join": {
+                  "left": {
+                    "table": {
+                      "sheet": "Orders",
+                      "columns": {
+                        "id": "A",
+                        "product": "B",
+                        "units": "C",
+                        "revenue": "D"
+                      },
+                      "first": 2,
+                      "last": 33
+                    }
+                  },
+                  "right": {
+                    "table": {
+                      "sheet": "Products",
+                      "columns": {
+                        "product": "A",
+                        "name": "B",
+                        "category": "C",
+                        "cost": "D"
+                      },
+                      "first": 2,
+                      "last": 9
+                    }
+                  },
+                  "key": "product"
+                }
+              },
+              "conditions": {
+                "product": "K05"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "14"
+  },
+  {
+    "id": "09_q010",
+    "category": "join_calculation",
+    "expression": {
+      "mul": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "join": {
+                      "left": {
+                        "table": {
+                          "sheet": "Orders",
+                          "columns": {
+                            "id": "A",
+                            "product": "B",
+                            "units": "C",
+                            "revenue": "D"
+                          },
+                          "first": 2,
+                          "last": 33
+                        }
+                      },
+                      "right": {
+                        "table": {
+                          "sheet": "Products",
+                          "columns": {
+                            "product": "A",
+                            "name": "B",
+                            "category": "C",
+                            "cost": "D"
+                          },
+                          "first": 2,
+                          "last": 9
+                        }
+                      },
+                      "key": "product"
+                    }
+                  },
+                  "conditions": {
+                    "product": "K05"
+                  }
+                }
+              },
+              "name": "units"
+            }
+          }
+        },
+        {
+          "cell": "Products!D6"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "350"
+  },
+  {
+    "id": "09_q011",
+    "category": "join_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "join": {
+                  "left": {
+                    "table": {
+                      "sheet": "Orders",
+                      "columns": {
+                        "id": "A",
+                        "product": "B",
+                        "units": "C",
+                        "revenue": "D"
+                      },
+                      "first": 2,
+                      "last": 33
+                    }
+                  },
+                  "right": {
+                    "table": {
+                      "sheet": "Products",
+                      "columns": {
+                        "product": "A",
+                        "name": "B",
+                        "category": "C",
+                        "cost": "D"
+                      },
+                      "first": 2,
+                      "last": 9
+                    }
+                  },
+                  "key": "product"
+                }
+              },
+              "conditions": {
+                "product": "K06"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "18"
+  },
+  {
+    "id": "09_q012",
+    "category": "join_calculation",
+    "expression": {
+      "mul": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "join": {
+                      "left": {
+                        "table": {
+                          "sheet": "Orders",
+                          "columns": {
+                            "id": "A",
+                            "product": "B",
+                            "units": "C",
+                            "revenue": "D"
+                          },
+                          "first": 2,
+                          "last": 33
+                        }
+                      },
+                      "right": {
+                        "table": {
+                          "sheet": "Products",
+                          "columns": {
+                            "product": "A",
+                            "name": "B",
+                            "category": "C",
+                            "cost": "D"
+                          },
+                          "first": 2,
+                          "last": 9
+                        }
+                      },
+                      "key": "product"
+                    }
+                  },
+                  "conditions": {
+                    "product": "K06"
+                  }
+                }
+              },
+              "name": "units"
+            }
+          }
+        },
+        {
+          "cell": "Products!D7"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "504"
+  },
+  {
+    "id": "09_q013",
+    "category": "join_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "join": {
+                  "left": {
+                    "table": {
+                      "sheet": "Orders",
+                      "columns": {
+                        "id": "A",
+                        "product": "B",
+                        "units": "C",
+                        "revenue": "D"
+                      },
+                      "first": 2,
+                      "last": 33
+                    }
+                  },
+                  "right": {
+                    "table": {
+                      "sheet": "Products",
+                      "columns": {
+                        "product": "A",
+                        "name": "B",
+                        "category": "C",
+                        "cost": "D"
+                      },
+                      "first": 2,
+                      "last": 9
+                    }
+                  },
+                  "key": "product"
+                }
+              },
+              "conditions": {
+                "product": "K07"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "10"
+  },
+  {
+    "id": "09_q014",
+    "category": "join_calculation",
+    "expression": {
+      "mul": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "join": {
+                      "left": {
+                        "table": {
+                          "sheet": "Orders",
+                          "columns": {
+                            "id": "A",
+                            "product": "B",
+                            "units": "C",
+                            "revenue": "D"
+                          },
+                          "first": 2,
+                          "last": 33
+                        }
+                      },
+                      "right": {
+                        "table": {
+                          "sheet": "Products",
+                          "columns": {
+                            "product": "A",
+                            "name": "B",
+                            "category": "C",
+                            "cost": "D"
+                          },
+                          "first": 2,
+                          "last": 9
+                        }
+                      },
+                      "key": "product"
+                    }
+                  },
+                  "conditions": {
+                    "product": "K07"
+                  }
+                }
+              },
+              "name": "units"
+            }
+          }
+        },
+        {
+          "cell": "Products!D8"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "310"
+  },
+  {
+    "id": "09_q015",
+    "category": "join_sum",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "join": {
+                  "left": {
+                    "table": {
+                      "sheet": "Orders",
+                      "columns": {
+                        "id": "A",
+                        "product": "B",
+                        "units": "C",
+                        "revenue": "D"
+                      },
+                      "first": 2,
+                      "last": 33
+                    }
+                  },
+                  "right": {
+                    "table": {
+                      "sheet": "Products",
+                      "columns": {
+                        "product": "A",
+                        "name": "B",
+                        "category": "C",
+                        "cost": "D"
+                      },
+                      "first": 2,
+                      "last": 9
+                    }
+                  },
+                  "key": "product"
+                }
+              },
+              "conditions": {
+                "product": "K08"
+              }
+            }
+          },
+          "name": "units"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "14"
+  },
+  {
+    "id": "09_q016",
+    "category": "join_calculation",
+    "expression": {
+      "mul": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "join": {
+                      "left": {
+                        "table": {
+                          "sheet": "Orders",
+                          "columns": {
+                            "id": "A",
+                            "product": "B",
+                            "units": "C",
+                            "revenue": "D"
+                          },
+                          "first": 2,
+                          "last": 33
+                        }
+                      },
+                      "right": {
+                        "table": {
+                          "sheet": "Products",
+                          "columns": {
+                            "product": "A",
+                            "name": "B",
+                            "category": "C",
+                            "cost": "D"
+                          },
+                          "first": 2,
+                          "last": 9
+                        }
+                      },
+                      "key": "product"
+                    }
+                  },
+                  "conditions": {
+                    "product": "K08"
+                  }
+                }
+              },
+              "name": "units"
+            }
+          }
+        },
+        {
+          "cell": "Products!D9"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "476"
+  },
+  {
+    "id": "09_q017",
+    "category": "join_filter",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "join": {
+                  "left": {
+                    "table": {
+                      "sheet": "Orders",
+                      "columns": {
+                        "id": "A",
+                        "product": "B",
+                        "units": "C",
+                        "revenue": "D"
+                      },
+                      "first": 2,
+                      "last": 33
+                    }
+                  },
+                  "right": {
+                    "table": {
+                      "sheet": "Products",
+                      "columns": {
+                        "product": "A",
+                        "name": "B",
+                        "category": "C",
+                        "cost": "D"
+                      },
+                      "first": 2,
+                      "last": 9
+                    }
+                  },
+                  "key": "product"
+                }
+              },
+              "conditions": {
+                "category": "Hardware"
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "2420"
+  },
+  {
+    "id": "09_q018",
+    "category": "join_filter",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "join": {
+                  "left": {
+                    "table": {
+                      "sheet": "Orders",
+                      "columns": {
+                        "id": "A",
+                        "product": "B",
+                        "units": "C",
+                        "revenue": "D"
+                      },
+                      "first": 2,
+                      "last": 33
+                    }
+                  },
+                  "right": {
+                    "table": {
+                      "sheet": "Products",
+                      "columns": {
+                        "product": "A",
+                        "name": "B",
+                        "category": "C",
+                        "cost": "D"
+                      },
+                      "first": 2,
+                      "last": 9
+                    }
+                  },
+                  "key": "product"
+                }
+              },
+              "conditions": {
+                "category": "Accessory"
+              }
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "3610"
+  },
+  {
+    "id": "09_q019",
+    "category": "side_by_side",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Summary!B2"
+        },
+        {
+          "cell": "Summary!F2"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "137"
+  },
+  {
+    "id": "09_q020",
+    "category": "side_by_side",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Summary!B3"
+        },
+        {
+          "cell": "Summary!F3"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "174"
+  },
+  {
+    "id": "09_q021",
+    "category": "side_by_side",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Summary!B4"
+        },
+        {
+          "cell": "Summary!F4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "211"
+  },
+  {
+    "id": "09_q022",
+    "category": "deduplicate_total",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "table": {
+              "sheet": "Orders",
+              "columns": {
+                "id": "A",
+                "product": "B",
+                "units": "C",
+                "revenue": "D"
+              },
+              "first": 2,
+              "last": 33
+            }
+          },
+          "name": "revenue"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "6030"
+  },
+  {
+    "id": "09_q023",
+    "category": "reconcile",
+    "expression": {
+      "eq": [
+        {
+          "cell": "Summary!B8"
+        },
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "table": {
+                  "sheet": "Orders",
+                  "columns": {
+                    "id": "A",
+                    "product": "B",
+                    "units": "C",
+                    "revenue": "D"
+                  },
+                  "first": 2,
+                  "last": 33
+                }
+              },
+              "name": "revenue"
+            }
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  },
+  {
+    "id": "09_q024",
+    "category": "table_sum",
+    "expression": {
+      "sum": {
+        "range": {
+          "sheet": "Summary",
+          "column": "B",
+          "first": 2,
+          "last": 4
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "540"
+  },
+  {
+    "id": "09_q025",
+    "category": "table_sum",
+    "expression": {
+      "sum": {
+        "range": {
+          "sheet": "Summary",
+          "column": "F",
+          "first": 2,
+          "last": 4
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "18"
+  },
+  {
+    "id": "09_q026",
+    "category": "join_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "join": {
+              "left": {
+                "table": {
+                  "sheet": "Orders",
+                  "columns": {
+                    "id": "A",
+                    "product": "B",
+                    "units": "C",
+                    "revenue": "D"
+                  },
+                  "first": 2,
+                  "last": 33
+                }
+              },
+              "right": {
+                "table": {
+                  "sheet": "Products",
+                  "columns": {
+                    "product": "A",
+                    "name": "B",
+                    "category": "C",
+                    "cost": "D"
+                  },
+                  "first": 2,
+                  "last": 9
+                }
+              },
+              "key": "product"
+            }
+          },
+          "conditions": {
+            "category": "Hardware"
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "16"
+  },
+  {
+    "id": "09_q027",
+    "category": "join_count",
+    "expression": {
+      "distinct_count": {
+        "column": {
+          "data": {
+            "table": {
+              "sheet": "Orders",
+              "columns": {
+                "id": "A",
+                "product": "B",
+                "units": "C",
+                "revenue": "D"
+              },
+              "first": 2,
+              "last": 33
+            }
+          },
+          "name": "product"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "8"
+  },
+  {
+    "id": "09_q028",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Orders",
+            "columns": {
+              "id": "A",
+              "product": "B",
+              "units": "C",
+              "revenue": "D"
+            },
+            "first": 2,
+            "last": 33
+          }
+        },
+        "by": [
+          [
+            "revenue",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "R023"
+  },
+  {
+    "id": "09_q029",
+    "category": "join_lookup",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "join": {
+                "left": {
+                  "table": {
+                    "sheet": "Orders",
+                    "columns": {
+                      "id": "A",
+                      "product": "B",
+                      "units": "C",
+                      "revenue": "D"
+                    },
+                    "first": 2,
+                    "last": 33
+                  }
+                },
+                "right": {
+                  "table": {
+                    "sheet": "Products",
+                    "columns": {
+                      "product": "A",
+                      "name": "B",
+                      "category": "C",
+                      "cost": "D"
+                    },
+                    "first": 2,
+                    "last": 9
+                  }
+                },
+                "key": "product"
+              }
+            },
+            "conditions": {
+              "id": "R017"
+            }
+          }
+        },
+        "by": [
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "name"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Item 02"
+  },
+  {
+    "id": "09_q030",
+    "category": "multi_step",
+    "expression": {
+      "div": [
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "table": {
+                  "sheet": "Orders",
+                  "columns": {
+                    "id": "A",
+                    "product": "B",
+                    "units": "C",
+                    "revenue": "D"
+                  },
+                  "first": 2,
+                  "last": 33
+                }
+              },
+              "name": "revenue"
+            }
+          }
+        },
+        {
+          "sum": {
+            "column": {
+              "data": {
+                "table": {
+                  "sheet": "Orders",
+                  "columns": {
+                    "id": "A",
+                    "product": "B",
+                    "units": "C",
+                    "revenue": "D"
+                  },
+                  "first": 2,
+                  "last": 33
+                }
+              },
+              "name": "units"
+            }
+          }
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "54.82"
+  }
+]

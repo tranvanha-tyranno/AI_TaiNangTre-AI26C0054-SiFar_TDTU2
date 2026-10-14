@@ -44,8 +44,8 @@ def build_01():
         {"id":"smoke_q003","file_name":"mini_fiscal.xlsx","query":"Is the agricultural export value for the fiscal year-to-date 2024 greater than that for the fiscal year-to-date 2023? Answer with only Yes or No."},
     ]
     (base/"queries.json").write_text(json.dumps(queries,ensure_ascii=False,indent=2),encoding="utf-8")
-    (base/"expected_submission.csv").write_text("id,answer\nsmoke_q001,Pham\nsmoke_q002,99\nsmoke_q003,Yes\n",encoding="utf-8")
-    (base/"README.md").write_text("# 01_smoke_replica — Smoke nhanh (3 cau)\n\nKiem tra I/O, merged header Name/Date of, va nhanh fiscal Yes/No ma khong can LLM.\n\n```powershell\n./.venv/Scripts/python.exe main.py --mode offline --xlsx_dir ./Test/01_smoke_replica/xlsx_files --queries ./Test/01_smoke_replica/queries.json --output ./Test/01_smoke_replica/submission.csv\n./.venv/Scripts/python.exe scripts/evaluate.py --prediction ./Test/01_smoke_replica/submission.csv --reference ./Test/01_smoke_replica/expected_submission.csv\n```\n\nDashboard: chon dataset `01_smoke_replica` o dropdown.\n",encoding="utf-8")
+    (base/"expected_submission.csv").write_text("id,answer\nsmoke_q001,Dang\nsmoke_q002,99\nsmoke_q003,Yes\n",encoding="utf-8")
+    (base/"README.md").write_text("# 01_smoke_replica — Smoke nhanh (3 cau)\n\nKiểm tra I/O, tiêu đề Name/Date of có ô gộp và so sánh fiscal Yes/No. Offline có thể trả chưa trả lời; chạy LLM để đánh giá đáp án.\n\nsmoke_q001: Dang là người trẻ thứ hai tại nhập học, sau Mai. Phải tính tuổi riêng từ Birth và Admission.\n\n```powershell\n./.venv/Scripts/python.exe main.py --mode offline --xlsx_dir ./Test/01_smoke_replica/xlsx_files --queries ./Test/01_smoke_replica/queries.json --output ./Test/01_smoke_replica/submission.csv\n./.venv/Scripts/python.exe scripts/evaluate.py --prediction ./Test/01_smoke_replica/submission.csv --reference ./Test/01_smoke_replica/expected_submission.csv\n```\n\nDashboard: chon dataset `01_smoke_replica` o dropdown.\n",encoding="utf-8")
 
 def build_02():
     base = TEST / "02_merged_hierarchy"
@@ -134,6 +134,7 @@ def build_05():
     (base/"expected_submission.csv").write_text("\n".join(lines)+"\n",encoding="utf-8")
     (base/"README.md").write_text("# 05_truncation_perf — Cat ngan & hieu nang\n\n500 dong de kiem tra serialize_for_llm(max_chars=14000) cat 60/40 va dashboard hien 200x30.\n\n```powershell\n./.venv/Scripts/python.exe main.py --mode offline --xlsx_dir ./Test/05_truncation_perf/xlsx_files --queries ./Test/05_truncation_perf/queries.json --output ./Test/05_truncation_perf/submission.csv\n```\n",encoding="utf-8")
 
-for fn in [build_01, build_02, build_03, build_04, build_05]:
-    fn()
-print("done")
+if __name__ == "__main__":
+    for fn in [build_01, build_02, build_03, build_04, build_05]:
+        fn()
+    print("done")
