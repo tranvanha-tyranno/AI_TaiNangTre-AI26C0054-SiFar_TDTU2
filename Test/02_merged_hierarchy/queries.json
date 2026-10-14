@@ -1,0 +1,12 @@
+[
+  {
+    "id": "hier_q001",
+    "file_name": "hierarchy.xlsx",
+    "query": "What is the total for All items in 2024? Answer with only the integer."
+  },
+  {
+    "id": "hier_q002",
+    "file_name": "industry_hours.xlsx",
+    "query": "Rank the following sectors by the number of employees in 'Manufacturing': Agriculture, Manufacturing, and Construction. Answer with the three sector names in descending order, separated by a comma and one space, without numbering."
+  }
+]

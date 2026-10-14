@@ -110,13 +110,31 @@ BTC chạy các bài dự thi hợp lệ trên **tập kiểm thử ẩn**. Th�
 
 ## 8. Checklist cho agent khi triển khai
 
-- [ ] Đọc `xlsx_files/` + `queries.json` từ **đường dẫn truyền qua tham số/ENV**, không hard-code.
-- [ ] Xử lý merged cells, tiêu đề phân cấp, nhiều bảng/sheet trên cùng file.
-- [ ] Sinh `submission.csv` với header `id,answer`, đủ số dòng, `answer` ngắn gọn (exact match).
-- [ ] Hỗ trợ cấu hình LLM qua biến môi trường / file config: model `qwen/qwen3-7-flash` qua OpenRouter; không commit API key.
-- [ ] Tối ưu chi phí ≤ $0.10/câu và thời gian ≤ 2 phút/câu trung bình; theo dõi số token.
-- [ ] Đảm bảo chạy offline/online trong 6 vCPU / 12 GB RAM, peak memory ≤ 1 GB.
-- [ ] Đóng gói `.zip` ≤ 100 MB kèm `README.md` hướng dẫn chạy bằng dòng lệnh.
+- [x] Đọc `xlsx_files/` + `queries.json` từ **đường dẫn truyền qua tham số/ENV**, không hard-code (`main.py --xlsx_dir/--queries`, `config/config.yaml`, `dashboard.py` hỗ trợ dataset param).
+- [x] Xử lý merged cells, tiêu đề phân cấp, nhiều bảng/sheet trên cùng file (`src/excel_parser.py`, `src/deterministic_qa.py::_grid/_header_col`).
+- [x] Sinh `submission.csv` với header `id,answer`, đủ số dòng, `answer` ngắn gọn (exact match).
+- [x] Hỗ trợ cấu hình LLM qua biến môi trường / file config: model `qwen/qwen3-7-flash` qua OpenRouter; không commit API key (`.env.example`, `OPENROUTER_API_KEY`, `OPENROUTER_REFERER`/`TITLE`, `src/llm_client.py`).
+- [x] Tối ưu chi phí ≤ $0.10/câu và thời gian ≤ 2 phút/câu trung bình; theo dõi số token (`outputs/logs/questions.jsonl` + `summary.json`, `COMPETITION_CONSTRAINTS.md`).
+- [x] Đảm bảo chạy offline/online trong 6 vCPU / 12 GB RAM, peak memory ≤ 1 GB.
+- [x] Đóng gói `.zip` ≤ 100 MB kèm `README.md` hướng dẫn chạy bằng dòng lệnh.
+
+## 9. Bộ kiểm thử trong `Test/` (thêm)
+
+Thư mục `Test/` chứa 5 suite riêng, mỗi suite là một bộ `xlsx_files/` + `queries.json` + `expected_submission.csv` + `README.md` **dựa trên `Public_data_1`** (tái tạo qua `scripts/gen_test_suites.py`):
+
+| Suite | Nội dung kiểm tra |
+|-------|-------------------|
+| `01_smoke_replica` | I/O, merged header `Name`/`Date of`, fiscal `Yes/No` (3 câu, không cần LLM) |
+| `02_merged_hierarchy` | Ô gộp & tiêu đề 2–3 dòng, flatten `L1 / L2` |
+| `03_multisheet_multitable` | Nhiều sheet & nhiều bảng trên 1 sheet |
+| `04_robustness` | CSV quoting, ô rỗng, từ chối ID trùng & path traversal |
+| `05_truncation_perf` | 500 dòng, cắt `serialize_for_llm` 60/40, hiệu năng |
+
+Chạy: `python main.py --xlsx_dir ./Test/<suite>/xlsx_files --queries ./Test/<suite>/queries.json --output ./Test/<suite>/submission.csv --mode offline` hoặc chọn dataset trên dashboard (dropdown **DATASET** → **Chạy mới**). Đánh giá: `python scripts/evaluate.py --prediction ./Test/<suite>/submission.csv --reference ./Test/<suite>/expected_submission.csv`.
+
+## 10. Dashboard
+
+`dashboard.py` quét `Public_data_1` + `Test/*/queries.json` thành danh mục **dataset** (`/api/datasets`). `build_state(dataset)` / `workbook(..., dataset)` / `start_run(..., dataset)` tôn trọng tham số `?dataset=` và lưu `dataset` trong `outputs/runs/<id>/metadata.json`. Giao diện: dropdown Dataset, run selector gắn dataset, thẻ 5 suite ở Tổng quan (bấm để đổi dataset), viewer Excel theo dataset. Xem `README.md` § Dashboard. `Test/` được liệt kê riêng ở dashboard và giữ nguyên cấu trúc Public_data_1 cho CLI.
 
 ---
 
