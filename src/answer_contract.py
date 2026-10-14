@@ -46,6 +46,12 @@ def infer_answer_contract(question):
         contract['decimals']=count_value(decimals.group(1)) if decimals.group(1) else 2
     # Integer ID/code questions must preserve identifiers, including leading 0.
     contract['integer']=bool(re.search(r'\bintegers?\b|số nguyên',q))
+    contract['unit_scale']=None
+    if re.search(r'\bmultiply\b[^)]{0,80}\b(?:by\s+)?100\b',q): contract['unit_scale']=100
+    elif re.search(r'from thousands (?:into|to) (?:individual |actual )?(?:people|persons|units)',q): contract['unit_scale']=1000
+    elif re.search(r'from millions (?:into|to) (?:individual |actual )?(?:people|persons|units)',q): contract['unit_scale']=1000000
+    category=re.search(r'\b(?:across|over|among)\s+(?:all|the\s+(\d+)|(\d+))\s+(sectors|industries|categories|regions|departments|products)\b',intent_q)
+    contract['category_scope']=({'noun':category.group(3),'count':int(category.group(1) or category.group(2)) if category.group(1) or category.group(2) else None} if category else None)
     return contract
 
 

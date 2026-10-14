@@ -12,6 +12,11 @@ import dashboard
 
 
 class DashboardTest(unittest.TestCase):
+    def test_second_server_cannot_share_port(self):
+        with dashboard.DashboardServer(("127.0.0.1", 0), dashboard.Handler) as server:
+            with self.assertRaises(OSError):
+                dashboard.DashboardServer(server.server_address, dashboard.Handler)
+
     def test_matches_use_selected_logs(self):
         dashboard.OUTPUTS.mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory(dir=dashboard.OUTPUTS) as temp:

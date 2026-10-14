@@ -433,5 +433,6 @@ def execute(plan, regions):
     if not isinstance(separator,str): raise PlanError('separator must be a string')
     answer=separator.join(values)
     if not sources or not answer or len(answer)>4000: raise PlanError("Final output must be nonempty and grounded in Excel")
-    return {'answer':answer,'trace':trace,'evidence':sorted(sources)[:100],
+    full_evidence=sorted(sources)
+    return {'answer':answer,'trace':trace,'evidence':full_evidence[:100],'evidence_full':full_evidence,
             'evidence_count':len(sources),'value_count':len(values),'values':values,'validated':True}

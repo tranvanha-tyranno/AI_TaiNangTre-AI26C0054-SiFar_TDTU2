@@ -7,6 +7,7 @@ from .tools.executor import execute, PlanError
 from .usage import UsageLedger, BudgetError
 from .scope_validation import validate_aggregate_scope
 from .answer_contract import infer_answer_contract, validate_answer_contract
+from .semantic_validation import validate_semantics, validate_rank_labels
 
 
 def answer_with_tools(path, question, client, record, settings):
@@ -44,14 +45,11 @@ def answer_with_tools(path, question, client, record, settings):
                 validate_aggregate_scope(question,plan,selected)
                 query=question.lower()
                 validate_answer_contract(contract,plan,result)
+                validate_semantics(question,contract,plan,result,selected)
                 if any(term in query for term in ('sector names','industry name','category name','last name')):
                     if any(re.fullmatch(r'-?\d+(\.\d+)?',v) for v in result['values']):
                         raise PlanError('Question asks for NAME labels, not numeric scores. Sort by values but output the corresponding name column, using aliases for short labels in the question.')
-                named_list=re.search(r'\brank\b[^:]*:\s*(.*?)\.\s*answer',question,re.I|re.S)
-                if named_list:
-                    labels=[re.sub(r'^and\s+','',label.strip(),flags=re.I) for label in named_list.group(1).split(',')]
-                    if len(labels)>1 and any(value.casefold() not in {label.casefold() for label in labels} for value in result['values']):
-                        raise PlanError(f'Use exactly the names explicitly listed in the question: {labels}. Add output.aliases to shorten longer spreadsheet labels, while preserving computed sort order.')
+                validate_rank_labels(question,result)
                 for target in plan.get('output',{}).get('aliases',{}).values():
                     if not isinstance(target,str) or target.casefold() not in question.casefold():
                         raise PlanError('Alias targets must be labels explicitly present in the question')

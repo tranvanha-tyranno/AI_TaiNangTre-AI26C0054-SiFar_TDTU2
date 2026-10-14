@@ -7,7 +7,7 @@ from unittest.mock import patch
 import urllib.request
 import urllib.error
 import dashboard
-from src.dashboard_analysis import decorate,summarize,compare_states,safe_context
+from src.dashboard_analysis import decorate,summarize,compare_states,safe_context,cohort
 
 
 def row(ident,answer,reference='42',dataset='public',**extra):
@@ -16,6 +16,13 @@ def row(ident,answer,reference='42',dataset='public',**extra):
 
 
 class DashboardAnalyticsTest(unittest.TestCase):
+    def test_cohort_distinguishes_changed_reference_and_subsets(self):
+        rows=[row('a','42'),row('b','42')]
+        original=cohort(rows,'public')
+        self.assertEqual(original,cohort(list(reversed(rows)),'public'))
+        self.assertNotEqual(original,cohort(rows[:1],'public'))
+        changed=[{**r,'reference':'different'} for r in rows]
+        self.assertNotEqual(original,cohort(changed,'public'))
     def test_api_error_is_not_an_answer_mismatch_or_solver_regression(self):
         original=row('x','42')
         failed=row('x','',status='error',usage={'calls':[{'status':'error','http_status':402}]})

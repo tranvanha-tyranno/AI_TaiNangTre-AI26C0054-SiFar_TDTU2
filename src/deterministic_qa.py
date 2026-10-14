@@ -1,10 +1,8 @@
-"""Deterministic answers for common spreadsheet question patterns.
+"""Legacy offline resolver for the public p4_t01 ... p4_t10 file families.
 
-The competition questions are mostly table lookups and small arithmetic
-operations.  This module deliberately works on the workbook grid directly so
-merged headers and multi-row headers remain available to the resolver.  It is
-used before the LLM; this keeps the public data set reproducible and lowers
-token/cost usage on the hidden set.
+Handlers are selected by filename and are only used in offline mode. They are
+not a general solver for unseen workbooks. The llm/hybrid pipeline reads each
+input workbook and plans tool operations without invoking these handlers.
 """
 from __future__ import annotations
 

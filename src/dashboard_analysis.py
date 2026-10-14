@@ -58,6 +58,14 @@ def identity(row,default_dataset):
     return dataset,ident
 
 
+def cohort(rows,default_dataset):
+    """Same question set and reference snapshot, independent of row order."""
+    payload=sorted([(identity(r,default_dataset),r.get('query',''),
+                     r.get('source_file',r.get('file_name','')),r.get('reference')) for r in rows],
+                   key=lambda item:item[0])
+    return hashlib.sha256(json.dumps(payload,ensure_ascii=False,sort_keys=True).encode()).hexdigest()[:16]
+
+
 def compare_states(before,after):
     old={identity(r,before['dataset']):r for r in before['rows']}
     new={identity(r,after['dataset']):r for r in after['rows']}

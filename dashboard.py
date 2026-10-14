@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 import csv
+import hashlib
 from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import io
@@ -11,24 +12,36 @@ import re
 from pathlib import Path
 import secrets
 import shutil
+import socket
 import subprocess
 import sys
 import threading
 import time
 from urllib.parse import parse_qs, urlparse
 from src.usage import summarize_usage
-from src.dashboard_analysis import decorate, summarize, compare_states, safe_context
+from src.dashboard_analysis import decorate, summarize, compare_states, safe_context, cohort
 
 ROOT = Path(__file__).resolve().parent
 STATIC = ROOT / "dashboard" / "dist"
 OUTPUTS = ROOT / "outputs"
 TEST_ROOT = ROOT / "Test"
+EXTRA_DATASET_DIRS = []
 # dataset id -> {label, xlsx_dir, queries, reference}
 DATASET_DEFAULT = "public"
 TOKEN = secrets.token_urlsafe(32)
 LOCK = threading.Lock()
 JOB = {"running": False, "run_id": None, "returncode": None, "messages": [], "started": None}
 RUN_CARD_CACHE = {}
+
+
+class DashboardServer(ThreadingHTTPServer):
+    # SO_REUSEADDR on Windows permits competing servers on the same port.
+    allow_reuse_address = os.name != "nt"
+
+    def server_bind(self):
+        if os.name == "nt":
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
 
 
 def read_json(path, default=None):
@@ -59,9 +72,40 @@ def datasets():
                     "reference": str(ref),
                     "readme": str(p / "README.md") if (p / "README.md").exists() else None,
                 })
+    for p in EXTRA_DATASET_DIRS:
+        ref = p / "expected_submission.csv"
+        if not ref.is_file():
+            ref = p / "sample_submission.csv"
+        result.append({
+            "id": "external-" + hashlib.sha256(str(p).casefold().encode()).hexdigest()[:16],
+            "label": f"Dữ liệu riêng / {p.name}", "kind": "external",
+            "xlsx_dir": str(p / "xlsx_files"), "queries": str(p / "queries.json"),
+            "reference": str(ref),
+        })
     for dataset in result:
         dataset["question_count"] = len(read_json(Path(dataset["queries"]), []))
     return result
+
+
+def configure_extra_datasets(paths):
+    """Register arbitrary dataset folders without copying them into Test/."""
+    folders = []
+    known = {(ROOT / "Public_data_1").resolve()}
+    if TEST_ROOT.is_dir():
+        known.update(p.resolve() for p in TEST_ROOT.iterdir() if p.is_dir())
+    for raw in paths:
+        folder = Path(raw).expanduser().resolve()
+        if not (folder / "xlsx_files").is_dir() or not (folder / "queries.json").is_file():
+            raise ValueError(f"Dataset cần xlsx_files/ và queries.json: {folder}")
+        questions = read_json(folder / "queries.json")
+        if not isinstance(questions, list) or not questions or any(
+                not isinstance(q, dict) or not all(k in q for k in ("id", "file_name", "query"))
+                for q in questions):
+            raise ValueError(f"queries.json không hợp lệ: {folder}")
+        if folder not in known:
+            folders.append(folder)
+            known.add(folder)
+    EXTRA_DATASET_DIRS[:] = folders
 
 
 def parse_dataset_ids(raw: str | None) -> list[str]:
@@ -205,12 +249,17 @@ def run_card(key,directory):
           'match':data[str(ident)].get('answer','')==expected[str(ident)] if str(ident) in data and str(ident) in expected else None}) for ident in ids]
     analysis=summarize(rows)
     compared=sum(r['match'] is not None for r in rows)
+    try: catalog=meta.get('catalog') or queries(dataset)
+    except ValueError: catalog=[]
+    included={str(ident) for ident in ids}
+    cohort_rows=[{**q,'reference':expected.get(str(q['id']))} for q in catalog if str(q['id']) in included]
     card={'id':key,'mode':meta.get('mode') or total.get('mode','unknown'),
           'label':meta.get('label') or ('Nhật ký lần gần nhất' if key=='latest' else 'Thử một câu LLM'),
           'dataset':dataset,'questions':total.get('questions',len(ids)),'matched':analysis['outcomes'].get('match',0),
           'compared':compared,'completed':analysis['completed'],'api_errors':analysis['api_errors'],
           'repairs':analysis['repaired_questions'],'elapsed_seconds':meta.get('elapsed_seconds',total.get('elapsed_seconds',0)),
           'finished':meta.get('finished',bool(total)),
+          'cohort':cohort(cohort_rows,dataset) if cohort_rows else None,
           'usage':total.get('usage') or summarize_usage(list(data.values())),
           'context':safe_context(read_json(directory/'run_context.json',{}))}
     if len(RUN_CARD_CACHE)>128: RUN_CARD_CACHE.pop(next(iter(RUN_CARD_CACHE)))
@@ -266,7 +315,7 @@ def build_state(selected=None, dataset_id: str | None = None, include_history=Tr
     measured_usage = summarize_usage([row for row in rows if row['status'] != 'pending'])
     return {"csrf": TOKEN, "config": safe_config(), "datasets": datasets(), "dataset": effective_dataset,
             "runs": choices, "selected": selected,
-            "analysis":summarize(rows),"context":safe_context(read_json(path/'run_context.json',{}) if path else {}),
+            "analysis":{**summarize(rows),'cohort':cohort(rows,effective_dataset)},"context":safe_context(read_json(path/'run_context.json',{}) if path else {}),
             "rows": rows, "job": job, "running": running,
             "summary": {**summary, "mode": meta.get("mode") or summary.get("mode", "unknown"),
                 "questions": len(rows), "completed": sum(row["status"] != "pending" for row in rows),
@@ -438,9 +487,9 @@ class Handler(BaseHTTPRequestHandler):
                 self.send({"catalog": queries(params.get("dataset", [None])[0])})
             elif parsed.path == "/api/datasets":
                 self.send({"datasets": datasets(), "default": DATASET_DEFAULT})
-            elif parsed.path in {"/", "/app.js", "/style.css", "/details.css", "/workspace.css"}:
-                name = {"/": "index.html", "/app.js": "app.js", "/style.css": "style.css", "/details.css": "details.css", "/workspace.css":"workspace.css"}[parsed.path]
-                mime = {"index.html": "text/html", "app.js": "text/javascript", "style.css": "text/css", "details.css": "text/css", "workspace.css":"text/css"}[name]
+            elif parsed.path in {"/", "/app.js", "/style.css", "/details.css", "/workspace.css",'/visuals.css','/chart-math.js'}:
+                name = 'index.html' if parsed.path=='/' else parsed.path[1:]
+                mime = 'text/html' if name.endswith('.html') else 'text/javascript' if name.endswith('.js') else 'text/css'
                 self.send((STATIC / name).read_bytes(), mime + "; charset=utf-8")
             else:
                 self.send({"error": "Không tìm thấy"}, status=404)
@@ -471,11 +520,23 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main():
+    for stream in (sys.stdout,sys.stderr):
+        try: stream.reconfigure(encoding='utf-8',errors='replace')
+        except AttributeError: pass
     parser = argparse.ArgumentParser(description="Dashboard Excel QA cục bộ")
     parser.add_argument("--port", type=int, default=8501)
+    parser.add_argument("--dataset-dir", action="append", default=[], metavar="PATH",
+                        help="Thêm thư mục có xlsx_files/ và queries.json; có thể lặp nhiều lần")
     args = parser.parse_args()
+    try:
+        configure_extra_datasets(args.dataset_dir)
+    except ValueError as error:
+        parser.error(str(error))
     OUTPUTS.mkdir(exist_ok=True)
-    server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
+    try:
+        server = DashboardServer(("127.0.0.1", args.port), Handler)
+    except OSError:
+        parser.error(f"Không mở được cổng {args.port}. Dừng dashboard cũ hoặc chọn --port khác.")
     print(f"Dashboard: http://127.0.0.1:{args.port}", flush=True)
     try:
         server.serve_forever()
