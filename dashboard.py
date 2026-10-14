@@ -49,13 +49,15 @@ def datasets():
                     ref = p / "sample_submission.csv"
                 result.append({
                     "id": p.name,
-                    "label": p.name,
+                    "label": f"Test / {p.name}",
                     "kind": "test",
                     "xlsx_dir": str(p / "xlsx_files"),
                     "queries": str(p / "queries.json"),
                     "reference": str(ref),
                     "readme": str(p / "README.md") if (p / "README.md").exists() else None,
                 })
+    for dataset in result:
+        dataset["question_count"] = len(read_json(Path(dataset["queries"]), []))
     return result
 
 

@@ -55,7 +55,7 @@ function render() {
   // multi picker menu
   const menu = $('datasetMenu');
   if(menu) {
-    menu.innerHTML = dsList.map(d => `<label class="multi-option"><input type="checkbox" value="${escapeHTML(d.id)}" ${chosen.has(d.id)?'checked':''}> <span>${escapeHTML(d.label)}</span> <small>${escapeHTML(d.kind||'')}</small></label>`).join('');
+    menu.innerHTML = dsList.map(d => `<label class="multi-option"><input type="checkbox" value="${escapeHTML(d.id)}" ${chosen.has(d.id)?'checked':''}> <span>${escapeHTML(d.label)}</span> <small>${d.question_count ?? '—'} câu</small></label>`).join('');
     menu.querySelectorAll('input').forEach(cb => cb.onchange = () => {
       const ids = [...menu.querySelectorAll('input:checked')].map(i=>i.value);
       setDataset(ids);
@@ -214,7 +214,7 @@ document.addEventListener('click', e=>{ const picker=$('datasetPicker'); if(pick
 $('clearDatasets').onclick = () => setDataset(['public']);
 $('openRun').onclick = () => {
   const chosen = new Set(datasetList());
-  $('datasetDialog').innerHTML = state.datasets.map(d => `<label class="multi-option"><input type="checkbox" value="${escapeHTML(d.id)}" ${chosen.has(d.id)?'checked':''}> ${escapeHTML(d.label)}</label>`).join('');
+  $('datasetDialog').innerHTML = state.datasets.map(d => `<label class="multi-option"><input type="checkbox" value="${escapeHTML(d.id)}" ${chosen.has(d.id)?'checked':''}> <span>${escapeHTML(d.label)}</span><small>${d.question_count ?? '—'} câu</small></label>`).join('');
   $('runDialog').showModal();
   loadDialogCatalog();
 };
