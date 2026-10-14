@@ -134,6 +134,10 @@ def main():
     t0 = time.time()
     log_dir = Path(args.log_dir)
     log_dir.mkdir(parents=True, exist_ok=True)
+    from src.run_context import run_context
+    context=run_context(Path(__file__).resolve().parent,queries_path,xlsx_dir,queries,cfg,mode,concurrency,
+                        os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash')
+    (log_dir / 'run_context.json').write_text(json.dumps(context,ensure_ascii=False,indent=2),encoding='utf-8')
     records = []
     progress_path = log_dir / "questions.jsonl"
     progress_path.write_text("", encoding="utf-8")

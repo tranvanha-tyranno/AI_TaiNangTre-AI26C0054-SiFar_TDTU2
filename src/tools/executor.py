@@ -62,7 +62,10 @@ def expression(expr, row, results, depth=0):
     op, arg = next(iter(expr.items()))
     if op == 'col':
         if arg not in row:
-            raise PlanError(f"Unknown column {arg}")
+            available=[key for key in row if not key.startswith('__')]
+            raise PlanError(f"Unknown column {arg}; available columns are {available}. "
+                            "After unpivot, label is the column heading and _row is the original row number. "
+                            "Filter the source row before unpivot, or use keep_columns to preserve its label.")
         return Result(row[arg], set(row.get('__sources',{}).get(arg,[])))
     if op == 'value':
         if isinstance(arg,(dict,list)):
@@ -138,6 +141,25 @@ def rows_of(results, name):
 def aggregate(rows, metric, expr, results, missing='error'):
     if metric=='count':
         return Result(len(rows),set().union(*(set(row.get('__filter_sources',[])) | set().union(*(set(v) for v in row.get('__sources',{}).values())) for row in rows)))
+    if metric=='sum' and len(rows)>1:
+        # Tables frequently print a grand total above/below its components.
+        # Summing both is syntactically valid but double-counts the data.
+        labels=[]
+        for row in rows:
+            label=next((str(v).strip() for col,v in row.items()
+                        if not col.startswith('_') and isinstance(v,str) and v.strip()),'')
+            labels.append(label)
+        total_rows=[(label,row) for label,row in zip(labels,rows)
+                    if re.match(r'^(?:grand total|subtotal|total|tổng cộng|tổng)(?:\b|\s|,|:)',label,re.I)]
+        if total_rows and len(total_rows)<len(rows):
+            locations=[]
+            for label,row in total_rows[:2]:
+                try: refs=sorted(expression(expr,row,results).sources)
+                except PlanError: refs=[]
+                locations.append({'label':label,'row':row.get('_row'),'cells':refs[:4]})
+            raise PlanError(f'Sum includes a Total/subtotal row together with detail rows. Total rows: {locations}. '
+                            'For the overall total, use cell on that matching printed Total alone (no new sum needed). '
+                            'For detail sums, exclude Total and overlapping groups from read/filter bounds.')
     selected=[]
     for row in rows:
         val=expression(expr,row,results)
@@ -177,6 +199,13 @@ def format_value(value, fmt):
 def execute(plan, regions):
     if not isinstance(plan,dict) or not isinstance(plan.get('steps'),list) or not 1<=len(plan['steps'])<=25:
         raise PlanError("Plan requires 1..25 steps")
+    final=plan.get('output')
+    if not isinstance(final,dict): raise PlanError('output must be an object')
+    unsupported=set(final)-{'step','columns','separator','decimals','aliases'}
+    if unsupported:
+        raise PlanError(f'Unsupported output fields: {sorted(unsupported)}. '
+                        'limit/offset belong in a take STEP after sorting, not in output. '
+                        'Totals require an aggregate or sum_columns STEP; output only formats the final result.')
     index={r.id:r for r in regions}
     results,trace={},[]
     materialized_cells=0
@@ -186,12 +215,25 @@ def execute(plan, regions):
         name,op=step.get('id'),step.get('op')
         allowed={
             'read':{'table','start_row','end_row'},'cell':{'table','row','column'},
-            'concat':{'inputs'},'collect':{'inputs'},'unpivot':{'input','columns','label_table','label_row'},
+            'sum_columns':{'table','row','columns'},
+            'concat':{'inputs'},'collect':{'inputs'},'unpivot':{'input','columns','label_table','label_row','keep_columns'},
             'filter':{'input','where'},'derive':{'input','column','expr'},'sort':{'input','by'},
             'take':{'input','offset','limit'},'select':{'input','columns'},
             'aggregate':{'input','metric','expr','missing'},'group':{'input','by','metric','expr','column','missing'},
             'join':{'left','right','left_on','right_on'},'calculate':{'expr'}}
         if op not in allowed: raise PlanError(f'Tool not allowed: {op}')
+        required={
+            'read':['table'],'cell':['table','row','column'],'sum_columns':['table','row','columns'],
+            'concat':['inputs'],'collect':['inputs'],'unpivot':['input','columns'],
+            'filter':['input','where'],'derive':['input','column','expr'],'sort':['input','by'],
+            'take':['input'],'select':['input','columns'],'aggregate':['input','metric'],
+            'group':['input','by','metric'],'join':['left','right','left_on','right_on'],'calculate':['expr']}
+        missing=[field for field in required[op] if field not in step]
+        if missing:
+            datasets=[key for key,result in results.items() if isinstance(result.value,list)]
+            raise PlanError(f'Step {name} ({op}) is missing required fields {missing}. '
+                            f'For input, explicitly name the intended preceding row dataset: {datasets}. '
+                            'Return the complete plan with those fields present.')
         unexpected=set(step)-allowed[op]-{'id','op'}
         if unexpected: raise PlanError(f'Unsupported fields for {op}: {sorted(unexpected)}. Apply filter in a separate step before aggregate.')
         if not isinstance(name,str) or not re.fullmatch(r'[a-zA-Z][a-zA-Z0-9_]{0,30}',name) or name in results:
@@ -218,6 +260,21 @@ def execute(plan, regions):
             columns={get_column_letter(c):c for c in range(region.start_col,region.end_col+1)}
             if col not in columns or not isinstance(row,int) or not region.start_row<=row<=region.end_row: raise PlanError('Cell outside selected table')
             result=Result(region.cells.get((row,columns[col])),{f'{region.sheet}!{col}{row}'})
+        elif op=='sum_columns':
+            region=index.get(step.get('table'))
+            row=step.get('row'); columns=step.get('columns')
+            available={get_column_letter(c):c for c in range(region.start_col,region.end_col+1)} if region else {}
+            if region is None or not isinstance(row,int) or not region.start_row<=row<=region.end_row:
+                raise PlanError('Row outside selected table')
+            if not isinstance(columns,list) or not columns or len(set(columns))!=len(columns):
+                raise PlanError('sum_columns requires distinct numeric column letters')
+            values=[]; sources=set()
+            for col in columns:
+                if col not in available: raise PlanError('Unknown sum_columns column')
+                source=f'{region.sheet}!{col}{row}'
+                values.append(numeric(Result(region.cells.get((row,available[col])),{source})))
+                sources.add(source)
+            result=Result(sum(values,Decimal(0)),sources)
         elif op=='concat':
             inputs=step.get('inputs')
             if not isinstance(inputs,list) or not 2<=len(inputs)<=10: raise PlanError('concat needs 2..10 datasets')
@@ -238,9 +295,13 @@ def execute(plan, regions):
             rows=rows_of(results,step.get('input'))
             columns=step.get('columns')
             if not isinstance(columns,list) or not columns: raise PlanError('unpivot requires columns')
+            keep_columns=step.get('keep_columns',[])
+            if not isinstance(keep_columns,list) or any(c in {'column','label','value','_row'} or c.startswith('__') for c in keep_columns):
+                raise PlanError('Invalid unpivot keep_columns')
             label_row=step.get('label_row'); label_region=index.get(step.get('label_table'))
             value=[]
             for row in rows:
+                if any(c not in row for c in keep_columns): raise PlanError('Unknown unpivot keep column')
                 for col in columns:
                     if col not in row: raise PlanError('Unknown unpivot column')
                     label=col; label_sources=[]
@@ -252,8 +313,10 @@ def execute(plan, regions):
                         if source is None: raise PlanError('Label cell not available in retrieved sheet')
                         label=source.cells.get((label_row,c))
                         label_sources=[f'{label_region.sheet}!{col}{label_row}']
-                    value.append({'column':col,'label':label,'value':row[col],'_row':row.get('_row'),
-                                  '__sources':{'label':label_sources or row['__sources'].get(col,[]),'value':row['__sources'].get(col,[])}})
+                    value.append({**{c:row[c] for c in keep_columns},
+                                  'column':col,'label':label,'value':row[col],'_row':row.get('_row'),
+                                  '__sources':{**{c:row['__sources'].get(c,[]) for c in keep_columns},
+                                               'label':label_sources or row['__sources'].get(col,[]),'value':row['__sources'].get(col,[])}})
             result=Result(value,set())
         elif op in {'filter','derive','sort','take','select','aggregate','group'}:
             rows=rows_of(results,step.get('input'))
@@ -370,5 +433,6 @@ def execute(plan, regions):
     if not isinstance(separator,str): raise PlanError('separator must be a string')
     answer=separator.join(values)
     if not sources or not answer or len(answer)>4000: raise PlanError("Final output must be nonempty and grounded in Excel")
-    return {'answer':answer,'trace':trace,'evidence':sorted(sources)[:100],
+    full_evidence=sorted(sources)
+    return {'answer':answer,'trace':trace,'evidence':full_evidence[:100],'evidence_full':full_evidence,
             'evidence_count':len(sources),'value_count':len(values),'values':values,'validated':True}

@@ -40,6 +40,30 @@ class Region:
     def bounds(self):
         return f"{get_column_letter(self.start_col)}{self.start_row}:{get_column_letter(self.end_col)}{self.end_row}"
 
+    def column_headers(self):
+        full_titles=[(r1,r2) for c1,r1,c2,r2 in map(range_boundaries,self.merged)
+                     if c1<=self.start_col and c2>=self.end_col and c2>c1 and r1==r2]
+        return {get_column_letter(c):list(dict.fromkeys(text(self.cells[(r,c)]) for r in self.header_rows
+                if (r,c) in self.cells and self.cells[(r,c)] is not None and not any(r1<=r<=r2 for r1,r2 in full_titles)))
+                for c in range(self.start_col,self.end_col+1)}
+
+    def row_dimensions(self):
+        dimensions=[]
+        paths=self.column_headers()
+        for c in range(self.start_col,self.end_col+1):
+            headers=paths[get_column_letter(c)]
+            if not any(re.fullmatch(r'(?:sectors?|industry|industries|category|categories|regions?|departments?|products?|groups?)',label.strip(),re.I) for label in headers): continue
+            rows=[];totals=[]
+            for r in range(self.start_row,self.end_row+1):
+                label=self.cells.get((r,c))
+                if r in self.header_rows or not isinstance(label,str) or not label.strip(): continue
+                if not any(isinstance(self.cells.get((r,col)),(int,float)) and not isinstance(self.cells.get((r,col)),bool)
+                           for col in range(self.start_col,self.end_col+1) if col!=c): continue
+                if re.match(r'^(?:total|subtotal|grand total)\b',label,re.I): totals.append(r)
+                else: rows.append(r)
+            dimensions.append({'column':get_column_letter(c),'column_index':c,'headers':headers,'data_rows':rows,'total_rows':totals})
+        return dimensions
+
     def preview(self, query, max_rows=45):
         all_rows = list(range(self.start_row, self.end_row + 1))
         tokens = words(query)
@@ -48,15 +72,28 @@ class Region:
             included = all_rows
         else:
             included = sorted(set(all_rows[:10] + all_rows[-3:] + ranked[:max_rows-13]))
+        # Retain merged ranges explicitly while sending the anchor text once.
+        # Expanded values remain available to the executor.
+        merged_bounds=[range_boundaries(region) for region in self.merged]
+        def preview_cells(row):
+            return {get_column_letter(c):text(self.cells[(row,c)])[:500]
+                    for c in range(self.start_col,self.end_col+1) if (row,c) in self.cells
+                    and not any(c1<=c<=c2 and r1<=row<=r2 and (row,c)!=(r1,c1)
+                                for c1,r1,c2,r2 in merged_bounds)}
         return {"table_id": self.id, "sheet": self.sheet, "range": self.bounds,
                 "context": self.context, "header_rows": self.header_rows,
+                "column_hierarchy":self.column_headers(),
+                "row_dimensions":[{'column':d['column'],'headers':d['headers'],'row_count':len(d['data_rows']),
+                                   'data_ranges':[[span[0],span[-1]] for span in spans(d['data_rows'])],
+                                   'distinct_labels':list(dict.fromkeys(text(self.cells[(r,d['column_index'])]) for r in d['data_rows']))[:40]}
+                                  for d in self.row_dimensions()],
                 "whole_sheet": self.whole_sheet,
                 "row_labels": [{'row':r,'label':' | '.join(dict.fromkeys(text(self.cells.get((r,c)))[:300] for c in range(self.start_col,min(self.start_col+2,self.end_col+1)) if self.cells.get((r,c)) is not None))} for r in all_rows[:500]],
                 "percent_cells": [f'{get_column_letter(c)}{r}' for (r,c),fmt in (self.formats or {}).items() if '%' in fmt][:100],
                 "merged_ranges": self.merged, "total_rows": len(all_rows),
                 "preview_is_complete": len(included) == len(all_rows),
                 "columns": [get_column_letter(c) for c in range(self.start_col,self.end_col+1)],
-                "rows": [{"row":r,"cells":{get_column_letter(c):text(self.cells[(r,c)])[:500] for c in range(self.start_col,self.end_col+1) if (r,c) in self.cells}} for r in included]}
+                "rows": [{"row":r,"cells":preview_cells(r)} for r in included]}
 
 
 def spans(indices):

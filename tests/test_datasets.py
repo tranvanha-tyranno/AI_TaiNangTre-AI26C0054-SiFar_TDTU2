@@ -19,6 +19,39 @@ def _write_expected(path: Path, rows: dict):
 
 
 class DashboardDatasetTest(unittest.TestCase):
+    def test_external_dataset_without_reference_and_refresh(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(dashboard, "EXTRA_DATASET_DIRS", []):
+            folder = Path(tmp) / "Bộ mới"
+            (folder / "xlsx_files").mkdir(parents=True)
+            query_file = folder / "queries.json"
+            query_file.write_text(json.dumps([{"id": "new1", "file_name": "unknown.xlsx", "query": "Q"}]), encoding="utf-8")
+            dashboard.configure_extra_datasets([str(folder), str(folder)])
+            extra = [d for d in dashboard.datasets() if d["kind"] == "external"]
+            self.assertEqual(len(extra), 1)
+            ident = extra[0]["id"]
+            self.assertEqual(dashboard.queries(ident)[0]["file_name"], "unknown.xlsx")
+            self.assertEqual(dashboard.reference(ident), {})
+            with patch.object(dashboard, "run_dirs", return_value={}):
+                state = dashboard.build_state(dataset_id=ident)
+            self.assertIsNone(state["rows"][0]["reference"])
+            self.assertIsNone(state["rows"][0]["match"])
+            self.assertEqual(state["summary"]["compared"], 0)
+            query_file.write_text(json.dumps([{"id": "new2", "file_name": "changed.xlsx", "query": "Changed"}]), encoding="utf-8")
+            self.assertEqual(dashboard.queries(ident)[0]["id"], "new2")
+            self.assertEqual([d for d in dashboard.datasets() if d["kind"] == "external"][0]["id"], ident)
+
+    def test_invalid_external_dataset_and_duplicate_builtin(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(dashboard, "EXTRA_DATASET_DIRS", []):
+            with self.assertRaises(ValueError):
+                dashboard.configure_extra_datasets([tmp])
+            folder = Path(tmp)
+            (folder / "xlsx_files").mkdir()
+            (folder / "queries.json").write_text('{}', encoding="utf-8")
+            with self.assertRaises(ValueError):
+                dashboard.configure_extra_datasets([tmp])
+            dashboard.configure_extra_datasets([str(ROOT / "Public_data_1")])
+            self.assertEqual(dashboard.EXTRA_DATASET_DIRS, [])
+
     def test_switching_dataset_does_not_reuse_public_logs(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp)
