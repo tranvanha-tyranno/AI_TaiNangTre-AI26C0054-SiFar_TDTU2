@@ -1,6 +1,6 @@
 xlsx_dir: ./Public_data_1/xlsx_files
 queries: ./Public_data_1/queries.json
-output: ./submission.csv
+output: ./outputs/submission.csv
 
 # LLM
 model: qwen/qwen3-7-flash

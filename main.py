@@ -63,12 +63,18 @@ def main():
     ap.add_argument("--xlsx_dir", type=str, default=None, help="Thư mục chứa .xlsx")
     ap.add_argument("--queries", type=str, default=None, help="Đường dẫn queries.json")
     ap.add_argument("--output", type=str, default=None, help="Đường dẫn submission.csv")
+    ap.add_argument("--log-dir", default="outputs/logs", help="Nhật ký từng câu")
     ap.add_argument("--config", type=str, default="config/config.yaml", help="File config yaml (optional)")
     ap.add_argument("--concurrency", type=int, default=4)
     ap.add_argument("--no-llm", action="store_true", help="Chạy offline: chỉ dùng bộ giải quyết định lượng")
     ap.add_argument("--mode", choices=["hybrid", "llm", "offline"], default=None,
                     help="hybrid (mặc định), llm, hoặc offline")
     args = ap.parse_args()
+    try:
+        from dotenv import load_dotenv
+        load_dotenv(Path(__file__).parent / ".env", override=False)
+    except ImportError:
+        pass
 
     cfg = {}
     if args.config and Path(args.config).exists():
@@ -81,6 +87,8 @@ def main():
     mode = args.mode or cfg.get("mode") or "hybrid"
     if args.no_llm:
         mode = "offline"
+    if not isinstance(concurrency, int) or concurrency < 1 or concurrency > 6:
+        ap.error("concurrency phải nằm trong khoảng 1 đến 6")
 
     # env cho llm_client
     if cfg.get("model"):
@@ -96,6 +104,20 @@ def main():
         sys.exit(1)
 
     queries = json.loads(queries_path.read_text(encoding="utf-8"))
+    if not isinstance(queries, list) or not queries:
+        ap.error("queries.json phải là danh sách câu hỏi không rỗng")
+    seen = set()
+    for q in queries:
+        if not isinstance(q, dict) or not all(k in q for k in ("id", "file_name", "query")):
+            ap.error("Mỗi câu hỏi phải có id, file_name, query")
+        if not isinstance(q["id"], (str, int)) or str(q["id"]) in seen:
+            ap.error("ID không hợp lệ hoặc trùng lặp")
+        seen.add(str(q["id"]))
+        if not isinstance(q["file_name"], str) or not isinstance(q["query"], str):
+            ap.error("file_name và query phải là chuỗi")
+        candidate = (xlsx_dir / q["file_name"]).resolve()
+        if not candidate.is_relative_to(xlsx_dir.resolve()) or not candidate.is_file() or candidate.suffix.lower() != ".xlsx":
+            ap.error(f"File Excel không hợp lệ cho ID {q['id']}")
     print(f"[INFO] {len(queries)} queries | xlsx_dir={xlsx_dir} | output={output_path}")
     print(f"[INFO] mode={mode} | LLM model={os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash'} | concurrency={concurrency}")
 
@@ -110,8 +132,14 @@ def main():
 
     results: dict[str, str] = {}
     t0 = time.time()
+    log_dir = Path(args.log_dir)
+    log_dir.mkdir(parents=True, exist_ok=True)
+    records = []
 
     def task(q):
+        started = time.perf_counter()
+        record = {"id": q["id"], "file_name": q["file_name"], "query": q["query"],
+                  "stage": "deterministic", "status": "ok", "mode": mode}
         xlsx_path = xlsx_dir / q["file_name"]
         if not xlsx_path.exists():
             return q["id"], ""
@@ -120,20 +148,27 @@ def main():
             if mode in {"hybrid", "offline"}:
                 ans = answer_deterministic(xlsx_path, q["query"])
             if ans is None and mode != "offline":
+                record["stage"] = "llm_direct"
                 ans = answer_one_file(xlsx_path, q["query"])
+            if ans is None or ans == "":
+                record["status"] = "unanswered"
             ans = ans or ""
-            return q["id"], ans
+            record.update(answer=ans, elapsed_seconds=round(time.perf_counter() - started, 4))
+            return q["id"], ans, record
         except Exception as e:
             print(f"[WARN] {q['id']} lỗi: {e}", file=sys.stderr)
-            return q["id"], ""
+            record.update(status="error", error_type=type(e).__name__, answer="",
+                          elapsed_seconds=round(time.perf_counter() - started, 4))
+            return q["id"], "", record
 
     with ThreadPoolExecutor(max_workers=concurrency) as pool:
         futs = {pool.submit(task, q): q for q in queries}
         for fut in as_completed(futs):
-            qid, ans = fut.result()
+            qid, ans, record = fut.result()
+            records.append(record)
             results[qid] = ans
             q = futs[fut]
-            print(f"  OK {qid} -> {ans[:120]}")
+            print(f"  {record['status'].upper()} {qid} -> {ans[:120]}")
 
     elapsed = time.time() - t0
     print(f"[INFO] Hoàn tất {len(results)}/{len(queries)} trong {elapsed:.1f}s ({elapsed/len(queries):.1f}s/câu)")
@@ -147,11 +182,21 @@ def main():
             w.writerow([q["id"], results.get(q["id"], "")])
 
     print(f"[INFO] Đã ghi {output_path}")
+    order = {str(q['id']): i for i, q in enumerate(queries)}
+    records.sort(key=lambda item: order[str(item['id'])])
+    (log_dir / "questions.jsonl").write_text(
+        "\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n", encoding="utf-8")
+    summary = {"questions": len(queries), "answered": sum(r['status'] == 'ok' for r in records),
+               "elapsed_seconds": elapsed, "mode": mode,
+               "model": os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash',
+               "cost_verified": False, "memory_verified": False}
+    (log_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # cảnh báo giới hạn đề thi
-    avg_cost_hint = elapsed  # placeholder
     if elapsed > 40 * 60:
         print(f"[WARN] Tổng thời gian {elapsed/60:.1f} phút vượt ngưỡng 40 phút/20 câu của đề!", file=sys.stderr)
+    if any(r['status'] != 'ok' for r in records):
+        sys.exit(3)
 
 
 if __name__ == "__main__":

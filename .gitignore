@@ -1,5 +1,9 @@
+.venv/
 __pycache__/
 *.pyc
-.venv/
 .env
+.env.*
+!.env.example
+outputs/
 submission.csv
+.pytest_cache/

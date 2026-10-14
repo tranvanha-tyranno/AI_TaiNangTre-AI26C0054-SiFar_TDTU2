@@ -27,7 +27,7 @@ def get_client() -> Optional["OpenAI"]:
     if not api_key:
         return None
     base_url = os.getenv("OPENROUTER_BASE_URL") or os.getenv("OPENAI_BASE_URL") or DEFAULT_BASE_URL
-    return OpenAI(api_key=api_key, base_url=base_url)
+    return OpenAI(api_key=api_key, base_url=base_url, timeout=45.0, max_retries=0)
 
 
 def get_model() -> str:
@@ -71,6 +71,8 @@ def ask_llm(question: str, table_text: str, max_tokens: int = 512, temperature: 
             return text.strip()
         except Exception as e:
             last_err = e
+            if getattr(e, "status_code", None) in {400, 401, 403, 404, 422}:
+                raise
             if attempt == 0:
                 time.sleep(1.5)
                 continue
