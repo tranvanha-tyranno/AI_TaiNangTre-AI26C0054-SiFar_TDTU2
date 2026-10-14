@@ -30,11 +30,23 @@ DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
 def get_client() -> Optional["OpenAI"]:
     if OpenAI is None:
         return None
-    api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY") or ""
+    api_key = (os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY") or "").strip()
     if not api_key:
         return None
-    base_url = os.getenv("OPENROUTER_BASE_URL") or os.getenv("OPENAI_BASE_URL") or DEFAULT_BASE_URL
-    return OpenAI(api_key=api_key, base_url=base_url, timeout=45.0, max_retries=0)
+    base_url = (os.getenv("OPENROUTER_BASE_URL") or os.getenv("OPENAI_BASE_URL") or DEFAULT_BASE_URL).strip()
+    # OpenRouter yêu cầu 2 header này để tính ranking/analytics, thiếu vẫn chạy
+    # nhưng có thì tránh bị chặn 401 trên một số key/org.
+    extra_headers = {
+        "HTTP-Referer": os.getenv("OPENROUTER_REFERER") or "https://github.com/tranvanha-tyranno/AI_TaiNangTre-AI26C0054-SiFar_TDTU2",
+        "X-Title": os.getenv("OPENROUTER_TITLE") or "SiFar-TDTU2 Excel QA",
+    }
+    return OpenAI(
+        api_key=api_key,
+        base_url=base_url,
+        timeout=60.0,
+        max_retries=0,
+        default_headers=extra_headers,
+    )
 
 
 def get_model() -> str:
