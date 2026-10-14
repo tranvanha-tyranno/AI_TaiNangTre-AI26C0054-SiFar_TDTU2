@@ -20,6 +20,9 @@ from src.usage import summarize_usage
 ROOT = Path(__file__).resolve().parent
 STATIC = ROOT / "dashboard" / "dist"
 OUTPUTS = ROOT / "outputs"
+TEST_ROOT = ROOT / "Test"
+# dataset id -> {label, xlsx_dir, queries, reference}
+DATASET_DEFAULT = "public"
 TOKEN = secrets.token_urlsafe(32)
 LOCK = threading.Lock()
 JOB = {"running": False, "run_id": None, "returncode": None, "messages": [], "started": None}
@@ -32,15 +35,54 @@ def read_json(path, default=None):
         return default
 
 
-def queries():
-    return read_json(ROOT / "Public_data_1" / "queries.json", [])
+def datasets():
+    """Danh mục dataset cho dashboard: public + từng thư mục trong Test/."""
+    result = [{"id": DATASET_DEFAULT, "label": "Public_data_1 (mặc định)", "kind": "public",
+               "xlsx_dir": str(ROOT / "Public_data_1" / "xlsx_files"),
+               "queries": str(ROOT / "Public_data_1" / "queries.json"),
+               "reference": str(ROOT / "Public_data_1" / "sample_submission.csv")}]
+    if TEST_ROOT.exists():
+        for p in sorted(TEST_ROOT.iterdir()):
+            if p.is_dir() and (p / "queries.json").exists():
+                ref = p / "expected_submission.csv"
+                if not ref.exists():
+                    # fallback: reference chính là expected nếu có
+                    ref = p / "expected_submission.csv"
+                result.append({
+                    "id": p.name,
+                    "label": p.name,
+                    "kind": "test",
+                    "xlsx_dir": str(p / "xlsx_files"),
+                    "queries": str(p / "queries.json"),
+                    "reference": str(ref),
+                    "readme": str(p / "README.md") if (p / "README.md").exists() else None,
+                })
+    return result
 
 
-def reference():
+def dataset_ids():
+    return {d["id"] for d in datasets()}
+
+
+def dataset_for(dataset_id: str | None):
+    target = (dataset_id or DATASET_DEFAULT).strip() or DATASET_DEFAULT
+    for d in datasets():
+        if d["id"] == target:
+            return d
+    raise ValueError("Dataset không tồn tại")
+
+
+def queries(dataset_id: str | None = None):
+    ds = dataset_for(dataset_id)
+    return read_json(Path(ds["queries"]), [])
+
+
+def reference(dataset_id: str | None = None):
+    ds = dataset_for(dataset_id)
     try:
-        with (ROOT / "Public_data_1" / "sample_submission.csv").open(encoding="utf-8-sig", newline="") as stream:
+        with Path(ds["reference"]).open(encoding="utf-8-sig", newline="") as stream:
             return {r["id"]: r["answer"] for r in csv.DictReader(stream)}
-    except (OSError, KeyError):
+    except (OSError, KeyError, FileNotFoundError):
         return {}
 
 
@@ -73,14 +115,18 @@ def records(path):
 
 def safe_config():
     # Read only safe values, never return API credentials or raw .env content.
-    from dotenv import dotenv_values
-    local = dotenv_values(ROOT / ".env")
+    try:
+        from dotenv import dotenv_values
+        local = dotenv_values(ROOT / ".env")
+    except ImportError:
+        local = {}
     return {"model": os.environ.get("MODEL_NAME") or local.get("MODEL_NAME") or "qwen/qwen3-7-flash",
             "key_configured": bool(os.environ.get("OPENROUTER_API_KEY") or local.get("OPENROUTER_API_KEY")),
             "base_url": "https://openrouter.ai/api/v1"}
 
 
-def build_state(selected=None):
+def build_state(selected=None, dataset_id: str | None = None):
+    # dataset resolved from run metadata if a run is selected, otherwise from query param
     directories = run_dirs()
     if selected and selected not in directories:
         raise ValueError("Không tìm thấy lần chạy")
@@ -91,13 +137,19 @@ def build_state(selected=None):
     data = records(path) if path else {}
     meta = read_json(path / "metadata.json", {}) if path else {}
     summary = read_json(path / "summary.json", {}) if path else {}
-    all_queries = queries()
+    # dataset priority: run metadata > explicit dataset param > default
+    effective_dataset = (meta.get("dataset") if isinstance(meta.get("dataset"), str) else None) or dataset_id or DATASET_DEFAULT
+    try:
+        dataset_for(effective_dataset)
+    except ValueError:
+        effective_dataset = DATASET_DEFAULT
+    all_queries = queries(effective_dataset)
     if meta.get("ids") is not None:
         included = {str(key) for key in meta["ids"]}
         all_queries = [q for q in all_queries if str(q["id"]) in included]
     elif selected == "smoke":
         all_queries = [q for q in all_queries if str(q["id"]) in data]
-    expected = reference()
+    expected = reference(effective_dataset)
     rows = []
     for q in all_queries:
         record = data.get(str(q["id"]), {})
@@ -121,11 +173,13 @@ def build_state(selected=None):
         information = read_json(directory / "metadata.json", {})
         total = read_json(directory / "summary.json", {})
         choices.append({"id": key, "mode": information.get("mode") or total.get("mode", "unknown"),
-                        "label": information.get("label") or ("Nhật ký lần gần nhất" if key == "latest" else "Thử một câu LLM")})
+                        "label": information.get("label") or ("Nhật ký lần gần nhất" if key == "latest" else "Thử một câu LLM"),
+                        "dataset": information.get("dataset") or DATASET_DEFAULT})
     matched = sum(row["match"] is True for row in rows)
     compared = sum(row["match"] is not None for row in rows)
     measured_usage = summarize_usage([row for row in rows if row['status'] != 'pending'])
-    return {"csrf": TOKEN, "config": safe_config(), "runs": choices, "selected": selected,
+    return {"csrf": TOKEN, "config": safe_config(), "datasets": datasets(), "dataset": effective_dataset,
+            "runs": choices, "selected": selected,
             "rows": rows, "job": job, "running": running,
             "summary": {**summary, "mode": meta.get("mode") or summary.get("mode", "unknown"),
                 "questions": len(rows), "completed": sum(row["status"] != "pending" for row in rows),
@@ -133,13 +187,14 @@ def build_state(selected=None):
                 "matched": matched, "compared": compared, "elapsed_seconds": elapsed,
                 "pipeline_version": summary.get('pipeline_version') or next((row.get('pipeline_version') for row in rows if row.get('pipeline_version')),None),
                 "usage": measured_usage},
-            "catalog": queries(), "files": sorted({q["file_name"] for q in queries()})}
+            "catalog": queries(effective_dataset), "files": sorted({q["file_name"] for q in queries(effective_dataset)})}
 
 
-def start_run(mode, ids):
+def start_run(mode, ids, dataset_id: str | None = None):
     if mode not in {"llm", "offline", "hybrid"}:
         raise ValueError("Chế độ không hợp lệ")
-    all_queries = queries()
+    ds = dataset_for(dataset_id)
+    all_queries = queries(ds["id"])
     if ids is not None:
         if not isinstance(ids, list) or not ids:
             raise ValueError("Chọn ít nhất một câu hỏi")
@@ -155,7 +210,7 @@ def start_run(mode, ids):
         name = now.strftime("%Y%m%d-%H%M%S") + "-" + secrets.token_hex(3)
         directory = OUTPUTS / "runs" / name
         directory.mkdir(parents=True)
-        metadata = {"mode": mode, "ids": [q["id"] for q in all_queries],
+        metadata = {"mode": mode, "dataset": ds["id"], "ids": [q["id"] for q in all_queries],
                     "label": now.strftime("%d/%m %H:%M:%S"), "timezone": "Asia/Ho_Chi_Minh", "finished": False}
         (directory / "metadata.json").write_text(json.dumps(metadata), encoding="utf-8")
         (directory / "queries.json").write_text(json.dumps(all_queries, ensure_ascii=False), encoding="utf-8")
@@ -167,7 +222,7 @@ def start_run(mode, ids):
             process = subprocess.Popen([sys.executable, "-u", str(ROOT / "main.py"),
                 "--mode", mode, "--concurrency", "1",
                 "--queries", str(directory / "queries.json"),
-                "--xlsx_dir", str(ROOT / "Public_data_1" / "xlsx_files"),
+                "--xlsx_dir", ds["xlsx_dir"],
                 "--output", str(directory / "submission.csv"), "--log-dir", str(directory)],
                 cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                 encoding="utf-8", errors="replace", creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
@@ -191,13 +246,15 @@ def start_run(mode, ids):
     return name
 
 
-def workbook(filename, sheet=None):
-    if filename not in {q["file_name"] for q in queries()}:
+def workbook(filename, sheet=None, dataset_id: str | None = None):
+    ds = dataset_for(dataset_id)
+    allowed = {q["file_name"] for q in queries(ds["id"])}
+    if filename not in allowed:
         raise ValueError("File không nằm trong bộ câu hỏi")
     import openpyxl
     from openpyxl.utils import get_column_letter
-    path = (ROOT / "Public_data_1" / "xlsx_files" / filename).resolve()
-    if not path.is_relative_to((ROOT / "Public_data_1" / "xlsx_files").resolve()):
+    path = (Path(ds["xlsx_dir"]) / filename).resolve()
+    if not path.is_relative_to(Path(ds["xlsx_dir"]).resolve()):
         raise ValueError("Đường dẫn không hợp lệ")
     book = openpyxl.load_workbook(path, data_only=True)
     try:
@@ -242,16 +299,18 @@ class Handler(BaseHTTPRequestHandler):
         params = parse_qs(parsed.query)
         try:
             if parsed.path == "/api/state":
-                self.send(build_state(params.get("run", [None])[0]))
+                self.send(build_state(params.get("run", [None])[0], params.get("dataset", [None])[0]))
             elif parsed.path == "/api/workbook":
-                self.send(workbook(params.get("file", [""])[0], params.get("sheet", [None])[0]))
+                self.send(workbook(params.get("file", [""])[0], params.get("sheet", [None])[0], params.get("dataset", [None])[0]))
             elif parsed.path == "/api/download":
-                state = build_state(params.get("run", [None])[0])
+                state = build_state(params.get("run", [None])[0], params.get("dataset", [None])[0])
                 buffer = io.StringIO(newline="")
                 writer = csv.writer(buffer)
                 writer.writerow(["id", "answer"])
                 writer.writerows((row["id"], row["answer"]) for row in state["rows"])
                 self.send(buffer.getvalue().encode("utf-8-sig"), "text/csv; charset=utf-8")
+            elif parsed.path == "/api/datasets":
+                self.send({"datasets": datasets(), "default": DATASET_DEFAULT})
             elif parsed.path in {"/", "/app.js", "/style.css", "/details.css"}:
                 name = {"/": "index.html", "/app.js": "app.js", "/style.css": "style.css", "/details.css": "details.css"}[parsed.path]
                 mime = {"index.html": "text/html", "app.js": "text/javascript", "style.css": "text/css", "details.css": "text/css"}[name]
@@ -279,7 +338,7 @@ class Handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(length))
             if not isinstance(body, dict):
                 raise ValueError("Yêu cầu phải là đối tượng")
-            self.send({"run_id": start_run(body.get("mode"), body.get("ids"))}, status=202)
+            self.send({"run_id": start_run(body.get("mode"), body.get("ids"), body.get("dataset"))}, status=202)
         except (ValueError, TypeError) as error:
             self.send({"error": str(error)}, status=400)
 

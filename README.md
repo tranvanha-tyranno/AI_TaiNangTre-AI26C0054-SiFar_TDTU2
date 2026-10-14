@@ -115,3 +115,14 @@ outputs/                 Kết quả sinh ra, không commit
 ```
 
 `src/deterministic_qa.py`, `src/excel_parser.py`, `src/qa_engine.py` là mã cũ; pipeline chính không dùng chúng để trả lời. Giới hạn đề lưu tại COMPETITION_CONSTRAINTS.md. ZIP nộp ≤100 MB; bỏ `.venv`, `.env`, outputs và dữ liệu công khai khỏi gói nộp.
+
+## Dataset và bộ kiểm thử mới
+
+Dashboard quét Public_data_1 và Test/*/queries.json, hỗ trợ chọn dataset ở màn hình tổng quan và hộp Chạy mới. Mỗi lần chạy lưu dataset trong metadata; bảng Excel, câu hỏi và đáp án tham chiếu được đọc từ dataset tương ứng.
+
+Test/ có 5 suite: 01_smoke_replica, 02_merged_hierarchy, 03_multisheet_multitable, 04_robustness, 05_truncation_perf. Mỗi suite có xlsx_files/, queries.json, expected_submission.csv và README. Tái tạo bằng scripts/gen_test_suites.py. Các suite là dữ liệu kiểm thử riêng, không phải tập ẩn của BTC.
+
+```bash
+./.venv/Scripts/python.exe main.py --mode llm --xlsx_dir Test/01_smoke_replica/xlsx_files --queries Test/01_smoke_replica/queries.json --output outputs/test_submission.csv
+./.venv/Scripts/python.exe scripts/evaluate.py --prediction outputs/test_submission.csv --reference Test/01_smoke_replica/expected_submission.csv
+```

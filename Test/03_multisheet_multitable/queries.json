@@ -1,0 +1,12 @@
+[
+  {
+    "id": "multi_q001",
+    "file_name": "multi.xlsx",
+    "query": "What is the absolute difference in the total number of people working in Manufacturing and Construction industries in 2023? Answer with only the integer, without commas or units."
+  },
+  {
+    "id": "multi_q002",
+    "file_name": "multi.xlsx",
+    "query": "What is the total value for 2024 in Summary sheet? Answer with only the integer."
+  }
+]

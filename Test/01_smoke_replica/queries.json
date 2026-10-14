@@ -1,0 +1,17 @@
+[
+  {
+    "id": "smoke_q001",
+    "file_name": "mini_people.xlsx",
+    "query": "Who was the second-youngest person on their admission date? Answer with only the last name."
+  },
+  {
+    "id": "smoke_q002",
+    "file_name": "mini_people.xlsx",
+    "query": "Among the ten youngest people, what was the highest score? Answer with only the integer score."
+  },
+  {
+    "id": "smoke_q003",
+    "file_name": "mini_fiscal.xlsx",
+    "query": "Is the agricultural export value for the fiscal year-to-date 2024 greater than that for the fiscal year-to-date 2023? Answer with only Yes or No."
+  }
+]

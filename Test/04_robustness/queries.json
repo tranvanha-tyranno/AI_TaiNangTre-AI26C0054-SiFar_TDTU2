@@ -1,0 +1,7 @@
+[
+  {
+    "id": "edge_q001",
+    "file_name": "edge.xlsx",
+    "query": "What is the score for ID 1? Answer with only the integer."
+  }
+]
