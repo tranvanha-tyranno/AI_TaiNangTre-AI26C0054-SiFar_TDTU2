@@ -24,8 +24,9 @@ python main.py `
   --mode offline
 ```
 
-Với dữ liệu công khai, `submission.csv` được tạo đủ 20 dòng và khớp
-`Public_data_1/sample_submission.csv`.
+Đã chạy bản offline trên dữ liệu công khai: đủ 20 dòng và khớp 20/20
+với `Public_data_1/sample_submission.csv`. Đây là so sánh với file mẫu,
+chưa chứng minh độ chính xác trên tập ẩn hoặc xác minh độc lập đáp án chuẩn.
 
 ## Chạy hybrid với Qwen qua OpenRouter
 
@@ -55,3 +56,54 @@ API. Nếu dùng Linux/macOS, thay cú pháp đặt biến môi trường bằng
 Không có API key nào được lưu trong mã nguồn. Khi mở rộng cho bảng mới, thêm
 resolver vào `src/deterministic_qa.py`; các câu còn lại tự động rơi xuống LLM
 trong chế độ hybrid.
+
+## Môi trường đã thiết lập và lần chạy đầu
+
+Không cần kích hoạt môi trường; có thể chạy trực tiếp:
+
+```powershell
+.\.venv\Scripts\python.exe main.py --mode offline --output outputs/submission.csv
+.\.venv\Scripts\python.exe scripts/evaluate.py --prediction outputs/submission.csv --reference Public_data_1/sample_submission.csv
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+Nếu tạo venv báo lỗi ensurepip nhưng đã có `.venv/Scripts/python.exe`, dùng pip của Python hệ thống:
+
+```powershell
+python -m pip --python .venv/Scripts/python.exe install -r requirements.txt
+```
+
+`requirements-lock.txt` lưu phiên bản đã cài và kiểm tra trong lần chạy này;
+có thể dùng file đó thay `requirements.txt` để tái tạo môi trường.
+
+Copy `.env.example` thành `.env` và điền OPENROUTER_API_KEY để chạy online.
+Chương trình đọc `.env`, giữ ưu tiên biến môi trường hiện có. `.env`, `.venv`
+và `outputs/` được bỏ qua bởi Git.
+
+Nhật ký ở `outputs/logs/questions.jsonl`: câu hỏi, nhánh xử lý, trạng thái và
+thời gian từng câu. Tổng kết ở `outputs/logs/summary.json`; báo cáo so sánh ở
+`outputs/evaluation.json`. Dùng `--log-dir` để đổi thư mục nhật ký.
+
+Exit code 0 khi đủ đáp án; 2 cho đầu vào không hợp lệ hoặc thiếu API ở mode llm;
+3 nếu có câu lỗi/chưa trả lời (CSV vẫn được xuất với đáp án trống).
+
+## Phạm vi bản đầu
+
+Kiểm tra online ngày 14/10/2026: OpenRouter trả HTTP 400,
+`qwen/qwen3-7-flash is not a valid model ID`. Giữ nguyên mã model theo đề;
+cần xác nhận với BTC trước khi đánh giá online. Có thể đổi `MODEL_NAME`
+cho phát triển nếu đã xác định model phù hợp, nhưng phải đáp ứng model khi chấm.
+
+Nhánh LLM hiện trả lời trực tiếp từ văn bản Excel có thể bị cắt ngắn, chưa có
+RAG cấp bảng + planner JSON + bộ công cụ tổng quát. Xem `docs/IMPLEMENTATION.md`.
+Chức năng codegen cũ trong qa_engine không được dùng bởi CLI.
+
+API timeout 45 giây/lượt, tối đa hai lần thử ở nhánh trực tiếp, đã tắt retry
+tự động của SDK. Chưa đo đủ token, chi phí thực tế và bộ nhớ đỉnh; chưa xác minh
+các giới hạn online. Các cấu hình max_chars/max_tokens/temperature trong YAML
+hiện chưa được nối vào CLI, không nên dùng chúng để khẳng định kiểm soát ngân sách.
+
+Thư mục bổ sung: `scripts/` cho đánh giá, `tests/` cho kiểm tra CLI,
+`docs/` cho trạng thái triển khai, `outputs/` cho kết quả và nhật ký.
+Giới hạn đề lưu ở `COMPETITION_CONSTRAINTS.md`. Không đưa `.venv`, `.env`,
+dữ liệu công khai và `outputs` vào ZIP nộp bài.
