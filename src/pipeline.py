@@ -35,6 +35,8 @@ def answer_with_tools(path, question, client, record, settings):
                 record['stage']='execute'
                 start=time.monotonic()
                 result=execute(plan,selected)
+                record['stage']='validate_output'
+                record['tool_trace']=result['trace']
                 query=question.lower()
                 expected_count=None
                 if re.search(r'two integers|men, women|as\s+[`\"\']?men,\s*women',query): expected_count=2
@@ -65,9 +67,15 @@ def answer_with_tools(path, question, client, record, settings):
                 return result['answer']
             except (PlanError,ValueError,TypeError,KeyError,AttributeError) as error:
                 record['validation_errors']=record.get('validation_errors',[])+[str(error)[:500]]
+                record.setdefault('validation_events',[]).append({'attempt':attempt+1,
+                    'detected_at':record['stage'],'error_type':type(error).__name__,'message':str(error)[:500]})
                 if attempt>=settings.get('max_plan_repairs',2):
                     raise PlanError(str(error)) from None
                 correction={'plan':plan or raw[:8000],'error':str(error)[:500]}
         raise PlanError("No valid answer produced")
+    except Exception as error:
+        record['failure_event']={'phase':record['stage'],'error_type':type(error).__name__,
+            'message':str(error)[:500] if isinstance(error,(PlanError,BudgetError,ValueError)) else type(error).__name__}
+        raise
     finally:
         record['usage']=ledger.summary()

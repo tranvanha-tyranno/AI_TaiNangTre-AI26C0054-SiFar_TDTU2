@@ -49,6 +49,7 @@ async function refresh() {
   }
 }
 function render() {
+  renderDiagnostics();
   const sum = state.summary;
   const dsList = state.datasets || [{id:'public',label:'Public_data_1'}];
   const chosen = new Set(datasetList());
@@ -126,6 +127,7 @@ function renderRows() {
   if(!state) return;
   const search = $('search').value.toLowerCase(), filter = $('filter').value;
   const rows = state.rows.filter(row => `${row.id} ${row.file_name} ${row.query} ${row.answer}`.toLowerCase().includes(search))
+    .filter(row => !$('phaseFilter') || $('phaseFilter').value==='all' || row.diagnostics?.issues.some(issue=>issue.phase===$('phaseFilter').value && !issue.recovered))
     .filter(row => filter === 'all' || (filter === 'match' && row.match === true) || (filter === 'mismatch' && row.match === false) || (filter === 'error' && ['error','unanswered'].includes(row.status)));
   $('rowCount').textContent = rows.length;
   $('answerRows').innerHTML = rows.map(row => `<tr data-id="${escapeHTML(row.id)}" tabindex="0" role="button" aria-label="Xem câu ${escapeHTML(row.id)}"><td class="qid">${escapeHTML(row.id)}</td><td class="query-cell"><div class="question">${escapeHTML(row.query)}</div><div class="filename">▤ ${escapeHTML(row.file_name)}</div></td><td class="answer-value">${escapeHTML(row.answer || '—')}</td><td>${statusBadge(row)}</td><td class="duration">${row.elapsed_seconds != null ? duration(row.elapsed_seconds) : '—'}</td><td class="arrow">↗</td></tr>`).join('');
@@ -192,6 +194,9 @@ function detail(id) {
   if(detailRow.validation_errors) html+='<h3 class="detail-section">Lỗi kiểm tra kế hoạch</h3><p class="detail-note">'+detailRow.validation_errors.map(escapeHTML).join('<br>')+'</p>';
   if(detailRow.plan || detailRow.plans) html += '<details class="plan"><summary>Xem kế hoạch JSON</summary><pre>'+escapeHTML(JSON.stringify(detailRow.plan || detailRow.plans,null,2))+'</pre></details>';
   $('toolDetails').innerHTML=html;
+  const issues=detailRow.diagnostics?.issues || [];
+  $('toolDetails').insertAdjacentHTML('afterbegin','<h3 class="detail-section">Chẩn đoán theo phase</h3>'+renderIssueList(issues)+'<p class="detail-note">Phase là nơi quan sát lỗi; nguyên nhân gốc chưa xác nhận. Lỗi đã sửa trong phiên được tách khỏi lỗi còn tồn tại.</p><div id="diagnosticHistory">Đang đọc lịch sử phiên…</div>');
+  loadDiagnosticHistory(String(detailRow.id));
   $('detailNote').textContent=detailRow.pipeline_version === 'tools-v1' ? 'Công cụ xử lý toàn bộ vùng được chọn, kể cả dòng không có trong bản xem trước. Kiểm tra kế hoạch hợp lệ chưa bảo đảm chọn đúng ý nghĩa của câu hỏi. File mẫu chưa được xác minh độc lập là đáp án chuẩn.' : 'Nhật ký cũ chưa có kế hoạch công cụ và số liệu sử dụng đầy đủ. Chạy lại với pipeline mới để xem căn cứ tính toán.';
   $('detailDialog').showModal();
 }

@@ -85,6 +85,17 @@ Nút Chạy mới dùng dữ liệu công khai và lưu riêng `outputs/runs/`; 
 
 ## Kiểm tra và đánh giá
 
+### Chẩn đoán phase lỗi (nhánh Bao)
+
+Dashboard có bảng phân loại phase, bộ lọc phase và chẩn đoán trong từng câu.
+Phân biệt dấu hiệu đã xác định, nghi ngờ và chưa xác định; lỗi đã sửa trong phiên
+được thống kê riêng. Một câu có thể có nhiều dấu hiệu; các phase không được cộng
+thành số câu sai độc lập. Khác tham chiếu không tự chứng minh lỗi RAG/LLM/TOOL.
+Lịch sử tổng hợp tối đa 100 phiên gần nhất, tách dataset/file/câu hỏi/tham chiếu.
+Phiên mới lưu fingerprint code; phiên cũ thiếu snapshot dùng tham chiếu hiện tại
+và ghi rõ hạn chế. Phân loại chỉ đọc nhật ký, không gọi thêm LLM, không sửa đáp án
+và không tự tối ưu thuật toán trả lời. Nguyên nhân gốc / lỗi dây chuyền cần xác minh.
+
 ```bash
 ./.venv/Scripts/python.exe -m unittest discover -s tests -v
 ./.venv/Scripts/python.exe scripts/evaluate.py \
