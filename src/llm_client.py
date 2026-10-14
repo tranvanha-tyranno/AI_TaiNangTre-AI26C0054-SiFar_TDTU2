@@ -85,8 +85,11 @@ def ask_llm(question: str, table_text: str, max_tokens: int = 512, temperature: 
                 ],
                 max_tokens=max_tokens,
                 temperature=temperature,
+                extra_body={"reasoning": {"enabled": False}},
             )
             text = resp.choices[0].message.content or ""
+            if not text.strip():
+                raise RuntimeError(f"LLM returned no answer (finish_reason={resp.choices[0].finish_reason})")
             return text.strip()
         except Exception as e:
             last_err = e

@@ -89,6 +89,12 @@ Exit code 0 khi đủ đáp án; 2 cho đầu vào không hợp lệ hoặc thi�
 
 ## Phạm vi bản đầu
 
+Cập nhật kiểm tra lại: khóa mới hợp lệ và OpenRouter có ID
+`qwen/qwen3.7-flash` (dấu chấm). `.env` đã dùng ID này để thử phát triển.
+Một câu online đã trả đáp án, nhưng khác file mẫu; kết nối thành công chưa
+đồng nghĩa trả lời đúng. Cần BTC xác nhận ID chính thức khi chấm vì văn bản đề
+ghi `qwen/qwen3-7-flash`.
+
 Kiểm tra online ngày 14/10/2026: OpenRouter trả HTTP 400,
 `qwen/qwen3-7-flash is not a valid model ID`. Giữ nguyên mã model theo đề;
 cần xác nhận với BTC trước khi đánh giá online. Có thể đổi `MODEL_NAME`
