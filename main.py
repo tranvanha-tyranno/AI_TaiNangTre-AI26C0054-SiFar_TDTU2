@@ -135,6 +135,8 @@ def main():
     log_dir = Path(args.log_dir)
     log_dir.mkdir(parents=True, exist_ok=True)
     records = []
+    progress_path = log_dir / "questions.jsonl"
+    progress_path.write_text("", encoding="utf-8")
 
     def task(q):
         started = time.perf_counter()
@@ -166,6 +168,8 @@ def main():
         for fut in as_completed(futs):
             qid, ans, record = fut.result()
             records.append(record)
+            with progress_path.open("a", encoding="utf-8") as stream:
+                stream.write(json.dumps(record, ensure_ascii=False) + "\n")
             results[qid] = ans
             q = futs[fut]
             print(f"  {record['status'].upper()} {qid} -> {ans[:120]}")

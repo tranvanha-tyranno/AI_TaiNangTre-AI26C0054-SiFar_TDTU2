@@ -5,6 +5,31 @@ Pipeline cho đề **Hỏi đáp trên bảng tính Excel**. Chương trình nh�
 
 ## Cài đặt
 
+### Dashboard trực quan (chạy cục bộ)
+
+Trong Git Bash, tại thư mục repo:
+
+```bash
+./.venv/Scripts/python.exe dashboard.py
+```
+
+Mở `http://127.0.0.1:8501`. Giữ terminal chạy; Ctrl+C để dừng.
+Nếu cổng đang dùng, thêm `--port 8502` và mở địa chỉ tương ứng.
+
+Dashboard đọc nhật ký hiện có; hiển thị câu hỏi, đáp án, mức khớp file mẫu,
+thời gian và nhánh xử lý. Chọn câu để xem chi tiết; mục Dữ liệu Excel cho xem
+sheet gốc với địa chỉ dòng/cột. Mục Luồng xử lý giải thích phần đã có và phần
+RAG/planner/công cụ chưa triển khai.
+
+Nút Chạy mới cho chọn LLM, offline hoặc hybrid và một câu/toàn bộ bộ công khai.
+LLM dùng khóa trong .env và có thể phát sinh phí khi bấm Bắt đầu chạy.
+Mỗi lần chạy lưu riêng ở `outputs/runs/`; đáp án cập nhật sau mỗi câu hoàn thành.
+Dashboard tính lại mức khớp từ nhật ký của lần đang xem, không dùng báo cáo
+evaluation.json cũ. Token và chi phí hiển thị chưa đo, không phải số 0.
+Dashboard không hiển thị khóa API và chỉ lắng nghe trên localhost.
+
+### Môi trường Python
+
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
