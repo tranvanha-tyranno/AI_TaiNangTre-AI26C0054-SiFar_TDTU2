@@ -14,6 +14,18 @@ function view(name) {
   document.querySelectorAll('.nav').forEach(el => el.classList.toggle('active', el.dataset.view === name));
   if(name === 'data') loadWorkbook();
 }
+function datasetList() { return (dataset || 'public').split(',').map(s=>s.trim()).filter(Boolean); }
+function datasetLabel(id) {
+  const d = (state && state.datasets || []).find(x=>x.id===id);
+  return d ? d.label : id;
+}
+function setDataset(ids) {
+  let arr = [...new Set(ids.map(s=>String(s).trim()).filter(Boolean))];
+  if(!arr.length) arr = ['public'];
+  dataset = arr.join(',');
+  selected = '';
+  refresh();
+}
 async function refresh() {
   if(polling) return; polling = true;
   try {
@@ -22,7 +34,6 @@ async function refresh() {
     if(dataset) qs.set('dataset', dataset);
     state = await getJSON('/api/state' + (qs.toString() ? '?' + qs.toString() : ''));
     selected = state.selected || '';
-    // keep dataset in sync with what server resolved (run's dataset wins)
     if(state.dataset) dataset = state.dataset;
     render(); $('connection').textContent = '● Đã kết nối';
   } catch (error) { $('connection').textContent = 'Mất kết nối'; notice(error.message); }
@@ -30,14 +41,32 @@ async function refresh() {
 }
 function render() {
   const sum = state.summary;
-  // dataset dropdowns
   const dsList = state.datasets || [{id:'public',label:'Public_data_1'}];
-  const dsOptions = dsList.map(d => `<option value="${escapeHTML(d.id)}">${escapeHTML(d.label)}</option>`).join('');
-  ['datasetSelect','datasetDialog'].forEach(id => {
-    const el = $(id); if(!el) return;
-    el.innerHTML = dsOptions;
-    el.value = dataset;
-  });
+  const chosen = new Set(datasetList());
+  // multi picker menu
+  const menu = $('datasetMenu');
+  if(menu) {
+    menu.innerHTML = dsList.map(d => `<label class="multi-option"><input type="checkbox" value="${escapeHTML(d.id)}" ${chosen.has(d.id)?'checked':''}> <span>${escapeHTML(d.label)}</span> <small>${escapeHTML(d.kind||'')}</small></label>`).join('');
+    menu.querySelectorAll('input').forEach(cb => cb.onchange = () => {
+      const ids = [...menu.querySelectorAll('input:checked')].map(i=>i.value);
+      setDataset(ids);
+    });
+  }
+  const btn = $('datasetButton');
+  if(btn) {
+    const ids = datasetList();
+    btn.textContent = ids.length===1 ? datasetLabel(ids[0]) : `${ids.length} dataset · ${ids.join(', ')}`;
+  }
+  const chips = $('datasetChips');
+  if(chips) {
+    chips.innerHTML = datasetList().map(id => `<span class="chip">${escapeHTML(id)} <button data-rm="${escapeHTML(id)}" aria-label="Bỏ ${escapeHTML(id)}">×</button></span>`).join('');
+    chips.querySelectorAll('[data-rm]').forEach(b=> b.onclick = () => { const ids = datasetList().filter(x=>x!==b.dataset.rm); setDataset(ids); });
+  }
+  // dialog checks
+  const dlg = $('datasetDialog');
+  if(dlg) {
+    dlg.innerHTML = dsList.map(d => `<label class="multi-option"><input type="checkbox" value="${escapeHTML(d.id)}" ${chosen.has(d.id)?'checked':''}> ${escapeHTML(d.label)}</label>`).join('');
+  }
   $('runSelect').innerHTML = state.runs.length ? state.runs.map(run => `<option value="${escapeHTML(run.id)}">${escapeHTML(run.label)} · ${escapeHTML(run.mode)}${run.dataset ? ' · ' + escapeHTML(run.dataset) : ''}</option>`).join('') : '<option>Chưa có lần chạy</option>';
   $('runSelect').value = selected;
   $('modeBadge').textContent = modes[sum.mode] || sum.mode;
@@ -98,8 +127,14 @@ function renderTestSuites() {
     '04_robustness':'CSV quoting, ô rỗng, ID trùng, traversal',
     '05_truncation_perf':'500 dòng · cắt 60/40 · hiệu năng',
   };
-  el.innerHTML = suites.map(s => `<div class="step" style="cursor:pointer" data-dataset="${escapeHTML(s.id)}"><div class="step-number">▦</div><h3>${escapeHTML(s.id)}</h3><p>${escapeHTML(blurbs[s.id] || s.label)}</p><p style="margin-top:8px"><span class="badge gray">${escapeHTML(s.id)}</span> <span style="font-size:10px;color:#7a8392">${escapeHTML(s.xlsx_dir.split('/').slice(-2).join('/'))}</span></p></div>`).join('');
-  el.querySelectorAll('[data-dataset]').forEach(card => card.onclick = () => { dataset = card.dataset.dataset; selected=''; refresh(); });
+  const chosen = new Set(datasetList());
+  el.innerHTML = suites.map(s => `<div class="step ${chosen.has(s.id)?'active':''}" style="cursor:pointer" data-dataset="${escapeHTML(s.id)}"><div class="step-number">${chosen.has(s.id)?'✓':'▦'}</div><h3>${escapeHTML(s.id)}</h3><p>${escapeHTML(blurbs[s.id] || s.label)}</p><p style="margin-top:8px"><span class="badge ${chosen.has(s.id)?'green':'gray'}">${chosen.has(s.id)?'Đang chọn':'Chưa chọn'}</span></p></div>`).join('');
+  el.querySelectorAll('[data-dataset]').forEach(card => card.onclick = () => {
+    const id = card.dataset.dataset;
+    const ids = datasetList();
+    if(ids.includes(id)) setDataset(ids.filter(x=>x!==id));
+    else setDataset([...ids, id]);
+  });
 }
 function detail(id) {
   detailRow = state.rows.find(row => String(row.id) === id); if(!detailRow) return;
@@ -125,7 +160,6 @@ async function loadWorkbook(sheet) {
 document.querySelectorAll('.nav').forEach(button => button.onclick = () => view(button.dataset.view));
 $('viewPipeline').onclick = () => view('pipeline');
 $('refresh').onclick = refresh;
-$('datasetSelect').onchange = () => { dataset = $('datasetSelect').value; selected=''; refresh(); };
 $('runSelect').onchange = () => { selected = $('runSelect').value; refresh(); };
 $('search').oninput = renderRows; $('filter').onchange = renderRows;
 $('answerRows').onclick = event => { const row=event.target.closest('tr'); if(row) detail(row.dataset.id); };
@@ -133,19 +167,22 @@ $('answerRows').onkeydown = event => {if(event.key === 'Enter') { const row=even
 $('closeDetail').onclick = () => $('detailDialog').close();
 $('detailData').onclick = () => { $('detailDialog').close(); $('fileSelect').value = detailRow.file_name; view('data'); };
 $('fileSelect').onchange = () => loadWorkbook(); $('sheetSelect').onchange = () => loadWorkbook($('sheetSelect').value);
+$('datasetButton').onclick = () => { const m=$('datasetMenu'); const open=m.classList.contains('hidden'); m.classList.toggle('hidden', !open); $('datasetButton').setAttribute('aria-expanded', open?'false':'true'); };
+document.addEventListener('click', e=>{ const picker=$('datasetPicker'); if(picker && !picker.contains(e.target)) { $('datasetMenu').classList.add('hidden'); $('datasetButton').setAttribute('aria-expanded','false'); }});
+$('clearDatasets').onclick = () => setDataset(['public']);
 $('openRun').onclick = () => {
-  const dsList = state.datasets || []; const sel = $('datasetDialog');
-  if(sel) { sel.innerHTML = dsList.map(d => `<option value="${escapeHTML(d.id)}">${escapeHTML(d.label)}</option>`).join(''); sel.value = dataset; }
+  // sync dialog checks with current selection
+  const chosen = new Set(datasetList());
+  const dlg = $('datasetDialog'); if(dlg) dlg.querySelectorAll('input').forEach(cb=> cb.checked = chosen.has(cb.value));
   $('runDialog').showModal();
 };
 $('closeRun').onclick = $('cancelRun').onclick = () => $('runDialog').close();
-$('datasetDialog').onchange = () => { /* keep preview in sync */ };
 $('scope').onchange = () => $('questionSelect').classList.toggle('hidden', $('scope').value === 'all');
 $('mode').onchange = () => { $('apiNote').textContent = $('mode').value === 'offline' ? 'Chế độ này dùng quy tắc cục bộ và không gọi API. Đây không phải kết quả LLM.' : 'Chạy LLM có thể phát sinh phí API. Chưa có bộ giới hạn chi phí tự động. Mỗi lần chạy được lưu riêng.'; };
 $('runForm').onsubmit = async event => {
   event.preventDefault(); $('submitRun').disabled = true;
   try {
-    const chosenDataset = $('datasetDialog').value || dataset;
+    const chosenDataset = [...$('datasetDialog').querySelectorAll('input:checked')].map(i=>i.value).join(',') || dataset;
     const data = await getJSON('/api/run', {method:'POST', headers:{'Content-Type':'application/json','X-Dashboard-Token':state.csrf}, body:JSON.stringify({mode:$('mode').value, dataset: chosenDataset, ids:$('scope').value === 'all' ? null : [$('questionSelect').value]})});
     selected = data.run_id; dataset = chosenDataset; $('runDialog').close(); notice('Đã bắt đầu lần chạy mới. Kết quả sẽ tự cập nhật; dữ liệu các lần trước được giữ lại.'); view('overview'); await refresh();
   } catch(error) { notice(error.message); $('runDialog').close(); }
