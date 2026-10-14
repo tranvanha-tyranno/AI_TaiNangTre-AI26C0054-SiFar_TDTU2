@@ -20,3 +20,9 @@ Bản đầu hiện chưa triển khai RAG + planner + tool execution tổng qu�
 - Offline: đủ 20 dòng, so sánh file mẫu khớp 20/20, khoảng 0.3 giây xử lý (không gồm khởi động Python).
 - Kiểm tra CLI: đầu ra/nhật ký và từ chối ID trùng đều qua.
 - Thử một câu online: OpenRouter trả HTTP 400 vì `qwen/qwen3-7-flash` không phải model ID hợp lệ. Chưa có đáp án online; không tự đổi model quy định.
+
+## Kiểm tra lại sau khi thay khóa
+- API kiểm tra khóa trả HTTP 200.
+- Danh sách model có `qwen/qwen3.7-flash` (dấu chấm), không có `qwen/qwen3-7-flash` (dấu gạch ngang). Đã sửa MODEL_NAME trong .env cho phát triển, vẫn giữ cấu hình mặc định theo văn bản đề; cần BTC xác nhận ID chính thức khi chấm.
+- Tắt reasoning trong nhánh trả lời trực tiếp để tránh hết ngân sách output trước khi có content; đáp án trống được coi là lỗi.
+- Gọi thực tế một câu thành công: p4_q001 trả `Pham`, khác file mẫu `Ngo`. Kết nối hoạt động nhưng độ chính xác chưa đạt; cần triển khai planner + công cụ tính tuổi, không dùng nhánh trực tiếp làm giải pháp cuối.
