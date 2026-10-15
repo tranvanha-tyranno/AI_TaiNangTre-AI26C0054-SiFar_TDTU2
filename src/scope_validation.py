@@ -41,7 +41,19 @@ def validate_aggregate_scope(question, plan, regions):
             values={c:region.cells.get((header,c)) for c in numeric_columns}
             if all(isinstance(v,str) and v.strip() for v in values.values()) and len(set(values.values()))>=3:
                 headings=values; break
-        if headings is None: continue
+        if headings is None:
+            # A request that explicitly says "across all industries" still
+            # has an axis requirement even when the candidate fragment starts
+            # below the header rows. Reject a single category cell/column;
+            # the planner must use every numeric industry column or a printed
+            # all-industry total.
+            if re.search(r'\bacross\s+all\s+industries\b',question,re.I):
+                used={step['column']} if step['op']=='cell' else set(step['columns'])
+                if len(used) < len(numeric_columns):
+                    raise PlanError(f'All-industry scope is incomplete at {region.sheet} row {row}: '
+                                    f'used {sorted(used)}, available numeric industry columns {len(numeric_columns)}. '
+                                    'Use sum_columns for every industry column or the explicit all-industry total.')
+            continue
         used={step['column']} if step['op']=='cell' else set(step['columns'])
         # An explicit total alongside components can coexist with narrower
         # qualifiers (e.g. "in all industries ... and in agriculture"). Do

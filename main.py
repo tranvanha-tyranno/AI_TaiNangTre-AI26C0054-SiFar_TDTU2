@@ -57,8 +57,8 @@ def main():
     ap.add_argument("--log-dir", default="outputs/logs", help="Nhật ký từng câu")
     ap.add_argument("--config", type=str, default="config/config.yaml", help="File config yaml (optional)")
     ap.add_argument("--concurrency", type=int, default=None)
-    ap.add_argument("--mode", choices=["llm"], default=None,
-                    help="LLM + Tools: đọc workbook, lập kế hoạch và kiểm tra kết quả")
+    ap.add_argument("--mode", choices=["llm", "llm-v2"], default=None,
+                    help="llm: pipeline chuẩn; llm-v2: khám phá chủ động + review mọi câu + sửa sâu")
     args = ap.parse_args()
     try:
         from dotenv import load_dotenv
@@ -75,6 +75,13 @@ def main():
     output_path = Path(args.output or cfg.get("output") or "./submission.csv")
     concurrency = args.concurrency if args.concurrency is not None else cfg.get("concurrency", 1)
     mode = args.mode or cfg.get("mode") or "llm"
+    if mode == 'llm-v2':
+        cfg = dict(cfg)
+        cfg.update(pipeline_variant='llm-v2', max_api_calls=max(6, int(cfg.get('max_api_calls',4))),
+                   max_plan_repairs=max(3, int(cfg.get('max_plan_repairs',2))),
+                   max_inspection_rounds=max(3, int(cfg.get('max_inspection_rounds',2))),
+                   semantic_review='all', retrieval_top_k=max(6, int(cfg.get('retrieval_top_k',4))),
+                   preview_rows=max(60, int(cfg.get('preview_rows',45))))
     if not isinstance(concurrency, int) or concurrency < 1 or concurrency > 6:
         ap.error("concurrency phải nằm trong khoảng 1 đến 6")
 
@@ -154,13 +161,18 @@ def main():
             if ans is None or ans == "":
                 record["status"] = "unanswered"
             ans = ans or ""
+            if record.get('finalized_with_warning') and ans:
+                record['status']='finalized'
             record.update(answer=ans, elapsed_seconds=round(time.perf_counter() - started, 4))
             return q["id"], ans, record
         except Exception as e:
             print(f"[WARN] {q['id']} lỗi: {type(e).__name__}", file=sys.stderr)
-            record.update(status="error", error_type=type(e).__name__, answer="",
+            fallback=record.get('last_candidate_answer') or 'N/A'
+            record.update(status="finalized", error_type=type(e).__name__, answer=fallback,
+                          finalized_with_warning=True,
+                          finalized_reason=f'Unhandled processing error: {type(e).__name__}',
                           elapsed_seconds=round(time.perf_counter() - started, 4))
-            return q["id"], "", record
+            return q["id"], fallback, record
 
     with ThreadPoolExecutor(max_workers=concurrency) as pool:
         futs = {pool.submit(task, q): q for q in queries}
@@ -194,19 +206,19 @@ def main():
     usage = summarize_usage(records)
     memory = peak_memory_mb()
     elapsed = time.monotonic() - run_started
-    summary = {"questions": len(queries), "answered": sum(r['status'] == 'ok' for r in records),
+    summary = {"questions": len(queries), "answered": sum(r['status'] in {'ok','finalized'} for r in records),
                "elapsed_seconds": elapsed, "mode": mode,
                "model": os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash',
                "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=1024,
                "peak_memory_mb": memory,
-               "pipeline_version": 'tools-v2',
+               "pipeline_version": 'tools-v3' if mode == 'llm-v2' else 'tools-v2',
                "usage": usage}
     (log_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # cảnh báo giới hạn đề thi
     if elapsed > 40 * 60:
         print(f"[WARN] Tổng thời gian {elapsed/60:.1f} phút vượt ngưỡng 40 phút/20 câu của đề!", file=sys.stderr)
-    if any(r['status'] != 'ok' for r in records):
+    if any(r['status'] not in {'ok','finalized'} for r in records):
         sys.exit(3)
 
 

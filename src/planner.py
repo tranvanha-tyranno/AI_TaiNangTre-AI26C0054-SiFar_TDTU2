@@ -27,7 +27,7 @@ Each step has a unique id, references only preceding step IDs.
 - sort: input, by:[{"column":"age","descending":false}]. Convert numeric text with derive number BEFORE sorting.
 - take: input, offset (0 based), limit. Rank second: offset=1,limit=1.
 - select: input, columns.
-- aggregate: REQUIRED input (preceding row-dataset step ID), REQUIRED metric: count|sum|mean|min|max, REQUIRED expr (except count), missing:error|skip (default error). Never omit input, even if an aggregate follows a select or unpivot step.
+- aggregate: REQUIRED input (preceding row-dataset step ID), REQUIRED metric: count|distinct_count|sum|mean|min|max, REQUIRED expr (except count), missing:error|skip (default error). Use distinct_count for unique names/IDs. Never omit input, even if an aggregate follows a select or unpivot step.
   aggregate has no column field. To sum column E: expr={"col":"E"}. A total across all ages is usually the explicit "Total, ..." row, not the sum of that row with its subgroups. Age groups may overlap (16-19 includes 16-17 and 18-19). Use an existing total, or choose a disjoint partition; never sum overlapping age ranges.
 - group: input, by:[columns], metric, expr (except count), column (aggregate output name), missing.
 - join: left,right,left_on,right_on, optional cardinality: many_to_one (default), one_to_one, one_to_many, many_to_many. Inner equality join, result columns are left.A/right.A etc. Put the lookup/mapping table on the right. Duplicate mapping keys are rejected unless the appropriate cardinality is explicitly selected. Never select many_to_many merely to bypass an error: first decide whether duplicates must be aggregated or filtered. Audit unmatched keys and output row expansion.
@@ -54,8 +54,13 @@ Do not compute sums or final answers in your head. Express every calculation thr
 """
 
 
-def messages(question, previews, catalog, correction=None, observations=None):
+def messages(question, previews, catalog, correction=None, observations=None, planner_mode='llm'):
     payload={'question':question,'answer_contract':infer_answer_contract(question),'retrieved_tables':previews,'table_catalog':catalog}
+    payload['planner_mode']=planner_mode
+    if planner_mode=='llm-v2':
+        payload['v2_instruction']=('Act as a workbook analyst before acting: compare all candidate sheets/tables, '
+            'map metric/time/label columns, inspect missing context when uncertain, and prefer a complete evidence-backed plan. '
+            'Use review feedback to reconsider the interpretation, not only repair JSON syntax.')
     if observations: payload['inspection_results']=observations
     result=[{'role':'system','content':SYSTEM},{'role':'user','content':json.dumps(payload,ensure_ascii=False)}]
     if correction:
@@ -106,7 +111,7 @@ def tool_schema(purpose='plan'):
     for key in ['columns','inputs','keep_columns']:
         fields[key]={'type':'array','items':{'type':'string'}}
     fields['expr']=fields['where']={'$ref':'#/$defs/expr'}
-    fields['metric']={'enum':['count','sum','mean','min','max']}
+    fields['metric']={'enum':['count','distinct_count','sum','mean','min','max']}
     fields['missing']={'enum':['error','skip']}
     fields['cardinality']={'enum':['many_to_one','one_to_one','one_to_many','many_to_many']}
     fields['by']={'anyOf':[{'type':'array','items':{'type':'string'}},{'type':'array','items':{'type':'object','properties':{'column':{'type':'string'},'descending':{'type':'boolean'}},'required':['column'],'additionalProperties':False}}]}

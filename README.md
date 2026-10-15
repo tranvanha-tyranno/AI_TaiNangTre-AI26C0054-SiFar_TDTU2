@@ -97,7 +97,15 @@ Thay `06_people_filters` bằng bộ muốn thử. [Test/README.md](Test/README.
 .\.venv\Scripts\python.exe main.py --mode llm --xlsx_dir .\Public_data_1\xlsx_files --queries .\Public_data_1\queries.json --output .\outputs\public\submission.csv --log-dir .\outputs\public\logs
 ```
 
-Pipeline chỉ có một chế độ `llm`. Không có resolver theo tên file, chế độ offline hoặc chế độ hybrid. Public và dữ liệu mới đều đi qua cùng một luồng LLM + Tools.
+Pipeline không có resolver theo tên file, chế độ offline hoặc chế độ hybrid. Có hai mức cùng dùng LLM + Tools: `llm` baseline và `llm-v2` tăng cường khám phá/review. Public và dữ liệu mới đều đi qua một trong hai luồng LLM này.
+
+Có thể bật **LLMv2 + Tools** để dùng nhiều khả năng AI hơn: khám phá workbook sâu hơn, tối đa 3 vòng inspect, review ngữ nghĩa mọi câu và tối đa 6 lượt plan/repair/review trong giới hạn `$0.10/câu`:
+
+```powershell
+.\.venv\Scripts\python.exe main.py --mode llm-v2 --xlsx_dir .\Public_data_1\xlsx_files --queries .\Public_data_1\queries.json --output .\outputs\public-v2\submission.csv --log-dir .\outputs\public-v2\logs
+```
+
+`llm-v2` có thể tốn token và thời gian hơn `llm`; log ghi `pipeline_version=tools-v3` và `llm_variant=llm-v2` để so sánh riêng.
 
 ### Dữ liệu mới và cấu hình YAML
 
@@ -108,6 +116,8 @@ Thay `--xlsx_dir`, `--queries`, `--output`, `--log-dir` bằng đường dẫn c
 ```
 
 Pipeline LLM đọc workbook đầu vào, lập kế hoạch tính và có thể yêu cầu đọc thêm sheet/vùng trước khi tính; không đọc CSV đáp án chuẩn. Mỗi kế hoạch phải khai báo `answer_spec` (loại đáp án, trường cần trả, phép tính). Với câu có nhãn, nối bảng, tỷ lệ hoặc đổi đơn vị, pipeline có thể bật vòng rà soát ngữ nghĩa (`semantic_review: risky`). Review là bước phụ; nếu model review trả sai định dạng, ứng viên đã qua kiểm tra xác định vẫn được giữ và log ghi `verdict: unavailable`. Việc chạy lại Public/Test đã biết là kiểm thử hồi quy, chưa chứng minh khả năng tổng quát trên tập ẩn. Bộ mới cần được đánh giá ở lần chạy đầu, trước khi chỉnh solver dựa vào lỗi của chính bộ đó.
+
+Mỗi câu luôn được chốt một dòng trong `submission.csv`: nếu kiểm tra cuối thất bại sau các lượt sửa, pipeline giữ kết quả tính gần nhất và ghi `finalized_with_warning`; nếu chưa tạo được kết quả tính, ghi `N/A` thay vì để đáp án rỗng. Dashboard hiển thị lý do chốt trong chi tiết câu.
 
 [Báo cáo bộ mới lần đầu ngày 14/10](docs/FIRST_SEEN_20261014.md): 6/10 câu khớp, có cả lỗi solver và lỗi API; giữ nguyên kết quả lần đầu để tránh nhầm với điểm số sau khi sửa theo bộ này.
 

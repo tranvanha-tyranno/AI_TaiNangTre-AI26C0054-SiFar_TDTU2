@@ -26,3 +26,4 @@ preview_rows: 45
 # Pipeline
 mode: llm  # LLM + Tools là luồng xử lý duy nhất
 concurrency: 1
+# Dùng --mode llm-v2 để bật khám phá/review sâu; mode mặc định giữ baseline.

@@ -112,6 +112,9 @@ def expression(expr, row, results, depth=0):
         value = (end-start).days if op=='date_diff_days' else end.year-start.year-((end.month,end.day)<(start.month,start.day))
     elif op in {'eq','ne','gt','ge','lt','le'}:
         a,b=values
+        if isinstance(a,(date,datetime)) or isinstance(b,(date,datetime)):
+            try: a,b=as_date(a),as_date(b)
+            except PlanError: pass
         if op in {'eq','ne'} and (a is None or b is None):
             return Result((a==b) if op=='eq' else (a!=b),sources)
         if isinstance(a,(int,float,Decimal)) or isinstance(b,(int,float,Decimal)):
@@ -142,6 +145,13 @@ def rows_of(results, name):
 def aggregate(rows, metric, expr, results, missing='error'):
     if metric=='count':
         return Result(len(rows),set().union(*(set(row.get('__filter_sources',[])) | set().union(*(set(v) for v in row.get('__sources',{}).values())) for row in rows)))
+    if metric=='distinct_count':
+        values=[];sources=set()
+        for row in rows:
+            value=expression(expr,row,results)
+            if value.value not in (None,''):
+                values.append(str(value.value));sources.update(value.sources)
+        return Result(len(set(values)),sources)
     if metric=='sum' and len(rows)>1:
         # Tables frequently print a grand total above/below its components.
         # Summing both is syntactically valid but double-counts the data.
@@ -190,7 +200,7 @@ def format_value(value, fmt):
         v=number(value)
         return str(int(v)) if v==v.to_integral_value() else format(v,'f').rstrip('0').rstrip('.')
     if isinstance(value,(datetime,date)):
-        return value.isoformat()
+        return value.date().isoformat() if isinstance(value,datetime) else value.isoformat()
     if value is None:
         raise PlanError("Final answer is missing")
     cleaned=re.sub(r'(?<=\w)-\s+(?=\w)','',str(value))
@@ -221,7 +231,7 @@ def execute(plan, regions):
             'filter':{'input','where'},'derive':{'input','column','expr'},'sort':{'input','by'},
             'take':{'input','offset','limit'},'select':{'input','columns'},
             'aggregate':{'input','metric','expr','missing'},'group':{'input','by','metric','expr','column','missing'},
-            'join':{'left','right','left_on','right_on','cardinality'},'calculate':{'expr'}}
+            'join':{'left','right','left_on','right_on','cardinality'},'calculate':{'expr','input'}}
         if op not in allowed: raise PlanError(f'Tool not allowed: {op}')
         required={
             'read':['table'],'cell':['table','row','column'],'sum_columns':['table','row','columns'],

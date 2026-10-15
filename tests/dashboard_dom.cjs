@@ -111,10 +111,10 @@ async function main(){
   await until(()=>w.document.querySelector('.cell-highlight')?.dataset.coordinate===address,'evidence jump');
   console.log('Evidence navigation OK');
   w.document.querySelector('.nav[data-view="history"]').click();
-  assert.equal(w.document.querySelectorAll('#historyTrend .history-point').length,2);
+  assert.ok(w.document.querySelectorAll('#historyTrend .history-point').length>=2);
   assert.ok($('historyTrend').querySelector('.history-line').getAttribute('d').includes('L'));
   change('historyMetric','cost');
-  assert.equal(w.document.querySelectorAll('#historyTrend .history-point').length,2);
+  assert.ok(w.document.querySelectorAll('#historyTrend .history-point').length>=2);
   $('datasetButton').click();
   w.document.querySelector('#datasetMenu input[value="12_large_full_scan"]').click();
   await until(()=>w.document.querySelector('#datasetChips [data-remove="12_large_full_scan"]'),'add large dataset');

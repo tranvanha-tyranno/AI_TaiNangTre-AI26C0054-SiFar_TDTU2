@@ -22,6 +22,7 @@ from src.usage import summarize_usage
 from src.dashboard_analysis import decorate, summarize, compare_states, safe_context, cohort
 
 ROOT = Path(__file__).resolve().parent
+PROJECT_VERSION = "2.0.0"
 STATIC = ROOT / "dashboard" / "dist"
 OUTPUTS = ROOT / "outputs"
 TEST_ROOT = ROOT / "Test"
@@ -228,7 +229,8 @@ def safe_config():
         local = dotenv_values(ROOT / ".env")
     except ImportError:
         local = {}
-    return {"model": os.environ.get("MODEL_NAME") or local.get("MODEL_NAME") or "qwen/qwen3-7-flash",
+    return {"app_version": PROJECT_VERSION,
+            "model": os.environ.get("MODEL_NAME") or local.get("MODEL_NAME") or "qwen/qwen3-7-flash",
             "key_configured": bool(os.environ.get("OPENROUTER_API_KEY") or local.get("OPENROUTER_API_KEY")),
             "base_url": "https://openrouter.ai/api/v1"}
 
@@ -319,7 +321,7 @@ def build_state(selected=None, dataset_id: str | None = None, include_history=Tr
             "rows": rows, "job": job, "running": running,
             "summary": {**summary, "mode": meta.get("mode") or summary.get("mode", "unknown"),
                 "questions": len(rows), "completed": sum(row["status"] != "pending" for row in rows),
-                "answered": sum(row["status"] == "ok" and bool(row["answer"]) for row in rows),
+                "answered": sum(row["status"] in {"ok","finalized"} and bool(row["answer"]) for row in rows),
                 "matched": matched, "compared": compared, "elapsed_seconds": elapsed,
                 "pipeline_version": summary.get('pipeline_version') or next((row.get('pipeline_version') for row in rows if row.get('pipeline_version')),None),
                 "usage": measured_usage},
@@ -327,7 +329,7 @@ def build_state(selected=None, dataset_id: str | None = None, include_history=Tr
 
 
 def start_run(mode, ids, dataset_id: str | None = None):
-    if mode != "llm":
+    if mode not in {"llm", "llm-v2"}:
         raise ValueError("Chế độ không hợp lệ")
     ds_list = datasets_for(dataset_id)
     combined_id = ",".join(d["id"] for d in ds_list)

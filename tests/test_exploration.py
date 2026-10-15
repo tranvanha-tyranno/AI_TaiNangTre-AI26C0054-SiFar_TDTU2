@@ -92,5 +92,21 @@ class ExplorationTest(unittest.TestCase):
         self.assertEqual(answer,'60')
         self.assertEqual(record['reviews'][0]['verdict'],'unavailable')
 
+    def test_finalization_never_returns_empty_after_validation_failure(self):
+        from src.pipeline import answer_with_tools
+        class Client:
+            prompt_cap=1; completion_cap=4; calls=0
+            def complete(self, msgs, ledger, purpose):
+                self.calls += 1
+                return json.dumps({'steps':[{'id':'r','op':'read','table':'t1','start_row':2,'end_row':4}],
+                    'answer_spec':{'answer_type':'number','answer_field':'Score','operation':'sum'},
+                    'output':{'step':'r','columns':['A']}})
+        client=Client();record={}
+        with patch('src.pipeline.load_regions', return_value=regions()), \
+             patch('src.pipeline.retrieve', return_value=([regions()[0]], [{'table_id':'t1','selected':True}])):
+            answer=answer_with_tools(Path('unused'),'What is the total Score?',client,record,{'max_api_calls':3,'max_plan_repairs':1})
+        self.assertTrue(answer)
+        self.assertTrue(record.get('finalized_with_warning'))
+
 
 if __name__ == '__main__': unittest.main()

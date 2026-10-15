@@ -23,7 +23,7 @@ function sameDatasets(a,b){return String(a).split(',').sort().join(',')===String
 function datasetList(){return dataset.split(',').filter(Boolean);}
 function label(id){return state?.datasets.find(d=>d.id===id)?.label||id;}
 function cost(usage){if(!usage)return 'Chưa đo';if(usage.cost_complete)return '$'+Number(usage.actual_cost_usd||0).toFixed(6);return usage.actual_cost_usd>0?'$'+usage.actual_cost_usd.toFixed(6)+'+':'Chưa xác nhận';}
-function badge(row){const [text,color]=outcomes[row.outcome]||outcomes.uncompared;return `<span class="badge ${color}">${esc(text)}${row.api_statuses?.length?' · '+row.api_statuses.join(', '):''}</span>`;}
+function badge(row){const [text,color]=outcomes[row.outcome]||outcomes.uncompared;return `<span class="badge ${color}">${esc(text)}${row.finalized_with_warning?' · Đã chốt đáp án':''}${row.api_statuses?.length?' · '+row.api_statuses.join(', '):''}</span>`;}
 function setDataset(ids){dataset=[...new Set(ids)].join(',')||'public';selected='';selectedIds.clear();page=0;remember();refresh();}
 function view(name){activeView=name;document.querySelectorAll('.view').forEach(el=>el.classList.toggle('hidden',el.id!==name));document.querySelectorAll('.nav').forEach(el=>el.classList.toggle('active',el.dataset.view===name));if(name==='data')loadWorkbook();if(name==='history')renderHistory();}
 function openRun(id){selected=id;selectedIds.clear();page=0;remember();refresh();view('overview');}
@@ -56,8 +56,9 @@ function render(){
   $('runSelect').value=selected;
   const context=state.context||{};
   $('runProvenance').textContent=context.source_fingerprint?`Mã nguồn ${context.source_fingerprint} · ${context.model||sum.model||''}`:(sum.model||'Chưa có thông tin phiên bản');
-  $('modeBadge').textContent='LLM + Tools';
+  $('modeBadge').textContent=sum.mode==='llm-v2'?'LLMv2 + Tools':'LLM + Tools';
   $('modeBadge').className='badge';
+  $('projectVersion').textContent=`Project v${state.config.app_version||'2.0.0'} · ${sum.mode==='llm-v2'?'LLMv2 + Tools':'LLM + Tools'} · ${sum.pipeline_version||'tools-v2'}`;
   $('runStatus').textContent=state.running?'● Đang xử lý…':`${sum.completed}/${sum.questions} câu hoàn thành`;
   $('answered').innerHTML=`${sum.answered}<span class="denom"> / ${sum.questions}</span>`;
   $('completionText').textContent=`${sum.completed} câu đã xử lý · ${sum.questions-sum.completed} câu đang chờ`;
@@ -230,7 +231,7 @@ function detail(id){
   const r=detailRow,u=r.usage;
   $('detailId').textContent=`${r.id} / ${r.file_name}`;$('detailQuestion').textContent=r.query;
   $('detailAnswer').textContent=r.answer||'Chưa có đáp án';$('detailReference').textContent=r.reference??'Không có tham chiếu';
-  $('detailMeta').innerHTML=`${badge(r)}<br>${duration(r.elapsed_seconds)} · ${r.repairs} lượt sửa kế hoạch${u?'<br>'+number(u.total_tokens)+' token · '+u.api_calls+' lượt API · '+cost(u):''}${r.error_type?'<br>Loại lỗi: '+esc(r.error_type):''}`;
+  $('detailMeta').innerHTML=`${badge(r)}<br>${duration(r.elapsed_seconds)} · ${r.repairs} lượt sửa kế hoạch${u?'<br>'+number(u.total_tokens)+' token · '+u.api_calls+' lượt API · '+cost(u):''}${r.error_type?'<br>Loại lỗi: '+esc(r.error_type):''}${r.finalized_reason?'<br>Chốt cuối: '+esc(r.finalized_reason):''}`;
   let html='';
   if(r.answer_contract){const c=r.answer_contract;html+=`<div class="contract-card"><strong>Yêu cầu đáp án</strong><br>${c.count==null?'Danh sách / số phần tử chưa cố định':c.count+' giá trị'}${c.reduction?' · phép '+esc({sum:'tổng',mean:'trung bình',count:'đếm'}[c.reduction]||c.reduction):''}${c.rank_offset!=null?' · bắt đầu ở vị trí '+(c.rank_offset+1):''}${c.decimals!=null?' · '+c.decimals+' chữ số thập phân':''}</div>`;}
   if(r.tool_trace?.length)html+='<h3 class="detail-section">Dữ liệu đi qua các công cụ</h3><div class="tool-flow">'+r.tool_trace.map((s,i)=>`<div class="flow-node"><span class="flow-index">${i+1}</span><strong>${esc(ops[s.op]||s.op)}</strong><div class="flow-result">${s.row_count==null?esc(s.scalar):number(s.row_count)+' dòng'}</div><small>${duration(s.elapsed_seconds)}</small></div>`).join('')+'</div>';
