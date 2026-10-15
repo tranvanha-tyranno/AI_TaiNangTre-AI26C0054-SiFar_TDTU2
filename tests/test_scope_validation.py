@@ -33,7 +33,7 @@ class ScopeValidationTest(unittest.TestCase):
         self.assertEqual(result['answer'],'9017')
         self.assertEqual(result['evidence_count'],24)
         self.assertIn('cpsaat14!M11',result['evidence'])
-        variants=tool_schema()['properties']['steps']['items']['anyOf']
+        variants=tool_schema()['anyOf'][0]['properties']['steps']['items']['anyOf']
         summed=next(v for v in variants if v['properties']['op']['enum']==['sum_columns'])
         self.assertEqual(set(summed['required']),{'id','op','table','row','columns'})
         self.assertNotIn('input',summed['properties'])

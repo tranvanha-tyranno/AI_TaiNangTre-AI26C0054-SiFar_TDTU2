@@ -56,8 +56,8 @@ function render(){
   $('runSelect').value=selected;
   const context=state.context||{};
   $('runProvenance').textContent=context.source_fingerprint?`Mã nguồn ${context.source_fingerprint} · ${context.model||sum.model||''}`:(sum.model||'Chưa có thông tin phiên bản');
-  $('modeBadge').textContent=sum.mode==='offline'?'Offline':sum.pipeline_version==='tools-v1'?'LLM + Tools':sum.mode==='unknown'?'Chưa chạy':'LLM (log cũ)';
-  $('modeBadge').className='badge '+(sum.mode==='offline'?'gray':'');
+  $('modeBadge').textContent='LLM + Tools';
+  $('modeBadge').className='badge';
   $('runStatus').textContent=state.running?'● Đang xử lý…':`${sum.completed}/${sum.questions} câu hoàn thành`;
   $('answered').innerHTML=`${sum.answered}<span class="denom"> / ${sum.questions}</span>`;
   $('completionText').textContent=`${sum.completed} câu đã xử lý · ${sum.questions-sum.completed} câu đang chờ`;
@@ -68,9 +68,9 @@ function render(){
   $('average').textContent=sum.completed?`${(sum.elapsed_seconds/sum.completed).toFixed(2)}s / câu${state.running?' · tạm tính':''}`:'Chưa có thời gian';
   $('repairText').textContent=`${a.repaired_questions} câu đã sửa kế hoạch · ${a.repair_attempts} lượt sửa`;
   $('costValue').textContent=sum.completed?cost(sum.usage):(state.running?'Đang xử lý':'Chưa chạy');
-  $('tokenValue').textContent=sum.usage?.api_calls?`${number(sum.usage.total_tokens)} token${sum.usage.tokens_complete?'':' ghi nhận'} · ${sum.usage.api_calls} lượt API`:sum.mode==='offline'?'Không gọi API':'Chưa ghi nhận lượt API';
+  $('tokenValue').textContent=sum.usage?.api_calls?`${number(sum.usage.total_tokens)} token${sum.usage.tokens_complete?'':' ghi nhận'} · ${sum.usage.api_calls} lượt API`:'Chưa ghi nhận lượt API';
   $('usageNote').textContent=!sum.completed?'Chi phí xuất hiện sau khi có kết quả API.':sum.usage?.cost_complete?'Phí API xác nhận, gồm các lượt sửa/retry':`${sum.usage?.unknown_cost_calls||0} lượt chưa rõ phí · Không coi là $0`;
-  $('contextText').textContent=sum.mode==='offline'?'Chế độ offline dùng quy tắc cũ. Câu chưa hỗ trợ có thể không có đáp án.':sum.pipeline_version==='tools-v1'?'Đọc Excel → chọn vùng → LLM lập kế hoạch → công cụ tính → kiểm tra đáp án. Mở chi tiết để xem từng bước.':'Log cũ thiếu một số thông tin. Kết quả được đối chiếu từ đáp án đã lưu.';
+  $('contextText').textContent='Đọc Excel → chọn vùng → LLM lập kế hoạch → công cụ tính → kiểm tra đáp án. Mở chi tiết để xem từng bước.';
   $('openRun').disabled=state.job.running;$('openRun').textContent=state.job.running?'Đang chạy…':'＋ Chạy mới';
   const params=new URLSearchParams({dataset});if(selected)params.set('run',selected);
   $('download').href='/api/download?'+params;$('downloadReport').href='/api/report?'+params;
@@ -220,8 +220,8 @@ function renderComparison(){
   $('comparisonResult').querySelector('.compare-tabs').before(board);
 }
 function renderPipeline(){
-  const modern=state.summary.pipeline_version==='tools-v1';
-  const steps=modern?[['Đọc Excel','Giữ tọa độ, ô gộp và tiêu đề.'],['Chọn vùng','Tìm sheet/bảng liên quan.'],['Lập kế hoạch','LLM chọn thao tác tính.'],['Tính bằng công cụ','Lọc, nhóm, tổng, xếp hạng.'],['Kiểm tra đáp án','Kiểm tra phạm vi và dạng đáp án.'],['Xuất kết quả','CSV, căn cứ, log và chi phí.']]:[['Đọc đầu vào','Câu hỏi và file Excel.'],['Xử lý cũ','Quy tắc offline hoặc LLM trực tiếp.'],['Xuất kết quả','Đáp án và log hiện có.']];
+  const modern=['tools-v1','tools-v2'].includes(state.summary.pipeline_version);
+  const steps=[['Đọc Excel','Giữ tọa độ, ô gộp và tiêu đề.'],['Chọn vùng','Tìm sheet/bảng liên quan.'],['Lập kế hoạch','LLM chọn thao tác tính.'],['Tính bằng công cụ','Lọc, nhóm, tổng, xếp hạng.'],['Kiểm tra đáp án','Kiểm tra phạm vi và dạng đáp án.'],['Xuất kết quả','CSV, căn cứ, log và chi phí.']];
   $('pipelineSteps').innerHTML=steps.map(([title,text],i)=>`<div class="step"><div class="step-number">0${i+1}</div><h3>${title}</h3><p>${text}</p></div>`).join('');
   document.querySelector('.future').innerHTML=`<span class="badge ${modern?'green':'gray'}">${modern?'LLM + TOOLS':'LOG CŨ'}</span><h3>${modern?'Kế hoạch hợp lệ chưa đồng nghĩa đáp án đúng':'Chỉ có các thông tin được ghi ở phiên bản cũ'}</h3><p>${modern?'Dùng đối chiếu tham chiếu và ô căn cứ để đánh giá. Câu sai vẫn có thể xuất phát từ cách hiểu câu hỏi hoặc lựa chọn dữ liệu.':'Không suy ngược token/chi phí từ đáp án. Chạy phiên bản mới để có log chi tiết hơn.'}</p>`;
 }
@@ -285,11 +285,11 @@ async function loadDialogCatalog(seed=[]){
 }
 function runIds(){if($('scope').value==='all')return null;if($('scope').value==='one')return $('questionSelect').value?[$('questionSelect').value]:[];return [...$('dialogSelection').querySelectorAll('input:checked')].map(el=>el.value);}
 function updateRunEstimate(){
-  const scope=$('scope').value,offline=$('mode').value==='offline';
+  const scope=$('scope').value;
   $('questionSelect').classList.toggle('hidden',scope!=='one');$('dialogSelection').classList.toggle('hidden',!['selected','failed'].includes(scope));
   const ids=runIds(),count=ids===null?dialogCatalog.length:ids.length;
-  $('runEstimate').textContent=offline?`${count} câu · Không gọi API. Các câu chưa hỗ trợ có thể chưa có đáp án.`:`${count} câu · Giới hạn ngân sách tối đa $${(count*.10).toFixed(2)} cho lần chạy ($0.10/câu). Phí thực tế phụ thuộc token.`;
-  $('apiNote').textContent=offline?'Kết quả được lưu thành lần chạy riêng.':'LLM dùng API key đã cấu hình. Kiểm tra credit trước khi chạy; thông báo HTTP 402 từ log cũ không xác nhận số dư hiện tại.';
+  $('runEstimate').textContent=`${count} câu · Giới hạn ngân sách tối đa $${(count*.10).toFixed(2)} cho lần chạy ($0.10/câu). Phí thực tế phụ thuộc token.`;
+  $('apiNote').textContent='LLM dùng API key đã cấu hình. Kiểm tra credit trước khi chạy.';
   $('submitRun').disabled=!count||state.job.running;
 }
 document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>view(b.dataset.view));

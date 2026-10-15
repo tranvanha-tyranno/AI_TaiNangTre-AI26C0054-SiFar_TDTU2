@@ -327,7 +327,7 @@ def build_state(selected=None, dataset_id: str | None = None, include_history=Tr
 
 
 def start_run(mode, ids, dataset_id: str | None = None):
-    if mode not in {"llm", "offline", "hybrid"}:
+    if mode != "llm":
         raise ValueError("Chế độ không hợp lệ")
     ds_list = datasets_for(dataset_id)
     combined_id = ",".join(d["id"] for d in ds_list)

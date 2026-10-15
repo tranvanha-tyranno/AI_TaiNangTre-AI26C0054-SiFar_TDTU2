@@ -81,9 +81,9 @@ class PlannerClient:
 
     def complete(self, messages, ledger, purpose='plan'):
         from .planner import tool_schema
-        schema=tool_schema()
+        schema=tool_schema(purpose)
         tools=[{'type':'function','function':{'name':'execute_spreadsheet_plan',
-                'description':'Execute a validated spreadsheet plan using the supplied tables and fixed tools.',
+                'description':'Request workbook inspection or submit a spreadsheet computation plan; during review, audit the candidate.',
                 'parameters':schema}}]
         last=None
         for retry in range(2):
@@ -143,6 +143,14 @@ class PlannerClient:
                 status=getattr(error,'status_code',None)
                 if retry or status in {400,401,402,403,404,422}:
                     raise RuntimeError(f"Planner API failed: {type(error).__name__}; HTTP {status}") from None
+                # Give a transient rate limit time to recover; a tight retry
+                # loop wastes both request allowance and unknown-cost reserve.
+                headers=getattr(getattr(error,'response',None),'headers',{}) or {}
+                try: delay=min(10,max(1,float(headers.get('retry-after',2))))
+                except (ValueError,TypeError): delay=2
+                if time.monotonic()+delay>=ledger.deadline:
+                    raise BudgetError('Insufficient time for API retry') from None
+                time.sleep(delay)
         raise last
 
 

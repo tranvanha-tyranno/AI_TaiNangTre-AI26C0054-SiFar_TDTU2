@@ -122,7 +122,7 @@ class AnswerContractTest(unittest.TestCase):
         filename=next(q['file_name'] for q in queries if q['id']=='p4_q012')
         result=answer_with_tools(ROOT/'Public_data_1/xlsx_files'/filename,question,client,record,{})
         self.assertEqual(result,'35')
-        self.assertEqual(client.calls,2)
+        self.assertEqual(client.calls,1)
         self.assertEqual(record['answer_contract']['reduction'],'sum')
 
 

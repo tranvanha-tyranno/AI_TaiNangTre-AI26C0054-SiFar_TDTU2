@@ -41,7 +41,7 @@ Mở **http://127.0.0.1:8501**. Giữ terminal chạy; **Ctrl+C** để dừng. 
 
 Sau đó mở http://127.0.0.1:8502. Khi cập nhật mã: dừng server, chạy lại và nhấn **Ctrl+F5** trên trình duyệt.
 
-Dashboard đọc log cục bộ; mở trang và xem kết quả không gọi LLM. Chọn bộ dữ liệu, bấm **Chạy mới**, chọn chế độ và phạm vi để bắt đầu một lần chạy. Chế độ LLM/hybrid dùng API key và có phí; offline không gọi API.
+Dashboard đọc log cục bộ; mở trang và xem kết quả không gọi LLM. Chọn bộ dữ liệu, bấm **Chạy mới**, chọn phạm vi để bắt đầu một lần chạy. Mọi dataset đều dùng LLM + Tools.
 
 **Nạp bộ dữ liệu mới ngoài Public/Test:** đặt Excel trong `xlsx_files/`, câu hỏi trong `queries.json`, rồi khởi động:
 
@@ -91,13 +91,13 @@ Ví dụ bộ 30 câu lọc/xếp hạng:
 
 Thay `06_people_filters` bằng bộ muốn thử. [Test/README.md](Test/README.md) liệt kê **12 bộ, 212 câu** cùng đáp án tham chiếu.
 
-### Chạy offline, không cần API key
+### Chạy pipeline
 
 ```powershell
-.\.venv\Scripts\python.exe main.py --mode offline --xlsx_dir .\Public_data_1\xlsx_files --queries .\Public_data_1\queries.json --output .\outputs\offline-public\submission.csv --log-dir .\outputs\offline-public\logs
+.\.venv\Scripts\python.exe main.py --mode llm --xlsx_dir .\Public_data_1\xlsx_files --queries .\Public_data_1\queries.json --output .\outputs\public\submission.csv --log-dir .\outputs\public\logs
 ```
 
-Offline dùng bộ quy tắc cũ gắn với các tên file Public `p4_t01`–`p4_t10`, chỉ để kiểm tra I/O và đối chiếu. **Dữ liệu mới cần dùng `--mode llm`**; offline không phải bộ giải tổng quát và có thể trả trống. `hybrid` hiện là tên tương thích cho pipeline LLM + Tools.
+Pipeline chỉ có một chế độ `llm`. Không có resolver theo tên file, chế độ offline hoặc chế độ hybrid. Public và dữ liệu mới đều đi qua cùng một luồng LLM + Tools.
 
 ### Dữ liệu mới và cấu hình YAML
 
@@ -107,7 +107,7 @@ Thay `--xlsx_dir`, `--queries`, `--output`, `--log-dir` bằng đường dẫn c
 .\.venv\Scripts\python.exe main.py --mode llm --xlsx_dir "D:\DuLieuMoi\BoA\xlsx_files" --queries "D:\DuLieuMoi\BoA\queries.json" --output .\outputs\bo-a\submission.csv --log-dir .\outputs\bo-a\logs
 ```
 
-Pipeline LLM đọc workbook đầu vào, tìm vùng liên quan và lập kế hoạch tính; không đọc CSV đáp án chuẩn. Việc chạy lại Public/Test đã biết là kiểm thử hồi quy, chưa chứng minh khả năng tổng quát trên tập ẩn. Bộ mới cần được đánh giá ở lần chạy đầu, trước khi chỉnh solver dựa vào lỗi của chính bộ đó.
+Pipeline LLM đọc workbook đầu vào, lập kế hoạch tính và có thể yêu cầu đọc thêm sheet/vùng trước khi tính; không đọc CSV đáp án chuẩn. Mỗi kế hoạch phải khai báo `answer_spec` (loại đáp án, trường cần trả, phép tính). Với câu có nhãn, nối bảng, tỷ lệ hoặc đổi đơn vị, pipeline có thể bật vòng rà soát ngữ nghĩa (`semantic_review: risky`). Review là bước phụ; nếu model review trả sai định dạng, ứng viên đã qua kiểm tra xác định vẫn được giữ và log ghi `verdict: unavailable`. Việc chạy lại Public/Test đã biết là kiểm thử hồi quy, chưa chứng minh khả năng tổng quát trên tập ẩn. Bộ mới cần được đánh giá ở lần chạy đầu, trước khi chỉnh solver dựa vào lỗi của chính bộ đó.
 
 [Báo cáo bộ mới lần đầu ngày 14/10](docs/FIRST_SEEN_20261014.md): 6/10 câu khớp, có cả lỗi solver và lỗi API; giữ nguyên kết quả lần đầu để tránh nhầm với điểm số sau khi sửa theo bộ này.
 
