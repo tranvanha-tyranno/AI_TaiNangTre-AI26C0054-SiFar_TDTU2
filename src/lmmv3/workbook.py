@@ -11,6 +11,33 @@ from ..tools.executor import number, PlanError
 from ..exploration import observe
 
 
+def evidence_ranges(value, region):
+    """Parse contiguous or disjoint A1 evidence without changing coordinates."""
+    values=value if isinstance(value,list) else [value]
+    parts=[]
+    for entry in values:
+        if not isinstance(entry,str): raise PlanError('Each evidence range must be a string')
+        # Separators inside quoted sheet names are not range separators.
+        parts.extend(re.split(r"[;,](?=(?:[^']*'[^']*')*[^']*$)",entry))
+    if not parts or len(parts)>40: raise PlanError('Evidence needs 1..40 A1 ranges')
+    result=[]
+    for part in parts:
+        if not isinstance(part,str): raise PlanError('Each evidence range must be a string')
+        ref=part.strip()
+        if '!' in ref:
+            sheet,ref=ref.rsplit('!',1)
+            sheet=sheet.strip().strip("'").replace("''", "'")
+            if sheet.casefold()!=region.sheet.casefold(): raise PlanError(f'Evidence sheet {sheet!r} differs from {region.sheet!r}')
+        ref=ref.replace('$','').strip().upper()
+        if len(ref)>40 or not re.fullmatch(r'[A-Z]{1,3}[1-9]\d*(?::[A-Z]{1,3}[1-9]\d*)?',ref):
+            raise PlanError(f'Invalid evidence range {part!r}; use A1:B3 or a list of A1 ranges')
+        c1,r1,c2,r2=range_boundaries(ref)
+        if not(region.start_col<=c1<=c2<=region.end_col and region.start_row<=r1<=r2<=region.end_row):
+            raise PlanError(f'Coverage outside table: {part!r}; {region.id} bounds are {region.bounds}')
+        result.append((ref,(c1,r1,c2,r2)))
+    return result
+
+
 def tokens(value):
     normalized=unicodedata.normalize('NFKC',text(value)).casefold()
     parts=re.findall(r'[^\W_]+',normalized,re.UNICODE)
@@ -147,6 +174,13 @@ class Workbook:
                                    'blank_count':sum(v is None or v=='' for v in values),'numeric_count':numeric,
                                    'includes_headers':True,'values_not_returned':True})
             else:
+                if op=='read_range' and region is not None:
+                    ranges=evidence_ranges(request.get('range'),region)
+                    if len(ranges)>1:
+                        if sum((c-a+1)*(d-b+1) for _,(a,b,c,d) in ranges)>600:
+                            raise PlanError('Inspection batch is limited to 600 cells; request smaller ranges')
+                        for ref,_ in ranges: result.extend(self.inspect([dict(request,range=ref)],question))
+                        continue
                 observations,_=observe([request],self.regions,question,60)
                 for item in observations:
                     if 'preview' in item:
@@ -162,28 +196,54 @@ class Workbook:
                 result.extend(observations)
         return result
 
+    def ensure_evidence(self,coverage,limit=2400):
+        """Read cited cells locally. A planner citation is a read request, not proof."""
+        cells=[];warnings=[];seen=set();seen_ranges=set();used=0
+        for item in coverage:
+            region=self.index.get(item.get('table'))
+            if region is None:
+                warnings.append(f'Unknown coverage table {item.get("table")!r}');continue
+            try: ranges=evidence_ranges(item.get('range'),region)
+            except PlanError as error: warnings.append(str(error));continue
+            for ref,(c1,r1,c2,r2) in ranges:
+                if (region.id,ref) in seen_ranges: continue
+                area=(c2-c1+1)*(r2-r1+1)
+                if used+area>limit:
+                    warnings.append(f'Evidence read cap reached for {region.id}!{ref}; not marked observed');continue
+                for row in range(r1,r2+1):
+                    for col in range(c1,c2+1):
+                        key=(region.sheet,row,col)
+                        if key not in seen: cells.append(self.cell(region,row,col));seen.add(key)
+                used+=area;self.remember(region.id,ref);seen_ranges.add((region.id,ref))
+        return {'op':'auto_read_evidence','cells':cells,'cell_count':len(cells),'warnings':warnings,'truncated':bool(warnings)}
 
-def coverage_check(spec,coverage,workbook,question=None):
+
+def coverage_check(spec,coverage,workbook,question=None,advisory=False):
     """Check grounding, not semantic truth: LLM still owns meaning alignment."""
     required={r['id'] for r in spec['requirements']};covered=set();issues=[]
     question_grounded={r['id'] for r in spec['requirements'] if r['kind']=='output' and question is not None and r['quote'] in question}
     for item in coverage:
         if item['requirement'] not in required:
-            raise PlanError(f'Coverage uses unknown requirement {item["requirement"]!r}; valid IDs: {sorted(required)}')
+            message=f'Coverage uses unknown requirement {item["requirement"]!r}; valid IDs: {sorted(required)}'
+            if not advisory: raise PlanError(message)
+            issues.append(message)
         region=workbook.index.get(item['table'])
-        if region is None: raise PlanError('Coverage uses unknown table')
-        try: c1,r1,c2,r2=range_boundaries(item['range'])
-        except (ValueError,TypeError): raise PlanError('Invalid coverage A1 range') from None
-        if None in (c1,r1,c2,r2) or not(region.start_col<=c1<=c2<=region.end_col and region.start_row<=r1<=r2<=region.end_row):
-            raise PlanError(f'Coverage outside table: {item["range"]!r}; {region.id} bounds are {region.bounds}. Cite an observed range inside these bounds; do not clamp or invent evidence.')
-        if (c2-c1+1)*(r2-r1+1)>600:
-            raise PlanError('Coverage evidence must cite <=600 observed cells, not an uninspected full data range')
+        try:
+            if region is None: raise PlanError('Coverage uses unknown table')
+            ranges=evidence_ranges(item['range'],region)
+        except PlanError as error:
+            if not advisory: raise
+            issues.append(str(error));continue
         observed_bounds=[range_boundaries(o['range']) for o in workbook.observed if o['table']==region.id]
+        area=sum((c2-c1+1)*(r2-r1+1) for _,(c1,r1,c2,r2) in ranges)
+        if area>2400:
+            if not advisory: raise PlanError('Coverage evidence exceeds local read cap')
+            issues.append('Coverage exceeds local read cap');continue
         seen=all(any(a<=col<=c and b<=row<=d for a,b,c,d in observed_bounds)
-                 for row in range(r1,r2+1) for col in range(c1,c2+1))
+                 for _,(c1,r1,c2,r2) in ranges for row in range(r1,r2+1) for col in range(c1,c2+1))
         if not seen: issues.append(f'{item["requirement"]}: no observed cells in {region.id}!{item["range"]}')
         else: covered.add(item['requirement'])
     issues.extend('Missing requirement evidence: '+key for key in sorted(required-covered-question_grounded))
-    if issues: raise PlanError('; '.join(issues))
-    return {'complete':True,'requirements':len(required),'grounding_checked':True,
+    if issues and not advisory: raise PlanError('; '.join(issues))
+    return {'complete':not issues,'warnings':issues,'requirements':len(required),'grounding_checked':True,
             'semantic_alignment':'model_assessed_not_proven','coverage':coverage,'question_grounded':sorted(question_grounded)}

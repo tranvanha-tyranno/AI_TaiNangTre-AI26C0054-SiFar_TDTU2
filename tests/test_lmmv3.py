@@ -63,11 +63,9 @@ class V3Test(unittest.TestCase):
         self.assertIn('金额!B2',record['evidence'])
 
     def test_missing_evidence_triggers_tool_then_plan(self):
-        first=response();first['coverage'][0]['table']='unknown'
         inspect={'action':'inspect','requests':[{'op':'read_cell','table':'t1','cell':'B2'}],'missing_requirements':['metric']}
-        client=FakeClient([specification(),first,inspect,response()]);record={}
+        client=FakeClient([specification(),inspect,response()]);record={}
         self.assertEqual(answer(self.path,QUESTION,client,record,{}),'60.00')
-        self.assertTrue(record['validation_events'])
         self.assertTrue(any(i['action']=='inspect' for i in record['interactions']))
 
     def test_unseen_coverage_is_not_claimed_complete(self):
@@ -118,8 +116,9 @@ class V3Test(unittest.TestCase):
         plan=computation();plan['steps']=[{'id':'cell','op':'cell','table':'t1','row':2,'column':'A'}];plan['output']={'step':'cell'}
         spec=specification();spec['fields'][0].update(type='label',decimals=None)
         client=FakeClient([spec,response(plan),{'verdict':'revise','issues':['Wrong scope; inspect more rows']}]);record={}
-        with self.assertRaises(PlanError): answer(self.path,QUESTION,client,record,{'v3_max_repairs':0})
+        self.assertEqual(answer(self.path,QUESTION,client,record,{'v3_max_repairs':0}),'')
         self.assertFalse(record['validated']);self.assertNotIn('answer',record)
+        self.assertEqual(record['status'],'unanswered')
 
     def test_risky_review_accepts_once(self):
         spec=specification();spec['fields'][0].update(type='label',decimals=None)
@@ -136,7 +135,7 @@ class V3Test(unittest.TestCase):
 
     def test_shared_budget_includes_spec_inspection_and_review(self):
         client=FakeClient([specification()]);record={}
-        with self.assertRaises(Exception): answer(self.path,QUESTION,client,record,{'v3_max_api_calls':1})
+        self.assertEqual(answer(self.path,QUESTION,client,record,{'v3_max_api_calls':1}),'')
         self.assertEqual(record['usage']['api_calls'],1);self.assertFalse(record['validated'])
 
     def test_explicit_locale_and_date_parsing_do_not_guess(self):
@@ -170,7 +169,7 @@ class V3Test(unittest.TestCase):
         with output.open(encoding='utf-8',newline='') as stream: rows=list(csv.DictReader(stream))
         self.assertEqual([r['id'] for r in rows],['1','2','10'])
         self.assertEqual([r['answer'] for r in rows],['60.00']*3)
-        self.assertEqual(json.loads((logs/'summary.json').read_text())['pipeline_version'],'lmmv3-8phase-v3')
+        self.assertEqual(json.loads((logs/'summary.json').read_text())['pipeline_version'],'lmmv3-8phase-v4')
 
     def test_dashboard_accepts_v3_without_launching_a_worker(self):
         import dashboard
@@ -209,20 +208,23 @@ class V3Test(unittest.TestCase):
         spec=specification();spec['output_count']='several'
         class Client(FakeClient):
             def complete(self,messages,ledger,purpose):
-                if self.purposes:
+                if self.purposes and purpose=='v3_spec':
                     feedback=json.loads(messages[1]['content'])['feedback']
                     assert 'previous_response' in feedback
                     assert "received str" in feedback['error']
                 return super().complete(messages,ledger,purpose)
         record={}
-        with self.assertRaises(PlanError): answer(self.path,QUESTION,Client([spec,spec]),record,{})
-        self.assertEqual(len(record['model_responses']),2)
+        self.assertEqual(answer(self.path,QUESTION,Client([spec,spec,response(),{'verdict':'accept','issues':[]}]),record,{}),'60')
+        self.assertTrue(record['specification_fallback'])
+        self.assertEqual(len(record['model_responses']),4)
         self.assertEqual(json.loads(record['model_responses'][0]['raw'])['output_count'],'several')
 
     def test_dynamic_schema_rejects_unknown_ids_and_bounds_feedback_is_precise(self):
         active=schema('v3_plan',specification(),[{'table_id':'t1'}])
         bad=response();bad['coverage'][0]['requirement']='fabricated'
-        with self.assertRaises(PlanError): validate(bad,active)
+        validate(bad,active)
+        book=Workbook(self.path)
+        with self.assertRaisesRegex(PlanError,'unknown requirement'): coverage_check(specification(),bad['coverage'],book)
         book=Workbook(self.path);book.preview(book.index['t1'],QUESTION,45)
         bad=response();bad['coverage'][0]['range']='B1:B100'
         with self.assertRaisesRegex(PlanError,'bounds are A1:C4'): coverage_check(specification(),bad['coverage'],book)
@@ -233,7 +235,7 @@ class V3Test(unittest.TestCase):
         class Client(FakeClient):
             def complete(self,messages,ledger,purpose):
                 if purpose=='v3_plan':
-                    assert ledger.response_schema['anyOf'][0]['properties']['coverage']['items']['properties']['requirement']['enum']==['metric']
+                    assert 'coverage' in ledger.response_schema['anyOf'][0]['properties']
                 if purpose=='v3_review': assert json.loads(messages[1]['content'])['ambiguity_resolutions']
                 return super().complete(messages,ledger,purpose)
         record={};client=Client([spec,ready,{'verdict':'accept','issues':[]}])
@@ -243,8 +245,7 @@ class V3Test(unittest.TestCase):
     def test_unresolved_ambiguity_requires_reviewer_clearance(self):
         spec=specification();spec['ambiguities']=['Which period?']
         ready=response();ready['ambiguity_resolutions']=[];record={}
-        with self.assertRaisesRegex(PlanError,'Semantic review'):
-            answer(self.path,QUESTION,FakeClient([spec,ready,{'verdict':'revise','issues':['Read the missing period header before accepting']}]),record,{'v3_max_repairs':0})
+        self.assertEqual(answer(self.path,QUESTION,FakeClient([spec,ready,{'verdict':'revise','issues':['Read the missing period header before accepting']}]),record,{'v3_max_repairs':0}),'')
         self.assertFalse(record['validated'])
         self.assertEqual(record['readiness']['pending_review_ambiguities'],['Which period?'])
 
@@ -274,6 +275,55 @@ class V3Test(unittest.TestCase):
         self.assertEqual(result['question_grounded'],['format'])
         with self.assertRaisesRegex(PlanError,'Missing requirement evidence'):
             coverage_check(spec,response()['coverage'],book)
+
+    def test_disjoint_evidence_and_auto_read_without_extra_generation(self):
+        for notation in ['A1:B1;A3:B3',['$A$1:$B$1',"'金额'!A3:B3"]]:
+            with self.subTest(notation=notation):
+                ready=response();ready['coverage'][0]['range']=notation
+                record={};client=FakeClient([specification(),ready])
+                self.assertEqual(answer(self.path,QUESTION,client,record,{'preview_rows':1}),'60.00')
+                self.assertEqual(client.purposes,['v3_spec','v3_plan'])
+                self.assertTrue(record['readiness']['complete'])
+                self.assertTrue(any(i['action']=='auto_read_evidence' for i in record['interactions']))
+
+    def test_missing_advisory_envelope_does_not_block_valid_computation(self):
+        plan=computation();plan.pop('answer_spec')
+        client=FakeClient([specification(),plan,{'verdict':'accept','issues':[]}]);record={}
+        self.assertEqual(answer(self.path,QUESTION,client,record,{}),'60.00')
+        self.assertTrue(record['readiness']['warnings'])
+        self.assertTrue(record['validated'])
+
+    def test_bad_coverage_never_clamps_coordinates_but_review_can_clear_real_plan(self):
+        ready=response();ready['coverage'][0]['range']='B900:B910'
+        client=FakeClient([specification(),ready,{'verdict':'accept','issues':[]}]);record={}
+        self.assertEqual(answer(self.path,QUESTION,client,record,{}),'60.00')
+        self.assertTrue(record['readiness']['warnings'])
+        self.assertFalse(record['readiness']['complete'])
+        self.assertNotIn('金额!B900',record['evidence'])
+
+    def test_repeated_invalid_computation_stops_without_retry_loop_or_fake_answer(self):
+        bad=response();bad['plan']['steps'][1]['expr']={'col':'MISSING'}
+        client=FakeClient([specification(),bad,bad]);record={}
+        self.assertEqual(answer(self.path,QUESTION,client,record,{}),'')
+        self.assertEqual(client.purposes,['v3_spec','v3_plan','v3_plan'])
+        self.assertEqual(record['status'],'unanswered');self.assertFalse(record['validated'])
+        self.assertNotIn('failure_event',record)
+
+    def test_failed_reviewer_metadata_keeps_computed_candidate_with_explicit_warning(self):
+        spec=specification();spec['ambiguities']=['Check source column']
+        client=FakeClient([spec,response(),{'unexpected':'metadata'}, {'unexpected':'metadata'}]);record={}
+        self.assertEqual(answer(self.path,QUESTION,client,record,{}),'60.00')
+        self.assertFalse(record['validated']);self.assertTrue(record['finalized_with_warning'])
+        self.assertEqual(record['verification_level'],'computed_review_unavailable')
+
+    def test_no_review_budget_keeps_computation_but_never_promotes_rejected_candidate(self):
+        spec=specification();spec['ambiguities']=['Check units']
+        record={};client=FakeClient([spec,response()])
+        self.assertEqual(answer(self.path,QUESTION,client,record,{'v3_max_api_calls':2}),'60.00')
+        self.assertTrue(record['finalized_with_warning'])
+        record={};client=FakeClient([spec,response(),{'verdict':'revise','issues':['Wrong metric']}])
+        self.assertEqual(answer(self.path,QUESTION,client,record,{'v3_max_api_calls':3}),'')
+        self.assertTrue(record['candidate_rejected']);self.assertFalse(record.get('finalized_with_warning',False))
 
 
 if __name__=='__main__': unittest.main()

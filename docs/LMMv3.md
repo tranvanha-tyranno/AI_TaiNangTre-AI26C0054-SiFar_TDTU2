@@ -81,3 +81,15 @@ Run kế tiếp cho thấy các kiểu descriptive kind như group và quote di�
 Yêu cầu format có quote nguyên văn được đối chiếu trực tiếp câu hỏi, không đòi tạo coverage Excel giả. Ambiguity chưa giải quyết được chuyển tới reviewer cùng bằng chứng sau tính toán; nếu thiếu bằng chứng có thể đổi đáp án thì reviewer phải yêu cầu đọc thêm/sửa, không xuất ứng viên bị bác bỏ. Không còn ép model thêm một trường metadata để được tới bước tính.
 
 Chỉ chuẩn hóa tương đương cú pháp: ambiguity_resolutions đặt trong plan được chuyển ra ngoài nếu không mâu thuẫn; biểu thức unary dạng object được bọc thành array. Không đổi tọa độ, số liệu hay phép toán. Kiểm chứng bằng client giả lập, chưa xác nhận điểm trên dataset thực.
+
+
+## Luồng thực thi bền vững — lmmv3-8phase-v4
+
+- Coverage hỗ trợ danh sách hoặc chuỗi nhiều vùng A1 phân cách chấm phẩy/phẩy, tham chiếu tuyệt đối và sheet-qualified. Không kẹp tọa độ sai vào bounds hay suy đoán vùng khác.
+- Python đọc trực tiếp vùng bằng chứng được chỉ ra, giới hạn tổng 2.400 ô/lần. Đọc thiếu/ngoài giới hạn được ghi cảnh báo, không khẳng định đã quan sát. Không tốn thêm API chỉ để yêu cầu LLM viết lại coverage.
+- Coverage/answer_spec là metadata hỗ trợ review, không phải điều kiện để tính. Thiếu hoặc sai coverage làm bắt buộc review dựa trên dữ liệu và trace thực tế. Chấp nhận kế hoạch trực tiếp hoặc envelope; answer_spec trùng lặp được lưu trong normalization log rồi bỏ khỏi phần thực thi.
+- Đặc tả thiếu metadata có mặc định trung tính. Nếu đặc tả hỏng sau một retry, tiếp tục dùng câu hỏi gốc với layout chưa xác định và bắt buộc review, không tự suy đoán đáp án.
+- Phản hồi/kế hoạch lỗi lặp không có dữ liệu mới và yêu cầu inspect đã cache không được lặp mãi. Hết giới hạn suy luận ghi trạng thái unanswered, lý do cụ thể và đáp án rỗng; lỗi runtime/API thực sự vẫn có thể báo error. Điều này không có nghĩa mọi câu đều trả lời được.
+- Kết quả Python đã vượt kiểm tra công cụ/định dạng có thể giữ lại khi reviewer không khả dụng hoặc hết ngân sách review: finalized_with_warning=true, validated=false, verification_level=computed_review_unavailable. Dashboard ghi rõ chưa qua review. Không giữ ứng viên đã bị reviewer bác bỏ hoặc chưa tính thành công; không xuất đáp án đoán.
+- Kiểm tra tọa độ thực thi, tham chiếu, kiểu dữ liệu, phép chia 0, nguồn ô, số trường và giới hạn tài nguyên tiếp tục có hiệu lực. Không vô hiệu hóa kiểm tra để tăng số đáp án.
+- Đã replay cục bộ ba kế hoạch từ run lỗi 20261016-132926-28c409 qua bước đọc bằng chứng và thực thi, không gọi API: cả ba chạy được; hai kế hoạch sau xuất tên nhóm. Đây là kiểm tra tích hợp từ log, không chứng minh độ chính xác của LMMv3 trên dataset mới hay khả năng reviewer thật.
