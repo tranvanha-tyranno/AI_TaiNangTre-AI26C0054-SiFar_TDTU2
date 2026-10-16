@@ -236,7 +236,7 @@ def answer_with_tools(path, question, client, record, settings):
     def context_messages(request,purpose):
         if settings.get('v4_upgrade'):
             from .llmv4 import prompt
-            request=prompt(request,contract)
+            request=prompt(request,contract,record.get('execution_audit') if purpose=='review' else None)
         if settings.get('v3_base_variant') and settings.get('v3_deduplicate_context',True):
             from .context_dedup import prepare
             request,metrics=prepare(request)
@@ -249,7 +249,18 @@ def answer_with_tools(path, question, client, record, settings):
         from .llmv4 import infer_contract, validate_contract, validate_field, VERSION
         contract=infer_contract(question)
         record.update(pipeline_version=VERSION,llm_variant='llm-v4',baseline_variant='llm-v3')
+        from .llmv4_reasoning import question_spec
+        record['question_spec']=question_spec(question,contract)
     record['answer_contract']=contract
+    def execute_plan(plan,available):
+        if not settings.get('v4_upgrade'):return execute(plan,available)
+        from .llmv4_reasoning import check_plan, execution_audit
+        check=check_plan(plan,available,contract,question)
+        record.setdefault('plan_checks',[]).append(check)
+        result=execute(plan,available)
+        record['execution_audit']=execution_audit(plan,result,check)
+        record.setdefault('execution_audits',[]).append(record['execution_audit'])
+        return result
     last_candidate=None
     def finalize_candidate(reason):
         if not last_candidate or not last_candidate.get('answer'):
@@ -275,7 +286,11 @@ def answer_with_tools(path, question, client, record, settings):
         record['timings']['parse']=time.monotonic()-start
         record['stage']='retrieve'
         start=time.monotonic()
-        selected,catalog=retrieve(regions,question,settings.get('retrieval_top_k',4))
+        if settings.get('v4_upgrade'):
+            from .llmv4_reasoning import retrieve_structured
+            selected,catalog=retrieve_structured(regions,question,settings.get('retrieval_top_k',4))
+        else:
+            selected,catalog=retrieve(regions,question,settings.get('retrieval_top_k',4))
         record['retrieval']=catalog
         record['timings']['retrieve']=time.monotonic()-start
         if not selected: raise PlanError('Workbook has no usable regions')
@@ -304,6 +319,8 @@ def answer_with_tools(path, question, client, record, settings):
                 previous=record['plans'][-1] if record['plans'] else {}
                 correction['execution_context']={'tool_trace':previous.get('tool_trace',[]),
                                                  'row_samples':previous.get('row_samples',{})}
+                if settings.get('v4_upgrade'):
+                    correction['execution_context']['audit']=record.get('execution_audit')
             raw=client.complete(context_messages(messages(question,previews,catalog,correction,observations,variant),'plan'),ledger,
                                 'repair' if correction else 'plan' if turn==0 else 'explore')
             record['timings']['plan']=record['timings'].get('plan',0)+time.monotonic()-start
@@ -345,7 +362,7 @@ def answer_with_tools(path, question, client, record, settings):
                     continue
                 record['stage']='execute'
                 start=time.monotonic()
-                result=execute(plan,selected)
+                result=execute_plan(plan,selected)
                 record['stage']='validate_output'
                 record['tool_trace']=result['trace']
                 last_candidate={'answer':result.get('answer'),'plan':plan,'result':result}
@@ -376,6 +393,12 @@ def answer_with_tools(path, question, client, record, settings):
                         record['timings']['review']=record['timings'].get('review',0)+time.monotonic()-started
                         try:
                             review=parse_plan(raw_review)
+                            if settings.get('v4_upgrade'):
+                                from .llmv4 import normalize_review
+                                review=normalize_review(review,record)
+                                if review is None:
+                                    record['reviews'].append({'turn':turn+1,'review_round':review_index+1,
+                                        'verdict':'unavailable','issues':[],'error':'Reviewer supplied no actionable revision evidence'})
                         except (ValueError,TypeError,KeyError) as error:
                         # Review is a second opinion, never the source of the
                         # answer. A malformed reviewer response must not erase
@@ -406,7 +429,7 @@ def answer_with_tools(path, question, client, record, settings):
                 shape_plan=fallback_shape_plan(question,contract,selected)
                 if shape_plan:
                     try:
-                        shape_result=execute(shape_plan,selected)
+                        shape_result=execute_plan(shape_plan,selected)
                         validate_contract(contract,shape_plan,shape_result,question)
                         validate_field(contract,shape_plan,shape_result,selected)
                         validate_semantics(question,contract,shape_plan,shape_result,selected)
@@ -432,7 +455,7 @@ def answer_with_tools(path, question, client, record, settings):
                         total_plan={'steps':[{'id':'printed_total','op':'cell','table':region.id,'row':row,'column':col}],
                                     'output':{'step':'printed_total'},'answer_spec':plan.get('answer_spec',{})}
                         try:
-                            total_result=execute(total_plan,selected)
+                            total_result=execute_plan(total_plan,selected)
                             validate_contract(contract,total_plan,total_result,question)
                             record['plans'].append({'attempt':len(record['plans'])+1,'turn':turn+1,'plan':total_plan,
                                                     'automatic_repair':'used explicit printed Total from executor guard',
@@ -453,7 +476,7 @@ def answer_with_tools(path, question, client, record, settings):
                     corrected,changed=use_exact_period_column(plan,str(error))
                     if changed:
                         try:
-                            candidate=execute(corrected,selected)
+                            candidate=execute_plan(corrected,selected)
                             validate_contract(contract,corrected,candidate,question)
                             validate_field(contract,corrected,candidate,selected)
                             validate_semantics(question,contract,corrected,candidate,selected)
@@ -469,10 +492,10 @@ def answer_with_tools(path, question, client, record, settings):
                             continue
                 if plan and 'Ranking must return each requested' in str(error):
                     try:
-                        candidate=execute(plan,selected)
+                        candidate=execute_plan(plan,selected)
                         aliased,changed=add_rank_aliases(plan,candidate,question)
                         if changed:
-                            candidate=execute(aliased,selected)
+                            candidate=execute_plan(aliased,selected)
                             validate_contract(contract,aliased,candidate,question)
                             validate_field(contract,aliased,candidate,selected)
                             validate_semantics(question,contract,aliased,candidate,selected)

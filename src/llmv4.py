@@ -8,7 +8,7 @@ from .answer_contract import infer_answer_contract, validate_answer_contract, va
 from .workbook_index import Region, text
 from .tools.executor import PlanError
 
-VERSION = 'llmv4-contract-context-v1'
+VERSION = 'llmv4-structured-plan-v2'
 
 
 def infer_contract(question):
@@ -107,6 +107,8 @@ class RegionV4(Region):
         candidates = [r for r in self.header_rows if r < max(self.header_rows, default=self.start_row)]
         preview['document_context'] = [{'row':r, 'cells':{get_column_letter(c):text(self.cells[(r,c)])[:500]
             for c in range(self.start_col,self.end_col+1) if (r,c) in self.cells}} for r in candidates[:8]]
+        from .llmv4_reasoning import metadata
+        preview['structure'] = metadata(self)
         return preview
 
 
@@ -127,8 +129,20 @@ def regions_v4(regions):
     return result
 
 
-def prompt(request, contract):
+def prompt(request, contract, execution=None):
+    from .llmv4_reasoning import question_spec
     request = copy.deepcopy(request)
+    for message in request:
+        if message.get('role') != 'user':continue
+        try:payload=json.loads(message.get('content',''))
+        except (ValueError,TypeError):continue
+        if not isinstance(payload,dict) or 'question' not in payload:continue
+        # The old planner payload also contains a contract. Replace it rather
+        # than sending contradictory old and new contracts in one request.
+        payload['answer_contract']=contract
+        payload['question_spec']=question_spec(payload['question'],contract)
+        if execution:payload['execution_audit']=execution
+        message['content']=json.dumps(payload,ensure_ascii=False)
     request.insert(0, {'role':'system', 'content':
         'LLMv4: use this output contract, including every requested component: ' + json.dumps(contract, ensure_ascii=False) +
         '\nReturn internal booleans as Yes/No; the program applies explicit output-language labels. '
@@ -137,5 +151,26 @@ def prompt(request, contract):
         'Read document_context for units; convert only when source and target units are explicit. '
         'For conditional counts filter first, then count. date_diff_days and age_years take [end, start]. '
         'A tuple needs all components in output; use scalar collect/record or selected row columns. '
+        'Bind each metric, period, label and unit to observed columns/cells before planning. '
+        'Scope and unit warnings are candidates to verify against evidence, not proof that a plan is wrong. '
         'Repair the named error; do not repeat an unchanged failed plan.'})
     return request
+
+
+def normalize_review(review, record):
+    """Normalize verbosity, never invent a verdict or an issue."""
+    if not isinstance(review,dict) or review.get('verdict') not in {'accept','revise'}:
+        return review
+    if set(review) != {'verdict','issues'}:
+        return review  # Unknown fields may contain caveats; do not erase them.
+    issues=review.get('issues')
+    if not isinstance(issues,list) or not all(isinstance(s,str) and s.strip() for s in issues):return review
+    if review['verdict']=='revise' and not issues:
+        record.setdefault('review_normalizations',[]).append({'reason':'Revision without actionable evidence treated as unavailable'})
+        return None
+    normalized={'verdict':review['verdict'],'issues':[s[:300] for s in issues[:5]]}
+    if normalized!=review:
+        record.setdefault('review_normalizations',[]).append({'original_verdict':review['verdict'],
+            'original_issue_count':len(issues),'original_issues':[s[:2000] for s in issues[:20]],
+            'reason':'Canonical verdict/issues retained; bounded feedback length, no invented meaning'})
+    return normalized
