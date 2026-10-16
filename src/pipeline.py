@@ -229,7 +229,25 @@ def answer_with_tools(path, question, client, record, settings):
     record.update(stage='parse',pipeline_version=v3_version(settings) if settings.get('v3_base_variant') else 'tools-v4',
                   plans=[],timings={},interactions=[],reviews=[],llm_variant=variant)
     if settings.get('v3_base_variant'): record['baseline_variant']='llm-v2'
+    reliability=bool(settings.get('v3_base_variant') and settings.get('v3_reliability',False))
+    def execute_plan(plan,selected):
+        if not reliability: return execute(plan,selected)
+        result=execute(plan,selected,reliability=True)
+        from .reliability import format_numeric_components
+        changes=format_numeric_components(result,contract)
+        if changes:
+            result['answer']=plan['output'].get('separator',', ').join(result['values'])
+            record.setdefault('output_normalizations',[]).extend(changes)
+        return result
+    def make_preview(region):
+        if reliability:
+            from .reliability import preview
+            return preview(region,question,settings.get('preview_rows',45))
+        return region.preview(question,settings.get('preview_rows',45))
     def context_messages(request,purpose):
+        if reliability:
+            from .reliability import GUIDANCE
+            request=[{'role':'system','content':GUIDANCE},*request]
         if settings.get('v3_base_variant') and settings.get('v3_deduplicate_context',True):
             from .context_dedup import prepare
             request,metrics=prepare(request)
@@ -263,7 +281,7 @@ def answer_with_tools(path, question, client, record, settings):
         record['retrieval']=catalog
         record['timings']['retrieve']=time.monotonic()-start
         if not selected: raise PlanError('Workbook has no usable regions')
-        previews=[r.preview(question,settings.get('preview_rows',45)) for r in selected]
+        previews=[make_preview(r) for r in selected]
         record['previews']=previews
         observations=[]
         correction=None
@@ -275,7 +293,7 @@ def answer_with_tools(path, question, client, record, settings):
             for region in acquired:
                 if region.id not in {r.id for r in selected}:
                     selected.append(region)
-                    previews.append(region.preview(question,settings.get('preview_rows',45)))
+                    previews.append(make_preview(region))
             for item in catalog: item['selected']=item['table_id'] in {r.id for r in selected}
 
         for turn in range(settings.get('max_api_calls',4)):
@@ -308,8 +326,12 @@ def answer_with_tools(path, question, client, record, settings):
                 if contract.get('yes_no') and not plan.get('answer_spec'):
                     plan=dict(plan);plan['answer_spec']={'answer_type':'boolean','answer_field':'boolean','operation':'other'}
                 raw_plan=plan
+                reliability_changes=[]
+                if reliability:
+                    from .reliability import normalize
+                    plan,reliability_changes=normalize(plan)
                 plan,normalizations=normalize_plan(plan,regions,contract)
-                normalizations=syntax_repairs+normalizations
+                normalizations=syntax_repairs+reliability_changes+normalizations
                 record['plans'].append({'attempt':len(record['plans'])+1,'turn':turn+1,'plan':plan,
                                         **({'raw_plan':raw_plan,'normalizations':normalizations} if normalizations else {}),
                                         **({'raw_planner_response':raw} if syntax_repairs else {})})
@@ -328,7 +350,7 @@ def answer_with_tools(path, question, client, record, settings):
                     continue
                 record['stage']='execute'
                 start=time.monotonic()
-                result=execute(plan,selected)
+                result=execute_plan(plan,selected)
                 record['stage']='validate_output'
                 record['tool_trace']=result['trace']
                 last_candidate={'answer':result.get('answer'),'plan':plan,'result':result}
@@ -389,7 +411,7 @@ def answer_with_tools(path, question, client, record, settings):
                 shape_plan=fallback_shape_plan(question,contract,selected)
                 if shape_plan:
                     try:
-                        shape_result=execute(shape_plan,selected)
+                        shape_result=execute_plan(shape_plan,selected)
                         validate_answer_contract(contract,shape_plan,shape_result,question)
                         validate_answer_field(contract,shape_plan,shape_result,selected)
                         validate_semantics(question,contract,shape_plan,shape_result,selected)
@@ -415,7 +437,7 @@ def answer_with_tools(path, question, client, record, settings):
                         total_plan={'steps':[{'id':'printed_total','op':'cell','table':region.id,'row':row,'column':col}],
                                     'output':{'step':'printed_total'},'answer_spec':plan.get('answer_spec',{})}
                         try:
-                            total_result=execute(total_plan,selected)
+                            total_result=execute_plan(total_plan,selected)
                             validate_answer_contract(contract,total_plan,total_result,question)
                             record['plans'].append({'attempt':len(record['plans'])+1,'turn':turn+1,'plan':total_plan,
                                                     'automatic_repair':'used explicit printed Total from executor guard',
@@ -436,7 +458,7 @@ def answer_with_tools(path, question, client, record, settings):
                     corrected,changed=use_exact_period_column(plan,str(error))
                     if changed:
                         try:
-                            candidate=execute(corrected,selected)
+                            candidate=execute_plan(corrected,selected)
                             validate_answer_contract(contract,corrected,candidate,question)
                             validate_answer_field(contract,corrected,candidate,selected)
                             validate_semantics(question,contract,corrected,candidate,selected)
@@ -452,10 +474,10 @@ def answer_with_tools(path, question, client, record, settings):
                             continue
                 if plan and 'Ranking must return each requested' in str(error):
                     try:
-                        candidate=execute(plan,selected)
+                        candidate=execute_plan(plan,selected)
                         aliased,changed=add_rank_aliases(plan,candidate,question)
                         if changed:
-                            candidate=execute(aliased,selected)
+                            candidate=execute_plan(aliased,selected)
                             validate_answer_contract(contract,aliased,candidate,question)
                             validate_answer_field(contract,aliased,candidate,selected)
                             validate_semantics(question,contract,aliased,candidate,selected)

@@ -16,7 +16,8 @@ class BaselineTest(unittest.TestCase):
         self.assertEqual(v2,v3)
         self.assertEqual(original['max_api_calls'],4)
 
-    def test_v2_and_restarted_v3_emit_the_same_requests_and_answer(self):
+    @patch('time.monotonic', return_value=100.0)
+    def test_v2_and_restarted_v3_emit_the_same_requests_and_answer(self, _clock):
         region=Region('t1','Data',1,3,1,2,{(1,1):'Code',(1,2):'Charge',
             (2,1):'A',(2,2):7,(3,1):'B',(3,2):11},[],[],[1])
         plan={'steps':[{'id':'r','op':'read','table':'t1','start_row':2,'end_row':3},
@@ -41,7 +42,8 @@ class BaselineTest(unittest.TestCase):
         self.assertEqual(records[1]['pipeline_version'],V3_DEDUP_VERSION)
         self.assertEqual(records[1]['baseline_variant'],'llm-v2')
 
-    def test_only_v3_packs_overlap_and_toggle_recovers_identical_requests(self):
+    @patch('time.monotonic', return_value=100.0)
+    def test_only_v3_packs_overlap_and_toggle_recovers_identical_requests(self, _clock):
         cells={(1,1):'Code',(1,2):'Charge'}
         for row in range(2,32): cells.update({(row,1):f'long source label preserved in full {row}',(row,2):row})
         whole=Region('t1','Data',1,31,1,2,cells,[],[],[1],True)
