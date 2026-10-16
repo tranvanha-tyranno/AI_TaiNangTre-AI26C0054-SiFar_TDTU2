@@ -206,3 +206,7 @@ Phạm vi lần cập nhật này: sửa hướng dẫn và ghi nhận việc c�
 ---
 
 *Nguồn: Đề thi Chủ đề 2 — Hỏi đáp trên bảng tính Excel (trang 1–3); Giải đáp thắc mắc của đội thi — Vòng Khu vực, Bảng C (trang 1–3, câu 01–07), bản sao trong `docs/`. Các mô tả hiện trạng và đề xuất ở mục 8–10, 12 là ghi chú của dự án, không phải phát biểu của BTC.*
+
+## 13. Nhánh thử nghiệm LMMv3
+
+Trên `Bao_LMMv3`, `--mode llm-v3` gọi pipeline riêng `src/lmmv3/`, tên hiển thị LMMv3. Giữ baseline `llm` và `llm-v2`; không merge main nếu chưa được yêu cầu. Thiết kế và giới hạn: `docs/LMMv3.md`. Tám phase ghi đặc tả, coverage, trace và điều phối sửa; grounding tọa độ không chứng minh đúng ngữ nghĩa. Không dùng đáp án mẫu/ID/file-specific resolver. Chỉ có kiểm tra tổng hợp/client giả lập cho v3, chưa có điểm dataset hay chứng nhận tài nguyên. Test dashboard đã được sửa để không gọi CLI thật; không gọi API khi chạy unit tests.

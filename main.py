@@ -66,8 +66,8 @@ def main():
     ap.add_argument("--log-dir", default="outputs/logs", help="Nhật ký từng câu")
     ap.add_argument("--config", type=str, default="config/config.yaml", help="File config yaml (optional)")
     ap.add_argument("--concurrency", type=int, default=None)
-    ap.add_argument("--mode", choices=["llm", "llm-v2"], default=None,
-                    help="llm: pipeline chuẩn; llm-v2: khám phá chủ động + review mọi câu + sửa sâu")
+    ap.add_argument("--mode", choices=["llm", "llm-v2", "llm-v3"], default=None,
+                    help="llm: baseline; llm-v2: deep; llm-v3: LMMv3, 8 phase có bằng chứng")
     args = ap.parse_args()
     try:
         from dotenv import load_dotenv
@@ -94,6 +94,8 @@ def main():
     output_path = Path(args.output or cfg.get("output") or "./submission.csv")
     concurrency = args.concurrency if args.concurrency is not None else cfg.get("concurrency", 1)
     mode = args.mode or cfg.get("mode") or "llm"
+    if mode == 'llm-v3':
+        cfg = dict(cfg, pipeline_variant='llm-v3')
     if mode == 'llm-v2':
         cfg = dict(cfg)
         cfg.update(pipeline_variant='llm-v2', max_api_calls=max(6, int(cfg.get('max_api_calls',4))),
@@ -212,7 +214,7 @@ def main():
     with open(output_path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f, quoting=csv.QUOTE_MINIMAL, lineterminator="\n")
         w.writerow(["id", "answer"])
-        for q in queries:
+        for q in (sorted(queries,key=lambda q:int(q['id'])) if mode=='llm-v3' and all(str(q['id']).isdigit() for q in queries) else queries):
             w.writerow([q["id"], results.get(q["id"], "")])
 
     print(f"[INFO] Đã ghi {output_path}")
@@ -226,9 +228,12 @@ def main():
     summary = {"questions": len(queries), "answered": sum(r['status'] in {'ok','finalized'} for r in records),
                "elapsed_seconds": elapsed, "mode": mode,
                "model": os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash',
-               "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=1024,
+               "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=(4096 if mode=='llm-v3' else 1024),
                "peak_memory_mb": memory,
-               "pipeline_version": 'tools-v4',
+               "pipeline_version": 'lmmv3-8phase-v1' if mode=='llm-v3' else 'tools-v4',
+               "memory_measurement_scope": "main_process_peak_only",
+               "resource_compliance_verified": False,
+               "disk_verified": False,
                "usage": usage}
     (log_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 

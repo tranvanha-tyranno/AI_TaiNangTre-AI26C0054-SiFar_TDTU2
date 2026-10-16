@@ -105,6 +105,7 @@ class PlannerClient:
                                 'provider':{'max_price':{'prompt':self.prompt_cap,'completion':self.completion_cap}}})
                 payload=response.model_dump()
                 usage=payload.get('usage') or {}
+                call['raw_usage']=usage
                 cost=usage.get('cost')
                 source='usage.cost' if cost is not None else 'unknown'
                 if cost is None and payload.get('id'):

@@ -28,3 +28,8 @@ preview_rows: 45
 mode: llm  # LLM + Tools là luồng xử lý duy nhất
 concurrency: 1
 # Dùng --mode llm-v2 để bật khám phá/review sâu; mode mặc định giữ baseline.
+
+# LMMv3 only: independent limits; earlier variants unchanged.
+v3_max_api_calls: 8
+v3_max_repairs: 3
+v3_max_inspections: 3

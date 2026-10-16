@@ -126,6 +126,9 @@ def parse_plan(content, syntax_repairs=None):
 
 
 def tool_schema(purpose='plan'):
+    if purpose.startswith('v3_'):
+        from .lmmv3.contracts import schema
+        return schema(purpose)
     if purpose == 'review':
         return {'type':'object','properties':{'verdict':{'enum':['accept','revise']},
                 'issues':{'type':'array','maxItems':5,'items':{'type':'string','maxLength':300}}},

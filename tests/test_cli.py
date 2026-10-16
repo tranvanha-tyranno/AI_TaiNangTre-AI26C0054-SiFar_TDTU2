@@ -13,7 +13,7 @@ class CLITest(unittest.TestCase):
                                 capture_output=True, text=True, encoding='utf-8', errors='replace')
         self.assertEqual(result.returncode, 0)
         help_text=(result.stdout or '')+(result.stderr or '')
-        self.assertIn('--mode {llm,llm-v2}', help_text)
+        self.assertIn('--mode {llm,llm-v2,llm-v3}', help_text)
         self.assertNotIn('offline', help_text.lower())
         self.assertNotIn('hybrid', help_text.lower())
 
