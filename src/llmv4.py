@@ -8,7 +8,7 @@ from .answer_contract import infer_answer_contract, validate_answer_contract, va
 from .workbook_index import Region, text
 from .tools.executor import PlanError
 
-VERSION = 'llmv4-structured-plan-v2'
+VERSION = 'llmv4-typed-comparison-v3'
 
 
 def infer_contract(question):

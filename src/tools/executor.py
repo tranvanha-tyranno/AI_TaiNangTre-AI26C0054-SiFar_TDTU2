@@ -8,11 +8,15 @@ import re
 import time
 import unicodedata
 from collections import Counter
+from contextvars import ContextVar
 from openpyxl.utils import get_column_letter
 
 
 class PlanError(ValueError):
     pass
+
+
+_TYPED_COMPARISONS = ContextVar('spreadsheet_typed_comparisons', default=False)
 
 
 @dataclass
@@ -154,6 +158,19 @@ def expression(expr, row, results, depth=0):
             except PlanError: pass
         if op in {'eq','ne'} and (a is None or b is None):
             return Result((a==b) if op=='eq' else (a!=b),sources)
+        if _TYPED_COMPARISONS.get():
+            if isinstance(a,bool) or isinstance(b,bool):
+                if op in {'eq','ne'} and isinstance(a,bool) and isinstance(b,bool):
+                    return Result(a==b if op=='eq' else a!=b,sources)
+                raise PlanError('Boolean comparisons require two booleans and eq/ne; booleans are not numbers.')
+            if op in {'gt','ge','lt','le'} and isinstance(a,str) and isinstance(b,str):
+                raw=[unicodedata.normalize('NFKC',v).strip().replace('\u2212','-') for v in (a,b)]
+                numeric_text=all(re.fullmatch(r'[+-]?\d[\d,. ]*',v) for v in raw)
+                identifiers=any(re.match(r'[+-]?0\d',v) for v in raw)
+                if numeric_text and not identifiers:
+                    try:a,b=map(number,raw)
+                    except PlanError:
+                        raise PlanError('Ambiguous numeric text comparison; declare locale explicitly with parse_number.') from None
         if isinstance(a,(int,float,Decimal)) or isinstance(b,(int,float,Decimal)):
             a,b=number(a),number(b)
         elif op not in {'eq','ne'} and (a is None or b is None):
@@ -251,7 +268,15 @@ def format_value(value, fmt):
     return re.sub(r'\s+',' ',cleaned).strip()
 
 
-def execute(plan, regions):
+def execute(plan, regions, *, typed_comparisons=False):
+    token=_TYPED_COMPARISONS.set(typed_comparisons)
+    try:
+        return _execute(plan,regions)
+    finally:
+        _TYPED_COMPARISONS.reset(token)
+
+
+def _execute(plan, regions):
     if not isinstance(plan,dict) or not isinstance(plan.get('steps'),list) or not 1<=len(plan['steps'])<=25:
         raise PlanError("Plan requires 1..25 steps")
     final=plan.get('output')

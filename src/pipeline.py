@@ -257,7 +257,7 @@ def answer_with_tools(path, question, client, record, settings):
         from .llmv4_reasoning import check_plan, execution_audit
         check=check_plan(plan,available,contract,question)
         record.setdefault('plan_checks',[]).append(check)
-        result=execute(plan,available)
+        result=execute(plan,available,typed_comparisons=True)
         record['execution_audit']=execution_audit(plan,result,check)
         record.setdefault('execution_audits',[]).append(record['execution_audit'])
         return result
@@ -327,7 +327,11 @@ def answer_with_tools(path, question, client, record, settings):
             plan=None
             try:
                 syntax_repairs=[]
-                plan=parse_plan(raw,syntax_repairs)
+                if settings.get('v4_upgrade'):
+                    from .llmv4_recovery import parse_response
+                    plan=parse_response(raw,syntax_repairs)
+                else:
+                    plan=parse_plan(raw,syntax_repairs)
                 if not isinstance(plan,dict): raise PlanError('Planner response must be an object')
                 if plan.get('action')=='inspect':
                     if set(plan)!={'action','requests'}: raise PlanError('Inspection cannot also include a computation plan')
@@ -342,8 +346,12 @@ def answer_with_tools(path, question, client, record, settings):
                 if contract.get('yes_no') and not plan.get('answer_spec'):
                     plan=dict(plan);plan['answer_spec']={'answer_type':'boolean','answer_field':'boolean','operation':'other'}
                 raw_plan=plan
+                v4_changes=[]
+                if settings.get('v4_upgrade'):
+                    from .llmv4_recovery import normalize_dependencies
+                    plan,v4_changes=normalize_dependencies(plan)
                 plan,normalizations=normalize_plan(plan,regions,contract)
-                normalizations=syntax_repairs+normalizations
+                normalizations=syntax_repairs+v4_changes+normalizations
                 record['plans'].append({'attempt':len(record['plans'])+1,'turn':turn+1,'plan':plan,
                                         **({'raw_plan':raw_plan,'normalizations':normalizations} if normalizations else {}),
                                         **({'raw_planner_response':raw} if syntax_repairs else {})})
