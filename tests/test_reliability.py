@@ -75,7 +75,7 @@ class ReliabilityTest(unittest.TestCase):
     def test_variant_switch_is_explicit_and_isolated(self):
         self.assertEqual(v3_version(settings_for_mode({},'llm-v3')),'lmmv3-v2-dedup-v1')
         settings=settings_for_mode({'v3_reliability':True},'llm-v3')
-        self.assertEqual(v3_version(settings),'lmmv3-v2-reliability-v1')
+        self.assertEqual(v3_version(settings),'lmmv3-v2-reliability-v2')
         self.assertNotIn('v3_reliability',settings_for_mode(settings,'llm-v2'))
 
     def test_integer_formatting_only_touches_declared_numeric_components(self):

@@ -1,5 +1,17 @@
 # LMMv3 reliability — thử nghiệm độc lập từ baseline
 
+## Bản sửa đầu ra/review `lmmv3-v2-reliability-v2`
+
+Nhánh `codex/llmv3-output-review-fix` phát triển từ main đã nhận reliability-v1. Baseline nguyên trạng không đổi.
+
+- Nếu contract yêu cầu count, answer_spec cũng khai báo count, nhưng output là filter không có columns: nối thêm aggregate count trên chính filter đó. Không tự tạo bộ lọc hoặc suy đoán cột; không sửa yêu cầu liệt kê có columns, không vượt 25 bước; mọi thay đổi ghi vào normalizations.
+- Khi câu hỏi yêu cầu identity và kết quả xếp hạng trả lại chính literal dùng để lọc, phát hiện literal lặp dưới nhiều section trong phạm vi đã đọc. Chỉ kiểm tra mẫu sort/take và output đúng cột đang lọc; bỏ qua nếu header cột xác định rõ identity được hỏi hoặc chỉ một section. Báo lỗi có bằng chứng cho LLM sửa, không tự thay nhãn bằng đáp án tham chiếu. Đây là guard hẹp, chưa phải bộ hiểu identity đa ngôn ngữ hoàn chỉnh.
+- Review nhận final_output.answer, final_output.values và normalizations của chính ứng viên hiện tại. Giữ nguyên raw tool trace/row_samples để kiểm tra nguồn và phép tính; chỉ dẫn reviewer không coi dấu phân cách ô gốc là lỗi còn tồn tại trong đầu ra đã chuẩn hóa. Không tự bỏ qua verdict revise hoặc thay đổi câu trả lời theo reviewer.
+
+Replay offline log `20261016-233013-7aa485`: kế hoạch đếm đã sửa hoàn tất và trả 34; nhãn lớp lặp được phát hiện với bằng chứng section. Tests giả lập xác minh đường sửa identity và payload review, không thêm stage/API allowance. Chưa có điểm benchmark LLM mới, không bảo đảm reviewer luôn đúng.
+
+Các mô tả v1 dưới đây là lịch sử và nền của bản sửa.
+
 Nhánh `codex/llmv3-reliability` bắt đầu từ `e07698f`. Nhánh `codex/llmv3-restored-25` giữ nguyên. Không đưa các gate/schema/RAG của v4 trở lại baseline.
 
 Chạy `--mode llm-v3` với `v3_reliability: true` trong config hiện tại để dùng version `lmmv3-v2-reliability-v1`. Tắt cờ để dùng luồng gốc trên nhánh này; muốn nguyên mã nguồn lịch sử dùng nhánh restored. Cờ được ghi trong run_context. Chế độ llm/llm-v2 không bật các thay đổi này.

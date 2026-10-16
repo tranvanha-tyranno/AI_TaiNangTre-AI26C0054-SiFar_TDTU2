@@ -224,6 +224,8 @@ Trên Bao_LMMv3, `--mode llm-v3` hiện dispatch sang `src/lmmv3/lite.py`, versi
 
 ## 16. LMMv3 hiện tại — chỉ nâng cấp giảm trùng context
 
+Trên `codex/llmv3-output-review-fix`, cờ reliability dùng version `lmmv3-v2-reliability-v2`: hoàn tất count khi question contract và plan đồng thuận, phát hiện nhãn filter lặp bị trả nhầm làm identity, phân biệt raw source với final_output trong review. Không tăng ngân sách, không đổi RAG ranking, không tự bỏ qua reviewer revise. Chi tiết/giới hạn ở `docs/LMMv3_RELIABILITY.md`. Chưa benchmark API bản v2.
+
 Trên nhánh thử nghiệm `codex/llmv3-reliability` mới: cờ `v3_reliability: true` bật version `lmmv3-v2-reliability-v1`, sửa so sánh số text/boolean, báo count boolean, chuẩn hóa lag khai báo rõ, bổ sung section provenance và hướng dẫn cú pháp. Baseline nguyên trạng ở `codex/llmv3-restored-25` commit `e07698f`. Không đổi RAG ranking hoặc tăng ngân sách; chưa benchmark API, không tuyên bố đã sửa hết sáu câu. Xem `docs/LMMv3_RELIABILITY.md`. Mô tả dưới đây áp dụng khi cờ tắt hoặc trên baseline.
 
 Mục 15 là mốc nền; hiện mặc định `--mode llm-v3` dùng version `lmmv3-v2-dedup-v1`, cùng pipeline/cấu hình LLMv2 và chỉ thêm `src/context_dedup.py` tại ranh giới gửi request. Tắt bằng `v3_deduplicate_context: false` để khôi phục `lmmv3-v2-baseline-v1`. Không đổi lựa chọn bảng, kế hoạch, phép tính hay chính sách review trong lần này. Xem docs/LMMv3_CONTEXT_DEDUP.md. Số đo offline là ký tự; chưa chứng minh tiết kiệm token thực hoặc giữ điểm. Tiếp tục phát triển từng thay đổi có đối chứng.

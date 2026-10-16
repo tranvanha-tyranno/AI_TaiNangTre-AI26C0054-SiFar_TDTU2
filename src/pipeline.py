@@ -237,6 +237,7 @@ def answer_with_tools(path, question, client, record, settings):
         changes=format_numeric_components(result,contract)
         if changes:
             result['answer']=plan['output'].get('separator',', ').join(result['values'])
+            result['output_normalizations']=changes
             record.setdefault('output_normalizations',[]).extend(changes)
         return result
     def make_preview(region):
@@ -252,6 +253,12 @@ def answer_with_tools(path, question, client, record, settings):
             from .context_dedup import prepare
             request,metrics=prepare(request)
             record.setdefault('context_dedup',[]).append({'purpose':purpose,**metrics})
+        return request
+    def make_review(plan,result):
+        request=review_messages(question,previews,plan,result)
+        if reliability:
+            from .reliability import review_request
+            request=review_request(request,result)
         return request
     contract=infer_answer_contract(question)
     record['answer_contract']=contract
@@ -329,7 +336,7 @@ def answer_with_tools(path, question, client, record, settings):
                 reliability_changes=[]
                 if reliability:
                     from .reliability import normalize
-                    plan,reliability_changes=normalize(plan)
+                    plan,reliability_changes=normalize(plan,contract)
                 plan,normalizations=normalize_plan(plan,regions,contract)
                 normalizations=syntax_repairs+reliability_changes+normalizations
                 record['plans'].append({'attempt':len(record['plans'])+1,'turn':turn+1,'plan':plan,
@@ -360,6 +367,9 @@ def answer_with_tools(path, question, client, record, settings):
                 validate_aggregate_scope(question,plan,selected)
                 validate_answer_contract(contract,plan,result,question)
                 validate_answer_field(contract,plan,result,selected)
+                if reliability:
+                    from .reliability import validate_section_identity
+                    validate_section_identity(contract,plan,result,selected)
                 validate_semantics(question,contract,plan,result,selected)
                 validate_rank_labels(question,result)
                 for target in plan.get('output',{}).get('aliases',{}).values():
@@ -372,7 +382,7 @@ def answer_with_tools(path, question, client, record, settings):
                     review_rounds=1
                     for review_index in range(review_rounds):
                         try:
-                            raw_review=client.complete(context_messages(review_messages(question,previews,plan,result),'review'),ledger,'review')
+                            raw_review=client.complete(context_messages(make_review(plan,result),'review'),ledger,'review')
                         except (BudgetError,RuntimeError) as error:
                             # Deterministic checks already passed. Optional review
                             # cannot turn that candidate into a budget failure.
