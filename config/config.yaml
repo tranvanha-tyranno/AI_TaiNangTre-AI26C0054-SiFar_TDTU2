@@ -33,3 +33,8 @@ concurrency: 1
 v3_max_api_calls: 8
 v3_max_repairs: 3
 v3_max_inspections: 3
+
+# LMMv3 Lite baseline: normal 1 call; one optional repair OR inspection follow-up.
+# Old v3_* options above apply only to the archived eight-phase implementation.
+lite_max_api_calls: 2
+lite_context_chars: 16000

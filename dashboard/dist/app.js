@@ -58,9 +58,9 @@ function render(){
   $('runSelect').value=selected;
   const context=state.context||{};
   $('runProvenance').textContent=context.source_fingerprint?`Mã nguồn ${context.source_fingerprint} · ${context.model||sum.model||''}`:(sum.model||'Chưa có thông tin phiên bản');
-  $('modeBadge').textContent=sum.mode==='llm-v3'?'LMMv3 · 8 phase':sum.mode==='llm-v2'?'LLMv2 + Tools':'LLM + Tools';
+  $('modeBadge').textContent=sum.mode==='llm-v3'?(String(sum.pipeline_version||'').startsWith('lmmv3-lite')?'LMMv3 Lite':'LMMv3 · 8 phase'):sum.mode==='llm-v2'?'LLMv2 + Tools':'LLM + Tools';
   $('modeBadge').className='badge';
-  $('projectVersion').textContent=`Project v${state.config.app_version||'2.0.0'} · ${sum.mode==='llm-v3'?'LMMv3 · 8 phase':sum.mode==='llm-v2'?'LLMv2 + Tools':'LLM + Tools'} · ${sum.pipeline_version||'tools-v2'}`;
+  $('projectVersion').textContent=`Project v${state.config.app_version||'2.0.0'} · ${sum.mode==='llm-v3'?(String(sum.pipeline_version||'').startsWith('lmmv3-lite')?'LMMv3 Lite':'LMMv3 · 8 phase'):sum.mode==='llm-v2'?'LLMv2 + Tools':'LLM + Tools'} · ${sum.pipeline_version||'tools-v2'}`;
   $('runStatus').textContent=state.running?'● Đang xử lý…':`${sum.completed}/${sum.questions} câu hoàn thành`;
   $('answered').innerHTML=`${sum.answered}<span class="denom"> / ${sum.questions}</span>`;
   $('completionText').textContent=`${sum.completed} câu đã xử lý · ${sum.questions-sum.completed} câu đang chờ`;
@@ -224,7 +224,7 @@ function renderComparison(){
 }
 function renderPipeline(){
   const modern=String(state.summary.pipeline_version||'').startsWith('tools-')||state.summary.mode==='llm-v3';
-  const steps=state.summary.mode==='llm-v3'?[['Đọc workbook','Giá trị gốc, ô gộp, tiêu đề, kiểu dữ liệu.'],['Đặc tả câu hỏi','Yêu cầu đa ngôn ngữ, phạm vi và định dạng.'],['Khám phá dữ liệu','Đọc sheet, bảng, ô, vùng và thống kê cột.'],['Đủ bằng chứng?','Đối chiếu từng yêu cầu với ô đã quan sát.'],['Lập kế hoạch','Kiểm tra cấu trúc, kiểu và tham chiếu.'],['Thực thi','Python tính theo kế hoạch, giữ nguồn ô.'],['Kiểm chứng và sửa','Review có chọn lọc, ghi lỗi và giới hạn retry.'],['Xuất đáp án','Định dạng theo đặc tả và lưu log.']]:[['Đọc Excel','Giữ tọa độ, ô gộp và tiêu đề.'],['Chọn vùng','Tìm sheet/bảng liên quan.'],['Lập kế hoạch','LLM chọn thao tác tính.'],['Tính bằng công cụ','Lọc, nhóm, tổng, xếp hạng.'],['Kiểm tra đáp án','Kiểm tra phạm vi và dạng đáp án.'],['Xuất kết quả','CSV, căn cứ, log và chi phí.']];
+  const steps=String(state.summary.pipeline_version||'').startsWith('lmmv3-lite')?[['Đọc dữ liệu gọn','Giữ tọa độ, tiêu đề và tránh gửi vùng trùng.'],['Lập kế hoạch','Một lượt LLM; tối đa một lượt sửa hoặc đọc thêm.'],['Python tính toán','Chỉ thực thi công cụ cho phép, giữ nguồn ô.'],['Xuất đáp án','Định dạng từ kế hoạch; chưa có review ngữ nghĩa.']]:state.summary.mode==='llm-v3'?[['Đọc workbook','Giá trị gốc, ô gộp, tiêu đề, kiểu dữ liệu.'],['Đặc tả câu hỏi','Yêu cầu đa ngôn ngữ, phạm vi và định dạng.'],['Khám phá dữ liệu','Đọc sheet, bảng, ô, vùng và thống kê cột.'],['Đủ bằng chứng?','Đối chiếu từng yêu cầu với ô đã quan sát.'],['Lập kế hoạch','Kiểm tra cấu trúc, kiểu và tham chiếu.'],['Thực thi','Python tính theo kế hoạch, giữ nguồn ô.'],['Kiểm chứng và sửa','Review có chọn lọc, ghi lỗi và giới hạn retry.'],['Xuất đáp án','Định dạng theo đặc tả và lưu log.']]:[['Đọc Excel','Giữ tọa độ, ô gộp và tiêu đề.'],['Chọn vùng','Tìm sheet/bảng liên quan.'],['Lập kế hoạch','LLM chọn thao tác tính.'],['Tính bằng công cụ','Lọc, nhóm, tổng, xếp hạng.'],['Kiểm tra đáp án','Kiểm tra phạm vi và dạng đáp án.'],['Xuất kết quả','CSV, căn cứ, log và chi phí.']];
   $('pipelineSteps').innerHTML=steps.map(([title,text],i)=>`<div class="step"><div class="step-number">0${i+1}</div><h3>${title}</h3><p>${text}</p></div>`).join('');
   document.querySelector('.future').innerHTML=`<span class="badge ${modern?'green':'gray'}">${modern?'LLM + TOOLS':'LOG CŨ'}</span><h3>${modern?'Kế hoạch hợp lệ chưa đồng nghĩa đáp án đúng':'Chỉ có các thông tin được ghi ở phiên bản cũ'}</h3><p>${modern?'Dùng đối chiếu tham chiếu và ô căn cứ để đánh giá. Câu sai vẫn có thể xuất phát từ cách hiểu câu hỏi hoặc lựa chọn dữ liệu.':'Không suy ngược token/chi phí từ đáp án. Chạy phiên bản mới để có log chi tiết hơn.'}</p>`;
 }
@@ -250,7 +250,7 @@ function detail(id){
   $('toolDetails').innerHTML=html;
   $('toolDetails').insertAdjacentHTML('afterbegin','<h3 class="detail-section">Chẩn đoán theo phase</h3>'+renderIssueList(r.diagnostics?.issues||[])+'<p class="detail-note">Phase là nơi quan sát lỗi; nguyên nhân gốc chưa xác nhận.</p><div id="diagnosticHistory">Đang đọc lịch sử phiên…</div>');
   loadDiagnosticHistory(String(r.id));
-$('detailNote').textContent='Căn cứ và kiểm tra kế hoạch giúp truy lỗi. Mức khớp tham chiếu không bảo đảm khả năng trả lời trên tập ẩn.';
+$('detailNote').textContent=r.verification_level==='tool_execution_only'?'LMMv3 Lite: Python đã thực thi kế hoạch; chưa có bước review ý nghĩa hoặc xác nhận đáp án đúng.':'Căn cứ và kiểm tra kế hoạch giúp truy lỗi. Mức khớp tham chiếu không bảo đảm khả năng trả lời trên tập ẩn.';
   $('detailRerun').disabled=state.job.running;$('detailDialog').showModal();
 }
 async function loadWorkbook(sheet){

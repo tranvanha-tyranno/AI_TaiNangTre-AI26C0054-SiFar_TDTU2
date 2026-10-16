@@ -67,7 +67,7 @@ def main():
     ap.add_argument("--config", type=str, default="config/config.yaml", help="File config yaml (optional)")
     ap.add_argument("--concurrency", type=int, default=None)
     ap.add_argument("--mode", choices=["llm", "llm-v2", "llm-v3"], default=None,
-                    help="llm: baseline; llm-v2: deep; llm-v3: LMMv3, 8 phase có bằng chứng")
+                    help="llm: baseline; llm-v2: deep; llm-v3: LMMv3 Lite, một kế hoạch + tối đa một lượt sửa/đọc thêm")
     args = ap.parse_args()
     try:
         from dotenv import load_dotenv
@@ -230,7 +230,7 @@ def main():
                "model": os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash',
                "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=(4096 if mode=='llm-v3' else 1024),
                "peak_memory_mb": memory,
-               "pipeline_version": 'lmmv3-8phase-v4' if mode=='llm-v3' else 'tools-v4',
+               "pipeline_version": 'lmmv3-lite-v1' if mode=='llm-v3' else 'tools-v4',
                "memory_measurement_scope": "main_process_peak_only",
                "resource_compliance_verified": False,
                "disk_verified": False,

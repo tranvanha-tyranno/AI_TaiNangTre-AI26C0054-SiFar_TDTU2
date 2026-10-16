@@ -160,7 +160,8 @@ class V3Test(unittest.TestCase):
         import main
         queries=Path(self.temp.name)/'queries.json';output=Path(self.temp.name)/'submission.csv';logs=Path(self.temp.name)/'logs'
         queries.write_text(json.dumps([{'id':i,'file_name':self.path.name,'query':QUESTION} for i in [10,2,1]]),encoding='utf-8')
-        client=FakeClient([specification(),response()]*3)
+        cli_plan=computation();cli_plan['output']['decimals']=2
+        client=FakeClient([cli_plan]*3)
         args=['main.py','--mode','llm-v3','--xlsx_dir',self.temp.name,'--queries',str(queries),
               '--output',str(output),'--log-dir',str(logs),'--config',str(Path(self.temp.name)/'unused.yaml')]
         with patch('sys.argv',args),patch.object(main,'get_client',return_value=object()), \
@@ -169,7 +170,7 @@ class V3Test(unittest.TestCase):
         with output.open(encoding='utf-8',newline='') as stream: rows=list(csv.DictReader(stream))
         self.assertEqual([r['id'] for r in rows],['1','2','10'])
         self.assertEqual([r['answer'] for r in rows],['60.00']*3)
-        self.assertEqual(json.loads((logs/'summary.json').read_text())['pipeline_version'],'lmmv3-8phase-v4')
+        self.assertEqual(json.loads((logs/'summary.json').read_text())['pipeline_version'],'lmmv3-lite-v1')
 
     def test_dashboard_accepts_v3_without_launching_a_worker(self):
         import dashboard

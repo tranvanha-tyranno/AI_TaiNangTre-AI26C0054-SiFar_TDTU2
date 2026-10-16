@@ -218,7 +218,7 @@ def fallback_shape_plan(question, contract, regions):
 
 def answer_with_tools(path, question, client, record, settings):
     if settings.get("pipeline_variant") == "llm-v3":
-        from .lmmv3.pipeline import answer
+        from .lmmv3.lite import answer
         return answer(path, question, client, record, settings)
     reserve_prompt=min(client.prompt_cap, getattr(client,'prompt_rate',0)*1e6 or client.prompt_cap)
     reserve_completion=min(client.completion_cap, getattr(client,'completion_rate',0)*1e6 or client.completion_cap)
