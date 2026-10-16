@@ -43,7 +43,8 @@
           "type": "TEXT",
           "column": 4
         }
-      ]
+      ],
+      "content_sha256": "8fe3905f6d150a2e4a3daeae70c4c57ddc069e6861f070f422bf93ee21320301"
     },
     {
       "table": "fx",
@@ -72,7 +73,8 @@
           "type": "INTEGER",
           "column": 3
         }
-      ]
+      ],
+      "content_sha256": "9744cd9ab66e311c422962b0ad9532b0fe772209504e157929a42e0652494202"
     },
     {
       "table": "contracts",
@@ -120,7 +122,8 @@
           "type": "INTEGER",
           "column": 6
         }
-      ]
+      ],
+      "content_sha256": "27df1c6cd76da7874c664dd0b0863db661a8aeba1ce84d6aa006f1253c09cd3f"
     },
     {
       "table": "lines",
@@ -197,7 +200,8 @@
           "type": "INTEGER",
           "column": 11
         }
-      ]
+      ],
+      "content_sha256": "cbe419a5d8a20e505b978795e6882098d60421a50bc4dd8b5e96e021b1f4d467"
     }
   ],
   "agrees_with": "AGENTS.md sections 3, 11.1, 11.2; synthetic benchmark, not an official scoring replica",

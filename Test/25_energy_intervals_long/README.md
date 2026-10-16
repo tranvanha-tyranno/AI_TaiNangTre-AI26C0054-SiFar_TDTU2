@@ -2,7 +2,7 @@
 
 20000 khoảng điện 1 giờ: kWh khác kW, giá hiệu lực, giao khoảng nửa mở, sự cố chồng nhau, CO2, pin và dữ liệu ước tính/thiếu.
 
-`Nhà máy`: 40 bản ghi / 41 dòng vật lý; `Giá theo hiệu lực`: 2,000 bản ghi / 2,001 dòng vật lý; `Điện năng 1 giờ`: 20,000 bản ghi / 20,002 dòng vật lý; `Sự cố`: 1,200 bản ghi / 1,201 dòng vật lý.
+`Nhà máy`: 40 bản ghi / 41 dòng vật lý; `Nhà máy`: 3 bản ghi / 4 dòng vật lý; `Giá theo hiệu lực`: 2,000 bản ghi / 2,001 dòng vật lý; `Điện năng 1 giờ`: 20,000 bản ghi / 20,002 dòng vật lý; `Sự cố`: 1,200 bản ghi / 1,201 dòng vật lý.
 
 30 câu: **15 Việt, 5 Anh, 4 Trung, 3 Pháp, 3 Hàn**. ID là số tự nhiên; câu hỏi cố ý xáo trộn. CSV chuẩn dùng UTF-8 và sắp ID theo giá trị số tăng dần. Một câu thiếu trường dữ liệu có đáp án chuỗi rỗng. Câu đó không tính là lỗi fixture; không tự đổi đáp án thành N/A.
 
