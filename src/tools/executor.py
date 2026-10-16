@@ -589,9 +589,17 @@ def _execute(plan, regions):
                 return value
             row_samples[name]=[{k:sample_value(v) for k,v in row.items() if not k.startswith('__')}
                                for row in result.value[:3]]
+        coverage={}
+        if _TYPED_COMPARISONS.get() and isinstance(result.value,list) and op in {'filter','take','group'}:
+            sections={str(row['_section']) for row in result.value if row.get('_section') not in (None,'')}
+            source_rows=[row['_row'] for row in result.value if isinstance(row.get('_row'),int)]
+            coverage={'observed_coverage':{'section_labels':sorted(sections)[:20],
+                'section_count':len(sections),'section_labels_truncated':len(sections)>20,
+                'source_row_min':min(source_rows,default=None),'source_row_max':max(source_rows,default=None),
+                'note':'Computed from all result rows. Does not establish completeness against the question.'}}
         trace.append({'id':name,'op':op,'row_count':len(result.value) if isinstance(result.value,list) else None,
                       'scalar':format_value(result.value,{}) if not isinstance(result.value,list) else None,
-                      'elapsed_seconds':time.monotonic()-started,**({'join_audit':audit} if op=='join' else {})})
+                      'elapsed_seconds':time.monotonic()-started,**coverage,**({'join_audit':audit} if op=='join' else {})})
     final=plan.get('output',{})
     result=results.get(final.get('step'))
     if result is None: raise PlanError("Final step does not exist")

@@ -121,7 +121,9 @@ def check_plan(plan, regions, contract, question):
     if output.get('step') not in kinds:raise PlanError('Typed plan output must reference an existing step.')
     if kinds[output['step']]=='rows' and not output.get('columns'):
         raise PlanError('Typed plan row output requires explicit columns.')
-    return {'steps':audit,'output_kind':kinds[output['step']], 'scope':scope_audit(plan,regions,contract,question)}
+    from .llmv4_schema import check_columns
+    return {'steps':audit,'column_schemas':check_columns(plan,regions),
+            'output_kind':kinds[output['step']], 'scope':scope_audit(plan,regions,contract,question)}
 
 
 def scope_audit(plan, regions, contract, question):
@@ -155,6 +157,7 @@ def execution_audit(plan,result,preflight):
         input_id=step.get('input')
         rows.append({'id':ident,'op':step['op'],'input_rows':trace.get(input_id,{}).get('row_count'),
                      'output_rows':event.get('row_count'),'scalar':event.get('scalar'),
+                     'observed_coverage':event.get('observed_coverage'),
                      'output_kind':'rows' if event.get('row_count') is not None else 'scalar'})
     return {'steps':rows,'scope':preflight['scope'],'output_value_count':result['value_count'],
             'evidence_count':result['evidence_count'],'note':'Execution evidence and warnings, not a correctness certificate.'}

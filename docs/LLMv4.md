@@ -41,6 +41,13 @@ Các test mới dùng dữ liệu tổng hợp và phản ví dụ. Không có r
 
 ## Chạy
 
+### Bản `llmv4-lineage-evidence-v4`
+
+- Theo dõi schema cột qua read/filter/derive/lag/select/unpivot/group/record/collect/sort/take. Lỗi cột ghi input thực tế và các bước trước có cột đó; không tự nối hai nhánh derive. Với join/concat chưa suy ra schema chắc chắn, giữ kiểm tra runtime thay vì chặn theo suy đoán.
+- Phân biệt tổng từng dòng rồi chọn cực trị với tổng toàn bộ dòng: chỉ miễn yêu cầu aggregate khi câu hỏi nêu cực trị, output đúng cột add từ ít nhất hai cột, và chuỗi derive → sort đúng hướng → take một dòng nối trực tiếp. Không bỏ kiểm tra tổng chung, không tự thêm abs hoặc đổi dấu đáp án. Công thức mean và các biến thể chưa chứng minh vẫn giữ kiểm tra cũ.
+- Review nhận coverage tính từ toàn bộ các dòng sau filter/take/group: số nhóm, tối đa 20 nhãn, cờ cắt nhãn và biên dòng nguồn. Nhắc reviewer đối chiếu số dòng trace, khoảng đọc và năm trong header; không coi mẫu ba dòng là toàn bộ dữ liệu. Biên min/max không chứng minh mọi dòng ở giữa tồn tại; coverage không chứng minh chọn đủ phạm vi câu hỏi.
+- Không thêm request, không tăng retry/ngân sách, không đổi baseline LLMv3. Review vẫn là đánh giá của LLM, chưa có cơ chế xác minh mọi phát biểu tự do của reviewer. Chưa benchmark API bản này; chưa kết luận tăng điểm.
+
 ```powershell
 .\.venv\Scripts\python.exe main.py --mode llm-v4 --xlsx_dir <dataset>/xlsx_files --queries <dataset>/queries.json --output outputs/v4/submission.csv --log-dir outputs/v4/logs
 ```

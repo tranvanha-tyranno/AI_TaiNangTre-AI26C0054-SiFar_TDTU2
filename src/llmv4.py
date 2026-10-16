@@ -8,7 +8,7 @@ from .answer_contract import infer_answer_contract, validate_answer_contract, va
 from .workbook_index import Region, text
 from .tools.executor import PlanError
 
-VERSION = 'llmv4-typed-comparison-v3'
+VERSION = 'llmv4-lineage-evidence-v4'
 
 
 def infer_contract(question):
@@ -45,6 +45,10 @@ def infer_contract(question):
 
 def validate_contract(contract, plan, result, question):
     check = dict(contract)
+    # An extremum of a row-wise computed metric is not a grand total.
+    # Require both explicit question intent and a connected sort/take/output chain.
+    if check.get('reduction') in {'sum', 'mean'} and row_metric_extremum(plan, question, check['reduction']):
+        check['reduction'] = None
     if contract.get('kind') == 'tuple':
         check.update(decimals=None, integer=False)
     validate_answer_contract(check, plan, result, question)
@@ -58,6 +62,36 @@ def validate_contract(contract, plan, result, question):
                     raise PlanError(f'Output component {i+1} requires {digits} decimal places, not {value}.')
             elif contract.get('integer') and not re.fullmatch(r'-?\d+', value):
                 raise PlanError(f'Output component {i+1} requires an integer.')
+
+
+def row_metric_extremum(plan, question, reduction):
+    q = unicodedata.normalize('NFKC', question).casefold()
+    high = bool(re.search(r'\bhighest\b|\blargest\b|\bmaximum\b|cao nhất|lớn nhất', q))
+    low = bool(re.search(r'\blowest\b|\bsmallest\b|\bminimum\b|thấp nhất|nhỏ nhất', q))
+    if high == low:
+        return False
+    steps = {s['id']: s for s in plan.get('steps', [])}
+    current = steps.get(plan.get('output', {}).get('step'), {})
+    columns = plan.get('output', {}).get('columns', [])
+    if len(columns) != 1:
+        return False
+    metric = columns[0]
+    if current.get('op') == 'select':
+        current = steps.get(current.get('input'), {})
+    if current.get('op') != 'take' or current.get('limit', 1) != 1 or current.get('offset', 0) != 0:
+        return False
+    current = steps.get(current.get('input'), {})
+    if current.get('op') != 'sort' or current.get('by') != [{'column': metric, 'descending': high}]:
+        return False
+    current = steps.get(current.get('input'), {})
+    while current.get('op') in {'filter', 'derive'}:
+        if current.get('op') == 'derive' and current.get('column') == metric:
+            expr = current.get('expr', {})
+            from .llmv4_schema import columns_in
+            # Mean formulas vary; retain their existing validation until proven.
+            return reduction == 'sum' and set(expr) == {'add'} and len(set(columns_in(expr))) >= 2
+        current = steps.get(current.get('input'), {})
+    return False
 
 
 def validate_field(contract, plan, result, regions):
@@ -153,6 +187,12 @@ def prompt(request, contract, execution=None):
         'A tuple needs all components in output; use scalar collect/record or selected row columns. '
         'Bind each metric, period, label and unit to observed columns/cells before planning. '
         'Scope and unit warnings are candidates to verify against evidence, not proof that a plan is wrong. '
+        'Derived columns exist only in that step and descendants; sibling branches do not share them. '
+        'For highest/lowest computed row metrics, derive the metric, sort it, take one, and output that metric. '
+        'During review cite the exact step, observed cell/header, expected condition and correction for each issue. '
+        'Check read interval start <= row <= end before claiming a row is excluded. '
+        'Use tool_trace row counts rather than counting row_samples: samples are truncated. '
+        'Do not demand a row filter for a year already selected by a year-specific column header. '
         'Repair the named error; do not repeat an unchanged failed plan.'})
     return request
 
