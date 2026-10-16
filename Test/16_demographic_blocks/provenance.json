@@ -1,0 +1,22 @@
+{
+  "seed": 261016,
+  "kind": "new synthetic data; structural transfer, not copied records",
+  "source_workbooks": [
+    "Public_data_1/xlsx_files/p4_t04.xlsx",
+    "Public_data_2/xlsx_files/p2_t04.xlsx",
+    "Public_data_2/xlsx_files/p2_t05.xlsx"
+  ],
+  "description": "Hai khối nam/nữ có nhãn lặp, 6 nhóm học vấn rời nhau; trung bình đơn khác tỷ lệ gộp.",
+  "questions": 30,
+  "answer_rounding": "Decimal ROUND_HALF_UP; explicit precision in query",
+  "generator": "scripts/gen_public_transfer_suites.py",
+  "categories": [
+    "comparison",
+    "nonoverlap_total",
+    "participation_rate",
+    "population_gap",
+    "repeated_label_scope",
+    "unweighted_average",
+    "weighted_rate"
+  ]
+}

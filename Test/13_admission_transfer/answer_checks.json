@@ -1,0 +1,1738 @@
+[
+  {
+    "id": "13_q001",
+    "category": "age_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "People",
+                "columns": {
+                  "id": "A",
+                  "first": "B",
+                  "middle": "C",
+                  "last": "D",
+                  "birth": "E",
+                  "admission": "F",
+                  "score": "G",
+                  "campus": "H"
+                },
+                "first": 3,
+                "last": 66
+              }
+            },
+            "fields": {
+              "age": {
+                "age": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              },
+              "days": {
+                "days": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "days",
+            "asc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "last"
+        ],
+        "offset": 1,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Ho"
+  },
+  {
+    "id": "13_q002",
+    "category": "age_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "People",
+                "columns": {
+                  "id": "A",
+                  "first": "B",
+                  "middle": "C",
+                  "last": "D",
+                  "birth": "E",
+                  "admission": "F",
+                  "score": "G",
+                  "campus": "H"
+                },
+                "first": 3,
+                "last": 66
+              }
+            },
+            "fields": {
+              "age": {
+                "age": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              },
+              "days": {
+                "days": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "days",
+            "asc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "last"
+        ],
+        "offset": 2,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Ho"
+  },
+  {
+    "id": "13_q003",
+    "category": "age_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "People",
+                "columns": {
+                  "id": "A",
+                  "first": "B",
+                  "middle": "C",
+                  "last": "D",
+                  "birth": "E",
+                  "admission": "F",
+                  "score": "G",
+                  "campus": "H"
+                },
+                "first": 3,
+                "last": 66
+              }
+            },
+            "fields": {
+              "age": {
+                "age": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              },
+              "days": {
+                "days": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "days",
+            "asc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "last"
+        ],
+        "offset": 4,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Truong"
+  },
+  {
+    "id": "13_q004",
+    "category": "age_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "People",
+                "columns": {
+                  "id": "A",
+                  "first": "B",
+                  "middle": "C",
+                  "last": "D",
+                  "birth": "E",
+                  "admission": "F",
+                  "score": "G",
+                  "campus": "H"
+                },
+                "first": 3,
+                "last": 66
+              }
+            },
+            "fields": {
+              "age": {
+                "age": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              },
+              "days": {
+                "days": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "days",
+            "asc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "last"
+        ],
+        "offset": 8,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Ho"
+  },
+  {
+    "id": "13_q005",
+    "category": "completed_age",
+    "expression": {
+      "age": [
+        {
+          "cell": "People!E3"
+        },
+        {
+          "cell": "People!F3"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "21"
+  },
+  {
+    "id": "13_q006",
+    "category": "completed_age",
+    "expression": {
+      "age": [
+        {
+          "cell": "People!E4"
+        },
+        {
+          "cell": "People!F4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "22"
+  },
+  {
+    "id": "13_q007",
+    "category": "completed_age",
+    "expression": {
+      "age": [
+        {
+          "cell": "People!E21"
+        },
+        {
+          "cell": "People!F21"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "26"
+  },
+  {
+    "id": "13_q008",
+    "category": "completed_age",
+    "expression": {
+      "age": [
+        {
+          "cell": "People!E66"
+        },
+        {
+          "cell": "People!F66"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "36"
+  },
+  {
+    "id": "13_q009",
+    "category": "top_k_age_score",
+    "expression": {
+      "max": {
+        "rank": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "People",
+                      "columns": {
+                        "id": "A",
+                        "first": "B",
+                        "middle": "C",
+                        "last": "D",
+                        "birth": "E",
+                        "admission": "F",
+                        "score": "G",
+                        "campus": "H"
+                      },
+                      "first": 3,
+                      "last": 66
+                    }
+                  },
+                  "fields": {
+                    "age": {
+                      "age": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    },
+                    "days": {
+                      "days": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "id": {
+                  "gt": 0
+                }
+              }
+            }
+          },
+          "by": [
+            [
+              "days",
+              "asc"
+            ],
+            [
+              "id",
+              "asc"
+            ]
+          ],
+          "columns": [
+            "score"
+          ],
+          "offset": 0,
+          "limit": 5
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "92"
+  },
+  {
+    "id": "13_q010",
+    "category": "top_k_age_score",
+    "expression": {
+      "max": {
+        "rank": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "People",
+                      "columns": {
+                        "id": "A",
+                        "first": "B",
+                        "middle": "C",
+                        "last": "D",
+                        "birth": "E",
+                        "admission": "F",
+                        "score": "G",
+                        "campus": "H"
+                      },
+                      "first": 3,
+                      "last": 66
+                    }
+                  },
+                  "fields": {
+                    "age": {
+                      "age": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    },
+                    "days": {
+                      "days": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "id": {
+                  "gt": 0
+                }
+              }
+            }
+          },
+          "by": [
+            [
+              "days",
+              "asc"
+            ],
+            [
+              "id",
+              "asc"
+            ]
+          ],
+          "columns": [
+            "score"
+          ],
+          "offset": 0,
+          "limit": 10
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "92"
+  },
+  {
+    "id": "13_q011",
+    "category": "top_k_age_score",
+    "expression": {
+      "max": {
+        "rank": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "People",
+                      "columns": {
+                        "id": "A",
+                        "first": "B",
+                        "middle": "C",
+                        "last": "D",
+                        "birth": "E",
+                        "admission": "F",
+                        "score": "G",
+                        "campus": "H"
+                      },
+                      "first": 3,
+                      "last": 66
+                    }
+                  },
+                  "fields": {
+                    "age": {
+                      "age": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    },
+                    "days": {
+                      "days": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "id": {
+                  "gt": 0
+                }
+              }
+            }
+          },
+          "by": [
+            [
+              "days",
+              "asc"
+            ],
+            [
+              "id",
+              "asc"
+            ]
+          ],
+          "columns": [
+            "score"
+          ],
+          "offset": 0,
+          "limit": 15
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "92"
+  },
+  {
+    "id": "13_q012",
+    "category": "conditional_average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "People",
+                      "columns": {
+                        "id": "A",
+                        "first": "B",
+                        "middle": "C",
+                        "last": "D",
+                        "birth": "E",
+                        "admission": "F",
+                        "score": "G",
+                        "campus": "H"
+                      },
+                      "first": 3,
+                      "last": 66
+                    }
+                  },
+                  "fields": {
+                    "age": {
+                      "age": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    },
+                    "days": {
+                      "days": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "campus": "Hue"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "69.90"
+  },
+  {
+    "id": "13_q013",
+    "category": "multi_condition",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "People",
+                      "columns": {
+                        "id": "A",
+                        "first": "B",
+                        "middle": "C",
+                        "last": "D",
+                        "birth": "E",
+                        "admission": "F",
+                        "score": "G",
+                        "campus": "H"
+                      },
+                      "first": 3,
+                      "last": 66
+                    }
+                  },
+                  "fields": {
+                    "age": {
+                      "age": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    },
+                    "days": {
+                      "days": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "campus": "Hue"
+              }
+            }
+          },
+          "conditions": {
+            "score": {
+              "ge": 75
+            },
+            "age": {
+              "lt": 30
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5"
+  },
+  {
+    "id": "13_q014",
+    "category": "conditional_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "People",
+                    "columns": {
+                      "id": "A",
+                      "first": "B",
+                      "middle": "C",
+                      "last": "D",
+                      "birth": "E",
+                      "admission": "F",
+                      "score": "G",
+                      "campus": "H"
+                    },
+                    "first": 3,
+                    "last": 66
+                  }
+                },
+                "fields": {
+                  "age": {
+                    "age": [
+                      {
+                        "field": "birth"
+                      },
+                      {
+                        "field": "admission"
+                      }
+                    ]
+                  },
+                  "days": {
+                    "days": [
+                      {
+                        "field": "birth"
+                      },
+                      {
+                        "field": "admission"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "conditions": {
+              "campus": "Hue"
+            }
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "3"
+  },
+  {
+    "id": "13_q015",
+    "category": "conditional_average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "People",
+                      "columns": {
+                        "id": "A",
+                        "first": "B",
+                        "middle": "C",
+                        "last": "D",
+                        "birth": "E",
+                        "admission": "F",
+                        "score": "G",
+                        "campus": "H"
+                      },
+                      "first": 3,
+                      "last": 66
+                    }
+                  },
+                  "fields": {
+                    "age": {
+                      "age": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    },
+                    "days": {
+                      "days": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "campus": "Can Tho"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "66.36"
+  },
+  {
+    "id": "13_q016",
+    "category": "multi_condition",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "People",
+                      "columns": {
+                        "id": "A",
+                        "first": "B",
+                        "middle": "C",
+                        "last": "D",
+                        "birth": "E",
+                        "admission": "F",
+                        "score": "G",
+                        "campus": "H"
+                      },
+                      "first": 3,
+                      "last": 66
+                    }
+                  },
+                  "fields": {
+                    "age": {
+                      "age": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    },
+                    "days": {
+                      "days": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "campus": "Can Tho"
+              }
+            }
+          },
+          "conditions": {
+            "score": {
+              "ge": 75
+            },
+            "age": {
+              "lt": 30
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5"
+  },
+  {
+    "id": "13_q017",
+    "category": "conditional_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "People",
+                    "columns": {
+                      "id": "A",
+                      "first": "B",
+                      "middle": "C",
+                      "last": "D",
+                      "birth": "E",
+                      "admission": "F",
+                      "score": "G",
+                      "campus": "H"
+                    },
+                    "first": 3,
+                    "last": 66
+                  }
+                },
+                "fields": {
+                  "age": {
+                    "age": [
+                      {
+                        "field": "birth"
+                      },
+                      {
+                        "field": "admission"
+                      }
+                    ]
+                  },
+                  "days": {
+                    "days": [
+                      {
+                        "field": "birth"
+                      },
+                      {
+                        "field": "admission"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "conditions": {
+              "campus": "Can Tho"
+            }
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "4"
+  },
+  {
+    "id": "13_q018",
+    "category": "conditional_average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "People",
+                      "columns": {
+                        "id": "A",
+                        "first": "B",
+                        "middle": "C",
+                        "last": "D",
+                        "birth": "E",
+                        "admission": "F",
+                        "score": "G",
+                        "campus": "H"
+                      },
+                      "first": 3,
+                      "last": 66
+                    }
+                  },
+                  "fields": {
+                    "age": {
+                      "age": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    },
+                    "days": {
+                      "days": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "campus": "Da Lat"
+              }
+            }
+          },
+          "name": "score"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "67.95"
+  },
+  {
+    "id": "13_q019",
+    "category": "multi_condition",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "People",
+                      "columns": {
+                        "id": "A",
+                        "first": "B",
+                        "middle": "C",
+                        "last": "D",
+                        "birth": "E",
+                        "admission": "F",
+                        "score": "G",
+                        "campus": "H"
+                      },
+                      "first": 3,
+                      "last": 66
+                    }
+                  },
+                  "fields": {
+                    "age": {
+                      "age": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    },
+                    "days": {
+                      "days": [
+                        {
+                          "field": "birth"
+                        },
+                        {
+                          "field": "admission"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "campus": "Da Lat"
+              }
+            }
+          },
+          "conditions": {
+            "score": {
+              "ge": 75
+            },
+            "age": {
+              "lt": 30
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5"
+  },
+  {
+    "id": "13_q020",
+    "category": "conditional_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "People",
+                    "columns": {
+                      "id": "A",
+                      "first": "B",
+                      "middle": "C",
+                      "last": "D",
+                      "birth": "E",
+                      "admission": "F",
+                      "score": "G",
+                      "campus": "H"
+                    },
+                    "first": 3,
+                    "last": 66
+                  }
+                },
+                "fields": {
+                  "age": {
+                    "age": [
+                      {
+                        "field": "birth"
+                      },
+                      {
+                        "field": "admission"
+                      }
+                    ]
+                  },
+                  "days": {
+                    "days": [
+                      {
+                        "field": "birth"
+                      },
+                      {
+                        "field": "admission"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "conditions": {
+              "campus": "Da Lat"
+            }
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "62"
+  },
+  {
+    "id": "13_q021",
+    "category": "strict_boundary",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "first": "B",
+                    "middle": "C",
+                    "last": "D",
+                    "birth": "E",
+                    "admission": "F",
+                    "score": "G",
+                    "campus": "H"
+                  },
+                  "first": 3,
+                  "last": 66
+                }
+              },
+              "fields": {
+                "age": {
+                  "age": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                },
+                "days": {
+                  "days": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 60
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "40"
+  },
+  {
+    "id": "13_q022",
+    "category": "strict_boundary",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "first": "B",
+                    "middle": "C",
+                    "last": "D",
+                    "birth": "E",
+                    "admission": "F",
+                    "score": "G",
+                    "campus": "H"
+                  },
+                  "first": 3,
+                  "last": 66
+                }
+              },
+              "fields": {
+                "age": {
+                  "age": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                },
+                "days": {
+                  "days": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 75
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "22"
+  },
+  {
+    "id": "13_q023",
+    "category": "strict_boundary",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "first": "B",
+                    "middle": "C",
+                    "last": "D",
+                    "birth": "E",
+                    "admission": "F",
+                    "score": "G",
+                    "campus": "H"
+                  },
+                  "first": 3,
+                  "last": 66
+                }
+              },
+              "fields": {
+                "age": {
+                  "age": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                },
+                "days": {
+                  "days": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 90
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "6"
+  },
+  {
+    "id": "13_q024",
+    "category": "date_filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "first": "B",
+                    "middle": "C",
+                    "last": "D",
+                    "birth": "E",
+                    "admission": "F",
+                    "score": "G",
+                    "campus": "H"
+                  },
+                  "first": 3,
+                  "last": 66
+                }
+              },
+              "fields": {
+                "age": {
+                  "age": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                },
+                "days": {
+                  "days": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "conditions": {
+            "admission": {
+              "ge": "2026-01-01",
+              "le": "2026-12-31"
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "32"
+  },
+  {
+    "id": "13_q025",
+    "category": "rank_score",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "People",
+                "columns": {
+                  "id": "A",
+                  "first": "B",
+                  "middle": "C",
+                  "last": "D",
+                  "birth": "E",
+                  "admission": "F",
+                  "score": "G",
+                  "campus": "H"
+                },
+                "first": 3,
+                "last": 66
+              }
+            },
+            "fields": {
+              "age": {
+                "age": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              },
+              "days": {
+                "days": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "days",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "score"
+        ],
+        "offset": 1,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "60"
+  },
+  {
+    "id": "13_q026",
+    "category": "top_three",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "People",
+                "columns": {
+                  "id": "A",
+                  "first": "B",
+                  "middle": "C",
+                  "last": "D",
+                  "birth": "E",
+                  "admission": "F",
+                  "score": "G",
+                  "campus": "H"
+                },
+                "first": 3,
+                "last": 66
+              }
+            },
+            "fields": {
+              "age": {
+                "age": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              },
+              "days": {
+                "days": [
+                  {
+                    "field": "birth"
+                  },
+                  {
+                    "field": "admission"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "score",
+            "desc"
+          ],
+          [
+            "id",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "id"
+        ],
+        "offset": 0,
+        "limit": 3
+      }
+    },
+    "decimals": null,
+    "answer": "3, 4, 62"
+  },
+  {
+    "id": "13_q027",
+    "category": "empty_result",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "first": "B",
+                    "middle": "C",
+                    "last": "D",
+                    "birth": "E",
+                    "admission": "F",
+                    "score": "G",
+                    "campus": "H"
+                  },
+                  "first": 3,
+                  "last": 66
+                }
+              },
+              "fields": {
+                "age": {
+                  "age": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                },
+                "days": {
+                  "days": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "conditions": {
+            "score": {
+              "gt": 100
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "0"
+  },
+  {
+    "id": "13_q028",
+    "category": "exact_age_days",
+    "expression": {
+      "days": [
+        {
+          "cell": "People!E66"
+        },
+        {
+          "cell": "People!F66"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "13387"
+  },
+  {
+    "id": "13_q029",
+    "category": "distinct",
+    "expression": {
+      "distinct_count": {
+        "column": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "People",
+                  "columns": {
+                    "id": "A",
+                    "first": "B",
+                    "middle": "C",
+                    "last": "D",
+                    "birth": "E",
+                    "admission": "F",
+                    "score": "G",
+                    "campus": "H"
+                  },
+                  "first": 3,
+                  "last": 66
+                }
+              },
+              "fields": {
+                "age": {
+                  "age": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                },
+                "days": {
+                  "days": [
+                    {
+                      "field": "birth"
+                    },
+                    {
+                      "field": "admission"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "name": "last"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "5"
+  },
+  {
+    "id": "13_q030",
+    "category": "birthday_boundary",
+    "expression": {
+      "sub": [
+        {
+          "age": [
+            {
+              "cell": "People!E4"
+            },
+            {
+              "cell": "People!F4"
+            }
+          ]
+        },
+        {
+          "age": [
+            {
+              "cell": "People!E3"
+            },
+            {
+              "cell": "People!F3"
+            }
+          ]
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1"
+  }
+]

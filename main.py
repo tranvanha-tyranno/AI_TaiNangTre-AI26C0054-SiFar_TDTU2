@@ -186,12 +186,10 @@ def main():
             return q["id"], ans, record
         except Exception as e:
             print(f"[WARN] {q['id']} lỗi: {type(e).__name__}", file=sys.stderr)
-            fallback=record.get('last_candidate_answer') or 'N/A'
-            record.update(status="finalized", error_type=type(e).__name__, answer=fallback,
-                          finalized_with_warning=True,
-                          finalized_reason=f'Unhandled processing error: {type(e).__name__}',
+            record.update(status="error", error_type=type(e).__name__, answer='', validated=False,
+                          failure_reason=f'Processing failed: {type(e).__name__}',
                           elapsed_seconds=round(time.perf_counter() - started, 4))
-            return q["id"], fallback, record
+            return q["id"], '', record
 
     with ThreadPoolExecutor(max_workers=concurrency) as pool:
         futs = {pool.submit(task, q): q for q in queries}
@@ -230,7 +228,7 @@ def main():
                "model": os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash',
                "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=1024,
                "peak_memory_mb": memory,
-               "pipeline_version": 'tools-v3' if mode == 'llm-v2' else 'tools-v2',
+               "pipeline_version": 'tools-v4',
                "usage": usage}
     (log_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 

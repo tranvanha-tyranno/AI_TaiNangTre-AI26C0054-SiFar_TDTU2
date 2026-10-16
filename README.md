@@ -110,7 +110,7 @@ Ví dụ bộ 30 câu lọc/xếp hạng:
 .\.venv\Scripts\python.exe main.py --mode llm --xlsx_dir .\Test\06_people_filters\xlsx_files --queries .\Test\06_people_filters\queries.json --output .\outputs\cli-people\submission.csv --log-dir .\outputs\cli-people\logs
 ```
 
-Thay `06_people_filters` bằng bộ muốn thử. [Test/README.md](Test/README.md) liệt kê **12 bộ, 212 câu** cùng đáp án tham chiếu.
+Thay `06_people_filters` bằng bộ muốn thử. [Test/README.md](Test/README.md) liệt kê **22 bộ, 512 câu** cùng đáp án tham chiếu. Bộ **13–22** bổ sung **300 câu trên dữ liệu Excel mới**, dựa theo cả `Public_data_1` và `Public_data_2`.
 
 ### Chạy pipeline
 
@@ -126,7 +126,21 @@ Có thể bật **LLMv2 + Tools** để dùng nhiều khả năng AI hơn: khám
 .\.venv\Scripts\python.exe main.py --mode llm-v2 --xlsx_dir .\Public_data_1\xlsx_files --queries .\Public_data_1\queries.json --output .\outputs\public-v2\submission.csv --log-dir .\outputs\public-v2\logs
 ```
 
-`llm-v2` có thể tốn token và thời gian hơn `llm`; log ghi `pipeline_version=tools-v3` và `llm_variant=llm-v2` để so sánh riêng.
+`llm-v2` có thể tốn token và thời gian hơn `llm`; cả hai dùng `pipeline_version=tools-v4`, còn `llm_variant` phân biệt chế độ. Mỗi ứng viên chỉ review một lần; review tùy chọn hết ngân sách không xóa kết quả đã qua kiểm tra xác định.
+
+Từ bản v4, tool đọc được số tiền dạng `$1,882`, số âm kế toán và số có khoảng trắng phân nhóm. `lag` hỗ trợ so sánh với dòng trước; `record` ghép nhãn và số; `fill_down` giữ nguồn ô của nhãn. `read` cung cấp `_section` và `_section_row` từ dòng tiêu đề section đứng riêng, cùng `_sheet` và `_row`. Đây là gợi ý cấu trúc; model vẫn cần kiểm tra `section_labels` trước khi chọn nhóm.
+
+Pipeline chuẩn hóa một số cách viết DSL tương đương trước khi chạy, ghi `raw_plan` và `normalizations` trong từng lượt plan. Phản hồi sửa lỗi có các lỗi trước và mẫu kết quả tool. Việc này giúp model điều chỉnh trong **từng câu hỏi**; không huấn luyện trọng số, không lưu đáp án để trả lời bộ mới. Đáp án tham chiếu chỉ được dùng khi đánh giá. Xem [báo cáo tinh chỉnh 16/10](docs/LLM_TOOL_TUNING_20261016.md).
+
+Tạo bộ probe với tên/giá trị mới để kiểm tra các nhóm lỗi đã biết:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/gen_generalization_probe.py --output outputs/probe --seed 7319
+.\.venv\Scripts\python.exe main.py --mode llm --xlsx_dir outputs/probe/xlsx_files --queries outputs/probe/queries.json --output outputs/probe/submission.csv --log-dir outputs/probe/logs
+.\.venv\Scripts\python.exe scripts/evaluate.py --prediction outputs/probe/submission.csv --reference outputs/probe/expected_submission.csv
+```
+
+Đổi seed để thay số liệu. Probe kiểm tra hồi quy trên cấu trúc đã thiết kế, chưa chứng minh độ chính xác trên tập ẩn. Có thể phát lại kế hoạch cũ **không gọi API** bằng `scripts/replay_run.py --run <thư-mục-run> --xlsx-dir <thư-mục-Excel> --output <báo-cáo.json>`; điểm replay chỉ đo ảnh hưởng của tool/validator, không thay cho một lượt chạy model mới.
 
 ### Dữ liệu mới và cấu hình YAML
 
@@ -138,7 +152,7 @@ Thay `--xlsx_dir`, `--queries`, `--output`, `--log-dir` bằng đường dẫn c
 
 Pipeline LLM đọc workbook đầu vào, lập kế hoạch tính và có thể yêu cầu đọc thêm sheet/vùng trước khi tính; không đọc CSV đáp án chuẩn. Mỗi kế hoạch phải khai báo `answer_spec` (loại đáp án, trường cần trả, phép tính). Với câu có nhãn, nối bảng, tỷ lệ hoặc đổi đơn vị, pipeline có thể bật vòng rà soát ngữ nghĩa (`semantic_review: risky`). Review là bước phụ; nếu model review trả sai định dạng, ứng viên đã qua kiểm tra xác định vẫn được giữ và log ghi `verdict: unavailable`. Việc chạy lại Public/Test đã biết là kiểm thử hồi quy, chưa chứng minh khả năng tổng quát trên tập ẩn. Bộ mới cần được đánh giá ở lần chạy đầu, trước khi chỉnh solver dựa vào lỗi của chính bộ đó.
 
-Mỗi câu luôn được chốt một dòng trong `submission.csv`: nếu kiểm tra cuối thất bại sau các lượt sửa, pipeline giữ kết quả tính gần nhất và ghi `finalized_with_warning`; nếu chưa tạo được kết quả tính, ghi `N/A` thay vì để đáp án rỗng. Dashboard hiển thị lý do chốt trong chi tiết câu.
+Mỗi câu luôn có một dòng trong `submission.csv`. Nếu kiểm tra cuối thất bại sau các lượt sửa hoặc không tạo được kết quả, trường `answer` để trống theo hướng dẫn BTC. Ứng viên bị từ chối chỉ được giữ trong log (`last_candidate_answer`, `candidate_rejected`) để chẩn đoán; không xuất ứng viên đó hay `N/A` làm đáp án.
 
 [Báo cáo bộ mới lần đầu ngày 14/10](docs/FIRST_SEEN_20261014.md): 6/10 câu khớp, có cả lỗi solver và lỗi API; giữ nguyên kết quả lần đầu để tránh nhầm với điểm số sau khi sửa theo bộ này.
 

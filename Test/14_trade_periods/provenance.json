@@ -1,0 +1,20 @@
+{
+  "seed": 261016,
+  "kind": "new synthetic data; structural transfer, not copied records",
+  "source_workbooks": [
+    "Public_data_1/xlsx_files/p4_t02.xlsx"
+  ],
+  "description": "Xuất nhập khẩu của 6 mặt hàng mới; fiscal/calendar/FYTD trùng năm, số âm và tăng trưởng.",
+  "questions": 30,
+  "answer_rounding": "Decimal ROUND_HALF_UP; explicit precision in query",
+  "generator": "scripts/gen_public_transfer_suites.py",
+  "categories": [
+    "absolute_difference",
+    "fiscal_vs_ytd",
+    "growth",
+    "noncontiguous_sum",
+    "period_disambiguation",
+    "signed_balance",
+    "trade_balance"
+  ]
+}

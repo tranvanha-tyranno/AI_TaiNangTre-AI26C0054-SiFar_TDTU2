@@ -1,0 +1,666 @@
+[
+  {
+    "id": "16_q001",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!B11"
+        },
+        {
+          "cell": "Demographics!B12"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "20074"
+  },
+  {
+    "id": "16_q002",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!C11"
+        },
+        {
+          "cell": "Demographics!C12"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "6945"
+  },
+  {
+    "id": "16_q003",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!D11"
+        },
+        {
+          "cell": "Demographics!D12"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "7395"
+  },
+  {
+    "id": "16_q004",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!E11"
+        },
+        {
+          "cell": "Demographics!E12"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "7927"
+  },
+  {
+    "id": "16_q005",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!F11"
+        },
+        {
+          "cell": "Demographics!F12"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "15727"
+  },
+  {
+    "id": "16_q006",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!G11"
+        },
+        {
+          "cell": "Demographics!G12"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "17909"
+  },
+  {
+    "id": "16_q007",
+    "category": "unweighted_average",
+    "expression": {
+      "mean": {
+        "list": [
+          {
+            "cell": "Demographics!B15"
+          },
+          {
+            "cell": "Demographics!C15"
+          },
+          {
+            "cell": "Demographics!D15"
+          },
+          {
+            "cell": "Demographics!E15"
+          },
+          {
+            "cell": "Demographics!F15"
+          },
+          {
+            "cell": "Demographics!G15"
+          }
+        ]
+      }
+    },
+    "decimals": 2,
+    "answer": "6.83"
+  },
+  {
+    "id": "16_q008",
+    "category": "weighted_rate",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sum": {
+                "list": [
+                  {
+                    "cell": "Demographics!B14"
+                  },
+                  {
+                    "cell": "Demographics!C14"
+                  },
+                  {
+                    "cell": "Demographics!D14"
+                  },
+                  {
+                    "cell": "Demographics!E14"
+                  },
+                  {
+                    "cell": "Demographics!F14"
+                  },
+                  {
+                    "cell": "Demographics!G14"
+                  }
+                ]
+              }
+            },
+            {
+              "sum": {
+                "list": [
+                  {
+                    "cell": "Demographics!B12"
+                  },
+                  {
+                    "cell": "Demographics!C12"
+                  },
+                  {
+                    "cell": "Demographics!D12"
+                  },
+                  {
+                    "cell": "Demographics!E12"
+                  },
+                  {
+                    "cell": "Demographics!F12"
+                  },
+                  {
+                    "cell": "Demographics!G12"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "7.60"
+  },
+  {
+    "id": "16_q009",
+    "category": "participation_rate",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Demographics!B12"
+            },
+            {
+              "cell": "Demographics!B11"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "48.00"
+  },
+  {
+    "id": "16_q010",
+    "category": "participation_rate",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Demographics!D12"
+            },
+            {
+              "cell": "Demographics!D11"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "75.00"
+  },
+  {
+    "id": "16_q011",
+    "category": "participation_rate",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Demographics!G12"
+            },
+            {
+              "cell": "Demographics!G11"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "54.00"
+  },
+  {
+    "id": "16_q012",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!B4"
+        },
+        {
+          "cell": "Demographics!B5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "3852"
+  },
+  {
+    "id": "16_q013",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!C4"
+        },
+        {
+          "cell": "Demographics!C5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "5972"
+  },
+  {
+    "id": "16_q014",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!D4"
+        },
+        {
+          "cell": "Demographics!D5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "6082"
+  },
+  {
+    "id": "16_q015",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!E4"
+        },
+        {
+          "cell": "Demographics!E5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "17983"
+  },
+  {
+    "id": "16_q016",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!F4"
+        },
+        {
+          "cell": "Demographics!F5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "8427"
+  },
+  {
+    "id": "16_q017",
+    "category": "population_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!G4"
+        },
+        {
+          "cell": "Demographics!G5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "5074"
+  },
+  {
+    "id": "16_q018",
+    "category": "unweighted_average",
+    "expression": {
+      "mean": {
+        "list": [
+          {
+            "cell": "Demographics!B8"
+          },
+          {
+            "cell": "Demographics!C8"
+          },
+          {
+            "cell": "Demographics!D8"
+          },
+          {
+            "cell": "Demographics!E8"
+          },
+          {
+            "cell": "Demographics!F8"
+          },
+          {
+            "cell": "Demographics!G8"
+          }
+        ]
+      }
+    },
+    "decimals": 2,
+    "answer": "7.17"
+  },
+  {
+    "id": "16_q019",
+    "category": "weighted_rate",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sum": {
+                "list": [
+                  {
+                    "cell": "Demographics!B7"
+                  },
+                  {
+                    "cell": "Demographics!C7"
+                  },
+                  {
+                    "cell": "Demographics!D7"
+                  },
+                  {
+                    "cell": "Demographics!E7"
+                  },
+                  {
+                    "cell": "Demographics!F7"
+                  },
+                  {
+                    "cell": "Demographics!G7"
+                  }
+                ]
+              }
+            },
+            {
+              "sum": {
+                "list": [
+                  {
+                    "cell": "Demographics!B5"
+                  },
+                  {
+                    "cell": "Demographics!C5"
+                  },
+                  {
+                    "cell": "Demographics!D5"
+                  },
+                  {
+                    "cell": "Demographics!E5"
+                  },
+                  {
+                    "cell": "Demographics!F5"
+                  },
+                  {
+                    "cell": "Demographics!G5"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "7.34"
+  },
+  {
+    "id": "16_q020",
+    "category": "participation_rate",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Demographics!B5"
+            },
+            {
+              "cell": "Demographics!B4"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "85.00"
+  },
+  {
+    "id": "16_q021",
+    "category": "participation_rate",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Demographics!D5"
+            },
+            {
+              "cell": "Demographics!D4"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "70.00"
+  },
+  {
+    "id": "16_q022",
+    "category": "participation_rate",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Demographics!G5"
+            },
+            {
+              "cell": "Demographics!G4"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "74.00"
+  },
+  {
+    "id": "16_q023",
+    "category": "repeated_label_scope",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!B6"
+        },
+        {
+          "cell": "Demographics!B13"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "2513"
+  },
+  {
+    "id": "16_q024",
+    "category": "repeated_label_scope",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!C6"
+        },
+        {
+          "cell": "Demographics!C13"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-4033"
+  },
+  {
+    "id": "16_q025",
+    "category": "repeated_label_scope",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!D6"
+        },
+        {
+          "cell": "Demographics!D13"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-7055"
+  },
+  {
+    "id": "16_q026",
+    "category": "repeated_label_scope",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!E6"
+        },
+        {
+          "cell": "Demographics!E13"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "11066"
+  },
+  {
+    "id": "16_q027",
+    "category": "repeated_label_scope",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!F6"
+        },
+        {
+          "cell": "Demographics!F13"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-5058"
+  },
+  {
+    "id": "16_q028",
+    "category": "repeated_label_scope",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Demographics!G6"
+        },
+        {
+          "cell": "Demographics!G13"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-6845"
+  },
+  {
+    "id": "16_q029",
+    "category": "comparison",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Demographics!G15"
+        },
+        {
+          "cell": "Demographics!G8"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "No"
+  },
+  {
+    "id": "16_q030",
+    "category": "nonoverlap_total",
+    "expression": {
+      "sum": {
+        "list": [
+          {
+            "cell": "Demographics!B6"
+          },
+          {
+            "cell": "Demographics!C6"
+          },
+          {
+            "cell": "Demographics!D6"
+          },
+          {
+            "cell": "Demographics!E6"
+          },
+          {
+            "cell": "Demographics!F6"
+          },
+          {
+            "cell": "Demographics!G6"
+          },
+          {
+            "cell": "Demographics!B13"
+          },
+          {
+            "cell": "Demographics!C13"
+          },
+          {
+            "cell": "Demographics!D13"
+          },
+          {
+            "cell": "Demographics!E13"
+          },
+          {
+            "cell": "Demographics!F13"
+          },
+          {
+            "cell": "Demographics!G13"
+          }
+        ]
+      }
+    },
+    "decimals": null,
+    "answer": "192280"
+  }
+]

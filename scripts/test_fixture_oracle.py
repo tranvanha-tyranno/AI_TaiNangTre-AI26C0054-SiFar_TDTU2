@@ -13,6 +13,31 @@ def normalized(value):
 def evaluate(expr, source):
     if not isinstance(expr,dict): return expr
     kind,payload=next(iter(expr.items()))
+    if kind=="field": return source["__row__"][payload]
+    if kind=="records": return [{k:evaluate(v,source) for k,v in row.items()} for row in payload]
+    if kind=="winner":
+        return payload["right_label"] if evaluate(payload["right"],source)>evaluate(payload["left"],source) else payload["left_label"]
+    if kind=="derive":
+        rows=evaluate(payload["data"],source)
+        result=[]
+        for row in rows:
+            derived=dict(row)
+            for key,expression in payload["fields"].items():
+                derived[key]=evaluate(expression,{**source,"__row__":derived})
+            result.append(derived)
+        return result
+    if kind=="previous":
+        rows=sorted(evaluate(payload["data"],source),key=lambda row:row[payload["order"]])
+        return [{**row,"previous":rows[i-1][payload["value"]]} for i,row in enumerate(rows) if i]
+    if kind=="parse":
+        value=evaluate(payload,source)
+        if value is None or str(value).strip() in {"", "..", "—", "(-8-)"}: return None
+        text=str(value).strip().replace("$", "").replace(",", "").replace("%", "")
+        return -number(text[1:-1]) if text.startswith("(") and text.endswith(")") else number(text)
+    if kind=="length": return len(str(evaluate(payload,source)))
+    if kind=="abs": return abs(number(evaluate(payload,source)))
+    if kind=="list": return [evaluate(v,source) for v in payload]
+    if kind=="format": return format_answer(evaluate(payload["value"],source),payload.get("decimals"))
     if kind=="cell": return source.get(payload)
     if kind=="range": return [source.get(f"{payload['sheet']}!{payload['column']}{r}") for r in range(payload['first'],payload['last']+1)]
     if kind=="table": return [{name:source.get(f"{payload['sheet']}!{col}{r}") for name,col in payload['columns'].items()}
@@ -31,7 +56,7 @@ def evaluate(expr, source):
                         elif value is None: return False
                         elif not {"gt":lambda:value>target,"ge":lambda:value>=target,
                                   "lt":lambda:value<target,"le":lambda:value<=target,
-                                  "eq":lambda:value==target}[comparator](): return False
+                                  "eq":lambda:value==target,"ne":lambda:value!=target}[comparator](): return False
             return True
         return [row for row in evaluate(payload["data"],source) if keep(row)]
     if kind=="join":

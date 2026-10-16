@@ -15,7 +15,7 @@ For age AT ADMISSION, derive date_diff_days(Admission,Birth), sort ascending for
 Tool contract:
 {"steps":[{"id":"s1","op":"read","table":"t1","start_row":3,"end_row":22},...],"output":{"step":"last_step","columns":["D"],"separator":", ","decimals":null}}
 Each step has a unique id, references only preceding step IDs.
-- read: table, optional start_row/end_row (original Excel row numbers).
+- read: table, optional start_row/end_row (original Excel row numbers). Also returns metadata columns _row, _sheet, _section and _section_row. _section is the nearest preceding standalone section-heading text in the first two columns, with its original cell provenance. Check section_labels in the preview before using this advisory section detection. For repeated activity labels grouped by demographics/industries, filter the activity/size row, sort metric, take 1, output _section to return its group, not the repeated activity label. No manual carry/row thresholds are needed when section_labels are correct.
 - cell: table, row, column. Produces ONE scalar cell value; use ref to compare/subtract these scalars. Prefer cell for exact row/column lookups.
 - sum_columns: REQUIRED table, REQUIRED row (ORIGINAL Excel row number), REQUIRED columns:[Excel column letters]. No input field. Sums all specified numeric cells across ONE row into a scalar. For "across all industries/sectors", when each industry is a separate column, sum EVERY relevant industry column in each target row, then subtract/compare scalar refs. A year heading spanning columns is not a total column. Use an existing explicit all-industry Total column if supplied; otherwise do not use the first industry as a total. Never add a total column to its components.
   Determine the aggregation AXIS from row_dimensions and column_hierarchy. If sectors/categories are ROWS, sum DOWN the metric column using read -> aggregate sum. sum_columns is HORIZONTAL for one row and cannot sum 8 sector rows. A preceding read step is unused unless a later tool consumes it.
@@ -32,15 +32,21 @@ Each step has a unique id, references only preceding step IDs.
 - group: input, by:[columns], metric, expr (except count), column (aggregate output name), missing.
 - join: left,right,left_on,right_on, optional cardinality: many_to_one (default), one_to_one, one_to_many, many_to_many. Inner equality join, result columns are left.A/right.A etc. Put the lookup/mapping table on the right. Duplicate mapping keys are rejected unless the appropriate cardinality is explicitly selected. Never select many_to_many merely to bypass an error: first decide whether duplicates must be aggregated or filtered. Audit unmatched keys and output row expansion.
 - calculate: expr on scalar refs from preceding aggregate/calculate steps.
+- record: fields:{output_column: expression,...}. Builds ONE row combining scalar cells/calculations. Example fields={"label":{"ref":"group_cell"},"value":{"ref":"difference"}}. For label-and-number comparisons: cell label, cell metric, record; repeat for each group; concat record datasets; sort by value; take 1; output columns=[label,value]. Each field must depend on spreadsheet cells. Labels come from section-heading cells, or if:[comparison of scalar refs, value:label_from_question, value:other_label_from_question].
+- lag: input, source (column), column (NEW output column), optional offset=1. Copies the previous row's source value with provenance. First offset rows have null. FIRST filter annual data and sort by year ascending; then lag; filter is_number on lagged value; derive change; sort/take and output year,change. No shift/prev fields on derive.
+- fill_down: input, columns. Fills ONLY null/empty values using the preceding nonempty value, retaining original label-cell provenance. For sectioned tables, derive a new section column with if:[condition identifying a section-heading row, col:A, value:null], fill_down section, THEN filter the requested detail rows. Never fill numeric missing-data cells to invent observations.
 Expression syntax (each object has EXACTLY ONE key):
 {"col":"A"} current row cell; {"value":scalar} literal from the QUESTION (not invented data); {"ref":"step_id"} preceding scalar result.
 Operators take arrays of expressions: add,sub,mul,div,abs,number,date,date_diff_days,age_years,eq,ne,gt,ge,lt,le,contains,starts_with,lower,is_null,is_number,not,and,or.
-Unary abs/number/date/lower/is_null/is_number/not take an ARRAY with one expression; add/mul/and/or take arrays of at least two; other binary operators take exactly two. Never put a bare expression object directly under abs/eq/etc. date_diff_days:[end,start]. eq is case-sensitive; use lower to ignore case. Filter is_number on numeric columns BEFORE deriving abs/change or sorting when read bounds include blank rows or notes. Numeric % cells stored as 0.05 mean 5% only when Excel number format says percent; multiply by 100 if the requested answer is percentage points. Text numbers ending in % are already in percent units.
+Unary abs/number/date/lower/trim/length/is_null/is_number/not take an ARRAY with one expression; add/mul/and/or take arrays of at least two; other binary operators take exactly two. if takes [boolean condition, true expression, false expression], evaluates only the selected branch. trim removes surrounding whitespace; length returns trimmed string length, useful for N-digit codes. Never put a bare expression object directly under abs/eq/etc. date_diff_days:[end,start]. eq is case-sensitive; use trim/lower for padded Excel labels. Filter is_number on EVERY compared numeric column BEFORE deriving abs/change or sorting when read bounds include blank rows or notes. Currency strings and accounting negatives are numeric. Numeric % cells stored as 0.05 mean 5% only when Excel number format says percent; multiply by 100 if the requested answer is percentage points. Text numbers ending in % are already in percent units.
+Count matching rows with filter -> aggregate count, never sum booleans. An N-digit code uses length(trim(col))=N (or numeric bounds 10^(N-1)..10^N-1), not N+1 digits. Annual years may be in column B with column A empty; inspect the cells before filtering. Percent decrease is (old-new)/old*100, positive for a decline; percent increase is (new-old)/old*100, in every language.
+For answer_contract.kind=tuple return ALL fields in order (e.g. label and difference), not only the metric. decimals formats numeric components and preserves text labels. read also supplies _sheet for questions asking the sheet name. A metric called 'average hours' is already a mean: ranking its groups is argmax, not another mean across those groups. For row sections repeated Housework/Occupation labels are not group names: use the section-heading cell as the label via record, or carry section labels before filtering.
 If answer_contract.unit_scale is present, apply that multiplication to the computed numeric result through calculate/derive (not through output.decimals). For a table in thousands converted to individual units, compute the full total first, then multiply by 1000. For a stored fraction converted to percentage points, multiply by 100. If the question asks to keep the table's thousands unit, do NOT multiply by 1000.
 Example scalar difference: steps cell id=p, cell id=q, then calculate expr={"abs":[{"sub":[{"ref":"p"},{"ref":"q"}]}]}.
 Example filter: where={"eq":[{"col":"A"},{"value":"Manufacturing"}]}.
 derive and select produce ROW DATASETS, not scalar values; do NOT use ref on them. Use cell, aggregate, or calculate for scalar refs.
 Section labels such as Women/Men are often on a separate row. Use row_labels to locate the corresponding section bounds; do not require a data row to contain its section heading.
+For repeated row labels under section headings, USE _section from read: read -> filter trim(A)=requested activity AND is_number(B) -> sort B descending -> take 1 -> output columns=[_section]. Match actual columns. Do not derive section AFTER filtering: that discards the heading rows and produces null labels. _row, _sheet and _section are ROW columns: use col, never ref.
 whole_sheet regions include all blocks. Prefer them for comparing all categories or when data spans blank rows. Rows omitted from a preview are still available to tools. Never duplicate totals across demographic sections.
 Final output must reference a computed step. If the step returns rows, give output.columns in requested order. Scalar steps need no columns. separator defaults to comma and one space. decimals applies exactly to each numeric answer if requested. Booleans format as Yes/No. No output literals.
 Output fields are ONLY step, columns, separator, decimals, aliases. output.limit and output.offset are INVALID: put them in a take step. A question asking position K (1-based) requires take offset=K-1,limit=1 AFTER sort. A top K list requires take offset=0,limit=K. A sum/total (including Vietnamese "Tổng ... Chỉ trả số nguyên") requires ONE resulting total, not a list of each row's amount. Use aggregate sum after filtering disjoint detail rows, OR use cell on an existing Total that already matches the requested scope. answer_contract.reduction describes the requested result, not a mandatory tool: an explicit Total cell is valid. Never add the Total to its details. Follow answer_contract: it is inferred only from the question, not from reference answers.
@@ -65,11 +71,41 @@ def messages(question, previews, catalog, correction=None, observations=None, pl
     result=[{'role':'system','content':SYSTEM},{'role':'user','content':json.dumps(payload,ensure_ascii=False)}]
     if correction:
         result.append({'role':'user','content':json.dumps({'previous_plan':correction['plan'],'validation_error':correction['error'],
-                           'instruction':'Return a corrected complete JSON plan. Do not change the question.'},ensure_ascii=False)})
+                           'previous_errors':correction.get('previous_errors',[]),
+                           'execution_context':correction.get('execution_context',{}),
+                           'instruction':'Return a corrected complete JSON plan. Do not change the question. Reconsider source coordinates and output fields when semantics failed. Do not repeat the same failing plan; use only operations and expression arities in the tool schema.'},ensure_ascii=False,default=str)})
     return result
 
 
-def parse_plan(content):
+def repair_containers(encoded):
+    """Balance only JSON container closers outside strings, with a small cap.
+
+    This never inserts a key, literal, operator, quote or comma. Any remaining
+    grammar error goes to the bounded model repair loop as before.
+    """
+    stack=[];output=[];quoted=False;escaped=False;edits=0
+    pairs={']':'[','}':'{'};closers={'[':']','{':'}'}
+    for char in encoded:
+        if quoted:
+            output.append(char)
+            if escaped: escaped=False
+            elif char=='\\': escaped=True
+            elif char=='"': quoted=False
+        elif char=='"': quoted=True;output.append(char)
+        elif char in '[{': stack.append(char);output.append(char)
+        elif char in ']}':
+            if pairs[char] not in stack: edits+=1;continue
+            while stack and stack[-1]!=pairs[char]:
+                output.append(closers[stack.pop()]);edits+=1
+            stack.pop();output.append(char)
+        else: output.append(char)
+        if edits>6: raise ValueError('Too many JSON container repairs')
+    if edits>6: raise ValueError('Too many JSON container repairs')
+    if quoted or stack: raise ValueError('Truncated JSON is not container-repaired')
+    return ''.join(output),edits
+
+
+def parse_plan(content, syntax_repairs=None):
     content=content.strip()
     if content.startswith('```'):
         content='\n'.join(content.splitlines()[1:-1])
@@ -80,13 +116,12 @@ def parse_plan(content):
         try:
             plan['steps']=json.loads(encoded)
         except json.JSONDecodeError:
-            # Qwen occasionally emits a double-encoded expression with the
-            # closing sub-expression brace in the wrong order. Repair only
-            # this unambiguous bracket pattern; all other malformed JSON is
-            # sent through the normal bounded repair loop.
-            repaired=encoded.replace(']}}]}]', ']}]}}]')
-            repaired=re.sub(r'("columns"\s*:\s*\[[^\]]*)\}', r'\1]}', repaired)
+            # Qwen can double-encode steps with missing/misordered closers.
+            # Preserve every token carrying data or computation semantics.
+            repaired,edits=repair_containers(encoded)
             plan['steps']=json.loads(repaired)
+            if syntax_repairs is not None:
+                syntax_repairs.append({'kind':'encoded_steps_container_closers','edits':edits})
     return plan
 
 
@@ -97,20 +132,22 @@ def tool_schema(purpose='plan'):
                 'required':['verdict','issues'],'additionalProperties':False}
     scalar={'type':['string','number','boolean','null']}
     props={'col':{'type':'string'},'value':scalar,'ref':{'type':'string'}}
-    for name in ['abs','number','date','lower','is_null','is_number','not','add','sub','mul','div','date_diff_days','age_years','eq','ne','gt','ge','lt','le','contains','starts_with','and','or']:
-        unary=name in {'abs','number','date','lower','is_null','is_number','not'}
+    for name in ['abs','number','date','lower','trim','length','is_null','is_number','not','if','add','sub','mul','div','round','date_diff_days','age_years','eq','ne','gt','ge','lt','le','contains','starts_with','and','or']:
+        unary=name in {'abs','number','date','lower','trim','length','is_null','is_number','not'}
         array={'type':'array','items':{'$ref':'#/$defs/expr'},'minItems':1 if unary else 2}
         if name not in {'add','mul','and','or'}: array['maxItems']=1 if unary else 2
+        if name=='if': array.update(minItems=3,maxItems=3)
         props[name]=array
     expr={'type':'object','properties':props,'minProperties':1,'maxProperties':1,'additionalProperties':False}
     fields={'id':{'type':'string'},'op':{'type':'string','enum':['read','cell','sum_columns','concat','collect','unpivot','filter','derive','sort','take','select','aggregate','group','join','calculate']}}
-    for key in ['table','input','column','left','right','left_on','right_on','label_table']:
+    for key in ['table','input','column','source','left','right','left_on','right_on','label_table']:
         fields[key]={'type':'string'}
     for key in ['start_row','end_row','row','offset','limit','label_row']:
         fields[key]={'type':'integer'}
     for key in ['columns','inputs','keep_columns']:
         fields[key]={'type':'array','items':{'type':'string'}}
     fields['expr']=fields['where']={'$ref':'#/$defs/expr'}
+    fields['fields']={'type':'object','minProperties':1,'maxProperties':20,'additionalProperties':{'anyOf':[{'$ref':'#/$defs/expr'},{'type':'string'}]}}
     fields['metric']={'enum':['count','distinct_count','sum','mean','min','max']}
     fields['missing']={'enum':['error','skip']}
     fields['cardinality']={'enum':['many_to_one','one_to_one','one_to_many','many_to_many']}
@@ -120,6 +157,8 @@ def tool_schema(purpose='plan'):
         'cell':(['table','row','column'],[]),
         'sum_columns':(['table','row','columns'],[]),
         'concat':(['inputs'],[]),'collect':(['inputs'],[]),
+        'record':(['fields'],[]),'lag':(['input','source','column'],['offset']),
+        'fill_down':(['input','columns'],[]),
         'unpivot':(['input','columns'],['label_table','label_row','keep_columns']),
         'filter':(['input','where'],[]),'derive':(['input','column','expr'],[]),
         'sort':(['input','by'],[]),'take':(['input'],['offset','limit']),

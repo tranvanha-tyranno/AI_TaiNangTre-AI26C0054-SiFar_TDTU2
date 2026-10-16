@@ -1,0 +1,27 @@
+{
+  "seed": 261016,
+  "kind": "new synthetic data; structural transfer, not copied records",
+  "source_workbooks": [
+    "Public_data_1/xlsx_files/p4_t01.xlsx"
+  ],
+  "description": "64 hồ sơ mới: tuổi thực theo ngày tại nhập học, tuổi tròn, ngày nhuận, lọc và top-k.",
+  "questions": 30,
+  "answer_rounding": "Decimal ROUND_HALF_UP; explicit precision in query",
+  "generator": "scripts/gen_public_transfer_suites.py",
+  "categories": [
+    "age_rank",
+    "birthday_boundary",
+    "completed_age",
+    "conditional_average",
+    "conditional_rank",
+    "date_filter",
+    "distinct",
+    "empty_result",
+    "exact_age_days",
+    "multi_condition",
+    "rank_score",
+    "strict_boundary",
+    "top_k_age_score",
+    "top_three"
+  ]
+}

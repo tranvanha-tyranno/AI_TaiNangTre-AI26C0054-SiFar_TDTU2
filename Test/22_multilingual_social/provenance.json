@@ -1,0 +1,34 @@
+{
+  "seed": 261016,
+  "kind": "new synthetic data; structural transfer, not copied records",
+  "source_workbooks": [
+    "Public_data_2/xlsx_files/p2_t11.xlsx",
+    "Public_data_2/xlsx_files/p2_t12.xlsx",
+    "Public_data_2/xlsx_files/p2_t13.xlsx",
+    "Public_data_2/xlsx_files/p2_t14.xlsx",
+    "Public_data_2/xlsx_files/p2_t15.xlsx"
+  ],
+  "description": "Câu hỏi Việt/Pháp/Hàn/Trung; chăm sóc, thu nhập, tòa án, lao động và sức khỏe với số liệu mới.",
+  "questions": 30,
+  "answer_rounding": "Decimal ROUND_HALF_UP; explicit precision in query",
+  "generator": "scripts/gen_public_transfer_suites.py",
+  "categories": [
+    "fr_mean",
+    "fr_missing",
+    "fr_range",
+    "fr_rank",
+    "ko_max",
+    "ko_percent_change",
+    "ko_ratio",
+    "ko_total",
+    "vi_care",
+    "vi_exclude_any",
+    "vi_income_gap",
+    "vi_income_rank",
+    "vi_income_ratio",
+    "vi_income_total",
+    "vi_missing_vs_zero",
+    "zh_group_gap",
+    "zh_marital_gap"
+  ]
+}

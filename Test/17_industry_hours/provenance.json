@@ -1,0 +1,28 @@
+{
+  "seed": 261016,
+  "kind": "new synthetic data; structural transfer, not copied records",
+  "source_workbooks": [
+    "Public_data_1/xlsx_files/p4_t05.xlsx",
+    "Public_data_1/xlsx_files/p4_t06.xlsx",
+    "Public_data_1/xlsx_files/p4_t07.xlsx",
+    "Public_data_1/xlsx_files/p4_t08.xlsx",
+    "Public_data_1/xlsx_files/p4_t09.xlsx",
+    "Public_data_1/xlsx_files/p4_t10.xlsx"
+  ],
+  "description": "Hai sheet ngành/nghề mới, tuổi, giờ làm, đơn vị nghìn, dòng TOTAL và phép tính chéo sheet.",
+  "questions": 30,
+  "answer_rounding": "Decimal ROUND_HALF_UP; explicit precision in query",
+  "generator": "scripts/gen_public_transfer_suites.py",
+  "categories": [
+    "age_difference",
+    "comparison",
+    "cross_sheet_ratio",
+    "exclude_total_rank",
+    "hours_share",
+    "no_double_count",
+    "occupation_sum",
+    "pair_output",
+    "sector_order",
+    "two_industries"
+  ]
+}

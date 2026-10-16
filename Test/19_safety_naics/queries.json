@@ -1,0 +1,152 @@
+[
+  {
+    "id": "19_q001",
+    "file_name": "data.xlsx",
+    "query": "How many industries with a 6-digit NAICS code have Total recordable cases strictly above 0? Ignore missing data. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "19_q002",
+    "file_name": "data.xlsx",
+    "query": "How many industries with a 6-digit NAICS code have Total recordable cases strictly above 2.5? Ignore missing data. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "19_q003",
+    "file_name": "data.xlsx",
+    "query": "How many industries with a 6-digit NAICS code have Total recordable cases strictly above 5? Ignore missing data. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "19_q004",
+    "file_name": "data.xlsx",
+    "query": "How many industries with a 6-digit NAICS code have Total recordable cases strictly above 7.5? Ignore missing data. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "19_q005",
+    "file_name": "data.xlsx",
+    "query": "How many industries with a 6-digit NAICS code have Total recordable cases strictly above 10? Ignore missing data. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "19_q006",
+    "file_name": "data.xlsx",
+    "query": "For Industry 0001, what is the REPORTED combined total for days away, restriction or transfer? Do not add the two rounded components. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "19_q007",
+    "file_name": "data.xlsx",
+    "query": "For Industry 0499, what is the REPORTED combined total for days away, restriction or transfer? Do not add the two rounded components. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "19_q008",
+    "file_name": "data.xlsx",
+    "query": "For Industry 0550, what is the REPORTED combined total for days away, restriction or transfer? Do not add the two rounded components. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "19_q009",
+    "file_name": "data.xlsx",
+    "query": "For Industry 0999, what is the REPORTED combined total for days away, restriction or transfer? Do not add the two rounded components. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "19_q010",
+    "file_name": "data.xlsx",
+    "query": "For Industry 1099, what is the REPORTED combined total for days away, restriction or transfer? Do not add the two rounded components. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "19_q011",
+    "file_name": "data.xlsx",
+    "query": "For Industry 1100, what is the REPORTED combined total for days away, restriction or transfer? Do not add the two rounded components. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "19_q012",
+    "file_name": "data.xlsx",
+    "query": "Among Industry 0001 through Industry 0300 inclusive, which has the highest available Total recordable cases rate? Break ties by the label in ascending Unicode order. Answer only the industry name."
+  },
+  {
+    "id": "19_q013",
+    "file_name": "data.xlsx",
+    "query": "Among Industry 0301 through Industry 0700 inclusive, which has the highest available Total recordable cases rate? Break ties by the label in ascending Unicode order. Answer only the industry name."
+  },
+  {
+    "id": "19_q014",
+    "file_name": "data.xlsx",
+    "query": "Among Industry 0701 through Industry 1100 inclusive, which has the highest available Total recordable cases rate? Break ties by the label in ascending Unicode order. Answer only the industry name."
+  },
+  {
+    "id": "19_q015",
+    "file_name": "data.xlsx",
+    "query": "In Crop production, excluding Total all sizes, which employment size has the largest Q3-minus-Median gap? Break ties by the label in ascending Unicode order. Answer `size class, gap`, with 1 decimal for gap."
+  },
+  {
+    "id": "19_q016",
+    "file_name": "data.xlsx",
+    "query": "In Crop production, is Q3 for size 11 - 49 strictly greater than 5.0? Answer only Yes or No."
+  },
+  {
+    "id": "19_q017",
+    "file_name": "data.xlsx",
+    "query": "In Crop production, what is the Median for size 250 - 999? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "19_q018",
+    "file_name": "data.xlsx",
+    "query": "In Machinery manufacturing, excluding Total all sizes, which employment size has the largest Q3-minus-Median gap? Break ties by the label in ascending Unicode order. Answer `size class, gap`, with 1 decimal for gap."
+  },
+  {
+    "id": "19_q019",
+    "file_name": "data.xlsx",
+    "query": "In Machinery manufacturing, is Q3 for size 11 - 49 strictly greater than 5.0? Answer only Yes or No."
+  },
+  {
+    "id": "19_q020",
+    "file_name": "data.xlsx",
+    "query": "In Machinery manufacturing, what is the Median for size 250 - 999? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "19_q021",
+    "file_name": "data.xlsx",
+    "query": "In Food manufacturing, excluding Total all sizes, which employment size has the largest Q3-minus-Median gap? Break ties by the label in ascending Unicode order. Answer `size class, gap`, with 1 decimal for gap."
+  },
+  {
+    "id": "19_q022",
+    "file_name": "data.xlsx",
+    "query": "In Food manufacturing, is Q3 for size 11 - 49 strictly greater than 5.0? Answer only Yes or No."
+  },
+  {
+    "id": "19_q023",
+    "file_name": "data.xlsx",
+    "query": "In Food manufacturing, what is the Median for size 250 - 999? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "19_q024",
+    "file_name": "data.xlsx",
+    "query": "In Warehousing, excluding Total all sizes, which employment size has the largest Q3-minus-Median gap? Break ties by the label in ascending Unicode order. Answer `size class, gap`, with 1 decimal for gap."
+  },
+  {
+    "id": "19_q025",
+    "file_name": "data.xlsx",
+    "query": "In Warehousing, is Q3 for size 11 - 49 strictly greater than 5.0? Answer only Yes or No."
+  },
+  {
+    "id": "19_q026",
+    "file_name": "data.xlsx",
+    "query": "In Warehousing, what is the Median for size 250 - 999? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "19_q027",
+    "file_name": "data.xlsx",
+    "query": "How many industries in Quartiles have a missing Mean for size 250 - 999? Treat (-8-) as missing. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "19_q028",
+    "file_name": "data.xlsx",
+    "query": "Which industry has the highest available Mean for size 250 - 999? Ignore (-8-) and break ties by industry name ascending. Answer only the industry name."
+  },
+  {
+    "id": "19_q029",
+    "file_name": "data.xlsx",
+    "query": "How many 6-digit NAICS industries have Total recordable cases exactly 5.0? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "19_q030",
+    "file_name": "data.xlsx",
+    "query": "How many rows in Incidence have missing Total recordable cases? Treat blanks and .. as missing. Answer only the integer, without thousands separators or units."
+  }
+]

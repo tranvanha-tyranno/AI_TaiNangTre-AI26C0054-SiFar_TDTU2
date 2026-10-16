@@ -1,0 +1,152 @@
+[
+  {
+    "id": "14_q001",
+    "file_name": "data.xlsx",
+    "query": "For Cocoa exports, is fiscal year-to-date 2026 greater than fiscal year-to-date 2025? Answer only Yes or No."
+  },
+  {
+    "id": "14_q002",
+    "file_name": "data.xlsx",
+    "query": "What is fiscal year-to-date 2026 exports minus imports for Cocoa, in billion dollars? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q003",
+    "file_name": "data.xlsx",
+    "query": "For Cocoa exports, what is calendar year-to-date 2026 minus fiscal year-to-date 2026? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q004",
+    "file_name": "data.xlsx",
+    "query": "What is the percentage change of Cocoa exports from fiscal year 2025 to fiscal year 2026? Use (new-old)/old*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "14_q005",
+    "file_name": "data.xlsx",
+    "query": "For Rice exports, is fiscal year-to-date 2026 greater than fiscal year-to-date 2025? Answer only Yes or No."
+  },
+  {
+    "id": "14_q006",
+    "file_name": "data.xlsx",
+    "query": "What is fiscal year-to-date 2026 exports minus imports for Rice, in billion dollars? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q007",
+    "file_name": "data.xlsx",
+    "query": "For Rice exports, what is calendar year-to-date 2026 minus fiscal year-to-date 2026? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q008",
+    "file_name": "data.xlsx",
+    "query": "What is the percentage change of Rice exports from fiscal year 2025 to fiscal year 2026? Use (new-old)/old*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "14_q009",
+    "file_name": "data.xlsx",
+    "query": "For Coffee exports, is fiscal year-to-date 2026 greater than fiscal year-to-date 2025? Answer only Yes or No."
+  },
+  {
+    "id": "14_q010",
+    "file_name": "data.xlsx",
+    "query": "What is fiscal year-to-date 2026 exports minus imports for Coffee, in billion dollars? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q011",
+    "file_name": "data.xlsx",
+    "query": "For Coffee exports, what is calendar year-to-date 2026 minus fiscal year-to-date 2026? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q012",
+    "file_name": "data.xlsx",
+    "query": "What is the percentage change of Coffee exports from fiscal year 2025 to fiscal year 2026? Use (new-old)/old*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "14_q013",
+    "file_name": "data.xlsx",
+    "query": "For Fruit exports, is fiscal year-to-date 2026 greater than fiscal year-to-date 2025? Answer only Yes or No."
+  },
+  {
+    "id": "14_q014",
+    "file_name": "data.xlsx",
+    "query": "What is fiscal year-to-date 2026 exports minus imports for Fruit, in billion dollars? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q015",
+    "file_name": "data.xlsx",
+    "query": "For Fruit exports, what is calendar year-to-date 2026 minus fiscal year-to-date 2026? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q016",
+    "file_name": "data.xlsx",
+    "query": "What is the percentage change of Fruit exports from fiscal year 2025 to fiscal year 2026? Use (new-old)/old*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "14_q017",
+    "file_name": "data.xlsx",
+    "query": "For Dairy exports, is fiscal year-to-date 2026 greater than fiscal year-to-date 2025? Answer only Yes or No."
+  },
+  {
+    "id": "14_q018",
+    "file_name": "data.xlsx",
+    "query": "What is fiscal year-to-date 2026 exports minus imports for Dairy, in billion dollars? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q019",
+    "file_name": "data.xlsx",
+    "query": "For Dairy exports, what is calendar year-to-date 2026 minus fiscal year-to-date 2026? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q020",
+    "file_name": "data.xlsx",
+    "query": "What is the percentage change of Dairy exports from fiscal year 2025 to fiscal year 2026? Use (new-old)/old*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "14_q021",
+    "file_name": "data.xlsx",
+    "query": "For Seafood exports, is fiscal year-to-date 2026 greater than fiscal year-to-date 2025? Answer only Yes or No."
+  },
+  {
+    "id": "14_q022",
+    "file_name": "data.xlsx",
+    "query": "What is fiscal year-to-date 2026 exports minus imports for Seafood, in billion dollars? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q023",
+    "file_name": "data.xlsx",
+    "query": "For Seafood exports, what is calendar year-to-date 2026 minus fiscal year-to-date 2026? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q024",
+    "file_name": "data.xlsx",
+    "query": "What is the percentage change of Seafood exports from fiscal year 2025 to fiscal year 2026? Use (new-old)/old*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "14_q025",
+    "file_name": "data.xlsx",
+    "query": "Sum exports for all six commodities for fiscal year 2025. Exclude imports and balances. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q026",
+    "file_name": "data.xlsx",
+    "query": "Sum exports for all six commodities for fiscal year 2026. Exclude imports and balances. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q027",
+    "file_name": "data.xlsx",
+    "query": "Sum exports for all six commodities for fiscal year-to-date 2025. Exclude imports and balances. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q028",
+    "file_name": "data.xlsx",
+    "query": "Sum exports for all six commodities for fiscal year-to-date 2026. Exclude imports and balances. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q029",
+    "file_name": "data.xlsx",
+    "query": "How many of the six commodities have a negative fiscal year-to-date 2026 trade balance? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "14_q030",
+    "file_name": "data.xlsx",
+    "query": "What is the absolute difference between Coffee and Seafood exports in September 2026? Answer only the integer, without thousands separators or units."
+  }
+]

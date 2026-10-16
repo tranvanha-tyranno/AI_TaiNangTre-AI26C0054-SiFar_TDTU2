@@ -1,0 +1,152 @@
+[
+  {
+    "id": "20_q001",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows only, which year has the highest Rubber, plastics & non-metallic minerals output per job? Exclude quarters and Level rows; break ties by earliest year. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "20_q002",
+    "file_name": "data.xlsx",
+    "query": "What is mean Rubber, plastics & non-metallic minerals index across all 20 Annual rows? Exclude quarters and Level. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "20_q003",
+    "file_name": "data.xlsx",
+    "query": "Using Quarter rows only, which period has the highest Rubber, plastics & non-metallic minerals index? Break ties by period ascending. Answer the period exactly."
+  },
+  {
+    "id": "20_q004",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows, what is Rubber, plastics & non-metallic minerals index in 2017 minus 2016? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "20_q005",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows, what is Rubber, plastics & non-metallic minerals index in 2027 minus 2026? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "20_q006",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows only, which year has the highest Chemicals, Pharmaceuticals output per job? Exclude quarters and Level rows; break ties by earliest year. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "20_q007",
+    "file_name": "data.xlsx",
+    "query": "What is mean Chemicals, Pharmaceuticals index across all 20 Annual rows? Exclude quarters and Level. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "20_q008",
+    "file_name": "data.xlsx",
+    "query": "Using Quarter rows only, which period has the highest Chemicals, Pharmaceuticals index? Break ties by period ascending. Answer the period exactly."
+  },
+  {
+    "id": "20_q009",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows, what is Chemicals, Pharmaceuticals index in 2017 minus 2016? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "20_q010",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows, what is Chemicals, Pharmaceuticals index in 2027 minus 2026? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "20_q011",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows only, which year has the highest Machinery & equipment output per job? Exclude quarters and Level rows; break ties by earliest year. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "20_q012",
+    "file_name": "data.xlsx",
+    "query": "What is mean Machinery & equipment index across all 20 Annual rows? Exclude quarters and Level. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "20_q013",
+    "file_name": "data.xlsx",
+    "query": "Using Quarter rows only, which period has the highest Machinery & equipment index? Break ties by period ascending. Answer the period exactly."
+  },
+  {
+    "id": "20_q014",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows, what is Machinery & equipment index in 2017 minus 2016? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "20_q015",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows, what is Machinery & equipment index in 2027 minus 2026? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "20_q016",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows only, which year has the highest Food, beverages & tobacco output per job? Exclude quarters and Level rows; break ties by earliest year. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "20_q017",
+    "file_name": "data.xlsx",
+    "query": "What is mean Food, beverages & tobacco index across all 20 Annual rows? Exclude quarters and Level. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "20_q018",
+    "file_name": "data.xlsx",
+    "query": "Using Quarter rows only, which period has the highest Food, beverages & tobacco index? Break ties by period ascending. Answer the period exactly."
+  },
+  {
+    "id": "20_q019",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows, what is Food, beverages & tobacco index in 2017 minus 2016? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "20_q020",
+    "file_name": "data.xlsx",
+    "query": "Using Annual index rows, what is Food, beverages & tobacco index in 2027 minus 2026? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "20_q021",
+    "file_name": "data.xlsx",
+    "query": "Across Annual index rows only, in how many years is Rubber, plastics & non-metallic minerals strictly above Chemicals, Pharmaceuticals? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "20_q022",
+    "file_name": "data.xlsx",
+    "query": "Among Annual rows only, which year has the greatest Rubber minus Chemicals index gap? Break ties by earliest year. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "20_q023",
+    "file_name": "data.xlsx",
+    "query": "How many Annual rows have Machinery & equipment index >= 90? Exclude all Quarter and Level rows. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "20_q024",
+    "file_name": "data.xlsx",
+    "query": "How many Annual rows have Machinery & equipment index >= 100? Exclude all Quarter and Level rows. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "20_q025",
+    "file_name": "data.xlsx",
+    "query": "How many Annual rows have Machinery & equipment index >= 110? Exclude all Quarter and Level rows. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "20_q026",
+    "file_name": "data.xlsx",
+    "query": "In Annual Rubber index rows, which year had the largest decrease versus the previous year? Answer `year, decrease` with decrease to exactly 1 decimal; break ties by earliest year."
+  },
+  {
+    "id": "20_q027",
+    "file_name": "data.xlsx",
+    "query": "How many Annual index rows are from 2015 through 2022 inclusive? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "20_q028",
+    "file_name": "data.xlsx",
+    "query": "What is mean Annual Chemicals, Pharmaceuticals index for 2020 through 2027 inclusive? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "20_q029",
+    "file_name": "data.xlsx",
+    "query": "What is mean Annual Food, beverages & tobacco index for 2020 through 2027 inclusive? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "20_q030",
+    "file_name": "data.xlsx",
+    "query": "In the Level (GBP thousand) table, what is Chemicals, Pharmaceuticals for 2026? Use Level, not Annual or Quarter index. Answer only the integer, without thousands separators or units."
+  }
+]

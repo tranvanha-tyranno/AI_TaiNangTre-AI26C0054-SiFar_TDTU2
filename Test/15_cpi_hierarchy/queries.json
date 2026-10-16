@@ -1,0 +1,152 @@
+[
+  {
+    "id": "15_q001",
+    "file_name": "data.xlsx",
+    "query": "For Housing, what is annual unadjusted change minus monthly unadjusted change, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "15_q002",
+    "file_name": "data.xlsx",
+    "query": "For Housing, what is monthly unadjusted change minus seasonally adjusted change? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "15_q003",
+    "file_name": "data.xlsx",
+    "query": "What is the October 2026 index minus September 2026 index for Housing? Answer exactly 3 decimal places."
+  },
+  {
+    "id": "15_q004",
+    "file_name": "data.xlsx",
+    "query": "For Food and beverages, what is annual unadjusted change minus monthly unadjusted change, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "15_q005",
+    "file_name": "data.xlsx",
+    "query": "For Food and beverages, what is monthly unadjusted change minus seasonally adjusted change? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "15_q006",
+    "file_name": "data.xlsx",
+    "query": "What is the October 2026 index minus September 2026 index for Food and beverages? Answer exactly 3 decimal places."
+  },
+  {
+    "id": "15_q007",
+    "file_name": "data.xlsx",
+    "query": "For Services, what is annual unadjusted change minus monthly unadjusted change, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "15_q008",
+    "file_name": "data.xlsx",
+    "query": "For Services, what is monthly unadjusted change minus seasonally adjusted change? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "15_q009",
+    "file_name": "data.xlsx",
+    "query": "What is the October 2026 index minus September 2026 index for Services? Answer exactly 3 decimal places."
+  },
+  {
+    "id": "15_q010",
+    "file_name": "data.xlsx",
+    "query": "For Commodities, what is annual unadjusted change minus monthly unadjusted change, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "15_q011",
+    "file_name": "data.xlsx",
+    "query": "For Commodities, what is monthly unadjusted change minus seasonally adjusted change? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "15_q012",
+    "file_name": "data.xlsx",
+    "query": "What is the October 2026 index minus September 2026 index for Commodities? Answer exactly 3 decimal places."
+  },
+  {
+    "id": "15_q013",
+    "file_name": "data.xlsx",
+    "query": "For Transport, what is annual unadjusted change minus monthly unadjusted change, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "15_q014",
+    "file_name": "data.xlsx",
+    "query": "For Transport, what is monthly unadjusted change minus seasonally adjusted change? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "15_q015",
+    "file_name": "data.xlsx",
+    "query": "What is the October 2026 index minus September 2026 index for Transport? Answer exactly 3 decimal places."
+  },
+  {
+    "id": "15_q016",
+    "file_name": "data.xlsx",
+    "query": "Excluding All items, how many categories have monthly unadjusted change strictly greater than 0? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "15_q017",
+    "file_name": "data.xlsx",
+    "query": "Excluding All items, how many categories have monthly unadjusted change strictly greater than 1? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "15_q018",
+    "file_name": "data.xlsx",
+    "query": "Excluding All items, how many categories have monthly unadjusted change strictly greater than 2? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "15_q019",
+    "file_name": "data.xlsx",
+    "query": "Excluding All items, how many categories have monthly unadjusted change strictly greater than 3? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "15_q020",
+    "file_name": "data.xlsx",
+    "query": "Rank the categories directly under Housing by annual unadjusted change descending; exclude grandchildren. Break ties by the label in ascending Unicode order. Separate category names with comma and one space."
+  },
+  {
+    "id": "15_q021",
+    "file_name": "data.xlsx",
+    "query": "What is mean annual unadjusted change of the three categories directly under Housing? Exclude grandchildren. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "15_q022",
+    "file_name": "data.xlsx",
+    "query": "Excluding All items, which category has the largest absolute monthly unadjusted change? Break ties by the label in ascending Unicode order. Answer only the category name."
+  },
+  {
+    "id": "15_q023",
+    "file_name": "data.xlsx",
+    "query": "Excluding All items, which category has the largest absolute gap between monthly unadjusted and seasonally adjusted change? Break ties by the label in ascending Unicode order. Answer only the category name."
+  },
+  {
+    "id": "15_q024",
+    "file_name": "data.xlsx",
+    "query": "Excluding All items, which category has the highest relative importance? Break ties by the label in ascending Unicode order. Answer only the category name."
+  },
+  {
+    "id": "15_q025",
+    "file_name": "data.xlsx",
+    "query": "Excluding All items, which category has the highest annual unadjusted change? Break ties by the label in ascending Unicode order. Answer only the category name."
+  },
+  {
+    "id": "15_q026",
+    "file_name": "data.xlsx",
+    "query": "How many categories have Indent Level exactly 1? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "15_q027",
+    "file_name": "data.xlsx",
+    "query": "How many categories have Indent Level exactly 2? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "15_q028",
+    "file_name": "data.xlsx",
+    "query": "How many categories have Indent Level exactly 3? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "15_q029",
+    "file_name": "data.xlsx",
+    "query": "What is Housing relative importance minus Food and beverages relative importance? Answer exactly 3 decimal places."
+  },
+  {
+    "id": "15_q030",
+    "file_name": "data.xlsx",
+    "query": "Is the annual unadjusted change of Services greater than that of Commodities? Answer only Yes or No."
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "seed": 261016,
+  "kind": "new synthetic data; structural transfer, not copied records",
+  "source_workbooks": [
+    "Public_data_2/xlsx_files/p2_t09.xlsx",
+    "Public_data_2/xlsx_files/p2_t10.xlsx"
+  ],
+  "description": "5 sheet tài chính mới: số chuỗi $/dấu phẩy/ngoặc âm, doanh thu bộ phận, fair value, cuối kỳ khác bình quân.",
+  "questions": 30,
+  "answer_rounding": "Decimal ROUND_HALF_UP; explicit precision in query",
+  "generator": "scripts/gen_public_transfer_suites.py",
+  "categories": [
+    "accounting_negative",
+    "avoid_total_double_count",
+    "boolean",
+    "cross_sheet_sum",
+    "cross_table_ratio",
+    "exact_text",
+    "fair_value_difference",
+    "fair_value_share",
+    "operating_margin",
+    "parentheses",
+    "revenue_growth",
+    "sheet_rank",
+    "year_end_vs_average"
+  ]
+}

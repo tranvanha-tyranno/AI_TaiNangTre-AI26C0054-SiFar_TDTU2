@@ -1,0 +1,895 @@
+[
+  {
+    "id": "17_q001",
+    "category": "age_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Employment!C3"
+        },
+        {
+          "cell": "Employment!B3"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1201"
+  },
+  {
+    "id": "17_q002",
+    "category": "hours_share",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Employment!E3"
+            },
+            {
+              "add": [
+                {
+                  "cell": "Employment!E3"
+                },
+                {
+                  "cell": "Employment!F3"
+                }
+              ]
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "29.00"
+  },
+  {
+    "id": "17_q003",
+    "category": "age_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Employment!C4"
+        },
+        {
+          "cell": "Employment!B4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1164"
+  },
+  {
+    "id": "17_q004",
+    "category": "hours_share",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Employment!E4"
+            },
+            {
+              "add": [
+                {
+                  "cell": "Employment!E4"
+                },
+                {
+                  "cell": "Employment!F4"
+                }
+              ]
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "26.00"
+  },
+  {
+    "id": "17_q005",
+    "category": "age_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Employment!C5"
+        },
+        {
+          "cell": "Employment!B5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "687"
+  },
+  {
+    "id": "17_q006",
+    "category": "hours_share",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Employment!E5"
+            },
+            {
+              "add": [
+                {
+                  "cell": "Employment!E5"
+                },
+                {
+                  "cell": "Employment!F5"
+                }
+              ]
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "37.00"
+  },
+  {
+    "id": "17_q007",
+    "category": "age_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Employment!C6"
+        },
+        {
+          "cell": "Employment!B6"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "247"
+  },
+  {
+    "id": "17_q008",
+    "category": "hours_share",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Employment!E6"
+            },
+            {
+              "add": [
+                {
+                  "cell": "Employment!E6"
+                },
+                {
+                  "cell": "Employment!F6"
+                }
+              ]
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "20.00"
+  },
+  {
+    "id": "17_q009",
+    "category": "age_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Employment!C7"
+        },
+        {
+          "cell": "Employment!B7"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "146"
+  },
+  {
+    "id": "17_q010",
+    "category": "hours_share",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Employment!E7"
+            },
+            {
+              "add": [
+                {
+                  "cell": "Employment!E7"
+                },
+                {
+                  "cell": "Employment!F7"
+                }
+              ]
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "22.00"
+  },
+  {
+    "id": "17_q011",
+    "category": "age_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Employment!C8"
+        },
+        {
+          "cell": "Employment!B8"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "814"
+  },
+  {
+    "id": "17_q012",
+    "category": "hours_share",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Employment!E8"
+            },
+            {
+              "add": [
+                {
+                  "cell": "Employment!E8"
+                },
+                {
+                  "cell": "Employment!F8"
+                }
+              ]
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "32.99"
+  },
+  {
+    "id": "17_q013",
+    "category": "age_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Employment!C9"
+        },
+        {
+          "cell": "Employment!B9"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "852"
+  },
+  {
+    "id": "17_q014",
+    "category": "hours_share",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Employment!E9"
+            },
+            {
+              "add": [
+                {
+                  "cell": "Employment!E9"
+                },
+                {
+                  "cell": "Employment!F9"
+                }
+              ]
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "26.00"
+  },
+  {
+    "id": "17_q015",
+    "category": "age_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Employment!C10"
+        },
+        {
+          "cell": "Employment!B10"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "803"
+  },
+  {
+    "id": "17_q016",
+    "category": "hours_share",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Employment!E10"
+            },
+            {
+              "add": [
+                {
+                  "cell": "Employment!E10"
+                },
+                {
+                  "cell": "Employment!F10"
+                }
+              ]
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "23.98"
+  },
+  {
+    "id": "17_q017",
+    "category": "occupation_sum",
+    "expression": {
+      "add": [
+        {
+          "cell": "Occupations!B2"
+        },
+        {
+          "cell": "Occupations!C2"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "2073"
+  },
+  {
+    "id": "17_q018",
+    "category": "occupation_sum",
+    "expression": {
+      "add": [
+        {
+          "cell": "Occupations!B3"
+        },
+        {
+          "cell": "Occupations!C3"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1623"
+  },
+  {
+    "id": "17_q019",
+    "category": "occupation_sum",
+    "expression": {
+      "add": [
+        {
+          "cell": "Occupations!B4"
+        },
+        {
+          "cell": "Occupations!C4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "2326"
+  },
+  {
+    "id": "17_q020",
+    "category": "occupation_sum",
+    "expression": {
+      "add": [
+        {
+          "cell": "Occupations!B5"
+        },
+        {
+          "cell": "Occupations!C5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1325"
+  },
+  {
+    "id": "17_q021",
+    "category": "exclude_total_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "Employment",
+                "columns": {
+                  "label": "A",
+                  "teen": "B",
+                  "young": "C",
+                  "adult": "D",
+                  "part": "E",
+                  "full": "F",
+                  "hours": "G"
+                },
+                "first": 3,
+                "last": 10
+              }
+            },
+            "fields": {
+              "total": {
+                "add": [
+                  {
+                    "add": [
+                      {
+                        "field": "teen"
+                      },
+                      {
+                        "field": "young"
+                      }
+                    ]
+                  },
+                  {
+                    "field": "adult"
+                  }
+                ]
+              },
+              "gap": {
+                "sub": [
+                  {
+                    "field": "young"
+                  },
+                  {
+                    "field": "teen"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "teen",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Information"
+  },
+  {
+    "id": "17_q022",
+    "category": "exclude_total_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "Employment",
+                "columns": {
+                  "label": "A",
+                  "teen": "B",
+                  "young": "C",
+                  "adult": "D",
+                  "part": "E",
+                  "full": "F",
+                  "hours": "G"
+                },
+                "first": 3,
+                "last": 10
+              }
+            },
+            "fields": {
+              "total": {
+                "add": [
+                  {
+                    "add": [
+                      {
+                        "field": "teen"
+                      },
+                      {
+                        "field": "young"
+                      }
+                    ]
+                  },
+                  {
+                    "field": "adult"
+                  }
+                ]
+              },
+              "gap": {
+                "sub": [
+                  {
+                    "field": "young"
+                  },
+                  {
+                    "field": "teen"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "full",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Hospitality"
+  },
+  {
+    "id": "17_q023",
+    "category": "exclude_total_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "Employment",
+                "columns": {
+                  "label": "A",
+                  "teen": "B",
+                  "young": "C",
+                  "adult": "D",
+                  "part": "E",
+                  "full": "F",
+                  "hours": "G"
+                },
+                "first": 3,
+                "last": 10
+              }
+            },
+            "fields": {
+              "total": {
+                "add": [
+                  {
+                    "add": [
+                      {
+                        "field": "teen"
+                      },
+                      {
+                        "field": "young"
+                      }
+                    ]
+                  },
+                  {
+                    "field": "adult"
+                  }
+                ]
+              },
+              "gap": {
+                "sub": [
+                  {
+                    "field": "young"
+                  },
+                  {
+                    "field": "teen"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "hours",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Information"
+  },
+  {
+    "id": "17_q024",
+    "category": "exclude_total_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "Employment",
+                "columns": {
+                  "label": "A",
+                  "teen": "B",
+                  "young": "C",
+                  "adult": "D",
+                  "part": "E",
+                  "full": "F",
+                  "hours": "G"
+                },
+                "first": 3,
+                "last": 10
+              }
+            },
+            "fields": {
+              "total": {
+                "add": [
+                  {
+                    "add": [
+                      {
+                        "field": "teen"
+                      },
+                      {
+                        "field": "young"
+                      }
+                    ]
+                  },
+                  {
+                    "field": "adult"
+                  }
+                ]
+              },
+              "gap": {
+                "sub": [
+                  {
+                    "field": "young"
+                  },
+                  {
+                    "field": "teen"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "gap",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Agriculture"
+  },
+  {
+    "id": "17_q025",
+    "category": "sector_order",
+    "expression": {
+      "rank": {
+        "data": {
+          "table": {
+            "sheet": "Occupations",
+            "columns": {
+              "label": "A",
+              "transport": "D"
+            },
+            "first": 2,
+            "last": 4
+          }
+        },
+        "by": [
+          [
+            "transport",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 3
+      }
+    },
+    "decimals": null,
+    "answer": "Construction, Manufacturing, Agriculture"
+  },
+  {
+    "id": "17_q026",
+    "category": "no_double_count",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Employment",
+                  "columns": {
+                    "label": "A",
+                    "teen": "B",
+                    "young": "C",
+                    "adult": "D",
+                    "part": "E",
+                    "full": "F",
+                    "hours": "G"
+                  },
+                  "first": 3,
+                  "last": 10
+                }
+              },
+              "fields": {
+                "total": {
+                  "add": [
+                    {
+                      "add": [
+                        {
+                          "field": "teen"
+                        },
+                        {
+                          "field": "young"
+                        }
+                      ]
+                    },
+                    {
+                      "field": "adult"
+                    }
+                  ]
+                },
+                "gap": {
+                  "sub": [
+                    {
+                      "field": "young"
+                    },
+                    {
+                      "field": "teen"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "name": "part"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "11794"
+  },
+  {
+    "id": "17_q027",
+    "category": "pair_output",
+    "expression": {
+      "list": [
+        {
+          "cell": "Employment!E11"
+        },
+        {
+          "cell": "Employment!F11"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "11794, 31554"
+  },
+  {
+    "id": "17_q028",
+    "category": "cross_sheet_ratio",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Occupations!E3"
+            },
+            {
+              "add": [
+                {
+                  "add": [
+                    {
+                      "cell": "Employment!B4"
+                    },
+                    {
+                      "cell": "Employment!C4"
+                    }
+                  ]
+                },
+                {
+                  "cell": "Employment!D4"
+                }
+              ]
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "12.67"
+  },
+  {
+    "id": "17_q029",
+    "category": "two_industries",
+    "expression": {
+      "add": [
+        {
+          "cell": "Employment!C5"
+        },
+        {
+          "cell": "Employment!C4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "2765"
+  },
+  {
+    "id": "17_q030",
+    "category": "comparison",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Employment!D6"
+        },
+        {
+          "cell": "Employment!D7"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  }
+]

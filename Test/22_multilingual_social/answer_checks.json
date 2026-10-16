@@ -1,0 +1,1216 @@
+[
+  {
+    "id": "22_q001",
+    "category": "vi_care",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "filter": {
+                      "data": {
+                        "derive": {
+                          "data": {
+                            "table": {
+                              "sheet": "Care",
+                              "columns": {
+                                "label": "A",
+                                "unmet": "B",
+                                "partial": "C",
+                                "full": "D"
+                              },
+                              "first": 3,
+                              "last": 7
+                            }
+                          },
+                          "fields": {
+                            "unmet": {
+                              "parse": {
+                                "field": "unmet"
+                              }
+                            },
+                            "partial": {
+                              "parse": {
+                                "field": "partial"
+                              }
+                            },
+                            "full": {
+                              "parse": {
+                                "field": "full"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "conditions": {
+                        "label": {
+                          "not_blank": true
+                        },
+                        "unmet": {
+                          "not_blank": true
+                        }
+                      }
+                    }
+                  },
+                  "fields": {
+                    "combined": {
+                      "add": [
+                        {
+                          "field": "unmet"
+                        },
+                        {
+                          "field": "partial"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "label": "information"
+              }
+            }
+          },
+          "name": "combined"
+        }
+      }
+    },
+    "decimals": 1,
+    "answer": "42.3"
+  },
+  {
+    "id": "22_q002",
+    "category": "vi_care",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "filter": {
+                      "data": {
+                        "derive": {
+                          "data": {
+                            "table": {
+                              "sheet": "Care",
+                              "columns": {
+                                "label": "A",
+                                "unmet": "B",
+                                "partial": "C",
+                                "full": "D"
+                              },
+                              "first": 3,
+                              "last": 7
+                            }
+                          },
+                          "fields": {
+                            "unmet": {
+                              "parse": {
+                                "field": "unmet"
+                              }
+                            },
+                            "partial": {
+                              "parse": {
+                                "field": "partial"
+                              }
+                            },
+                            "full": {
+                              "parse": {
+                                "field": "full"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "conditions": {
+                        "label": {
+                          "not_blank": true
+                        },
+                        "unmet": {
+                          "not_blank": true
+                        }
+                      }
+                    }
+                  },
+                  "fields": {
+                    "combined": {
+                      "add": [
+                        {
+                          "field": "unmet"
+                        },
+                        {
+                          "field": "partial"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "label": "medication"
+              }
+            }
+          },
+          "name": "combined"
+        }
+      }
+    },
+    "decimals": 1,
+    "answer": "31.1"
+  },
+  {
+    "id": "22_q003",
+    "category": "vi_care",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "filter": {
+                      "data": {
+                        "derive": {
+                          "data": {
+                            "table": {
+                              "sheet": "Care",
+                              "columns": {
+                                "label": "A",
+                                "unmet": "B",
+                                "partial": "C",
+                                "full": "D"
+                              },
+                              "first": 3,
+                              "last": 7
+                            }
+                          },
+                          "fields": {
+                            "unmet": {
+                              "parse": {
+                                "field": "unmet"
+                              }
+                            },
+                            "partial": {
+                              "parse": {
+                                "field": "partial"
+                              }
+                            },
+                            "full": {
+                              "parse": {
+                                "field": "full"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "conditions": {
+                        "label": {
+                          "not_blank": true
+                        },
+                        "unmet": {
+                          "not_blank": true
+                        }
+                      }
+                    }
+                  },
+                  "fields": {
+                    "combined": {
+                      "add": [
+                        {
+                          "field": "unmet"
+                        },
+                        {
+                          "field": "partial"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "label": "counselling"
+              }
+            }
+          },
+          "name": "combined"
+        }
+      }
+    },
+    "decimals": 1,
+    "answer": "41.0"
+  },
+  {
+    "id": "22_q004",
+    "category": "vi_exclude_any",
+    "expression": {
+      "max": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "filter": {
+                      "data": {
+                        "derive": {
+                          "data": {
+                            "table": {
+                              "sheet": "Care",
+                              "columns": {
+                                "label": "A",
+                                "unmet": "B",
+                                "partial": "C",
+                                "full": "D"
+                              },
+                              "first": 3,
+                              "last": 7
+                            }
+                          },
+                          "fields": {
+                            "unmet": {
+                              "parse": {
+                                "field": "unmet"
+                              }
+                            },
+                            "partial": {
+                              "parse": {
+                                "field": "partial"
+                              }
+                            },
+                            "full": {
+                              "parse": {
+                                "field": "full"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "conditions": {
+                        "label": {
+                          "not_blank": true
+                        },
+                        "unmet": {
+                          "not_blank": true
+                        }
+                      }
+                    }
+                  },
+                  "fields": {
+                    "combined": {
+                      "add": [
+                        {
+                          "field": "unmet"
+                        },
+                        {
+                          "field": "partial"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "label": {
+                  "ne": "any"
+                }
+              }
+            }
+          },
+          "name": "combined"
+        }
+      }
+    },
+    "decimals": 1,
+    "answer": "42.3"
+  },
+  {
+    "id": "22_q005",
+    "category": "fr_missing",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Care",
+                  "columns": {
+                    "unmet": "B"
+                  },
+                  "first": 3,
+                  "last": 7
+                }
+              },
+              "fields": {
+                "unmet": {
+                  "parse": {
+                    "field": "unmet"
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "unmet": {
+              "not_blank": false
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "1"
+  },
+  {
+    "id": "22_q006",
+    "category": "vi_income_ratio",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "parse": {
+                "cell": "Thu nhập!C3"
+              }
+            },
+            {
+              "parse": {
+                "cell": "Thu nhập!B3"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 1,
+    "answer": "90.1"
+  },
+  {
+    "id": "22_q007",
+    "category": "vi_income_ratio",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "parse": {
+                "cell": "Thu nhập!C4"
+              }
+            },
+            {
+              "parse": {
+                "cell": "Thu nhập!B4"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 1,
+    "answer": "33.0"
+  },
+  {
+    "id": "22_q008",
+    "category": "vi_income_ratio",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "parse": {
+                "cell": "Thu nhập!C5"
+              }
+            },
+            {
+              "parse": {
+                "cell": "Thu nhập!B5"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 1,
+    "answer": "168.6"
+  },
+  {
+    "id": "22_q009",
+    "category": "vi_income_ratio",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "parse": {
+                "cell": "Thu nhập!C6"
+              }
+            },
+            {
+              "parse": {
+                "cell": "Thu nhập!B6"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 1,
+    "answer": "57.1"
+  },
+  {
+    "id": "22_q010",
+    "category": "vi_income_ratio",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "parse": {
+                "cell": "Thu nhập!C7"
+              }
+            },
+            {
+              "parse": {
+                "cell": "Thu nhập!B7"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 1,
+    "answer": "110.3"
+  },
+  {
+    "id": "22_q011",
+    "category": "vi_income_ratio",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "parse": {
+                "cell": "Thu nhập!C8"
+              }
+            },
+            {
+              "parse": {
+                "cell": "Thu nhập!B8"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 1,
+    "answer": "48.3"
+  },
+  {
+    "id": "22_q012",
+    "category": "vi_income_gap",
+    "expression": {
+      "max": {
+        "column": {
+          "data": {
+            "derive": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "Thu nhập",
+                      "columns": {
+                        "label": "A",
+                        "male": "B",
+                        "female": "C"
+                      },
+                      "first": 3,
+                      "last": 8
+                    }
+                  },
+                  "fields": {
+                    "male": {
+                      "parse": {
+                        "field": "male"
+                      }
+                    },
+                    "female": {
+                      "parse": {
+                        "field": "female"
+                      }
+                    }
+                  }
+                }
+              },
+              "fields": {
+                "gap": {
+                  "abs": {
+                    "sub": [
+                      {
+                        "field": "male"
+                      },
+                      {
+                        "field": "female"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "name": "gap"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "59158"
+  },
+  {
+    "id": "22_q013",
+    "category": "vi_income_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "Thu nhập",
+                    "columns": {
+                      "label": "A",
+                      "male": "B",
+                      "female": "C"
+                    },
+                    "first": 3,
+                    "last": 8
+                  }
+                },
+                "fields": {
+                  "male": {
+                    "parse": {
+                      "field": "male"
+                    }
+                  },
+                  "female": {
+                    "parse": {
+                      "field": "female"
+                    }
+                  }
+                }
+              }
+            },
+            "fields": {
+              "gap": {
+                "abs": {
+                  "sub": [
+                    {
+                      "field": "male"
+                    },
+                    {
+                      "field": "female"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "female",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "sau trung học"
+  },
+  {
+    "id": "22_q014",
+    "category": "ko_percent_change",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "parse": {
+                    "cell": "Justice!D3"
+                  }
+                },
+                {
+                  "parse": {
+                    "cell": "Justice!D12"
+                  }
+                }
+              ]
+            },
+            {
+              "parse": {
+                "cell": "Justice!D3"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "6.11"
+  },
+  {
+    "id": "22_q015",
+    "category": "ko_percent_change",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "parse": {
+                    "cell": "Justice!D5"
+                  }
+                },
+                {
+                  "parse": {
+                    "cell": "Justice!D10"
+                  }
+                }
+              ]
+            },
+            {
+              "parse": {
+                "cell": "Justice!D5"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "-8.74"
+  },
+  {
+    "id": "22_q016",
+    "category": "ko_percent_change",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "parse": {
+                    "cell": "Justice!D6"
+                  }
+                },
+                {
+                  "parse": {
+                    "cell": "Justice!D11"
+                  }
+                }
+              ]
+            },
+            {
+              "parse": {
+                "cell": "Justice!D6"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "-1.05"
+  },
+  {
+    "id": "22_q017",
+    "category": "ko_max",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "Justice",
+                "columns": {
+                  "label": "A",
+                  "charges": "B",
+                  "cases": "D"
+                },
+                "first": 3,
+                "last": 12
+              }
+            },
+            "fields": {
+              "charges": {
+                "parse": {
+                  "field": "charges"
+                }
+              },
+              "cases": {
+                "parse": {
+                  "field": "cases"
+                }
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "cases",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "2023/2024"
+  },
+  {
+    "id": "22_q018",
+    "category": "ko_total",
+    "expression": {
+      "sum": {
+        "column": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Justice",
+                  "columns": {
+                    "label": "A",
+                    "charges": "B",
+                    "cases": "D"
+                  },
+                  "first": 3,
+                  "last": 12
+                }
+              },
+              "fields": {
+                "charges": {
+                  "parse": {
+                    "field": "charges"
+                  }
+                },
+                "cases": {
+                  "parse": {
+                    "field": "cases"
+                  }
+                }
+              }
+            }
+          },
+          "name": "charges"
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "9397194"
+  },
+  {
+    "id": "22_q019",
+    "category": "zh_group_gap",
+    "expression": {
+      "sub": [
+        {
+          "parse": {
+            "cell": "劳动!C4"
+          }
+        },
+        {
+          "parse": {
+            "cell": "劳动!C3"
+          }
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-22.9"
+  },
+  {
+    "id": "22_q020",
+    "category": "zh_marital_gap",
+    "expression": {
+      "sub": [
+        {
+          "parse": {
+            "cell": "劳动!B3"
+          }
+        },
+        {
+          "parse": {
+            "cell": "劳动!C3"
+          }
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-12.9"
+  },
+  {
+    "id": "22_q021",
+    "category": "zh_group_gap",
+    "expression": {
+      "sub": [
+        {
+          "parse": {
+            "cell": "劳动!C7"
+          }
+        },
+        {
+          "parse": {
+            "cell": "劳动!C6"
+          }
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "4.9"
+  },
+  {
+    "id": "22_q022",
+    "category": "zh_marital_gap",
+    "expression": {
+      "sub": [
+        {
+          "parse": {
+            "cell": "劳动!B6"
+          }
+        },
+        {
+          "parse": {
+            "cell": "劳动!C6"
+          }
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-0.5"
+  },
+  {
+    "id": "22_q023",
+    "category": "zh_group_gap",
+    "expression": {
+      "sub": [
+        {
+          "parse": {
+            "cell": "劳动!C10"
+          }
+        },
+        {
+          "parse": {
+            "cell": "劳动!C9"
+          }
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "1.2"
+  },
+  {
+    "id": "22_q024",
+    "category": "zh_marital_gap",
+    "expression": {
+      "sub": [
+        {
+          "parse": {
+            "cell": "劳动!B9"
+          }
+        },
+        {
+          "parse": {
+            "cell": "劳动!C9"
+          }
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-8.1"
+  },
+  {
+    "id": "22_q025",
+    "category": "fr_range",
+    "expression": {
+      "sub": [
+        {
+          "max": {
+            "column": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "Santé",
+                      "columns": {
+                        "label": "A",
+                        "mood": "E",
+                        "asthma": "D"
+                      },
+                      "first": 2,
+                      "last": 4
+                    }
+                  },
+                  "fields": {
+                    "mood": {
+                      "parse": {
+                        "field": "mood"
+                      }
+                    },
+                    "asthma": {
+                      "parse": {
+                        "field": "asthma"
+                      }
+                    }
+                  }
+                }
+              },
+              "name": "mood"
+            }
+          }
+        },
+        {
+          "min": {
+            "column": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "Santé",
+                      "columns": {
+                        "label": "A",
+                        "mood": "E",
+                        "asthma": "D"
+                      },
+                      "first": 2,
+                      "last": 4
+                    }
+                  },
+                  "fields": {
+                    "mood": {
+                      "parse": {
+                        "field": "mood"
+                      }
+                    },
+                    "asthma": {
+                      "parse": {
+                        "field": "asthma"
+                      }
+                    }
+                  }
+                }
+              },
+              "name": "mood"
+            }
+          }
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "15.8"
+  },
+  {
+    "id": "22_q026",
+    "category": "fr_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "table": {
+                "sheet": "Santé",
+                "columns": {
+                  "label": "A",
+                  "mood": "E",
+                  "asthma": "D"
+                },
+                "first": 2,
+                "last": 4
+              }
+            },
+            "fields": {
+              "mood": {
+                "parse": {
+                  "field": "mood"
+                }
+              },
+              "asthma": {
+                "parse": {
+                  "field": "asthma"
+                }
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "asthma",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Premières Nations hors réserve"
+  },
+  {
+    "id": "22_q027",
+    "category": "fr_mean",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Santé",
+                  "columns": {
+                    "label": "A",
+                    "mood": "E",
+                    "asthma": "D"
+                  },
+                  "first": 2,
+                  "last": 4
+                }
+              },
+              "fields": {
+                "mood": {
+                  "parse": {
+                    "field": "mood"
+                  }
+                },
+                "asthma": {
+                  "parse": {
+                    "field": "asthma"
+                  }
+                }
+              }
+            }
+          },
+          "name": "mood"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "16.80"
+  },
+  {
+    "id": "22_q028",
+    "category": "vi_missing_vs_zero",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Care",
+                  "columns": {
+                    "unmet": "B"
+                  },
+                  "first": 3,
+                  "last": 7
+                }
+              },
+              "fields": {
+                "unmet": {
+                  "parse": {
+                    "field": "unmet"
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "unmet": 0
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "0"
+  },
+  {
+    "id": "22_q029",
+    "category": "ko_ratio",
+    "expression": {
+      "div": [
+        {
+          "parse": {
+            "cell": "Justice!B12"
+          }
+        },
+        {
+          "parse": {
+            "cell": "Justice!D12"
+          }
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "3.625"
+  },
+  {
+    "id": "22_q030",
+    "category": "vi_income_total",
+    "expression": {
+      "add": [
+        {
+          "parse": {
+            "cell": "Thu nhập!C7"
+          }
+        },
+        {
+          "parse": {
+            "cell": "Thu nhập!C8"
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "106600"
+  }
+]

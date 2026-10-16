@@ -1,0 +1,1053 @@
+[
+  {
+    "id": "15_q001",
+    "category": "percent_points",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!F7"
+        },
+        {
+          "cell": "Prices!G7"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "1.2"
+  },
+  {
+    "id": "15_q002",
+    "category": "adjusted_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!G7"
+        },
+        {
+          "cell": "Prices!H7"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "1.1"
+  },
+  {
+    "id": "15_q003",
+    "category": "index_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!E7"
+        },
+        {
+          "cell": "Prices!D7"
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "6.177"
+  },
+  {
+    "id": "15_q004",
+    "category": "percent_points",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!F4"
+        },
+        {
+          "cell": "Prices!G4"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-5.1"
+  },
+  {
+    "id": "15_q005",
+    "category": "adjusted_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!G4"
+        },
+        {
+          "cell": "Prices!H4"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-0.2"
+  },
+  {
+    "id": "15_q006",
+    "category": "index_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!E4"
+        },
+        {
+          "cell": "Prices!D4"
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "5.999"
+  },
+  {
+    "id": "15_q007",
+    "category": "percent_points",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!F19"
+        },
+        {
+          "cell": "Prices!G19"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "4.4"
+  },
+  {
+    "id": "15_q008",
+    "category": "adjusted_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!G19"
+        },
+        {
+          "cell": "Prices!H19"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "1.1"
+  },
+  {
+    "id": "15_q009",
+    "category": "index_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!E19"
+        },
+        {
+          "cell": "Prices!D19"
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "8.133"
+  },
+  {
+    "id": "15_q010",
+    "category": "percent_points",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!F18"
+        },
+        {
+          "cell": "Prices!G18"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-2.6"
+  },
+  {
+    "id": "15_q011",
+    "category": "adjusted_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!G18"
+        },
+        {
+          "cell": "Prices!H18"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "1.9"
+  },
+  {
+    "id": "15_q012",
+    "category": "index_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!E18"
+        },
+        {
+          "cell": "Prices!D18"
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "10.624"
+  },
+  {
+    "id": "15_q013",
+    "category": "percent_points",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!F15"
+        },
+        {
+          "cell": "Prices!G15"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "4.5"
+  },
+  {
+    "id": "15_q014",
+    "category": "adjusted_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!G15"
+        },
+        {
+          "cell": "Prices!H15"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-2.2"
+  },
+  {
+    "id": "15_q015",
+    "category": "index_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!E15"
+        },
+        {
+          "cell": "Prices!D15"
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "-0.795"
+  },
+  {
+    "id": "15_q016",
+    "category": "filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Prices",
+                  "columns": {
+                    "level": "A",
+                    "label": "B",
+                    "weight": "C",
+                    "sep": "D",
+                    "oct": "E",
+                    "annual": "F",
+                    "monthly": "G",
+                    "adjusted": "H"
+                  },
+                  "first": 3,
+                  "last": 22
+                }
+              },
+              "fields": {
+                "magnitude": {
+                  "abs": {
+                    "field": "monthly"
+                  }
+                },
+                "gap": {
+                  "abs": {
+                    "sub": [
+                      {
+                        "field": "monthly"
+                      },
+                      {
+                        "field": "adjusted"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "level": {
+              "gt": 0
+            },
+            "monthly": {
+              "gt": 0
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "14"
+  },
+  {
+    "id": "15_q017",
+    "category": "filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Prices",
+                  "columns": {
+                    "level": "A",
+                    "label": "B",
+                    "weight": "C",
+                    "sep": "D",
+                    "oct": "E",
+                    "annual": "F",
+                    "monthly": "G",
+                    "adjusted": "H"
+                  },
+                  "first": 3,
+                  "last": 22
+                }
+              },
+              "fields": {
+                "magnitude": {
+                  "abs": {
+                    "field": "monthly"
+                  }
+                },
+                "gap": {
+                  "abs": {
+                    "sub": [
+                      {
+                        "field": "monthly"
+                      },
+                      {
+                        "field": "adjusted"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "level": {
+              "gt": 0
+            },
+            "monthly": {
+              "gt": 1
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "12"
+  },
+  {
+    "id": "15_q018",
+    "category": "filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Prices",
+                  "columns": {
+                    "level": "A",
+                    "label": "B",
+                    "weight": "C",
+                    "sep": "D",
+                    "oct": "E",
+                    "annual": "F",
+                    "monthly": "G",
+                    "adjusted": "H"
+                  },
+                  "first": 3,
+                  "last": 22
+                }
+              },
+              "fields": {
+                "magnitude": {
+                  "abs": {
+                    "field": "monthly"
+                  }
+                },
+                "gap": {
+                  "abs": {
+                    "sub": [
+                      {
+                        "field": "monthly"
+                      },
+                      {
+                        "field": "adjusted"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "level": {
+              "gt": 0
+            },
+            "monthly": {
+              "gt": 2
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "9"
+  },
+  {
+    "id": "15_q019",
+    "category": "filter",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Prices",
+                  "columns": {
+                    "level": "A",
+                    "label": "B",
+                    "weight": "C",
+                    "sep": "D",
+                    "oct": "E",
+                    "annual": "F",
+                    "monthly": "G",
+                    "adjusted": "H"
+                  },
+                  "first": 3,
+                  "last": 22
+                }
+              },
+              "fields": {
+                "magnitude": {
+                  "abs": {
+                    "field": "monthly"
+                  }
+                },
+                "gap": {
+                  "abs": {
+                    "sub": [
+                      {
+                        "field": "monthly"
+                      },
+                      {
+                        "field": "adjusted"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "level": {
+              "gt": 0
+            },
+            "monthly": {
+              "gt": 3
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "2"
+  },
+  {
+    "id": "15_q020",
+    "category": "direct_children",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "table": {
+                "sheet": "Prices",
+                "columns": {
+                  "level": "A",
+                  "label": "B",
+                  "annual": "F",
+                  "monthly": "G"
+                },
+                "first": 8,
+                "last": 14
+              }
+            },
+            "conditions": {
+              "level": 2
+            }
+          }
+        },
+        "by": [
+          [
+            "annual",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 3
+      }
+    },
+    "decimals": null,
+    "answer": "Shelter, Utilities, Household furnishings"
+  },
+  {
+    "id": "15_q021",
+    "category": "hierarchy_average",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "table": {
+                  "sheet": "Prices",
+                  "columns": {
+                    "level": "A",
+                    "label": "B",
+                    "annual": "F",
+                    "monthly": "G"
+                  },
+                  "first": 8,
+                  "last": 14
+                }
+              },
+              "conditions": {
+                "level": 2
+              }
+            }
+          },
+          "name": "annual"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "-1.07"
+  },
+  {
+    "id": "15_q022",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "Prices",
+                    "columns": {
+                      "level": "A",
+                      "label": "B",
+                      "weight": "C",
+                      "sep": "D",
+                      "oct": "E",
+                      "annual": "F",
+                      "monthly": "G",
+                      "adjusted": "H"
+                    },
+                    "first": 3,
+                    "last": 22
+                  }
+                },
+                "fields": {
+                  "magnitude": {
+                    "abs": {
+                      "field": "monthly"
+                    }
+                  },
+                  "gap": {
+                    "abs": {
+                      "sub": [
+                        {
+                          "field": "monthly"
+                        },
+                        {
+                          "field": "adjusted"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "conditions": {
+              "level": {
+                "gt": 0
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "magnitude",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Services"
+  },
+  {
+    "id": "15_q023",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "Prices",
+                    "columns": {
+                      "level": "A",
+                      "label": "B",
+                      "weight": "C",
+                      "sep": "D",
+                      "oct": "E",
+                      "annual": "F",
+                      "monthly": "G",
+                      "adjusted": "H"
+                    },
+                    "first": 3,
+                    "last": 22
+                  }
+                },
+                "fields": {
+                  "magnitude": {
+                    "abs": {
+                      "field": "monthly"
+                    }
+                  },
+                  "gap": {
+                    "abs": {
+                      "sub": [
+                        {
+                          "field": "monthly"
+                        },
+                        {
+                          "field": "adjusted"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "conditions": {
+              "level": {
+                "gt": 0
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "gap",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Food at home"
+  },
+  {
+    "id": "15_q024",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "Prices",
+                    "columns": {
+                      "level": "A",
+                      "label": "B",
+                      "weight": "C",
+                      "sep": "D",
+                      "oct": "E",
+                      "annual": "F",
+                      "monthly": "G",
+                      "adjusted": "H"
+                    },
+                    "first": 3,
+                    "last": 22
+                  }
+                },
+                "fields": {
+                  "magnitude": {
+                    "abs": {
+                      "field": "monthly"
+                    }
+                  },
+                  "gap": {
+                    "abs": {
+                      "sub": [
+                        {
+                          "field": "monthly"
+                        },
+                        {
+                          "field": "adjusted"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "conditions": {
+              "level": {
+                "gt": 0
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "weight",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Commodities"
+  },
+  {
+    "id": "15_q025",
+    "category": "ranking",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "Prices",
+                    "columns": {
+                      "level": "A",
+                      "label": "B",
+                      "weight": "C",
+                      "sep": "D",
+                      "oct": "E",
+                      "annual": "F",
+                      "monthly": "G",
+                      "adjusted": "H"
+                    },
+                    "first": 3,
+                    "last": 22
+                  }
+                },
+                "fields": {
+                  "magnitude": {
+                    "abs": {
+                      "field": "monthly"
+                    }
+                  },
+                  "gap": {
+                    "abs": {
+                      "sub": [
+                        {
+                          "field": "monthly"
+                        },
+                        {
+                          "field": "adjusted"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "conditions": {
+              "level": {
+                "gt": 0
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "annual",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Services"
+  },
+  {
+    "id": "15_q026",
+    "category": "hierarchy_scope",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Prices",
+                  "columns": {
+                    "level": "A",
+                    "label": "B",
+                    "weight": "C",
+                    "sep": "D",
+                    "oct": "E",
+                    "annual": "F",
+                    "monthly": "G",
+                    "adjusted": "H"
+                  },
+                  "first": 3,
+                  "last": 22
+                }
+              },
+              "fields": {
+                "magnitude": {
+                  "abs": {
+                    "field": "monthly"
+                  }
+                },
+                "gap": {
+                  "abs": {
+                    "sub": [
+                      {
+                        "field": "monthly"
+                      },
+                      {
+                        "field": "adjusted"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "level": 1
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "6"
+  },
+  {
+    "id": "15_q027",
+    "category": "hierarchy_scope",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Prices",
+                  "columns": {
+                    "level": "A",
+                    "label": "B",
+                    "weight": "C",
+                    "sep": "D",
+                    "oct": "E",
+                    "annual": "F",
+                    "monthly": "G",
+                    "adjusted": "H"
+                  },
+                  "first": 3,
+                  "last": 22
+                }
+              },
+              "fields": {
+                "magnitude": {
+                  "abs": {
+                    "field": "monthly"
+                  }
+                },
+                "gap": {
+                  "abs": {
+                    "sub": [
+                      {
+                        "field": "monthly"
+                      },
+                      {
+                        "field": "adjusted"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "level": 2
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "9"
+  },
+  {
+    "id": "15_q028",
+    "category": "hierarchy_scope",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Prices",
+                  "columns": {
+                    "level": "A",
+                    "label": "B",
+                    "weight": "C",
+                    "sep": "D",
+                    "oct": "E",
+                    "annual": "F",
+                    "monthly": "G",
+                    "adjusted": "H"
+                  },
+                  "first": 3,
+                  "last": 22
+                }
+              },
+              "fields": {
+                "magnitude": {
+                  "abs": {
+                    "field": "monthly"
+                  }
+                },
+                "gap": {
+                  "abs": {
+                    "sub": [
+                      {
+                        "field": "monthly"
+                      },
+                      {
+                        "field": "adjusted"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "level": 3
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "4"
+  },
+  {
+    "id": "15_q029",
+    "category": "weight_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Prices!C7"
+        },
+        {
+          "cell": "Prices!C4"
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "-11.805"
+  },
+  {
+    "id": "15_q030",
+    "category": "comparison",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Prices!F19"
+        },
+        {
+          "cell": "Prices!F18"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  }
+]

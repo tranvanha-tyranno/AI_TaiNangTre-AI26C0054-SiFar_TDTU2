@@ -19,6 +19,14 @@ def validate_aggregate_scope(question, plan, regions):
         if ident in visited: return True
         visited.add(ident)
         step=steps.get(ident,{})
+        # A sum down ONE row is just a single category cell. Do not let this
+        # syntactic wrapper bypass the horizontal coverage check.
+        if step.get('op')=='aggregate' and step.get('metric')=='sum':
+            source=steps.get(step.get('input'),{})
+            expr=step.get('expr',{})
+            if source.get('op')=='read' and source.get('start_row')==source.get('end_row') and isinstance(source.get('start_row'),int) and set(expr)=={'col'}:
+                leaves.append({'op':'cell','table':source['table'],'row':source['start_row'],'column':expr['col']})
+                return True
         if step.get('op') in {'cell','sum_columns'}:
             leaves.append(step); return True
         if step.get('op')=='calculate': return all(walk(ref) for ref in refs(step.get('expr')))

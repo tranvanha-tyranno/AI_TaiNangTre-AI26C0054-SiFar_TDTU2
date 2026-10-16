@@ -1,0 +1,152 @@
+[
+  {
+    "id": "22_q001",
+    "file_name": "data.xlsx",
+    "query": "Trong Care, tổng unmet và partially met cho information là bao nhiêu? Chỉ trả số với đúng 1 chữ số thập phân."
+  },
+  {
+    "id": "22_q002",
+    "file_name": "data.xlsx",
+    "query": "Trong Care, tổng unmet và partially met cho medication là bao nhiêu? Chỉ trả số với đúng 1 chữ số thập phân."
+  },
+  {
+    "id": "22_q003",
+    "file_name": "data.xlsx",
+    "query": "Trong Care, tổng unmet và partially met cho counselling là bao nhiêu? Chỉ trả số với đúng 1 chữ số thập phân."
+  },
+  {
+    "id": "22_q004",
+    "file_name": "data.xlsx",
+    "query": "Trong Care, không tính dòng any và bỏ dòng thiếu unmet, tổng unmet + partially met cao nhất là bao nhiêu? Chỉ trả số với đúng 1 chữ số thập phân."
+  },
+  {
+    "id": "22_q005",
+    "file_name": "data.xlsx",
+    "query": "Dans Care, combien de types ont une valeur unmet manquante ? Le symbole .. signifie manquant. Répondez par un entier."
+  },
+  {
+    "id": "22_q006",
+    "file_name": "data.xlsx",
+    "query": "Trong sheet Thu nhập, ở nhóm chưa tốt nghiệp phổ thông, thu nhập nữ bằng bao nhiêu phần trăm thu nhập nam? Chỉ trả số với đúng 1 chữ số thập phân."
+  },
+  {
+    "id": "22_q007",
+    "file_name": "data.xlsx",
+    "query": "Trong sheet Thu nhập, ở nhóm tốt nghiệp phổ thông, thu nhập nữ bằng bao nhiêu phần trăm thu nhập nam? Chỉ trả số với đúng 1 chữ số thập phân."
+  },
+  {
+    "id": "22_q008",
+    "file_name": "data.xlsx",
+    "query": "Trong sheet Thu nhập, ở nhóm sau trung học, thu nhập nữ bằng bao nhiêu phần trăm thu nhập nam? Chỉ trả số với đúng 1 chữ số thập phân."
+  },
+  {
+    "id": "22_q009",
+    "file_name": "data.xlsx",
+    "query": "Trong sheet Thu nhập, ở nhóm cao đẳng, thu nhập nữ bằng bao nhiêu phần trăm thu nhập nam? Chỉ trả số với đúng 1 chữ số thập phân."
+  },
+  {
+    "id": "22_q010",
+    "file_name": "data.xlsx",
+    "query": "Trong sheet Thu nhập, ở nhóm đại học, thu nhập nữ bằng bao nhiêu phần trăm thu nhập nam? Chỉ trả số với đúng 1 chữ số thập phân."
+  },
+  {
+    "id": "22_q011",
+    "file_name": "data.xlsx",
+    "query": "Trong sheet Thu nhập, ở nhóm sau đại học, thu nhập nữ bằng bao nhiêu phần trăm thu nhập nam? Chỉ trả số với đúng 1 chữ số thập phân."
+  },
+  {
+    "id": "22_q012",
+    "file_name": "data.xlsx",
+    "query": "Trong Thu nhập, chênh lệch tuyệt đối thu nhập nam và nữ lớn nhất giữa các trình độ là bao nhiêu đô la? Chỉ trả số nguyên không có dấu phân cách hàng nghìn."
+  },
+  {
+    "id": "22_q013",
+    "file_name": "data.xlsx",
+    "query": "Trong Thu nhập, nhóm nào có thu nhập nữ cao nhất? Nếu bằng nhau chọn tên nhóm tăng dần Unicode. Chỉ trả tên nhóm."
+  },
+  {
+    "id": "22_q014",
+    "file_name": "data.xlsx",
+    "query": "Justice에서 2017/2018년 대비 2026/2027년 total cases의 감소율을 (이전-이후)/이전*100으로 계산하세요. 음수도 허용합니다. 소수점 둘째 자리까지 % 기호 없이 숫자만 답하십시오."
+  },
+  {
+    "id": "22_q015",
+    "file_name": "data.xlsx",
+    "query": "Justice에서 2019/2020년 대비 2024/2025년 total cases의 감소율을 (이전-이후)/이전*100으로 계산하세요. 음수도 허용합니다. 소수점 둘째 자리까지 % 기호 없이 숫자만 답하십시오."
+  },
+  {
+    "id": "22_q016",
+    "file_name": "data.xlsx",
+    "query": "Justice에서 2020/2021년 대비 2025/2026년 total cases의 감소율을 (이전-이후)/이전*100으로 계산하세요. 음수도 허용합니다. 소수점 둘째 자리까지 % 기호 없이 숫자만 답하십시오."
+  },
+  {
+    "id": "22_q017",
+    "file_name": "data.xlsx",
+    "query": "Justice에서 total cases가 가장 많은 연도를 표에 나온 그대로 답하십시오. 동률이면 가장 이른 연도입니다."
+  },
+  {
+    "id": "22_q018",
+    "file_name": "data.xlsx",
+    "query": "Justice의 10개 연도 total charges 합계를 쉼표 없는 정수로 답하십시오."
+  },
+  {
+    "id": "22_q019",
+    "file_name": "data.xlsx",
+    "query": "在劳动表中，对于单身或曾结婚的人群，非原住民的劳动参与率减去原住民的劳动参与率是多少个百分点？只回答数字，保留一位小数。"
+  },
+  {
+    "id": "22_q020",
+    "file_name": "data.xlsx",
+    "query": "在劳动表中，原住民的劳动参与率，已婚或同居减去单身或曾结婚是多少个百分点？只回答数字，保留一位小数。"
+  },
+  {
+    "id": "22_q021",
+    "file_name": "data.xlsx",
+    "query": "在劳动表中，对于单身或曾结婚的人群，非原住民的就业率减去原住民的就业率是多少个百分点？只回答数字，保留一位小数。"
+  },
+  {
+    "id": "22_q022",
+    "file_name": "data.xlsx",
+    "query": "在劳动表中，原住民的就业率，已婚或同居减去单身或曾结婚是多少个百分点？只回答数字，保留一位小数。"
+  },
+  {
+    "id": "22_q023",
+    "file_name": "data.xlsx",
+    "query": "在劳动表中，对于单身或曾结婚的人群，非原住民的失业率减去原住民的失业率是多少个百分点？只回答数字，保留一位小数。"
+  },
+  {
+    "id": "22_q024",
+    "file_name": "data.xlsx",
+    "query": "在劳动表中，原住民的失业率，已婚或同居减去单身或曾结婚是多少个百分点？只回答数字，保留一位小数。"
+  },
+  {
+    "id": "22_q025",
+    "file_name": "data.xlsx",
+    "query": "Dans Santé, parmi Premières Nations hors réserve, Métis et Inuits seulement, quel est l'écart entre le maximum et le minimum de trouble de l'humeur ? Répondez avec une décimale sans %."
+  },
+  {
+    "id": "22_q026",
+    "file_name": "data.xlsx",
+    "query": "Dans Santé, parmi les trois groupes autochtones seulement, lequel a le taux d'asthme le plus élevé ? En cas d'égalité, ordre Unicode croissant. Répondez par le nom exact."
+  },
+  {
+    "id": "22_q027",
+    "file_name": "data.xlsx",
+    "query": "Dans Santé, quelle est la moyenne simple du trouble de l'humeur parmi les trois groupes autochtones, sans Population non autochtone ? Répondez avec deux décimales."
+  },
+  {
+    "id": "22_q028",
+    "file_name": "data.xlsx",
+    "query": "Trong Care, có bao nhiêu dòng có unmet bằng số 0? Không coi .. là 0. Chỉ trả số nguyên."
+  },
+  {
+    "id": "22_q029",
+    "file_name": "data.xlsx",
+    "query": "Justice에서 2026/2027년 total charges를 total cases로 나눈 비율을 소수점 셋째 자리까지 숫자만 답하십시오."
+  },
+  {
+    "id": "22_q030",
+    "file_name": "data.xlsx",
+    "query": "Trong Thu nhập, tổng thu nhập nữ của hai nhóm đại học và sau đại học là bao nhiêu? Chỉ trả số nguyên không có dấu phân cách hàng nghìn."
+  }
+]
