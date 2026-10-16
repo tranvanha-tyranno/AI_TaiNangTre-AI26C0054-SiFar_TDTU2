@@ -23,7 +23,7 @@ def run_context(root,queries_path,xlsx_dir,queries,settings,mode,concurrency,mod
           'question_timeout','run_timeout','max_prompt_price_per_million',
           'max_completion_price_per_million','max_workbook_cells','retrieval_top_k','preview_rows',
           'max_inspection_rounds','semantic_review','pipeline_variant','v3_max_api_calls','v3_max_repairs','v3_max_inspections',
-          'lite_max_api_calls','lite_context_chars']
+          'lite_max_api_calls','lite_context_chars','v3_base_variant']
     return {'git_revision':revision,'source_sha256':source,'model':model,'mode':mode,'concurrency':concurrency,
             'settings':{k:settings[k] for k in keys if k in settings},
             'queries_sha256':fingerprint(queries_path),

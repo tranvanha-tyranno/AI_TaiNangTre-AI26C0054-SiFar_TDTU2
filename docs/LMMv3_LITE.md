@@ -1,4 +1,6 @@
-# LMMv3 Lite — xây lại từ baseline nhỏ
+# LMMv3 Lite — bản thử nghiệm đã lưu
+
+**Lịch sử:** CLI hiện đã chuyển về [baseline LLMv2](LMMv3_V2_BASELINE.md). Nội dung dưới mô tả bản Lite trước đó.
 
 Phiên bản: `lmmv3-lite-v1`, nhánh `Bao_LMMv3`. Đây là hướng phát triển lại từng bước, không phải lời khẳng định chính xác hơn các bản trước.
 

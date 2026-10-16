@@ -292,6 +292,11 @@ Chương trình chỉ ghi hai cột `id,answer` vào CSV; nhật ký tiến trì
 Thêm lựa chọn `--mode llm-v3` và **LMMv3 · 8 phase có bằng chứng** trên dashboard. Giữ `llm`/`llm-v2` để so sánh. Xem [thiết kế, cách chạy và giới hạn LMMv3](docs/LMMv3.md). Chưa đánh giá độ chính xác trên dataset; các kiểm tra mới dùng client giả lập.
 
 
-## LMMv3 Lite — baseline hiện tại
+## LMMv3 Lite — bản thử nghiệm đã lưu
 
 `--mode llm-v3` hiện dùng **LMMv3 Lite** (`lmmv3-lite-v1`): dữ liệu gọn → một kế hoạch LLM → Python tính → CSV. Mặc định tối đa 2 lượt API, không có đặc tả hoặc review riêng. Bản 8 phase được giữ làm lịch sử. Xem [cách chạy và phạm vi Lite](docs/LMMv3_LITE.md). Chưa đánh giá độ chính xác trên dataset thực.
+
+
+## LMMv3 hiện tại: baseline từ LLMv2
+
+`--mode llm-v3` hiện dùng chung pipeline và cấu hình LLMv2, version `lmmv3-v2-baseline-v1`; không chạy Lite hay tám phase. Đây là mốc khôi phục, chưa có cải tiến mới. Giữ LLMv2 để đối chứng, nâng cấp từng thay đổi sau khi đo baseline. Xem [hướng dẫn baseline](docs/LMMv3_V2_BASELINE.md). Các mô tả Lite/tám phase trước đó là lịch sử. Chưa gọi API để đánh giá trong lần khôi phục.

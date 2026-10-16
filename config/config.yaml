@@ -29,12 +29,12 @@ mode: llm  # LLM + Tools là luồng xử lý duy nhất
 concurrency: 1
 # Dùng --mode llm-v2 để bật khám phá/review sâu; mode mặc định giữ baseline.
 
-# LMMv3 only: independent limits; earlier variants unchanged.
+# Archived eight-phase v3 options (inactive for current LLMv2-based baseline).
 v3_max_api_calls: 8
 v3_max_repairs: 3
 v3_max_inspections: 3
 
-# LMMv3 Lite baseline: normal 1 call; one optional repair OR inspection follow-up.
+# Archived Lite options (inactive for current LLMv2-based baseline).
 # Old v3_* options above apply only to the archived eight-phase implementation.
 lite_max_api_calls: 2
 lite_context_chars: 16000

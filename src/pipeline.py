@@ -218,15 +218,17 @@ def fallback_shape_plan(question, contract, regions):
 
 def answer_with_tools(path, question, client, record, settings):
     if settings.get("pipeline_variant") == "llm-v3":
-        from .lmmv3.lite import answer
-        return answer(path, question, client, record, settings)
+        from .variants import settings_for_mode
+        return answer_with_tools(path,question,client,record,settings_for_mode(settings,'llm-v3'))
     reserve_prompt=min(client.prompt_cap, getattr(client,'prompt_rate',0)*1e6 or client.prompt_cap)
     reserve_completion=min(client.completion_cap, getattr(client,'completion_rate',0)*1e6 or client.completion_cap)
     ledger=UsageLedger(limit_usd=settings.get('max_cost_per_question',.10),max_calls=settings.get('max_api_calls',4),
         seconds=settings.get('question_timeout',115),prompt_cap=reserve_prompt,completion_cap=reserve_completion)
     variant=settings.get('pipeline_variant','llm')
-    record.update(stage='parse',pipeline_version='tools-v4',
+    from .variants import V3_BASELINE_VERSION
+    record.update(stage='parse',pipeline_version=V3_BASELINE_VERSION if settings.get('v3_base_variant') else 'tools-v4',
                   plans=[],timings={},interactions=[],reviews=[],llm_variant=variant)
+    if settings.get('v3_base_variant'): record['baseline_variant']='llm-v2'
     contract=infer_answer_contract(question)
     record['answer_contract']=contract
     last_candidate=None
