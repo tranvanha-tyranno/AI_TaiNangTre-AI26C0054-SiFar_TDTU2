@@ -305,3 +305,6 @@ Thêm lựa chọn `--mode llm-v3` và **LMMv3 · 8 phase có bằng chứng** t
 ## LMMv3 hiện tại — bước 1 trên nền LLMv2
 
 Version `lmmv3-v2-dedup-v1`: chỉ giảm ô trùng trong request, giữ nguyên retrieval, thực thi và review. Đặt `v3_deduplicate_context: false` để quay về baseline đối chứng. Xem [cơ chế và số đo offline](docs/LMMv3_CONTEXT_DEDUP.md). Chưa đo token API hoặc độ chính xác dataset sau thay đổi.
+# LLMv4 thử nghiệm
+
+Trên nhánh `Bao_LLMv4`, dùng `--mode llm-v4` hoặc chọn LLMv4 trên dashboard. Phiên bản này bổ sung hợp đồng đầu ra đa ngôn ngữ, metadata nhãn nhóm/đơn vị và dừng retry lặp; giữ LMMv3 để so sánh. Xem [phạm vi, cách chạy và giới hạn](docs/LLMv4.md). Chưa có benchmark API của v4.

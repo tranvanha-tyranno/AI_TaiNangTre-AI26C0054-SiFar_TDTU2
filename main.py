@@ -66,8 +66,8 @@ def main():
     ap.add_argument("--log-dir", default="outputs/logs", help="Nhật ký từng câu")
     ap.add_argument("--config", type=str, default="config/config.yaml", help="File config yaml (optional)")
     ap.add_argument("--concurrency", type=int, default=None)
-    ap.add_argument("--mode", choices=["llm", "llm-v2", "llm-v3"], default=None,
-                    help="llm: baseline; llm-v2: deep; llm-v3: baseline từ LLMv2, chưa thêm cải tiến")
+    ap.add_argument("--mode", choices=["llm", "llm-v2", "llm-v3", "llm-v4"], default=None,
+                    help="llm: baseline; llm-v2: deep; llm-v3: nền LLMv2 + dedup; llm-v4: contract/context/retry")
     args = ap.parse_args()
     try:
         from dotenv import load_dotenv
@@ -94,7 +94,7 @@ def main():
     output_path = Path(args.output or cfg.get("output") or "./submission.csv")
     concurrency = args.concurrency if args.concurrency is not None else cfg.get("concurrency", 1)
     mode = args.mode or cfg.get("mode") or "llm"
-    from src.variants import settings_for_mode, v3_version
+    from src.variants import settings_for_mode, version_for_mode
     cfg = settings_for_mode(cfg,mode)
     if not isinstance(concurrency, int) or concurrency < 1 or concurrency > 6:
         ap.error("concurrency phải nằm trong khoảng 1 đến 6")
@@ -207,7 +207,7 @@ def main():
     with open(output_path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f, quoting=csv.QUOTE_MINIMAL, lineterminator="\n")
         w.writerow(["id", "answer"])
-        for q in (sorted(queries,key=lambda q:int(q['id'])) if mode=='llm-v3' and all(str(q['id']).isdigit() for q in queries) else queries):
+        for q in (sorted(queries,key=lambda q:int(q['id'])) if mode in {'llm-v3','llm-v4'} and all(str(q['id']).isdigit() for q in queries) else queries):
             w.writerow([q["id"], results.get(q["id"], "")])
 
     print(f"[INFO] Đã ghi {output_path}")
@@ -221,9 +221,9 @@ def main():
     summary = {"questions": len(queries), "answered": sum(r['status'] in {'ok','finalized'} for r in records),
                "elapsed_seconds": elapsed, "mode": mode,
                "model": os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash',
-               "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=(4096 if mode=='llm-v3' else 1024),
+               "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=(4096 if mode in {'llm-v3','llm-v4'} else 1024),
                "peak_memory_mb": memory,
-               "pipeline_version": v3_version(cfg) if mode=='llm-v3' else 'tools-v4',
+               "pipeline_version": version_for_mode(cfg,mode),
                "memory_measurement_scope": "main_process_peak_only",
                "resource_compliance_verified": False,
                "disk_verified": False,

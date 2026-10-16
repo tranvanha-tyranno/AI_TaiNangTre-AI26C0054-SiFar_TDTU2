@@ -217,6 +217,10 @@ def fallback_shape_plan(question, contract, regions):
 
 
 def answer_with_tools(path, question, client, record, settings):
+    if settings.get('v4_upgrade') and not settings.get('_v4_active'):
+        from .llmv4 import format_answer
+        answer=answer_with_tools(path,question,client,record,{**settings,'_v4_active':True})
+        return format_answer(answer,record['answer_contract'],record)
     if settings.get("pipeline_variant") == "llm-v3":
         from .variants import settings_for_mode
         return answer_with_tools(path,question,client,record,settings_for_mode(settings,'llm-v3'))
@@ -230,12 +234,21 @@ def answer_with_tools(path, question, client, record, settings):
                   plans=[],timings={},interactions=[],reviews=[],llm_variant=variant)
     if settings.get('v3_base_variant'): record['baseline_variant']='llm-v2'
     def context_messages(request,purpose):
+        if settings.get('v4_upgrade'):
+            from .llmv4 import prompt
+            request=prompt(request,contract)
         if settings.get('v3_base_variant') and settings.get('v3_deduplicate_context',True):
             from .context_dedup import prepare
             request,metrics=prepare(request)
             record.setdefault('context_dedup',[]).append({'purpose':purpose,**metrics})
         return request
     contract=infer_answer_contract(question)
+    validate_contract=validate_answer_contract
+    validate_field=validate_answer_field
+    if settings.get('v4_upgrade'):
+        from .llmv4 import infer_contract, validate_contract, validate_field, VERSION
+        contract=infer_contract(question)
+        record.update(pipeline_version=VERSION,llm_variant='llm-v4',baseline_variant='llm-v3')
     record['answer_contract']=contract
     last_candidate=None
     def finalize_candidate(reason):
@@ -256,6 +269,9 @@ def answer_with_tools(path, question, client, record, settings):
     try:
         start=time.monotonic()
         regions=load_regions(path,settings.get('max_workbook_cells',200000))
+        if settings.get('v4_upgrade'):
+            from .llmv4 import regions_v4
+            regions=regions_v4(regions)
         record['timings']['parse']=time.monotonic()-start
         record['stage']='retrieve'
         start=time.monotonic()
@@ -269,6 +285,7 @@ def answer_with_tools(path, question, client, record, settings):
         correction=None
         repairs=0
         inspections=0
+        seen_failures={}
         max_inspections=settings.get('max_inspection_rounds',3 if variant=='llm-v2' else 2)
 
         def acquire(acquired):
@@ -336,8 +353,8 @@ def answer_with_tools(path, question, client, record, settings):
                 record['plans'][-1]['tool_trace']=result['trace']
                 record['plans'][-1]['row_samples']=result['row_samples']
                 validate_aggregate_scope(question,plan,selected)
-                validate_answer_contract(contract,plan,result,question)
-                validate_answer_field(contract,plan,result,selected)
+                validate_contract(contract,plan,result,question)
+                validate_field(contract,plan,result,selected)
                 validate_semantics(question,contract,plan,result,selected)
                 validate_rank_labels(question,result)
                 for target in plan.get('output',{}).get('aliases',{}).values():
@@ -390,8 +407,8 @@ def answer_with_tools(path, question, client, record, settings):
                 if shape_plan:
                     try:
                         shape_result=execute(shape_plan,selected)
-                        validate_answer_contract(contract,shape_plan,shape_result,question)
-                        validate_answer_field(contract,shape_plan,shape_result,selected)
+                        validate_contract(contract,shape_plan,shape_result,question)
+                        validate_field(contract,shape_plan,shape_result,selected)
                         validate_semantics(question,contract,shape_plan,shape_result,selected)
                         validate_rank_labels(question,shape_result)
                         record['validation_errors']=record.get('validation_errors',[])+['Automatic coordinate-driven shape recovery after invalid planner output']
@@ -416,7 +433,7 @@ def answer_with_tools(path, question, client, record, settings):
                                     'output':{'step':'printed_total'},'answer_spec':plan.get('answer_spec',{})}
                         try:
                             total_result=execute(total_plan,selected)
-                            validate_answer_contract(contract,total_plan,total_result,question)
+                            validate_contract(contract,total_plan,total_result,question)
                             record['plans'].append({'attempt':len(record['plans'])+1,'turn':turn+1,'plan':total_plan,
                                                     'automatic_repair':'used explicit printed Total from executor guard',
                                                     'tool_trace':total_result['trace']})
@@ -437,8 +454,8 @@ def answer_with_tools(path, question, client, record, settings):
                     if changed:
                         try:
                             candidate=execute(corrected,selected)
-                            validate_answer_contract(contract,corrected,candidate,question)
-                            validate_answer_field(contract,corrected,candidate,selected)
+                            validate_contract(contract,corrected,candidate,question)
+                            validate_field(contract,corrected,candidate,selected)
                             validate_semantics(question,contract,corrected,candidate,selected)
                             validate_rank_labels(question,candidate)
                             record['validation_errors']=record.get('validation_errors',[])+['Automatic exact period column correction inserted']
@@ -456,8 +473,8 @@ def answer_with_tools(path, question, client, record, settings):
                         aliased,changed=add_rank_aliases(plan,candidate,question)
                         if changed:
                             candidate=execute(aliased,selected)
-                            validate_answer_contract(contract,aliased,candidate,question)
-                            validate_answer_field(contract,aliased,candidate,selected)
+                            validate_contract(contract,aliased,candidate,question)
+                            validate_field(contract,aliased,candidate,selected)
                             validate_semantics(question,contract,aliased,candidate,selected)
                             record['validation_errors']=record.get('validation_errors',[])+['Automatic source-label aliases applied for requested ranking labels']
                             record.update(stage='validated',plan=aliased,tool_trace=candidate['trace'],
@@ -471,6 +488,13 @@ def answer_with_tools(path, question, client, record, settings):
                 record['validation_errors']=record.get('validation_errors',[])+[str(error)[:500]]
                 record.setdefault('validation_events',[]).append({'attempt':turn+1,
                     'detected_at':record['stage'],'error_type':type(error).__name__,'message':str(error)[:500]})
+                if settings.get('v4_upgrade'):
+                    signature=json.dumps([plan if plan is not None else raw,record['stage'],str(error),len(observations)],sort_keys=True,ensure_ascii=False,default=str)
+                    seen_failures[signature]=seen_failures.get(signature,0)+1
+                    if seen_failures[signature]>=2:
+                        record['retry_stop_reason']='Identical plan/response and error repeated with unchanged evidence'
+                        finalize_candidate(record['retry_stop_reason'])
+                        raise PlanError(record['retry_stop_reason']) from None
                 repairs+=1
                 if repairs>settings.get('max_plan_repairs',2):
                     answer=finalize_candidate(f'Final validation failed after bounded repairs: {error}')
