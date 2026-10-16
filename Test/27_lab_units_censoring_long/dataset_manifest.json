@@ -37,7 +37,8 @@
           "type": "TEXT",
           "column": 3
         }
-      ]
+      ],
+      "content_sha256": "d1b4518996bb7e9d887be55e108010eabb1df0af3c333048bd4afa842eb6693c"
     },
     {
       "table": "limits",
@@ -65,7 +66,8 @@
           "type": "INTEGER",
           "column": 3
         }
-      ]
+      ],
+      "content_sha256": "06c3a998723bf296f7ae3c1ef169ddcdf644c890952b7fdbe4e0ac498f4e589a"
     },
     {
       "table": "results",
@@ -268,7 +270,8 @@
           "type": "REAL",
           "column": 27
         }
-      ]
+      ],
+      "content_sha256": "a87081457f476930ec33bfbbd1a22b77620252f32fccdcaa65a232507124365e"
     }
   ],
   "agrees_with": "AGENTS.md sections 3, 11.1, 11.2; synthetic benchmark, not an official scoring replica",

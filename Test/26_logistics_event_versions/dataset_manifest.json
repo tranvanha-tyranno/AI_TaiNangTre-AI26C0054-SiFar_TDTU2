@@ -37,7 +37,8 @@
           "type": "TEXT",
           "column": 3
         }
-      ]
+      ],
+      "content_sha256": "3d91cd702df9b4a6d0f07c8256f6dfcba463ae0330bc2f96e03c06d0f2eb9923"
     },
     {
       "table": "shipments",
@@ -91,7 +92,8 @@
           "type": "INTEGER",
           "column": 7
         }
-      ]
+      ],
+      "content_sha256": "994a24c15cabf7be81fc8ff8860f1c136561ed789ec60deac6e021df3e14de88"
     },
     {
       "table": "events",
@@ -151,7 +153,8 @@
           "type": "TEXT",
           "column": 8
         }
-      ]
+      ],
+      "content_sha256": "712fd6f7da7a1e26ca8a0917e463baef05fac572ab76261f2f91683a758991aa"
     }
   ],
   "agrees_with": "AGENTS.md sections 3, 11.1, 11.2; synthetic benchmark, not an official scoring replica",

@@ -378,15 +378,16 @@
     {
       "id": 25027,
       "language": "fr",
-      "category": "average_peak",
-      "sql": "SELECT sum(peak_kw),count(*) FROM readings WHERE plant='NM-040'",
+      "category": "side_by_side_table",
+      "sql": "SELECT divisor FROM units WHERE quantity='Carbon'",
       "params": [],
       "presentation": {
-        "kind": "ratio",
-        "digits": 2,
-        "scale": 1
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
       },
-      "answer": "477.39"
+      "answer": "1000"
     },
     {
       "id": 25028,
