@@ -1,6 +1,6 @@
 # Bộ kiểm thử Excel QA
 
-**22 bộ, 512 câu** với file Excel và đáp án mẫu. Các bộ 06–12 có 200 câu từ dữ liệu tổng hợp cố định; **10 bộ mới 13–22 có đúng 30 câu/bộ, tổng 300 câu**, dựa theo cả hai bộ công khai.
+**27 bộ, 662 câu** với file Excel và đáp án mẫu. Các bộ 06–12 có 200 câu; bộ 13–22 có 300 câu dựa theo hai bộ công khai; **5 bộ mới 23–27 có 150 câu và bảng chính 12.000–32.800 bản ghi**, áp dụng thêm quy ước trong `AGENTS.md` cập nhật 16/10/2026.
 
 | Bộ | Số câu | Nội dung |
 |---|---:|---|
@@ -26,6 +26,11 @@
 | [20_productivity_periods](20_productivity_periods/README.md) | 30 | 20 năm xen 80 quý, bảng level riêng, giảm liên năm |
 | [21_finance_multisheet](21_finance_multisheet/README.md) | 30 | 5 sheet, số chuỗi `$`, dấu phẩy, ngoặc âm, cuối kỳ/bình quân |
 | [22_multilingual_social](22_multilingual_social/README.md) | 30 | Việt/Pháp/Hàn/Trung; chăm sóc, thu nhập, tòa án, lao động, sức khỏe |
+| [23_civic_service_long](23_civic_service_long/README.md) | 30 | 12.000 khảo sát + 12.000 cỡ mẫu; mean có/không Total, header 3 cấp |
+| [24_procurement_temporal_long](24_procurement_temporal_long/README.md) | 30 | 16.000 dòng, 9.600 hợp đồng; tỷ giá ngày, hiệu lực nửa mở, ghi có |
+| [25_energy_intervals_long](25_energy_intervals_long/README.md) | 30 | 20.000 khoảng đo; kWh/kW, giao khoảng, giá theo giờ, bảng cạnh nhau |
+| [26_logistics_event_versions](26_logistics_event_versions/README.md) | 30 | 32.800 dòng sự kiện / 8.000 vận đơn; phiên bản, UTC, đúng hẹn, P95 |
+| [27_lab_units_censoring_long](27_lab_units_censoring_long/README.md) | 30 | 30.000 kết quả / 27 cột; µg/L–mg/L, '<', tiêu đề lặp, median/P95 |
 
 Trong dashboard, tải lại trang để thấy các bộ tự được nhận diện. Chọn một hoặc nhiều bộ rồi **Chạy mới**. Nên bắt đầu bằng một bộ hoặc một câu ở chế độ **LLM + Tools**. Chọn tất cả sẽ gọi API cho nhiều câu và có thể phát sinh phí.
 
@@ -36,6 +41,7 @@ Chưa chạy LLM để đo exact match trên 300 câu mới của bộ 13–22. 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests -p test_extended_fixtures.py -v
 .\.venv\Scripts\python.exe -m unittest discover -s tests -p test_public_transfer_fixtures.py -v
+.\.venv\Scripts\python.exe -m unittest discover -s tests -p test_long_multilingual_fixtures.py -v
 .\.venv\Scripts\python.exe -m unittest discover -s Test -v
 ```
 

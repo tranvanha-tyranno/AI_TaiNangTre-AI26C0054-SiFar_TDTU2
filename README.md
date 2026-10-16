@@ -99,7 +99,7 @@ Ví dụ bộ 30 câu lọc/xếp hạng:
 .\.venv\Scripts\python.exe main.py --mode llm --xlsx_dir .\Test\06_people_filters\xlsx_files --queries .\Test\06_people_filters\queries.json --output .\outputs\cli-people\submission.csv --log-dir .\outputs\cli-people\logs
 ```
 
-Thay `06_people_filters` bằng bộ muốn thử. [Test/README.md](Test/README.md) liệt kê **22 bộ, 512 câu** cùng đáp án tham chiếu. Bộ **13–22** bổ sung **300 câu trên dữ liệu Excel mới**, dựa theo cả `Public_data_1` và `Public_data_2`.
+Thay `06_people_filters` bằng bộ muốn thử. [Test/README.md](Test/README.md) liệt kê **27 bộ, 662 câu** cùng đáp án tham chiếu. Bộ **13–22** có 300 câu trên dữ liệu mới dựa theo hai bộ công khai. Bộ **23–27** có thêm **150 câu đa ngôn ngữ**, bảng chính **12.000–32.800 bản ghi**, nghiệp vụ mới, ID số và các ca theo giải đáp mới trong `AGENTS.md`.
 
 ### Chạy pipeline
 
