@@ -96,6 +96,22 @@ def datasets():
             "xlsx_dir": str(p / "xlsx_files"), "queries": str(p / "queries.json"),
             "reference": str(ref),
         })
+    # Extracted archives may wrap a dataset in Test/name/name/. Preserve the
+    # external-path identity so earlier manually registered runs remain linked.
+    known_paths = {Path(d['queries']).parent.resolve() for d in result}
+    if TEST_ROOT.is_dir():
+        for query_path in sorted(TEST_ROOT.glob('*/*/queries.json')):
+            p = query_path.parent.resolve()
+            if p in known_paths or not (p/'xlsx_files').is_dir():
+                continue
+            ref = p/'expected_submission.csv'
+            if not ref.is_file():
+                ref = p/'sample_submission.csv'
+            result.append({'id': 'external-' + hashlib.sha256(str(p).casefold().encode()).hexdigest()[:16],
+                           'label': f'Test / {p.name}', 'kind': 'test',
+                           'xlsx_dir': str(p/'xlsx_files'), 'queries': str(query_path.resolve()),
+                           'reference': str(ref)})
+            known_paths.add(p)
     for dataset in result:
         dataset["question_count"] = len(read_json(Path(dataset["queries"]), []))
     return result
