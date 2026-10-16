@@ -336,7 +336,7 @@ def answer_with_tools(path, question, client, record, settings):
                 reliability_changes=[]
                 if reliability:
                     from .reliability import normalize
-                    plan,reliability_changes=normalize(plan,contract)
+                    plan,reliability_changes=normalize(plan,contract,question,regions)
                 plan,normalizations=normalize_plan(plan,regions,contract)
                 normalizations=syntax_repairs+reliability_changes+normalizations
                 record['plans'].append({'attempt':len(record['plans'])+1,'turn':turn+1,'plan':plan,

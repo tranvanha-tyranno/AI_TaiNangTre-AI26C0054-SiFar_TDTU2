@@ -1,5 +1,15 @@
 # LMMv3 reliability — thử nghiệm độc lập từ baseline
 
+## Bản sửa chiều so sánh `lmmv3-v2-reliability-v3`
+
+Chỉ áp dụng trong cờ reliability. Nhận diện mẫu so sánh thấp/cao hơn bao nhiêu trong tiếng Trung, Anh, Việt; đối chiếu hai scalar cell operands với nhãn văn bản thực tế trên cùng dòng. Chỉ đổi thứ tự sub khi hai nhóm được định danh duy nhất, cùng sheet và cột metric, final op calculate/sub và answer_spec operation difference. Với mẫu tên chồng lấn, dùng khớp nhãn dài nhất và yêu cầu mỗi vai trò có một nguồn duy nhất. Không hard-code tên nhóm, ID, ô hoặc đáp án.
+
+Thấp hơn: reference-subject; cao hơn: subject-reference. Không dùng abs để đổi mọi số âm thành dương; giữ dấu nếu dữ liệu trái giả định của câu hỏi. Bỏ qua khi câu hỏi yêu cầu signed/net/new-old hoặc không đủ bằng chứng, không tự sửa công thức khác. Mẫu ngôn ngữ hữu hạn, chưa xử lý mọi cách diễn đạt hoặc so sánh aggregate/khác cột. Các quyết định ghi nguồn ô và công thức trong normalizations; không thêm API/retry.
+
+Hai log `20261016-234532-4b9feb` và `20261016-235203-30fa87` có cùng revision, source hash, settings, model, concurrency và seed 42. Phần Public_data_2 cùng đạt strict 27/30 nhưng sai lần lượt 2/7/30 và 12/17/30. Với các câu này, workbook hash, question, preview và retrieval giống nhau, trong khi kế hoạch đầu khác nhau. Điều này ghi nhận sự biến động của phản hồi API, chưa xác định được nguyên nhân nội bộ provider. Chạy lại không huấn luyện model từ log.
+
+Ở cả hai log, câu so sánh dùng 57.8-76.9=-19.1; mẫu yêu cầu thấp hơn tương ứng 76.9-57.8=19.1. Replay offline sau sửa cho 19.1; không phải 19.0 và không phải điểm benchmark API mới.
+
 ## Bản sửa đầu ra/review `lmmv3-v2-reliability-v2`
 
 Nhánh `codex/llmv3-output-review-fix` phát triển từ main đã nhận reliability-v1. Baseline nguyên trạng không đổi.

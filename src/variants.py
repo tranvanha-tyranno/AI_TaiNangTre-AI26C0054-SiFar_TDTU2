@@ -4,7 +4,7 @@ V3_DEDUP_VERSION='lmmv3-v2-dedup-v1'
 
 
 def v3_version(settings):
-    if settings.get('v3_reliability',False): return 'lmmv3-v2-reliability-v2'
+    if settings.get('v3_reliability',False): return 'lmmv3-v2-reliability-v3'
     return V3_DEDUP_VERSION if settings.get('v3_deduplicate_context',True) else V3_BASELINE_VERSION
 
 

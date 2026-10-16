@@ -17,7 +17,7 @@ Return steps as a JSON array, not a JSON-encoded string. Do not add a new valida
 '''
 
 
-def normalize(plan, contract=None):
+def normalize(plan, contract=None, question='', regions=()):
     """Lift an explicitly declared lag with identical source/destination only."""
     cloned = deepcopy(plan)
     changes = []
@@ -53,6 +53,9 @@ def normalize(plan, contract=None):
         output['step']=ident
         output.pop('columns',None)
         changes.append({'kind':'complete_declared_row_count','input':final['id'],'step':ident})
+    if question:
+        from .directional_difference import normalize_difference
+        changes.extend(normalize_difference(cloned,question,regions))
     return cloned, changes
 
 
