@@ -94,7 +94,7 @@ def main():
     output_path = Path(args.output or cfg.get("output") or "./submission.csv")
     concurrency = args.concurrency if args.concurrency is not None else cfg.get("concurrency", 1)
     mode = args.mode or cfg.get("mode") or "llm"
-    from src.variants import settings_for_mode
+    from src.variants import settings_for_mode, v3_version
     cfg = settings_for_mode(cfg,mode)
     if not isinstance(concurrency, int) or concurrency < 1 or concurrency > 6:
         ap.error("concurrency phải nằm trong khoảng 1 đến 6")
@@ -223,7 +223,7 @@ def main():
                "model": os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash',
                "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=(4096 if mode=='llm-v3' else 1024),
                "peak_memory_mb": memory,
-               "pipeline_version": 'lmmv3-v2-baseline-v1' if mode=='llm-v3' else 'tools-v4',
+               "pipeline_version": v3_version(cfg) if mode=='llm-v3' else 'tools-v4',
                "memory_measurement_scope": "main_process_peak_only",
                "resource_compliance_verified": False,
                "disk_verified": False,

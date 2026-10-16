@@ -38,3 +38,6 @@ v3_max_inspections: 3
 # Old v3_* options above apply only to the archived eight-phase implementation.
 lite_max_api_calls: 2
 lite_context_chars: 16000
+
+# Current LMMv3: one change on top of LLMv2; false restores identical baseline input.
+v3_deduplicate_context: true
