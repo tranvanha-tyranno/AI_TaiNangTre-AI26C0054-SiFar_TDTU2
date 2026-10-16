@@ -163,9 +163,10 @@ class Workbook:
         return result
 
 
-def coverage_check(spec,coverage,workbook):
+def coverage_check(spec,coverage,workbook,question=None):
     """Check grounding, not semantic truth: LLM still owns meaning alignment."""
     required={r['id'] for r in spec['requirements']};covered=set();issues=[]
+    question_grounded={r['id'] for r in spec['requirements'] if r['kind']=='output' and question is not None and r['quote'] in question}
     for item in coverage:
         if item['requirement'] not in required:
             raise PlanError(f'Coverage uses unknown requirement {item["requirement"]!r}; valid IDs: {sorted(required)}')
@@ -182,7 +183,7 @@ def coverage_check(spec,coverage,workbook):
                  for row in range(r1,r2+1) for col in range(c1,c2+1))
         if not seen: issues.append(f'{item["requirement"]}: no observed cells in {region.id}!{item["range"]}')
         else: covered.add(item['requirement'])
-    issues.extend('Missing requirement evidence: '+key for key in sorted(required-covered))
+    issues.extend('Missing requirement evidence: '+key for key in sorted(required-covered-question_grounded))
     if issues: raise PlanError('; '.join(issues))
     return {'complete':True,'requirements':len(required),'grounding_checked':True,
-            'semantic_alignment':'model_assessed_not_proven','coverage':coverage}
+            'semantic_alignment':'model_assessed_not_proven','coverage':coverage,'question_grounded':sorted(question_grounded)}

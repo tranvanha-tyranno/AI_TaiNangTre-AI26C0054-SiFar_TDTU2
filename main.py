@@ -230,7 +230,7 @@ def main():
                "model": os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash',
                "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=(4096 if mode=='llm-v3' else 1024),
                "peak_memory_mb": memory,
-               "pipeline_version": 'lmmv3-8phase-v2' if mode=='llm-v3' else 'tools-v4',
+               "pipeline_version": 'lmmv3-8phase-v3' if mode=='llm-v3' else 'tools-v4',
                "memory_measurement_scope": "main_process_peak_only",
                "resource_compliance_verified": False,
                "disk_verified": False,

@@ -170,7 +170,7 @@ class V3Test(unittest.TestCase):
         with output.open(encoding='utf-8',newline='') as stream: rows=list(csv.DictReader(stream))
         self.assertEqual([r['id'] for r in rows],['1','2','10'])
         self.assertEqual([r['answer'] for r in rows],['60.00']*3)
-        self.assertEqual(json.loads((logs/'summary.json').read_text())['pipeline_version'],'lmmv3-8phase-v2')
+        self.assertEqual(json.loads((logs/'summary.json').read_text())['pipeline_version'],'lmmv3-8phase-v3')
 
     def test_dashboard_accepts_v3_without_launching_a_worker(self):
         import dashboard
@@ -240,13 +240,40 @@ class V3Test(unittest.TestCase):
         self.assertEqual(answer(self.path,QUESTION,client,record,{}),'60.00')
         self.assertTrue(record['readiness']['ambiguity_resolutions'])
 
-    def test_unresolved_ambiguity_cannot_pass_readiness(self):
+    def test_unresolved_ambiguity_requires_reviewer_clearance(self):
         spec=specification();spec['ambiguities']=['Which period?']
         ready=response();ready['ambiguity_resolutions']=[];record={}
-        with self.assertRaisesRegex(PlanError,'Unresolved ambiguities'):
-            answer(self.path,QUESTION,FakeClient([spec,ready]),record,{'v3_max_repairs':0})
+        with self.assertRaisesRegex(PlanError,'Semantic review'):
+            answer(self.path,QUESTION,FakeClient([spec,ready,{'verdict':'revise','issues':['Read the missing period header before accepting']}]),record,{'v3_max_repairs':0})
         self.assertFalse(record['validated'])
-        self.assertFalse(any(p['phase']==6 for p in record['phases']))
+        self.assertEqual(record['readiness']['pending_review_ambiguities'],['Which period?'])
+
+    def test_descriptive_kind_and_paraphrase_do_not_deadlock_before_execution(self):
+        spec=specification();spec['requirements'][0]['kind']='group'
+        spec['requirements'][0]['quote']='a paraphrased statement, not an exact quote'
+        spec['ambiguities']=['Need to identify the amount column from workbook']
+        client=FakeClient([spec,response(),{'verdict':'accept','issues':[]}]);record={}
+        self.assertEqual(answer(self.path,QUESTION,client,record,{}),'60.00')
+        self.assertTrue(record['specification_warnings'])
+        self.assertEqual(client.purposes.count('v3_review'),1)
+
+    def test_nested_metadata_and_unary_container_are_syntax_only(self):
+        from src.lmmv3.contracts import normalize_response
+        ready=response();ready['plan']['ambiguity_resolutions']=[]
+        ready['plan']['steps'][-1]={'id':'total','op':'calculate','expr':{'abs':{'value':-7}}}
+        normalized,changes=normalize_response(ready)
+        self.assertNotIn('ambiguity_resolutions',normalized['plan'])
+        self.assertEqual(normalized['plan']['steps'][-1]['expr'],{'abs':[{'value':-7}]})
+        self.assertIn('hoist_ambiguity_resolutions',changes)
+        self.assertNotIn('ambiguity_resolutions',ready)
+
+    def test_output_format_is_grounded_in_question_not_fabricated_cells(self):
+        spec=specification();spec['requirements'].append({'id':'format','kind':'output','description':'Two decimals','quote':'两位小数'})
+        book=Workbook(self.path);book.preview(book.index['t1'],QUESTION,45)
+        result=coverage_check(spec,response()['coverage'],book,QUESTION)
+        self.assertEqual(result['question_grounded'],['format'])
+        with self.assertRaisesRegex(PlanError,'Missing requirement evidence'):
+            coverage_check(spec,response()['coverage'],book)
 
 
 if __name__=='__main__': unittest.main()

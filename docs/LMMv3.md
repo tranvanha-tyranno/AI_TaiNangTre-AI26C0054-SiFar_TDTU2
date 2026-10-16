@@ -72,3 +72,12 @@ Header/table segmentation còn suy đoán; không tự tính lại công thức 
 - Thiếu ngữ cảnh workbook trong ambiguities được giải quyết bằng inspect rồi ambiguity_resolutions: index, requirement có coverage, giải thích. Readiness kiểm tra đủ từng index; reviewer phải xem giải thích. Không được bỏ qua mơ hồ còn tồn tại.
 - Feedback coverage chỉ rõ danh sách ID hợp lệ và bounds bảng; giữ kiểm tra vùng đã quan sát. Không tự sửa tọa độ để làm cho một kế hoạch sai vượt kiểm tra.
 - Chỉ kiểm chứng bằng client giả lập; chưa chạy lại dataset hoặc gọi API. Kiểm thử này không chứng minh Qwen sẽ luôn tuân thủ schema hay LMMv3 sẽ đạt điểm cao hơn.
+
+
+## Sửa chốt metadata — lmmv3-8phase-v3
+
+Run kế tiếp cho thấy các kiểu descriptive kind như group và quote diễn giải vẫn bị chặn trước tính toán. Bản này giữ kind dưới dạng metadata mô tả; quote không khớp và kind ngoài taxonomy trở thành cảnh báo bắt buộc reviewer kiểm tra, không được coi là bằng chứng đã xác nhận. Tọa độ, phạm vi đã quan sát, kiểu/số trường đầu ra và phép tính vẫn kiểm tra chặt.
+
+Yêu cầu format có quote nguyên văn được đối chiếu trực tiếp câu hỏi, không đòi tạo coverage Excel giả. Ambiguity chưa giải quyết được chuyển tới reviewer cùng bằng chứng sau tính toán; nếu thiếu bằng chứng có thể đổi đáp án thì reviewer phải yêu cầu đọc thêm/sửa, không xuất ứng viên bị bác bỏ. Không còn ép model thêm một trường metadata để được tới bước tính.
+
+Chỉ chuẩn hóa tương đương cú pháp: ambiguity_resolutions đặt trong plan được chuyển ra ngoài nếu không mâu thuẫn; biểu thức unary dạng object được bọc thành array. Không đổi tọa độ, số liệu hay phép toán. Kiểm chứng bằng client giả lập, chưa xác nhận điểm trên dataset thực.

@@ -18,7 +18,7 @@ def array(item, maximum=20, minimum=0):
 SPEC=obj({
     'language':TEXT,
     'requirements':array(obj({'id':{'type':'string','minLength':1,'maxLength':80},
-        'kind':{'enum':['metric','scope','period','condition','unit','output']},
+        'kind':{'type':'string','minLength':1,'maxLength':80},
         'description':TEXT,'quote':TEXT}),minimum=1),
     'operation':TEXT,
     'output_count':{'type':['integer','null'],'minimum':1,'maximum':1000},
@@ -66,7 +66,6 @@ def schema(purpose, spec=None, catalog=None):
         coverage['items']['properties']['requirement']={'type':'string','enum':ids}
         inspection['properties']['missing_requirements']['items']={'type':'string','enum':ids}
         ready['properties']['ambiguity_resolutions']['items']['properties']['requirement']={'type':'string','enum':ids}
-        if spec['ambiguities']: ready['required'].append('ambiguity_resolutions')
     if catalog:
         table_ids=[item['table_id'] for item in catalog]
         coverage['items']['properties']['table']={'type':'string','enum':table_ids}
@@ -114,13 +113,49 @@ def validate(value, rule, root=None, path='$'):
         raise PlanError(f'{path}: number outside bounds')
 
 
-def check_spec(spec, question):
+def check_spec(spec, question, warnings=None):
     validate(spec,SPEC)
     ids=[r['id'] for r in spec['requirements']]
     if len(ids)!=len(set(ids)): raise PlanError('Duplicate requirement IDs')
-    for item in spec['requirements']+spec['fields']:
-        if item['quote'] not in question: raise PlanError('Every requirement/field must quote the original question verbatim')
+    for i,item in enumerate(spec['requirements']+spec['fields']):
+        if item['quote'] not in question:
+            message=f'Unverified question quote at item {i}: {item["quote"]!r}'
+            if warnings is None: raise PlanError('Every requirement/field must quote the original question verbatim; '+message)
+            warnings.append(message)
+    if warnings is not None:
+        for item in spec['requirements']:
+            if item['kind'] not in {'metric','scope','period','condition','unit','output'}:
+                warnings.append(f'Descriptive requirement kind {item["kind"]!r}; review meaning against original question')
     return spec
+
+
+def normalize_response(response):
+    """Repair equivalent container spelling only, preserving computation semantics."""
+    cloned=copy.deepcopy(response);changes=[]
+    if not isinstance(cloned,dict) or not isinstance(cloned.get('plan'),dict): return cloned,changes
+    plan=cloned['plan']
+    if 'ambiguity_resolutions' in plan:
+        if 'ambiguity_resolutions' in cloned and cloned['ambiguity_resolutions']!=plan['ambiguity_resolutions']:
+            raise PlanError('Conflicting top-level and nested ambiguity_resolutions')
+        cloned['ambiguity_resolutions']=plan.pop('ambiguity_resolutions');changes.append('hoist_ambiguity_resolutions')
+    unary={'abs','number','date','lower','trim','length','is_null','is_number','not'}
+    def walk(value):
+        if isinstance(value,dict):
+            if len(value)==1:
+                key=next(iter(value))
+                if key in unary and isinstance(value[key],dict):
+                    value[key]=[value[key]];changes.append('unary_array:'+key)
+            for item in value.values(): walk(item)
+        elif isinstance(value,list):
+            for item in value: walk(item)
+    # Restrict repair to expression-bearing fields, never literal dictionaries.
+    for step in plan.get('steps',[]):
+        if not isinstance(step,dict): continue
+        for key in ('expr','where','value','weight','old','new'):
+            if key in step: walk(step[key])
+        if step.get('op')=='record' and isinstance(step.get('fields'),dict):
+            for item in step['fields'].values(): walk(item)
+    return cloned,changes
 
 
 def normalize_spec(spec):
