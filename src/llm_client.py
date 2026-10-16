@@ -58,7 +58,7 @@ def get_model() -> str:
 
 class PlannerClient:
     """One SDK request per recorded attempt, with price caps and usage."""
-    def __init__(self, prompt_cap=1.0, completion_cap=4.0, max_tokens=2000):
+    def __init__(self, prompt_cap=1.0, completion_cap=4.0, max_tokens=2000, seed=42):
         self.client=get_client()
         if self.client is None: raise RuntimeError("Configure OPENROUTER_API_KEY")
         self.model=get_model()
@@ -70,6 +70,7 @@ class PlannerClient:
             catalog=json.load(response)['data']
         entry=next((item for item in catalog if item['id']==self.model),None)
         if entry is None: raise BudgetError(f"Model ID not in OpenRouter catalog: {self.model}")
+        self.seed=seed if 'seed' in entry.get('supported_parameters',[]) else None
         prices=entry.get('pricing',{})
         # Long-context price tiers must also fit the reservation. Using only
         # the cheapest tier can underestimate a repair on a large workbook.
@@ -92,11 +93,13 @@ class PlannerClient:
         for retry in range(2):
             call=ledger.reserve(messages+[{'role':'system','content':json.dumps(tools)}],self.max_tokens,self.request_rate)
             call.update(purpose=purpose,model=self.model)
+            if self.seed is not None: call['seed']=self.seed
             started=time.monotonic()
             try:
                 response=self.client.chat.completions.create(model=self.model,messages=messages,
                     max_tokens=self.max_tokens,temperature=0,
                     tools=tools,tool_choice={'type':'function','function':{'name':'execute_spreadsheet_plan'}},
+                    **({'seed':self.seed} if self.seed is not None else {}),
                     timeout=min(45,max(.1,ledger.deadline-time.monotonic())),
                     extra_body={'reasoning':{'enabled':False},
                                 'provider':{'max_price':{'prompt':self.prompt_cap,'completion':self.completion_cap}}})

@@ -1,0 +1,152 @@
+[
+  {
+    "id": 25013,
+    "file_name": "data.xlsx",
+    "query": "Trong các dòng hợp lệ, tỷ lệ điện Mặt trời trong tổng Mặt trời+Gió là bao nhiêu phần trăm? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 25021,
+    "file_name": "data.xlsx",
+    "query": "東部区域的有效记录中，电网净输入总量是多少kWh？有效指Đo thật且输入值不缺失。只回答整数。"
+  },
+  {
+    "id": 25014,
+    "file_name": "data.xlsx",
+    "query": "Nhà máy nào có tổng net_cost hợp lệ lớn nhất? Nếu bằng nhau, chọn mã tăng dần. Chỉ trả mã."
+  },
+  {
+    "id": 25006,
+    "file_name": "data.xlsx",
+    "query": "Tổng tiền VND của Miền Nam theo net_kWh*giá hiệu lực đúng đầu khoảng là bao nhiêu? Chỉ Đo thật và không thiếu điện nhập; số âm được giữ nguyên. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25004,
+    "file_name": "data.xlsx",
+    "query": "Tổng tiền VND của Miền Trung theo net_kWh*giá hiệu lực đúng đầu khoảng là bao nhiêu? Chỉ Đo thật và không thiếu điện nhập; số âm được giữ nguyên. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25016,
+    "file_name": "data.xlsx",
+    "query": "What tariff in VND/kWh applies to NM-040 at exactly 2028-01-20 10:00:00 UTC? Validity is start-inclusive, end-exclusive. Return an integer."
+  },
+  {
+    "id": 25008,
+    "file_name": "data.xlsx",
+    "query": "Trong toàn bộ bảng Điện năng 1 giờ, công suất đỉnh kW lớn nhất là bao nhiêu? Không cộng điện năng để trả lời. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25012,
+    "file_name": "data.xlsx",
+    "query": "Có bao nhiêu dòng thiếu Điện nhập kWh? Không tính các giá trị 0 là thiếu. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25023,
+    "file_name": "data.xlsx",
+    "query": "全部记录中，电力输入恰好为0的记录有多少条？不把空白当作0。只回答整数。"
+  },
+  {
+    "id": 25020,
+    "file_name": "data.xlsx",
+    "query": "Which region contains the plant of reading ĐĐ-19999? Return the exact region label."
+  },
+  {
+    "id": 25024,
+    "file_name": "data.xlsx",
+    "query": "NM-040 的最大功率 peak_kw 首次出现于哪个UTC时刻？并列取最早时间。只回答 YYYY-MM-DD HH:MM:SS。"
+  },
+  {
+    "id": 25030,
+    "file_name": "data.xlsx",
+    "query": "검증된 모든 사고의 개별 지속 시간 합계를 분으로 답하십시오. 사고 간 겹침은 이 질문에서는 각각 더합니다."
+  },
+  {
+    "id": 25018,
+    "file_name": "data.xlsx",
+    "query": "For valid readings with positive net_kwh, what is total implied carbon in kgCO2? Use each plant's gCO2/kWh times net_kwh, divide by 1000; exactly 2 decimals."
+  },
+  {
+    "id": 25019,
+    "file_name": "data.xlsx",
+    "query": "Across all valid readings, what is total battery discharge minus charge in kWh? Return an integer."
+  },
+  {
+    "id": 25015,
+    "file_name": "data.xlsx",
+    "query": "Trong workbook này, mã số thuế của đơn vị sở hữu nhà máy NM-040 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
+  },
+  {
+    "id": 25028,
+    "file_name": "data.xlsx",
+    "query": "NM-040의 전체 측정 구간 수를 정수로 답하십시오. 품질이나 결측으로 제외하지 않습니다."
+  },
+  {
+    "id": 25003,
+    "file_name": "data.xlsx",
+    "query": "Với vùng Miền Trung, tổng điện nhập ròng (nhập-xuất) của các dòng Đo thật và không thiếu điện nhập là bao nhiêu kWh? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25007,
+    "file_name": "data.xlsx",
+    "query": "Đơn giá bình quân gia quyền theo điện nhập ròng của các dòng hợp lệ có net_kwh>0 là bao nhiêu VND/kWh? Tính sum(net_cost)/sum(net_kwh). Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 25025,
+    "file_name": "data.xlsx",
+    "query": "Quelle est la somme de net_kwh valide pour les identifiants ĐĐ-19001 à ĐĐ-20000 inclus ? Un entier uniquement."
+  },
+  {
+    "id": 25027,
+    "file_name": "data.xlsx",
+    "query": "Quelle est la moyenne simple des puissances peak_kw de NM-040, toutes qualités incluses ? Deux décimales uniquement."
+  },
+  {
+    "id": 25005,
+    "file_name": "data.xlsx",
+    "query": "Với vùng Miền Nam, tổng điện nhập ròng (nhập-xuất) của các dòng Đo thật và không thiếu điện nhập là bao nhiêu kWh? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25009,
+    "file_name": "data.xlsx",
+    "query": "Có bao nhiêu khoảng đo 1 giờ giao với ít nhất một sự cố Đã xác minh? Hai khoảng [bắt đầu,kết thúc) giao nhau khi đầu này nhỏ hơn cuối kia; mỗi mã đo chỉ đếm một lần dù nhiều sự cố. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25010,
+    "file_name": "data.xlsx",
+    "query": "Tổng net_kwh hợp lệ trong tháng 02/2028 là bao nhiêu? Dùng thời điểm bắt đầu UTC, không tính các giờ tháng 01. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25001,
+    "file_name": "data.xlsx",
+    "query": "Với vùng Miền Bắc, tổng điện nhập ròng (nhập-xuất) của các dòng Đo thật và không thiếu điện nhập là bao nhiêu kWh? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25026,
+    "file_name": "data.xlsx",
+    "query": "Combien de centrales distinctes ont au moins un incident Đã xác minh ? Un entier uniquement."
+  },
+  {
+    "id": 25022,
+    "file_name": "data.xlsx",
+    "query": "有效记录中，电网净输入严格小于0的记录有多少条？只回答整数。"
+  },
+  {
+    "id": 25011,
+    "file_name": "data.xlsx",
+    "query": "Điện xuất kWh của mã ĐĐ-20000 là bao nhiêu? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25002,
+    "file_name": "data.xlsx",
+    "query": "Tổng tiền VND của Miền Bắc theo net_kWh*giá hiệu lực đúng đầu khoảng là bao nhiêu? Chỉ Đo thật và không thiếu điện nhập; số âm được giữ nguyên. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25029,
+    "file_name": "data.xlsx",
+    "query": "유효 순전력량 합계가 높은 상위 3개 발전소 코드를 답하십시오. 내림차순, 동률은 코드 오름차순, 쉼표와 공백으로 구분합니다."
+  },
+  {
+    "id": 25017,
+    "file_name": "data.xlsx",
+    "query": "How many readings have quality Ước tính? Return an integer."
+  }
+]

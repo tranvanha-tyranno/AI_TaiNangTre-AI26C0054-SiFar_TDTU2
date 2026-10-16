@@ -1,0 +1,207 @@
+{
+  "suite": "24_procurement_temporal_long",
+  "seed": 261017,
+  "description": "Mua sắm 16000 dòng: tỷ giá đúng ngày, hợp đồng hiệu lực [từ,đến), nhiều dòng một hóa đơn, ghi có, hoàn tiền, tập trung nhà cung cấp.",
+  "questions": 30,
+  "language_counts": {
+    "vi": 15,
+    "en": 5,
+    "zh": 4,
+    "fr": 3,
+    "ko": 3
+  },
+  "tables": [
+    {
+      "table": "vendors",
+      "sheet": "Nhà cung cấp",
+      "first_row": 2,
+      "last_row": 2401,
+      "record_count": 2400,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "vendor",
+          "label": "Mã NCC",
+          "type": "TEXT",
+          "column": 1
+        },
+        {
+          "key": "name",
+          "label": "Tên NCC",
+          "type": "TEXT",
+          "column": 2
+        },
+        {
+          "key": "region",
+          "label": "Vùng",
+          "type": "TEXT",
+          "column": 3
+        },
+        {
+          "key": "tier",
+          "label": "Hạng",
+          "type": "TEXT",
+          "column": 4
+        }
+      ]
+    },
+    {
+      "table": "fx",
+      "sheet": "Tỷ giá ngày",
+      "first_row": 2,
+      "last_row": 1099,
+      "record_count": 1098,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "day",
+          "label": "Ngày",
+          "type": "TEXT",
+          "column": 1,
+          "temporal": "date"
+        },
+        {
+          "key": "currency",
+          "label": "Tiền tệ",
+          "type": "TEXT",
+          "column": 2
+        },
+        {
+          "key": "rate",
+          "label": "VND / 1 đơn vị",
+          "type": "INTEGER",
+          "column": 3
+        }
+      ]
+    },
+    {
+      "table": "contracts",
+      "sheet": "Hợp đồng hiệu lực",
+      "first_row": 2,
+      "last_row": 9601,
+      "record_count": 9600,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "contract",
+          "label": "Hợp đồng",
+          "type": "TEXT",
+          "column": 1
+        },
+        {
+          "key": "vendor",
+          "label": "Mã NCC",
+          "type": "TEXT",
+          "column": 2
+        },
+        {
+          "key": "start",
+          "label": "Từ ngày (gồm)",
+          "type": "TEXT",
+          "column": 3,
+          "temporal": "date"
+        },
+        {
+          "key": "end",
+          "label": "Đến ngày (không gồm)",
+          "type": "TEXT",
+          "column": 4,
+          "temporal": "date"
+        },
+        {
+          "key": "rebate",
+          "label": "Hoàn tiền (%)",
+          "type": "INTEGER",
+          "column": 5
+        },
+        {
+          "key": "cap",
+          "label": "Hạn mức VND",
+          "type": "INTEGER",
+          "column": 6
+        }
+      ]
+    },
+    {
+      "table": "lines",
+      "sheet": "Chi tiết mua sắm",
+      "first_row": 2,
+      "last_row": 16001,
+      "record_count": 16000,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "id",
+          "label": "Mã dòng",
+          "type": "TEXT",
+          "column": 1
+        },
+        {
+          "key": "invoice",
+          "label": "Số hóa đơn",
+          "type": "TEXT",
+          "column": 2
+        },
+        {
+          "key": "day",
+          "label": "Ngày chứng từ",
+          "type": "TEXT",
+          "column": 3,
+          "temporal": "date"
+        },
+        {
+          "key": "vendor",
+          "label": "Mã NCC",
+          "type": "TEXT",
+          "column": 4
+        },
+        {
+          "key": "currency",
+          "label": "Tiền tệ",
+          "type": "TEXT",
+          "column": 5
+        },
+        {
+          "key": "amount",
+          "label": "Giá trị gốc",
+          "type": "INTEGER",
+          "column": 6
+        },
+        {
+          "key": "discount",
+          "label": "Chiết khấu (%)",
+          "type": "INTEGER",
+          "column": 7
+        },
+        {
+          "key": "sign",
+          "label": "Dấu (ghi có=-1)",
+          "type": "INTEGER",
+          "column": 8
+        },
+        {
+          "key": "status",
+          "label": "Trạng thái",
+          "type": "TEXT",
+          "column": 9
+        },
+        {
+          "key": "category",
+          "label": "Nhóm hàng",
+          "type": "TEXT",
+          "column": 10
+        },
+        {
+          "key": "units",
+          "label": "Số lượng",
+          "type": "INTEGER",
+          "column": 11
+        }
+      ]
+    }
+  ],
+  "agrees_with": "AGENTS.md sections 3, 11.1, 11.2; synthetic benchmark, not an official scoring replica",
+  "gold_order": "ascending numeric ID",
+  "unknown_answer": "",
+  "data_kind": "new fictional records"
+}

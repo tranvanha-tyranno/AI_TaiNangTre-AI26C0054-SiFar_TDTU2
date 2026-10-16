@@ -1,0 +1,278 @@
+{
+  "suite": "27_lab_units_censoring_long",
+  "seed": 261017,
+  "description": "30000 phép kiểm nghiệm, 27 cột tới AA: đổi mg/L–µg/L, kiểm duyệt '<', ô thiếu, tiêu đề lặp, trung vị, phân vị, điều kiện đủ cả ba chất.",
+  "questions": 30,
+  "language_counts": {
+    "vi": 15,
+    "en": 5,
+    "zh": 4,
+    "fr": 3,
+    "ko": 3
+  },
+  "tables": [
+    {
+      "table": "sites",
+      "sheet": "Điểm quan trắc",
+      "first_row": 2,
+      "last_row": 1501,
+      "record_count": 1500,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "site",
+          "label": "Mã điểm",
+          "type": "TEXT",
+          "column": 1
+        },
+        {
+          "key": "matrix",
+          "label": "Nền mẫu",
+          "type": "TEXT",
+          "column": 2
+        },
+        {
+          "key": "name",
+          "label": "Tên điểm",
+          "type": "TEXT",
+          "column": 3
+        }
+      ]
+    },
+    {
+      "table": "limits",
+      "sheet": "Ngưỡng nội bộ",
+      "first_row": 2,
+      "last_row": 13,
+      "record_count": 12,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "analyte",
+          "label": "Chất",
+          "type": "TEXT",
+          "column": 1
+        },
+        {
+          "key": "matrix",
+          "label": "Nền mẫu",
+          "type": "TEXT",
+          "column": 2
+        },
+        {
+          "key": "limit_ug",
+          "label": "Ngưỡng µg/L",
+          "type": "INTEGER",
+          "column": 3
+        }
+      ]
+    },
+    {
+      "table": "results",
+      "sheet": "Résultats dài",
+      "first_row": 2,
+      "last_row": 30030,
+      "record_count": 30000,
+      "skip_rows": [
+        1002,
+        2003,
+        3004,
+        4005,
+        5006,
+        6007,
+        7008,
+        8009,
+        9010,
+        10011,
+        11012,
+        12013,
+        13014,
+        14015,
+        15016,
+        16017,
+        17018,
+        18019,
+        19020,
+        20021,
+        21022,
+        22023,
+        23024,
+        24025,
+        25026,
+        26027,
+        27028,
+        28029,
+        29030
+      ],
+      "columns": [
+        {
+          "key": "id",
+          "label": "Mã kết quả",
+          "type": "TEXT",
+          "column": 1
+        },
+        {
+          "key": "sample",
+          "label": "Mã mẫu",
+          "type": "TEXT",
+          "column": 2
+        },
+        {
+          "key": "site",
+          "label": "Mã điểm",
+          "type": "TEXT",
+          "column": 3
+        },
+        {
+          "key": "day",
+          "label": "Ngày lấy mẫu",
+          "type": "TEXT",
+          "column": 4,
+          "temporal": "date"
+        },
+        {
+          "key": "analyte",
+          "label": "Chất",
+          "type": "TEXT",
+          "column": 5
+        },
+        {
+          "key": "unit",
+          "label": "Đơn vị",
+          "type": "TEXT",
+          "column": 6
+        },
+        {
+          "key": "result",
+          "label": "Kết quả",
+          "type": "",
+          "column": 7
+        },
+        {
+          "key": "qualifier",
+          "label": "Định lượng",
+          "type": "TEXT",
+          "column": 8
+        },
+        {
+          "key": "quality",
+          "label": "Duyệt",
+          "type": "TEXT",
+          "column": 9
+        },
+        {
+          "key": "volume",
+          "label": "Thể tích mL",
+          "type": "INTEGER",
+          "column": 10
+        },
+        {
+          "key": "batch",
+          "label": "Lô",
+          "type": "TEXT",
+          "column": 11
+        },
+        {
+          "key": "instrument",
+          "label": "Thiết bị",
+          "type": "TEXT",
+          "column": 12
+        },
+        {
+          "key": "temperature",
+          "label": "Nhiệt độ °C",
+          "type": "REAL",
+          "column": 13
+        },
+        {
+          "key": "humidity",
+          "label": "Độ ẩm %",
+          "type": "INTEGER",
+          "column": 14
+        },
+        {
+          "key": "runtime",
+          "label": "Phút chạy",
+          "type": "INTEGER",
+          "column": 15
+        },
+        {
+          "key": "signal",
+          "label": "Tín hiệu thô",
+          "type": "INTEGER",
+          "column": 16
+        },
+        {
+          "key": "blank",
+          "label": "Mẫu trắng",
+          "type": "INTEGER",
+          "column": 17
+        },
+        {
+          "key": "calibration",
+          "label": "Hệ số chuẩn",
+          "type": "REAL",
+          "column": 18
+        },
+        {
+          "key": "pressure",
+          "label": "Áp suất kPa",
+          "type": "INTEGER",
+          "column": 19
+        },
+        {
+          "key": "method",
+          "label": "Phương pháp",
+          "type": "TEXT",
+          "column": 20
+        },
+        {
+          "key": "lod_ug",
+          "label": "LOD µg/L",
+          "type": "INTEGER",
+          "column": 21
+        },
+        {
+          "key": "dilution",
+          "label": "Pha loãng",
+          "type": "INTEGER",
+          "column": 22
+        },
+        {
+          "key": "operator",
+          "label": "Kỹ thuật viên",
+          "type": "TEXT",
+          "column": 23
+        },
+        {
+          "key": "channel",
+          "label": "Kênh",
+          "type": "TEXT",
+          "column": 24
+        },
+        {
+          "key": "reference",
+          "label": "Chuẩn thu hồi %",
+          "type": "REAL",
+          "column": 25
+        },
+        {
+          "key": "uncertainty",
+          "label": "Độ không đảm bảo",
+          "type": "REAL",
+          "column": 26
+        },
+        {
+          "key": "recovery",
+          "label": "Thu hồi %",
+          "type": "REAL",
+          "column": 27
+        }
+      ]
+    }
+  ],
+  "agrees_with": "AGENTS.md sections 3, 11.1, 11.2; synthetic benchmark, not an official scoring replica",
+  "gold_order": "ascending numeric ID",
+  "unknown_answer": "",
+  "data_kind": "new fictional records"
+}

@@ -1,0 +1,152 @@
+[
+  {
+    "id": 23028,
+    "file_name": "data.xlsx",
+    "query": "DV-12000의 6개 하위 항목 중 최대 비율을 소수점 둘째 자리까지 답하십시오. Total은 제외합니다."
+  },
+  {
+    "id": 23006,
+    "file_name": "data.xlsx",
+    "query": "Trong Cỡ mẫu, mã DV-11999, tổng số người ở 6 nhóm con là bao nhiêu? Không cộng thêm hai cột tổng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 23001,
+    "file_name": "data.xlsx",
+    "query": "Ở Khảo sát 2028, mã DV-00001, trung bình across all nhóm dịch vụ là bao nhiêu? Theo quy ước đề thi, lấy cả 8 cột dữ liệu, gồm hai cột Total; không dùng trọng số. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23027,
+    "file_name": "data.xlsx",
+    "query": "Combien de lignes Hài lòng confirmées sont présentes en 2028-12 ? Répondez par un entier."
+  },
+  {
+    "id": 23022,
+    "file_name": "data.xlsx",
+    "query": "在2028年12月的 Hài lòng 记录中，海港的 Cấp nước Total 按每行 Tổng mẫu 加权的平均值是多少？保留两位小数。"
+  },
+  {
+    "id": 23003,
+    "file_name": "data.xlsx",
+    "query": "Trong Cỡ mẫu, mã DV-00001, tổng số người ở 6 nhóm con là bao nhiêu? Không cộng thêm hai cột tổng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 23012,
+    "file_name": "data.xlsx",
+    "query": "Trong tất cả 12000 khảo sát, bao nhiêu phần trăm có trạng thái Tạm tính? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23017,
+    "file_name": "data.xlsx",
+    "query": "Among confirmed Hài lòng records in December 2028, list the top 3 survey IDs by the 6-leaf mean descending, ties by ID ascending. Separate IDs with comma and one space."
+  },
+  {
+    "id": 23020,
+    "file_name": "data.xlsx",
+    "query": "Among DV-11001 through DV-12000 inclusive, which ID has the lowest displayed Chất thải Total? Break ties by ID ascending. Return only the ID."
+  },
+  {
+    "id": 23030,
+    "file_name": "data.xlsx",
+    "query": "DV-12000의 Chất thải Total 값은 얼마입니까? 다른 그룹의 Total과 구분하여 소수점 둘째 자리까지 답하십시오."
+  },
+  {
+    "id": 23010,
+    "file_name": "data.xlsx",
+    "query": "Trong tháng 2028-12, chỉ tiêu Hài lòng, phường nào có trung bình 8 cột cao nhất (kể cả Total)? Nếu bằng nhau, chọn mã tăng dần. Chỉ trả mã."
+  },
+  {
+    "id": 23008,
+    "file_name": "data.xlsx",
+    "query": "Mã DV-12000 thuộc phường nào? Chỉ trả đúng mã phường."
+  },
+  {
+    "id": 23019,
+    "file_name": "data.xlsx",
+    "query": "How many distinct wards appear in Khảo sát 2028, across both metrics and all months? Return an integer."
+  },
+  {
+    "id": 23015,
+    "file_name": "data.xlsx",
+    "query": "Trong workbook này, mã chứng nhận ISO của đơn vị thu thập khảo sát DV-12000 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
+  },
+  {
+    "id": 23025,
+    "file_name": "data.xlsx",
+    "query": "Pour DV-06001, quelle est la moyenne non pondérée de toutes les 8 colonnes de taux, y compris les deux Total ? Deux décimales uniquement."
+  },
+  {
+    "id": 23007,
+    "file_name": "data.xlsx",
+    "query": "Với DV-11999, tính tỷ lệ gộp có trọng số theo cỡ mẫu của 6 nhóm con: sum(tỷ lệ*cỡ mẫu)/sum(cỡ mẫu). Không dùng hai Total. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23002,
+    "file_name": "data.xlsx",
+    "query": "Với DV-00001, trung bình chỉ 6 nhóm con (subcategories only, excluding totals) của hai dịch vụ là bao nhiêu? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23013,
+    "file_name": "data.xlsx",
+    "query": "Ở phường P0499 tháng 2028-12, trung bình 8 cột của Hài lòng trừ trung bình 8 cột của Đúng hạn là bao nhiêu điểm phần trăm? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23016,
+    "file_name": "data.xlsx",
+    "query": "For DV-11999, what is the unweighted 8-column mean including both Total columns minus the 6-leaf mean? Return exactly 2 decimals."
+  },
+  {
+    "id": 23026,
+    "file_name": "data.xlsx",
+    "query": "Pour DV-06001, quelle est la moyenne des six sous-catégories seulement, sans Total ? Deux décimales uniquement."
+  },
+  {
+    "id": 23011,
+    "file_name": "data.xlsx",
+    "query": "Tổng mẫu của các khảo sát Đúng hạn tại Cần Thơ trong quý 4/2028 là bao nhiêu? Chỉ cộng trường Tổng mẫu mỗi dòng một lần. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 23014,
+    "file_name": "data.xlsx",
+    "query": "Trong Lưu trữ 2027, Điểm của OLD-02400 là bao nhiêu? Không lấy giá trị ở Khảo sát 2028. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 23004,
+    "file_name": "data.xlsx",
+    "query": "Ở Khảo sát 2028, mã DV-11999, trung bình across all nhóm dịch vụ là bao nhiêu? Theo quy ước đề thi, lấy cả 8 cột dữ liệu, gồm hai cột Total; không dùng trọng số. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23024,
+    "file_name": "data.xlsx",
+    "query": "有多少条记录的 Tổng mẫu 为0？只回答整数，不要把没有匹配项当作缺失答案。"
+  },
+  {
+    "id": 23023,
+    "file_name": "data.xlsx",
+    "query": "DV-12000 的 Cấp nước Total 减去 Chất thải Total 是多少个百分点？保留两位小数。"
+  },
+  {
+    "id": 23029,
+    "file_name": "data.xlsx",
+    "query": "DV-11501부터 DV-12000까지의 Tổng mẫu 합계를 정수로 답하십시오. 각 행은 한 번만 더합니다."
+  },
+  {
+    "id": 23021,
+    "file_name": "data.xlsx",
+    "query": "在 Khảo sát 2028 中，城市为海港且指标为 Hài lòng 的记录有多少条？只回答整数。"
+  },
+  {
+    "id": 23018,
+    "file_name": "data.xlsx",
+    "query": "How many confirmed Đúng hạn records have the displayed Cấp nước Total strictly above 75.0? Return an integer."
+  },
+  {
+    "id": 23005,
+    "file_name": "data.xlsx",
+    "query": "Với DV-11999, trung bình chỉ 6 nhóm con (subcategories only, excluding totals) của hai dịch vụ là bao nhiêu? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23009,
+    "file_name": "data.xlsx",
+    "query": "Có bao nhiêu khảo sát Hài lòng tại Huế có trạng thái Đã xác nhận và tỷ lệ Cơ bản >= 80? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  }
+]

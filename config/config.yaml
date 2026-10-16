@@ -9,6 +9,7 @@ base_url: https://openrouter.ai/api/v1
 
 # Giới hạn đề thi
 max_tokens_plan: 3000
+llm_seed: 42  # Used only when the configured model advertises seed support.
 max_cost_per_question: 0.10
 max_api_calls: 4
 max_plan_repairs: 2

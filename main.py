@@ -147,7 +147,7 @@ def main():
         planner = PlannerClient(
             prompt_cap=cfg.get('max_prompt_price_per_million', 1.0),
             completion_cap=cfg.get('max_completion_price_per_million', 4.0),
-            max_tokens=cfg.get('max_tokens_plan', 2000))
+            max_tokens=cfg.get('max_tokens_plan', 2000),seed=cfg.get('llm_seed',42))
     except Exception as error:
         print(f"[ERROR] Không khởi tạo được planner: {error}", file=sys.stderr)
         sys.exit(2)

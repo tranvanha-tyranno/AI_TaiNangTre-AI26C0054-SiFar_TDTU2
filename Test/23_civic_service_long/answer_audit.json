@@ -1,0 +1,427 @@
+{
+  "schema_version": 1,
+  "views": [
+    "CREATE VIEW scores AS SELECT *, (water_total+basic+advanced+special+residential+commercial+public+waste_total) AS all_sum, (basic+advanced+special+residential+commercial+public) AS leaf_sum FROM civic"
+  ],
+  "checks": [
+    {
+      "id": 23001,
+      "language": "vi",
+      "category": "mean_all_includes_totals",
+      "sql": "SELECT all_sum,8 FROM scores WHERE id=?",
+      "params": [
+        "DV-00001"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "66.16"
+    },
+    {
+      "id": 23002,
+      "language": "vi",
+      "category": "mean_excludes_totals",
+      "sql": "SELECT leaf_sum,6 FROM scores WHERE id=?",
+      "params": [
+        "DV-00001"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "64.72"
+    },
+    {
+      "id": 23003,
+      "language": "vi",
+      "category": "sum_no_double_count",
+      "sql": "SELECT basic+advanced+special+residential+commercial+public FROM counts WHERE id=?",
+      "params": [
+        "DV-00001"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3071"
+    },
+    {
+      "id": 23004,
+      "language": "vi",
+      "category": "mean_all_includes_totals",
+      "sql": "SELECT all_sum,8 FROM scores WHERE id=?",
+      "params": [
+        "DV-11999"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "56.85"
+    },
+    {
+      "id": 23005,
+      "language": "vi",
+      "category": "mean_excludes_totals",
+      "sql": "SELECT leaf_sum,6 FROM scores WHERE id=?",
+      "params": [
+        "DV-11999"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "57.50"
+    },
+    {
+      "id": 23006,
+      "language": "vi",
+      "category": "sum_no_double_count",
+      "sql": "SELECT basic+advanced+special+residential+commercial+public FROM counts WHERE id=?",
+      "params": [
+        "DV-11999"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2987"
+    },
+    {
+      "id": 23007,
+      "language": "vi",
+      "category": "weighted_pool",
+      "sql": "SELECT s.basic*c.basic+s.advanced*c.advanced+s.special*c.special+s.residential*c.residential+s.commercial*c.commercial+s.public*c.public,c.basic+c.advanced+c.special+c.residential+c.commercial+c.public FROM civic s JOIN counts c USING(id) WHERE id='DV-11999'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "56.88"
+    },
+    {
+      "id": 23008,
+      "language": "vi",
+      "category": "tail_lookup",
+      "sql": "SELECT ward FROM civic WHERE id='DV-12000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "P0500"
+    },
+    {
+      "id": 23009,
+      "language": "vi",
+      "category": "multi_filter",
+      "sql": "SELECT count(*) FROM civic WHERE metric='Hài lòng' AND city='Huế' AND status='Đã xác nhận' AND basic>=80",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "306"
+    },
+    {
+      "id": 23010,
+      "language": "vi",
+      "category": "group_rank",
+      "sql": "SELECT ward FROM scores WHERE period='2028-12' AND metric='Hài lòng' ORDER BY all_sum DESC,ward LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "P0348"
+    },
+    {
+      "id": 23011,
+      "language": "vi",
+      "category": "date_scope",
+      "sql": "SELECT sum(respondents) FROM civic WHERE metric='Đúng hạn' AND city='Cần Thơ' AND period BETWEEN '2028-10' AND '2028-12'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "838665"
+    },
+    {
+      "id": 23012,
+      "language": "vi",
+      "category": "conditional_percentage",
+      "sql": "SELECT sum(status='Tạm tính'),count(*) FROM civic",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "1.03"
+    },
+    {
+      "id": 23013,
+      "language": "vi",
+      "category": "paired_metric",
+      "sql": "SELECT a.all_sum-b.all_sum,8 FROM scores a JOIN scores b ON a.ward=b.ward AND a.period=b.period WHERE a.ward='P0499' AND a.period='2028-12' AND a.metric='Hài lòng' AND b.metric='Đúng hạn'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "-1.05"
+    },
+    {
+      "id": 23014,
+      "language": "vi",
+      "category": "cross_sheet_archive",
+      "sql": "SELECT score FROM archive WHERE id='OLD-02400'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "18"
+    },
+    {
+      "id": 23015,
+      "language": "vi",
+      "category": "unavailable_field",
+      "sql": "SELECT NULL",
+      "params": [],
+      "presentation": {
+        "kind": "empty"
+      },
+      "answer": ""
+    },
+    {
+      "id": 23016,
+      "language": "en",
+      "category": "all_vs_leaf_gap",
+      "sql": "SELECT all_sum/8.0-leaf_sum/6.0 FROM scores WHERE id='DV-11999'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "-0.65"
+    },
+    {
+      "id": 23017,
+      "language": "en",
+      "category": "top_k",
+      "sql": "SELECT id FROM scores WHERE metric='Hài lòng' AND period='2028-12' AND status='Đã xác nhận' ORDER BY leaf_sum DESC,id LIMIT 3",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "DV-11848, DV-11995, DV-11827"
+    },
+    {
+      "id": 23018,
+      "language": "en",
+      "category": "strict_boundary",
+      "sql": "SELECT count(*) FROM civic WHERE metric='Đúng hạn' AND status='Đã xác nhận' AND water_total>75",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1067"
+    },
+    {
+      "id": 23019,
+      "language": "en",
+      "category": "distinct_count",
+      "sql": "SELECT count(DISTINCT ward) FROM civic",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "500"
+    },
+    {
+      "id": 23020,
+      "language": "en",
+      "category": "minimum_tail",
+      "sql": "SELECT id FROM civic WHERE id BETWEEN 'DV-11001' AND 'DV-12000' ORDER BY waste_total,id LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "DV-11557"
+    },
+    {
+      "id": 23021,
+      "language": "zh",
+      "category": "unicode_filter",
+      "sql": "SELECT count(*) FROM civic WHERE city='海港' AND metric='Hài lòng'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1200"
+    },
+    {
+      "id": 23022,
+      "language": "zh",
+      "category": "weighted_city",
+      "sql": "SELECT sum(water_total*respondents),sum(respondents) FROM civic WHERE city='海港' AND metric='Hài lòng' AND period='2028-12'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "61.33"
+    },
+    {
+      "id": 23023,
+      "language": "zh",
+      "category": "difference",
+      "sql": "SELECT water_total-waste_total FROM civic WHERE id='DV-12000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "1.80"
+    },
+    {
+      "id": 23024,
+      "language": "zh",
+      "category": "nonempty_zero",
+      "sql": "SELECT count(*) FROM civic WHERE respondents=0",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "0"
+    },
+    {
+      "id": 23025,
+      "language": "fr",
+      "category": "mean_all_scope",
+      "sql": "SELECT all_sum,8 FROM scores WHERE id='DV-06001'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "69.05"
+    },
+    {
+      "id": 23026,
+      "language": "fr",
+      "category": "leaf_scope",
+      "sql": "SELECT leaf_sum,6 FROM scores WHERE id='DV-06001'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "68.10"
+    },
+    {
+      "id": 23027,
+      "language": "fr",
+      "category": "scope_count",
+      "sql": "SELECT count(*) FROM civic WHERE metric='Hài lòng' AND status='Đã xác nhận' AND period='2028-12'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "495"
+    },
+    {
+      "id": 23028,
+      "language": "ko",
+      "category": "cross_column_max",
+      "sql": "SELECT max(basic,advanced,special,residential,commercial,public) FROM civic WHERE id='DV-12000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "81.60"
+    },
+    {
+      "id": 23029,
+      "language": "ko",
+      "category": "sum_tail",
+      "sql": "SELECT sum(respondents) FROM civic WHERE id BETWEEN 'DV-11501' AND 'DV-12000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1350170"
+    },
+    {
+      "id": 23030,
+      "language": "ko",
+      "category": "header_position",
+      "sql": "SELECT waste_total FROM civic WHERE id='DV-12000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "59.50"
+    }
+  ]
+}
