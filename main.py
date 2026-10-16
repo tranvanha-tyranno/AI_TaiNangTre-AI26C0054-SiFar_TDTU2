@@ -51,9 +51,18 @@ def main():
         except AttributeError:
             pass
     ap = argparse.ArgumentParser(description="Excel QA pipeline — Chủ đề 2")
-    ap.add_argument("--xlsx_dir", type=str, default=None, help="Thư mục chứa .xlsx")
+    # Accept both the historical underscore spelling and the hyphenated
+    # spelling used by the competition runner.
+    ap.add_argument("--xlsx_dir", "--xlsx-dir", dest="xlsx_dir", type=str, default=None,
+                    help="Thư mục chứa .xlsx")
     ap.add_argument("--queries", type=str, default=None, help="Đường dẫn queries.json")
     ap.add_argument("--output", type=str, default=None, help="Đường dẫn submission.csv")
+    ap.add_argument("--openrouter-key", dest="openrouter_key", default=None,
+                    help="OpenRouter API key supplied by the competition runner")
+    ap.add_argument("--openrouter-model", dest="openrouter_model", default=None,
+                    help="OpenRouter model ID supplied by the competition runner")
+    ap.add_argument("--openrouter-base-url", dest="openrouter_base_url", default=None,
+                    help="OpenRouter-compatible API base URL supplied by the runner")
     ap.add_argument("--log-dir", default="outputs/logs", help="Nhật ký từng câu")
     ap.add_argument("--config", type=str, default="config/config.yaml", help="File config yaml (optional)")
     ap.add_argument("--concurrency", type=int, default=None)
@@ -65,6 +74,16 @@ def main():
         load_dotenv(Path(__file__).parent / ".env", override=False)
     except ImportError:
         pass
+
+    # The official Docker contract passes provider settings as command-line
+    # arguments. Translate them to the environment variables already used by
+    # the local CLI so the rest of the pipeline has one configuration path.
+    if args.openrouter_key is not None:
+        os.environ["OPENROUTER_API_KEY"] = args.openrouter_key
+    if args.openrouter_model is not None:
+        os.environ["MODEL_NAME"] = args.openrouter_model
+    if args.openrouter_base_url is not None:
+        os.environ["OPENROUTER_BASE_URL"] = args.openrouter_base_url
 
     cfg = {}
     if args.config and Path(args.config).exists():

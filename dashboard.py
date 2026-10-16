@@ -53,11 +53,22 @@ def read_json(path, default=None):
 
 
 def datasets():
-    """Danh mục dataset cho dashboard: public + từng thư mục trong Test/."""
+    """Danh mục dataset: các đợt Public_data_* và từng thư mục trong Test/."""
     result = [{"id": DATASET_DEFAULT, "label": "Public_data_1 (mặc định)", "kind": "public",
                "xlsx_dir": str(ROOT / "Public_data_1" / "xlsx_files"),
                "queries": str(ROOT / "Public_data_1" / "queries.json"),
                "reference": str(ROOT / "Public_data_1" / "sample_submission.csv")}]
+    for p in sorted(ROOT.glob("Public_data_*")):
+        if p.name == "Public_data_1" or not (p / "queries.json").is_file() or not (p / "xlsx_files").is_dir():
+            continue
+        ref = p / "expected_submission.csv"
+        if not ref.is_file():
+            ref = p / "sample_submission.csv"
+        result.append({
+            "id": p.name.lower(), "label": p.name, "kind": "public",
+            "xlsx_dir": str(p / "xlsx_files"), "queries": str(p / "queries.json"),
+            "reference": str(ref),
+        })
     if TEST_ROOT.exists():
         for p in sorted(TEST_ROOT.iterdir()):
             if p.is_dir() and (p / "queries.json").is_file() and (p / "xlsx_files").is_dir():
@@ -91,7 +102,7 @@ def datasets():
 def configure_extra_datasets(paths):
     """Register arbitrary dataset folders without copying them into Test/."""
     folders = []
-    known = {(ROOT / "Public_data_1").resolve()}
+    known = {Path(d["queries"]).parent.resolve() for d in datasets() if d["kind"] != "external"}
     if TEST_ROOT.is_dir():
         known.update(p.resolve() for p in TEST_ROOT.iterdir() if p.is_dir())
     for raw in paths:

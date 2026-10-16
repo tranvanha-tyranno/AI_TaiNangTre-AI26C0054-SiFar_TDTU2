@@ -43,6 +43,8 @@ Sau đó mở http://127.0.0.1:8502. Khi cập nhật mã: dừng server, chạy
 
 Dashboard đọc log cục bộ; mở trang và xem kết quả không gọi LLM. Chọn bộ dữ liệu, bấm **Chạy mới**, chọn phạm vi để bắt đầu một lần chạy. Mọi dataset đều dùng LLM + Tools.
 
+Dashboard tự nhận các thư mục `Public_data_*`. Bộ **Public_data_2** có sẵn trong danh sách Dataset, kèm đáp án từ `sample_submission.csv` để đối chiếu. Mở trực tiếp: http://127.0.0.1:8501/?dataset=public_data_2.
+
 **Nạp bộ dữ liệu mới ngoài Public/Test:** đặt Excel trong `xlsx_files/`, câu hỏi trong `queries.json`, rồi khởi động:
 
 ```powershell
@@ -79,6 +81,14 @@ Kết quả nằm ở `outputs/cli-public/submission.csv`. Không cần chạy `
 
 ```bash
 ./.venv/Scripts/python.exe main.py --mode llm --xlsx_dir ./Public_data_1/xlsx_files --queries ./Public_data_1/queries.json --output ./outputs/cli-public/submission.csv --log-dir ./outputs/cli-public/logs
+```
+
+### Chạy Public 2
+
+Chạy bộ Public 2 và lưu kết quả riêng:
+
+```powershell
+.\.venv\Scripts\python.exe main.py --mode llm --xlsx_dir .\Public_data_2\xlsx_files --queries .\Public_data_2\queries.json --output .\outputs\cli-public-2\submission.csv --log-dir .\outputs\cli-public-2\logs
 ```
 
 ### Chạy một bộ Test riêng
@@ -210,3 +220,44 @@ node tests/dashboard_dom.cjs
 Bài kiểm tra DOM mock yêu cầu chạy mới; không gọi LLM. Kiểm tra dữ liệu Test ở [Test/README.md](Test/README.md).
 
 Mã chính: `main.py`, `src/`, `config/`; giao diện: `dashboard.py`, `dashboard/dist/`; kiểm tra: `tests/`, `scripts/`. Khi đóng gói, kèm mã nguồn, phụ thuộc, cấu hình và README; loại `.venv`, `.env`, `outputs` và dữ liệu mẫu khỏi ZIP.
+
+## 8. Đóng gói và chạy bằng Docker để nộp bài
+
+`Dockerfile` phải nằm ngay ở thư mục gốc của file ZIP. Image dùng Linux amd64, không cần GPU, cài các thư viện từ `requirements.txt` và không chứa API key hoặc dữ liệu mẫu.
+
+### Tạo file ZIP
+
+Không nén `.env`, `.venv`, `outputs`, `Public_data_1` hoặc `Test`. Trên PowerShell, dùng danh sách tệp cụ thể để giữ Dockerfile ở gốc ZIP:
+
+```powershell
+$files = @("Dockerfile", ".dockerignore", "main.py", "README.md",
+           "COMPETITION_CONSTRAINTS.md", "requirements.txt", "config", "src")
+Compress-Archive -Path $files -DestinationPath team001.zip -Force
+```
+
+Đổi `team001.zip` thành tên đội và kiểm tra dung lượng ZIP không quá 100 MB.
+
+### Build image
+
+```bash
+docker build --platform linux/amd64 -t sifar-excel-qa:latest .
+```
+
+### Chạy theo hợp đồng của hệ thống chấm
+
+Thay `<KEY>` bằng API key do hệ thống cấp. Các thư mục input được mount chỉ đọc; kết quả được ghi vào `/output/submission.csv`:
+
+```bash
+docker run --rm \
+  -v "$(pwd)/input:/input:ro" \
+  -v "$(pwd)/output:/output" \
+  sifar-excel-qa:latest \
+  --xlsx-dir /input/xlsx_files \
+  --queries /input/queries.json \
+  --output /output/submission.csv \
+  --openrouter-key "<KEY>" \
+  --openrouter-model qwen/qwen3.7-flash \
+  --openrouter-base-url https://openrouter.ai/api/v1
+```
+
+Chương trình chỉ ghi hai cột `id,answer` vào CSV; nhật ký tiến trình đi ra stdout/stderr. Cách viết cũ `--xlsx_dir` vẫn được hỗ trợ.
