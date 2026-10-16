@@ -6,6 +6,7 @@ from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 import math
 import re
 import time
+from collections import Counter
 from openpyxl.utils import get_column_letter
 
 
@@ -111,6 +112,9 @@ def expression(expr, row, results, depth=0):
         value = (end-start).days if op=='date_diff_days' else end.year-start.year-((end.month,end.day)<(start.month,start.day))
     elif op in {'eq','ne','gt','ge','lt','le'}:
         a,b=values
+        if isinstance(a,(date,datetime)) or isinstance(b,(date,datetime)):
+            try: a,b=as_date(a),as_date(b)
+            except PlanError: pass
         if op in {'eq','ne'} and (a is None or b is None):
             return Result((a==b) if op=='eq' else (a!=b),sources)
         if isinstance(a,(int,float,Decimal)) or isinstance(b,(int,float,Decimal)):
@@ -141,6 +145,13 @@ def rows_of(results, name):
 def aggregate(rows, metric, expr, results, missing='error'):
     if metric=='count':
         return Result(len(rows),set().union(*(set(row.get('__filter_sources',[])) | set().union(*(set(v) for v in row.get('__sources',{}).values())) for row in rows)))
+    if metric=='distinct_count':
+        values=[];sources=set()
+        for row in rows:
+            value=expression(expr,row,results)
+            if value.value not in (None,''):
+                values.append(str(value.value));sources.update(value.sources)
+        return Result(len(set(values)),sources)
     if metric=='sum' and len(rows)>1:
         # Tables frequently print a grand total above/below its components.
         # Summing both is syntactically valid but double-counts the data.
@@ -189,7 +200,7 @@ def format_value(value, fmt):
         v=number(value)
         return str(int(v)) if v==v.to_integral_value() else format(v,'f').rstrip('0').rstrip('.')
     if isinstance(value,(datetime,date)):
-        return value.isoformat()
+        return value.date().isoformat() if isinstance(value,datetime) else value.isoformat()
     if value is None:
         raise PlanError("Final answer is missing")
     cleaned=re.sub(r'(?<=\w)-\s+(?=\w)','',str(value))
@@ -207,7 +218,7 @@ def execute(plan, regions):
                         'limit/offset belong in a take STEP after sorting, not in output. '
                         'Totals require an aggregate or sum_columns STEP; output only formats the final result.')
     index={r.id:r for r in regions}
-    results,trace={},[]
+    results,trace,row_samples={},[],{}
     materialized_cells=0
     for step in plan['steps']:
         started=time.monotonic()
@@ -220,7 +231,7 @@ def execute(plan, regions):
             'filter':{'input','where'},'derive':{'input','column','expr'},'sort':{'input','by'},
             'take':{'input','offset','limit'},'select':{'input','columns'},
             'aggregate':{'input','metric','expr','missing'},'group':{'input','by','metric','expr','column','missing'},
-            'join':{'left','right','left_on','right_on'},'calculate':{'expr'}}
+            'join':{'left','right','left_on','right_on','cardinality'},'calculate':{'expr','input'}}
         if op not in allowed: raise PlanError(f'Tool not allowed: {op}')
         required={
             'read':['table'],'cell':['table','row','column'],'sum_columns':['table','row','columns'],
@@ -299,6 +310,31 @@ def execute(plan, regions):
             if not isinstance(keep_columns,list) or any(c in {'column','label','value','_row'} or c.startswith('__') for c in keep_columns):
                 raise PlanError('Invalid unpivot keep_columns')
             label_row=step.get('label_row'); label_region=index.get(step.get('label_table'))
+            # Horizontal tables often keep category names in the nearest
+            # textual header row of the same retrieved region. Infer that
+            # row only when the planner omitted label_table/label_row; this
+            # remains coordinate based and cannot invent a label.
+            if label_region is None:
+                source_region=None
+                for candidate_region in regions:
+                    if not rows: continue
+                    sample=rows[0]
+                    valid=True
+                    for col in columns:
+                        col_index=next((c for c in range(candidate_region.start_col,candidate_region.end_col+1)
+                                    if get_column_letter(c)==col),-1)
+                        if (sample.get('_row'),col_index) not in candidate_region.cells:
+                            valid=False;break
+                    if valid:
+                        source_region=candidate_region;break
+                if source_region is not None:
+                    row_numbers=sorted({r for r,c in source_region.cells if r < min((row.get('_row',source_region.end_row) for row in rows),default=source_region.end_row)})
+                    candidates=[]
+                    for candidate in row_numbers:
+                        values=[source_region.cells.get((candidate,next((c for c in range(source_region.start_col,source_region.end_col+1) if get_column_letter(c)==col),-1))) for col in columns]
+                        if values and all(isinstance(v,str) and v.strip() for v in values): candidates.append(candidate)
+                    if candidates:
+                        label_row=max(candidates); label_region=source_region
             value=[]
             for row in rows:
                 if any(c not in row for c in keep_columns): raise PlanError('Unknown unpivot keep column')
@@ -381,6 +417,23 @@ def execute(plan, regions):
             left,right=rows_of(results,step.get('left')),rows_of(results,step.get('right'))
             lk,rk=step.get('left_on'),step.get('right_on')
             if len(left)*len(right)>1000000: raise PlanError("Join exceeds execution limit")
+            if any(lk not in row for row in left) or any(rk not in row for row in right):
+                raise PlanError('Unknown join key')
+            cardinality=step.get('cardinality','many_to_one')
+            if cardinality not in {'many_to_one','one_to_one','one_to_many','many_to_many'}:
+                raise PlanError('Invalid join cardinality')
+            left_keys=Counter(row[lk] for row in left if row[lk] is not None)
+            right_keys=Counter(row[rk] for row in right if row[rk] is not None)
+            audit={'cardinality':cardinality,'left_rows':len(left),'right_rows':len(right),
+                   'left_duplicate_keys':sum(n>1 for n in left_keys.values()),
+                   'right_duplicate_keys':sum(n>1 for n in right_keys.values()),
+                   'unmatched_left_rows':sum(row[lk] is None or row[lk] not in right_keys for row in left),
+                   'unmatched_right_rows':sum(row[rk] is None or row[rk] not in left_keys for row in right)}
+            if cardinality in {'many_to_one','one_to_one'} and audit['right_duplicate_keys']:
+                raise PlanError(f'Join cardinality {cardinality}: duplicate right lookup keys would multiply rows. '
+                                f'Audit: {audit}. Aggregate/filter the lookup table, or explicitly choose the true relationship.')
+            if cardinality in {'one_to_many','one_to_one'} and audit['left_duplicate_keys']:
+                raise PlanError(f'Join cardinality {cardinality}: duplicate left keys. Audit: {audit}')
             value=[]
             for a in left:
                 if lk not in a: raise PlanError("Unknown left join key")
@@ -395,7 +448,8 @@ def execute(plan, regions):
                                 row['__sources'][prefix+col]=record['__sources'].get(col,[])
                         value.append(row)
                         if len(value)>10000: raise PlanError('Join result exceeds 10000 rows')
-            result=Result(value,set())
+            result=Result(value,set(results[step['left']].sources)|set(results[step['right']].sources))
+            audit.update(output_rows=len(value),expansion_factor=round(len(value)/len(left),4) if left else 0)
         elif op=='calculate':
             result=expression(step.get('expr'),{},results)
             if not result.sources: raise PlanError("Calculation must depend on spreadsheet data")
@@ -406,9 +460,17 @@ def execute(plan, regions):
             materialized_cells += sum(len(row.get('__sources',{})) for row in result.value)
             if materialized_cells>500000: raise PlanError('Plan exceeds intermediate memory limit')
         results[name]=result
+        if isinstance(result.value,list):
+            def sample_value(value):
+                if isinstance(value,(datetime,date)): return value.isoformat()
+                if isinstance(value,Decimal): return str(value)
+                if isinstance(value,str): return value[:160]
+                return value
+            row_samples[name]=[{k:sample_value(v) for k,v in row.items() if not k.startswith('__')}
+                               for row in result.value[:3]]
         trace.append({'id':name,'op':op,'row_count':len(result.value) if isinstance(result.value,list) else None,
                       'scalar':format_value(result.value,{}) if not isinstance(result.value,list) else None,
-                      'elapsed_seconds':time.monotonic()-started})
+                      'elapsed_seconds':time.monotonic()-started,**({'join_audit':audit} if op=='join' else {})})
     final=plan.get('output',{})
     result=results.get(final.get('step'))
     if result is None: raise PlanError("Final step does not exist")
@@ -417,14 +479,17 @@ def execute(plan, regions):
         columns=final.get('columns')
         if not isinstance(columns,list) or not columns: raise PlanError("Row output requires columns")
         if not result.value: raise PlanError("Final selection is empty")
-        values=[]
+        values=[]; value_sources=[]
         for row in result.value:
             for col in columns:
                 if col not in row: raise PlanError(f"Unknown output column {col}")
                 values.append(format_value(row[col],final))
+                value_sources.append(sorted(row['__sources'].get(col,[])))
                 sources.update(row['__sources'].get(col,[]))
                 sources.update(row.get('__filter_sources',[]))
-    else: values=[format_value(result.value,final)]
+    else:
+        values=[format_value(result.value,final)]
+        value_sources=[sorted(result.sources)]
     aliases=final.get('aliases',{})
     if not isinstance(aliases,dict): raise PlanError('Output aliases must be a mapping')
     if any(not isinstance(key,str) or not isinstance(value,str) for key,value in aliases.items()): raise PlanError('Aliases must map strings to strings')
@@ -435,4 +500,5 @@ def execute(plan, regions):
     if not sources or not answer or len(answer)>4000: raise PlanError("Final output must be nonempty and grounded in Excel")
     full_evidence=sorted(sources)
     return {'answer':answer,'trace':trace,'evidence':full_evidence[:100],'evidence_full':full_evidence,
-            'evidence_count':len(sources),'value_count':len(values),'values':values,'validated':True}
+            'evidence_count':len(sources),'value_count':len(values),'values':values,'validated':True,
+            'value_sources':value_sources,'row_samples':row_samples}

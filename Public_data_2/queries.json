@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "file_name": "p2_t01.xlsx",
+    "query": "Across the three groups of own household children shown in the table, for which group do full-time employed married mothers spend the most average hours per day on 'Housework'? Answer with only the group name exactly as it appears in the table."
+  },
+  {
+    "id": 2,
+    "file_name": "p2_t01.xlsx",
+    "query": "Compare the average hours per day spent on 'Housework' by not-employed married fathers and full-time employed married mothers with own household children 6-17. Who spends more, and by how many hours? Answer as `group, difference`, where group is either `not-employed fathers` or `full-time employed mothers`, and the difference is in hours using exactly two decimal places."
+  },
+  {
+    "id": 3,
+    "file_name": "p2_t02.xlsx",
+    "query": "How many percentage points higher was the unadjusted percent change from Jan. 2023 to Jan. 2024 for Services than for Commodities? Answer with only the number using exactly one decimal place."
+  },
+  {
+    "id": 4,
+    "file_name": "p2_t02.xlsx",
+    "query": "How many percentage points larger is the relative importance of Housing than that of Food and beverages? Answer with only the number using exactly three decimal places."
+  },
+  {
+    "id": 5,
+    "file_name": "p2_t02.xlsx",
+    "query": "Rank the categories directly under “Housing” by their unadjusted percent change to Jan. 2024 from Jan. 2023, from highest to lowest. Answer with the category names in that order, separated by a comma and one space, without numbering."
+  },
+  {
+    "id": 6,
+    "file_name": "p2_t03.xlsx",
+    "query": "In which year did the number of employed people fall the most compared with the previous year, and by how many thousand? Answer as `year, decrease`, separated by a comma and one space, as integers without commas or units."
+  },
+  {
+    "id": 7,
+    "file_name": "p2_t03.xlsx",
+    "query": "Find the year in which employment in agriculture was the highest and state the total employed population (in thousands) in that year. Answer as `year, total employed`, separated by a comma and one space, with the total as an integer without commas or units."
+  },
+  {
+    "id": 8,
+    "file_name": "p2_t03.xlsx",
+    "query": "Identify the year when the unemployment rate exceeded 5% and the total civilian labor force was below 65,000 (in thousands). Answer with only the year."
+  },
+  {
+    "id": 9,
+    "file_name": "p2_t03.xlsx",
+    "query": "In which year did the number of unemployed individuals (in thousands) drop below 2,000 while the employed percentage of the population was above 57%? Answer with only the year."
+  },
+  {
+    "id": 10,
+    "file_name": "p2_t04.xlsx",
+    "query": "Among Mexican, Puerto Rican and Cuban women aged 16 years and over, which group had the largest increase in the number of unemployed people from 2022 to 2023, and by how many thousand? Answer as `group, increase`, separated by a comma and one space, with the increase as an integer."
+  },
+  {
+    "id": 11,
+    "file_name": "p2_t04.xlsx",
+    "query": "For Hispanic or Latino people aged 16 years and over, how many percentage points higher was the labor force participation rate of men than that of women in 2023? Answer with only the number using exactly one decimal place."
+  },
+  {
+    "id": 12,
+    "file_name": "p2_t05.xlsx",
+    "query": "In 2023, among employed women who are White, Black or African American, Asian, or Hispanic or Latino, which group had the highest percentage working in management, professional, and related occupations? Answer with only the group name: White, Black or African American, Asian, or Hispanic or Latino."
+  },
+  {
+    "id": 13,
+    "file_name": "p2_t05.xlsx",
+    "query": "For employed women of all races combined, what is the absolute difference between 2022 and 2023 in the share working in management, business, and financial operations occupations? Answer with only the number using exactly two decimal places."
+  },
+  {
+    "id": 14,
+    "file_name": "p2_t06.xlsx",
+    "query": "Within the 'Crop production' industry, excluding the overall 'Total all sizes' row, which employment size class has the largest gap between its 3rd quartile and its median incidence rate, and what is that gap? Answer as `size class, gap`, separated by a comma and one space, with the gap using exactly one decimal place."
+  },
+  {
+    "id": 15,
+    "file_name": "p2_t06.xlsx",
+    "query": "Which industry has the highest average (mean) incidence rate among establishments in the '250 - 999' employment size class? Ignore industries without data for that class. Answer with only the industry name exactly as it appears in the table."
+  },
+  {
+    "id": 16,
+    "file_name": "p2_t06.xlsx",
+    "query": "Within the Machinery manufacturing (NAICS 333000) industry, does the rate below which three-fourths of the '11 - 49' establishments fall exceed 5.0? Answer with only Yes or No."
+  },
+  {
+    "id": 17,
+    "file_name": "p2_t07.xlsx",
+    "query": "How many industries with a 6-digit NAICS code have a total recordable cases incidence rate above 5.0? Answer with only the integer."
+  },
+  {
+    "id": 18,
+    "file_name": "p2_t07.xlsx",
+    "query": "What is the combined incidence rate of cases with days away from work, job restriction, or transfer in the Metal valve manufacturing industry, as reported in the table (not summed from its components)? Answer with only the number using exactly two decimal places."
+  },
+  {
+    "id": 19,
+    "file_name": "p2_t08.xlsx",
+    "query": "Using the annual rows of the index series (rows labelled with a year, not with a quarter), in how many years was the output per job of 'Rubber, plastics & non-metallic minerals' strictly higher than that of 'Chemicals, Pharmaceuticals'? Answer with only the integer."
+  },
+  {
+    "id": 20,
+    "file_name": "p2_t08.xlsx",
+    "query": "Using the annual figures (rows labelled with a year, not with a quarter), in which year did the 'Rubber, plastics & non-metallic minerals' sector have the highest output per job? Answer with only the year."
+  },
+  {
+    "id": 21,
+    "file_name": "p2_t09.xlsx",
+    "query": "By how much did the total assets measured at fair value on a recurring basis increase between July 31, 2013 and July 31, 2014, in millions of dollars? Answer with only the integer, without commas or units."
+  },
+  {
+    "id": 22,
+    "file_name": "p2_t09.xlsx",
+    "query": "In Fiscal2014, what was the combined Total segment revenue of all the segments reported in this workbook, in millions of dollars? Answer with only the integer, without commas or units."
+  },
+  {
+    "id": 23,
+    "file_name": "p2_t09.xlsx",
+    "query": "Which sheet reports the higher Service and other revenue in Fiscal2012, and what was that value in millions of dollars? Answer as `sheet name, integer value`, separated by a comma and one space, without commas inside the number and without units."
+  },
+  {
+    "id": 24,
+    "file_name": "p2_t10.xlsx",
+    "query": "What is the ratio of Other borrowed funds at December 31, 2016 to Preferred stock at December 31, 2016? Answer with only the number rounded to three decimal places."
+  },
+  {
+    "id": 25,
+    "file_name": "p2_t11.xlsx",
+    "query": "Trong các loại hình chăm sóc cần thiết (không tính dòng `any`), tổng tỷ lệ chưa được đáp ứng và đáp ứng một phần cao nhất là bao nhiêu phần trăm? Chỉ trả lời bằng số với đúng một chữ số thập phân."
+  },
+  {
+    "id": 26,
+    "file_name": "p2_t12.xlsx",
+    "query": "Parmi les femmes autochtones de 15 ans et plus, quel est l'écart (en points de pourcentage) entre la prévalence la plus élevée et la plus faible du trouble de l'humeur parmi les trois groupes autochtones (Premières Nations hors réserve, Métis, Inuits) ? Répondez uniquement par le nombre avec une décimale, sans le symbole %."
+  },
+  {
+    "id": 27,
+    "file_name": "p2_t13.xlsx",
+    "query": "2005/2006년 대비 2014/2015년에 성인 형사 법원에서 완료된 총 사건(total cases) 수는 몇 퍼센트 감소했습니까? 소수점 둘째 자리까지, % 기호 없이 숫자만 답하십시오."
+  },
+  {
+    "id": 28,
+    "file_name": "p2_t14.xlsx",
+    "query": "Giữa các nhóm trình độ học vấn (không tính dòng tổng), chênh lệch thu nhập tiền lương và tiền công trung vị giữa nam và nữ lớn nhất là bao nhiêu đô la? Chỉ trả lời bằng số nguyên, không có dấu phẩy."
+  },
+  {
+    "id": 29,
+    "file_name": "p2_t14.xlsx",
+    "query": "Ở nhóm có chứng chỉ, văn bằng hoặc bằng cấp đại học, thu nhập tiền lương và tiền công trung vị của nữ bằng bao nhiêu phần trăm so với nam? Làm tròn đến một chữ số thập phân, chỉ trả lời bằng số, không kèm ký hiệu %."
+  },
+  {
+    "id": 30,
+    "file_name": "p2_t15.xlsx",
+    "query": "对于单身或曾结婚的人群，原住民的就业率比非原住民低多少个百分点？只回答数字，保留一位小数。"
+  }
+]

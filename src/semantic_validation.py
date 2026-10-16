@@ -40,6 +40,39 @@ def has_scale(plan,factor):
 
 def validate_semantics(question,contract,plan,result,regions):
     problems=[]
+    entity_match=re.search(r'(?:in|for) the ([A-Za-z][\w -]*?) and ([A-Za-z][\w -]*?) industries?',question,re.I)
+    if entity_match and contract.get('reduction')=='sum':
+        requested={entity_match.group(1).strip().casefold(),entity_match.group(2).strip().casefold()}
+        steps=ancestors(plan); observed=[]
+        for step in steps:
+            if step.get('op')=='sum_columns' and isinstance(step.get('row'),int):
+                region=next((r for r in regions if r.id==step.get('table')),None)
+                if region:
+                    label=region.cells.get((step['row'],region.start_col))
+                    if isinstance(label,str) and label.strip(): observed.append(label.strip().casefold())
+        if observed and set(observed)!=requested:
+            problems.append(f'Combined total explicitly names {sorted(requested)}, but plan uses rows {sorted(set(observed))}. Exclude unrelated industry rows before adding the requested values.')
+    if re.search(r'unadjusted percent change',question,re.I) and re.search(r'sep(?:tember)?\.?\s*2024.{0,30}oct(?:ober)?\.?\s*2024',question,re.I|re.S):
+        expected=[]
+        for region in regions:
+            for col,headers in region.column_headers().items():
+                joined=' '.join(headers).casefold().replace('\n',' ')
+                if 'unadjusted percent change' in joined and 'sep.' in joined and 'oct.' in joined:
+                    expected.append(col)
+        if expected:
+            for step in ancestors(plan):
+                expr=step.get('expr')
+                cols=[]
+                def collect(value):
+                    if isinstance(value,dict):
+                        if 'col' in value: cols.append(value['col'])
+                        for child in value.values(): collect(child)
+                    elif isinstance(value,list):
+                        for child in value: collect(child)
+                collect(expr)
+                if step.get('op')=='derive' and len(set(cols))>1 and any(col in cols for col in expected):
+                    problems.append(f'Use the exact percent-change column {expected[0]} for September 2024 to October 2024; do not subtract it from another percent-change column.')
+                    break
     factor=contract.get('unit_scale')
     if factor and not has_scale(plan,factor):
         problems.append(f'Explicit unit conversion is missing: multiply the computed value by {factor} '

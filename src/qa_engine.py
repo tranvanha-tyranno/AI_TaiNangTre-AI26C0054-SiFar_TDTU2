@@ -36,7 +36,7 @@ def post_process(raw: str, question: str) -> str:
 def answer_one(xlsx_path: str | Path, question: str, use_llm: bool = True) -> str:
     _, table_text = parse_and_serialize(xlsx_path)
     if not use_llm:
-        # offline stub: trả về rỗng để test pipeline
+        # Legacy engine retained only for compatibility with imports.
         return ""
     raw = ask_llm(question, table_text)
     return post_process(raw, question)

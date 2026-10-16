@@ -24,6 +24,7 @@ from src.diagnostics import diagnose, summarize as summarize_diagnostics, identi
 from src.dashboard_analysis import decorate, summarize, compare_states, safe_context, cohort
 
 ROOT = Path(__file__).resolve().parent
+PROJECT_VERSION = "2.0.0"
 STATIC = ROOT / "dashboard" / "dist"
 OUTPUTS = ROOT / "outputs"
 TEST_ROOT = ROOT / "Test"
@@ -54,11 +55,22 @@ def read_json(path, default=None):
 
 
 def datasets():
-    """Danh mục dataset cho dashboard: public + từng thư mục trong Test/."""
+    """Danh mục dataset: các đợt Public_data_* và từng thư mục trong Test/."""
     result = [{"id": DATASET_DEFAULT, "label": "Public_data_1 (mặc định)", "kind": "public",
                "xlsx_dir": str(ROOT / "Public_data_1" / "xlsx_files"),
                "queries": str(ROOT / "Public_data_1" / "queries.json"),
                "reference": str(ROOT / "Public_data_1" / "sample_submission.csv")}]
+    for p in sorted(ROOT.glob("Public_data_*")):
+        if p.name == "Public_data_1" or not (p / "queries.json").is_file() or not (p / "xlsx_files").is_dir():
+            continue
+        ref = p / "expected_submission.csv"
+        if not ref.is_file():
+            ref = p / "sample_submission.csv"
+        result.append({
+            "id": p.name.lower(), "label": p.name, "kind": "public",
+            "xlsx_dir": str(p / "xlsx_files"), "queries": str(p / "queries.json"),
+            "reference": str(ref),
+        })
     if TEST_ROOT.exists():
         for p in sorted(TEST_ROOT.iterdir()):
             if p.is_dir() and (p / "queries.json").is_file() and (p / "xlsx_files").is_dir():
@@ -92,7 +104,7 @@ def datasets():
 def configure_extra_datasets(paths):
     """Register arbitrary dataset folders without copying them into Test/."""
     folders = []
-    known = {(ROOT / "Public_data_1").resolve()}
+    known = {Path(d["queries"]).parent.resolve() for d in datasets() if d["kind"] != "external"}
     if TEST_ROOT.is_dir():
         known.update(p.resolve() for p in TEST_ROOT.iterdir() if p.is_dir())
     for raw in paths:
@@ -230,7 +242,8 @@ def safe_config():
         local = dotenv_values(ROOT / ".env")
     except ImportError:
         local = {}
-    return {"model": os.environ.get("MODEL_NAME") or local.get("MODEL_NAME") or "qwen/qwen3-7-flash",
+    return {"app_version": PROJECT_VERSION,
+            "model": os.environ.get("MODEL_NAME") or local.get("MODEL_NAME") or "qwen/qwen3-7-flash",
             "key_configured": bool(os.environ.get("OPENROUTER_API_KEY") or local.get("OPENROUTER_API_KEY")),
             "base_url": "https://openrouter.ai/api/v1"}
 
@@ -323,7 +336,7 @@ def build_state(selected=None, dataset_id: str | None = None, include_history=Tr
             "rows": rows, "job": job, "running": running,
             "summary": {**summary, "mode": meta.get("mode") or summary.get("mode", "unknown"),
                 "questions": len(rows), "completed": sum(row["status"] != "pending" for row in rows),
-                "answered": sum(row["status"] == "ok" and bool(row["answer"]) for row in rows),
+                "answered": sum(row["status"] in {"ok","finalized"} and bool(row["answer"]) for row in rows),
                 "matched": matched, "compared": compared, "elapsed_seconds": elapsed,
                 "pipeline_version": summary.get('pipeline_version') or next((row.get('pipeline_version') for row in rows if row.get('pipeline_version')),None),
                 "usage": measured_usage},
@@ -365,7 +378,7 @@ def diagnostics_report(selected=None, dataset_id=None):
 
 
 def start_run(mode, ids, dataset_id: str | None = None):
-    if mode not in {"llm", "offline", "hybrid"}:
+    if mode not in {"llm", "llm-v2"}:
         raise ValueError("Chế độ không hợp lệ")
     ds_list = datasets_for(dataset_id)
     combined_id = ",".join(d["id"] for d in ds_list)

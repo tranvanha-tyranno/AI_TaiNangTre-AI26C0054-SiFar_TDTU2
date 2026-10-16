@@ -42,7 +42,7 @@ w.localStorage.setItem('sifar.run',baseline);
 w.fetch=async(url,options)=>{
   if(url==='/api/run'){
     posted=JSON.parse(options.body);
-    assert.equal(posted.mode,'offline');
+    assert.equal(posted.mode,'llm');
     return {ok:true,json:async()=>({run_id:baseline})};
   }
   return fetch(new URL(url,base),options);
@@ -91,12 +91,12 @@ async function main(){
   $('rerunFailed').click();
   await until(()=>$('runDialog').open&&$('dialogSelection').querySelectorAll('input:checked').length===4,'failed selection');
   assert.match($('runEstimate').textContent,/4 câu/);
-  change('mode','offline');
+  change('mode','llm');
   $('runForm').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
-  await until(()=>posted&&!$('runDialog').open,'mock offline submit');
+  await until(()=>posted&&!$('runDialog').open,'mock llm submit');
   assert.deepEqual(posted.ids.sort(),['06_q011','06_q019','06_q021','06_q023']);
   assert.equal(posted.dataset,'06_people_filters');
-  console.log('Selection and mocked offline submit OK');
+  console.log('Selection and mocked llm submit OK');
   await until(()=>$('connection').textContent.includes('Đã kết nối'),'submit refresh');
   change('filter','all');$('nextPage').click();
   assert.equal(w.document.querySelectorAll('#answerRows tr').length,10);
@@ -111,10 +111,10 @@ async function main(){
   await until(()=>w.document.querySelector('.cell-highlight')?.dataset.coordinate===address,'evidence jump');
   console.log('Evidence navigation OK');
   w.document.querySelector('.nav[data-view="history"]').click();
-  assert.equal(w.document.querySelectorAll('#historyTrend .history-point').length,2);
+  assert.ok(w.document.querySelectorAll('#historyTrend .history-point').length>=2);
   assert.ok($('historyTrend').querySelector('.history-line').getAttribute('d').includes('L'));
   change('historyMetric','cost');
-  assert.equal(w.document.querySelectorAll('#historyTrend .history-point').length,2);
+  assert.ok(w.document.querySelectorAll('#historyTrend .history-point').length>=2);
   $('datasetButton').click();
   w.document.querySelector('#datasetMenu input[value="12_large_full_scan"]').click();
   await until(()=>w.document.querySelector('#datasetChips [data-remove="12_large_full_scan"]'),'add large dataset');

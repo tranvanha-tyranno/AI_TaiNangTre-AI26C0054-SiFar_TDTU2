@@ -26,7 +26,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from src.llm_client import get_client, PlannerClient
-from src.deterministic_qa import answer_deterministic
 from src.pipeline import answer_with_tools
 from src.usage import UsageLedger, summarize_usage, peak_memory_mb
 
@@ -52,21 +51,39 @@ def main():
         except AttributeError:
             pass
     ap = argparse.ArgumentParser(description="Excel QA pipeline — Chủ đề 2")
-    ap.add_argument("--xlsx_dir", type=str, default=None, help="Thư mục chứa .xlsx")
+    # Accept both the historical underscore spelling and the hyphenated
+    # spelling used by the competition runner.
+    ap.add_argument("--xlsx_dir", "--xlsx-dir", dest="xlsx_dir", type=str, default=None,
+                    help="Thư mục chứa .xlsx")
     ap.add_argument("--queries", type=str, default=None, help="Đường dẫn queries.json")
     ap.add_argument("--output", type=str, default=None, help="Đường dẫn submission.csv")
+    ap.add_argument("--openrouter-key", dest="openrouter_key", default=None,
+                    help="OpenRouter API key supplied by the competition runner")
+    ap.add_argument("--openrouter-model", dest="openrouter_model", default=None,
+                    help="OpenRouter model ID supplied by the competition runner")
+    ap.add_argument("--openrouter-base-url", dest="openrouter_base_url", default=None,
+                    help="OpenRouter-compatible API base URL supplied by the runner")
     ap.add_argument("--log-dir", default="outputs/logs", help="Nhật ký từng câu")
     ap.add_argument("--config", type=str, default="config/config.yaml", help="File config yaml (optional)")
     ap.add_argument("--concurrency", type=int, default=None)
-    ap.add_argument("--no-llm", action="store_true", help="Chạy offline: chỉ dùng bộ giải quyết định lượng")
-    ap.add_argument("--mode", choices=["hybrid", "llm", "offline"], default=None,
-                    help="llm: planner + tools; hybrid: alias cho pipeline LLM; offline: bộ giải cũ")
+    ap.add_argument("--mode", choices=["llm", "llm-v2"], default=None,
+                    help="llm: pipeline chuẩn; llm-v2: khám phá chủ động + review mọi câu + sửa sâu")
     args = ap.parse_args()
     try:
         from dotenv import load_dotenv
         load_dotenv(Path(__file__).parent / ".env", override=False)
     except ImportError:
         pass
+
+    # The official Docker contract passes provider settings as command-line
+    # arguments. Translate them to the environment variables already used by
+    # the local CLI so the rest of the pipeline has one configuration path.
+    if args.openrouter_key is not None:
+        os.environ["OPENROUTER_API_KEY"] = args.openrouter_key
+    if args.openrouter_model is not None:
+        os.environ["MODEL_NAME"] = args.openrouter_model
+    if args.openrouter_base_url is not None:
+        os.environ["OPENROUTER_BASE_URL"] = args.openrouter_base_url
 
     cfg = {}
     if args.config and Path(args.config).exists():
@@ -77,8 +94,13 @@ def main():
     output_path = Path(args.output or cfg.get("output") or "./submission.csv")
     concurrency = args.concurrency if args.concurrency is not None else cfg.get("concurrency", 1)
     mode = args.mode or cfg.get("mode") or "llm"
-    if args.no_llm:
-        mode = "offline"
+    if mode == 'llm-v2':
+        cfg = dict(cfg)
+        cfg.update(pipeline_variant='llm-v2', max_api_calls=max(6, int(cfg.get('max_api_calls',4))),
+                   max_plan_repairs=max(3, int(cfg.get('max_plan_repairs',2))),
+                   max_inspection_rounds=max(3, int(cfg.get('max_inspection_rounds',2))),
+                   semantic_review='all', retrieval_top_k=max(6, int(cfg.get('retrieval_top_k',4))),
+                   preview_rows=max(60, int(cfg.get('preview_rows',45))))
     if not isinstance(concurrency, int) or concurrency < 1 or concurrency > 6:
         ap.error("concurrency phải nằm trong khoảng 1 đến 6")
 
@@ -113,7 +135,7 @@ def main():
     print(f"[INFO] {len(queries)} queries | xlsx_dir={xlsx_dir} | output={output_path}")
     print(f"[INFO] mode={mode} | LLM model={os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash'} | concurrency={concurrency}")
 
-    if mode != "offline" and get_client() is None:
+    if get_client() is None:
         print("[ERROR] Chưa cấu hình OPENROUTER_API_KEY. Đặt biến môi trường rồi chạy lại:", file=sys.stderr)
         print("        export OPENROUTER_API_KEY=sk-or-...", file=sys.stderr)
         print("   hoặc tạo file .env với dòng OPENROUTER_API_KEY=...", file=sys.stderr)
@@ -122,7 +144,7 @@ def main():
     if not 0 < float(cfg.get('max_cost_per_question', .10)) <= .10:
         ap.error("max_cost_per_question phải > 0 và <= 0.10 USD")
     try:
-        planner = None if mode == 'offline' else PlannerClient(
+        planner = PlannerClient(
             prompt_cap=cfg.get('max_prompt_price_per_million', 1.0),
             completion_cap=cfg.get('max_completion_price_per_million', 4.0),
             max_tokens=cfg.get('max_tokens_plan', 2000))
@@ -145,30 +167,31 @@ def main():
     def task(q):
         started = time.perf_counter()
         record = {"id": q["id"], "file_name": q["file_name"], "query": q["query"],
-                  "stage": "deterministic" if mode == 'offline' else 'parse', "status": "ok", "mode": mode}
+                  "stage": "parse", "status": "ok", "mode": mode}
         xlsx_path = xlsx_dir / q["file_name"]
         try:
             if time.monotonic()-run_started >= cfg.get('run_timeout',2400):
                 raise RuntimeError('Run deadline exceeded; no more API calls')
             ans = None
-            if mode == "offline":
-                ans = answer_deterministic(xlsx_path, q["query"])
-                record['usage'] = UsageLedger().summary()
-            else:
-                settings = dict(cfg)
-                settings['question_timeout'] = min(cfg.get('question_timeout',115),
-                    max(.1,cfg.get('run_timeout',2400)-(time.monotonic()-run_started)))
-                ans = answer_with_tools(xlsx_path, q['query'], planner, record, settings)
+            settings = dict(cfg)
+            settings['question_timeout'] = min(cfg.get('question_timeout',115),
+                max(.1,cfg.get('run_timeout',2400)-(time.monotonic()-run_started)))
+            ans = answer_with_tools(xlsx_path, q['query'], planner, record, settings)
             if ans is None or ans == "":
                 record["status"] = "unanswered"
             ans = ans or ""
+            if record.get('finalized_with_warning') and ans:
+                record['status']='finalized'
             record.update(answer=ans, elapsed_seconds=round(time.perf_counter() - started, 4))
             return q["id"], ans, record
         except Exception as e:
             print(f"[WARN] {q['id']} lỗi: {type(e).__name__}", file=sys.stderr)
-            record.update(status="error", error_type=type(e).__name__, answer="",
+            fallback=record.get('last_candidate_answer') or 'N/A'
+            record.update(status="finalized", error_type=type(e).__name__, answer=fallback,
+                          finalized_with_warning=True,
+                          finalized_reason=f'Unhandled processing error: {type(e).__name__}',
                           elapsed_seconds=round(time.perf_counter() - started, 4))
-            return q["id"], "", record
+            return q["id"], fallback, record
 
     with ThreadPoolExecutor(max_workers=concurrency) as pool:
         futs = {pool.submit(task, q): q for q in queries}
@@ -176,7 +199,9 @@ def main():
             qid, ans, record = fut.result()
             records.append(record)
             with progress_path.open("a", encoding="utf-8") as stream:
-                stream.write(json.dumps(record, ensure_ascii=False) + "\n")
+                # Workbook previews and row samples may contain Excel dates.
+                # Keep logs JSON-safe without changing the answer value.
+                stream.write(json.dumps(record, ensure_ascii=False, default=str) + "\n")
             results[qid] = ans
             q = futs[fut]
             print(f"  {record['status'].upper()} {qid} -> {ans[:120]}")
@@ -196,23 +221,23 @@ def main():
     order = {str(q['id']): i for i, q in enumerate(queries)}
     records.sort(key=lambda item: order[str(item['id'])])
     (log_dir / "questions.jsonl").write_text(
-        "\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n", encoding="utf-8")
+        "\n".join(json.dumps(record, ensure_ascii=False, default=str) for record in records) + "\n", encoding="utf-8")
     usage = summarize_usage(records)
     memory = peak_memory_mb()
     elapsed = time.monotonic() - run_started
-    summary = {"questions": len(queries), "answered": sum(r['status'] == 'ok' for r in records),
+    summary = {"questions": len(queries), "answered": sum(r['status'] in {'ok','finalized'} for r in records),
                "elapsed_seconds": elapsed, "mode": mode,
                "model": os.getenv('MODEL_NAME') or 'qwen/qwen3-7-flash',
                "cost_verified": usage['cost_complete'], "memory_verified": memory is not None and memory<=1024,
                "peak_memory_mb": memory,
-               "pipeline_version": 'legacy-offline' if mode == 'offline' else 'tools-v1',
+               "pipeline_version": 'tools-v3' if mode == 'llm-v2' else 'tools-v2',
                "usage": usage}
     (log_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # cảnh báo giới hạn đề thi
     if elapsed > 40 * 60:
         print(f"[WARN] Tổng thời gian {elapsed/60:.1f} phút vượt ngưỡng 40 phút/20 câu của đề!", file=sys.stderr)
-    if any(r['status'] != 'ok' for r in records):
+    if any(r['status'] not in {'ok','finalized'} for r in records):
         sys.exit(3)
 
 

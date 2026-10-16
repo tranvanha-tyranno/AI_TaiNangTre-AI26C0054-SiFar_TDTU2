@@ -78,7 +78,7 @@ class DashboardDatasetTest(unittest.TestCase):
                 ]), encoding="utf-8")
                 _write_expected(folder / "expected_submission.csv", {1: answer})
             with patch.object(dashboard, "TEST_ROOT", root / "Test"), patch.object(dashboard, "OUTPUTS", root / "outputs"):
-                run = dashboard.start_run("offline", None, "a,b")
+                run = dashboard.start_run("llm", None, "a,b")
                 deadline = time.monotonic() + 30
                 while dashboard.JOB["running"] and time.monotonic() < deadline:
                     time.sleep(0.05)
@@ -101,7 +101,7 @@ class DashboardDatasetTest(unittest.TestCase):
             with patch.object(dashboard, "OUTPUTS", Path(tmp)), patch.dict(dashboard.JOB, running=False):
                 dataset = "01_smoke_replica,02_merged_hierarchy"
                 question = dashboard.queries(dataset)[-1]
-                run = dashboard.start_run("offline", [question["id"]], dataset)
+                run = dashboard.start_run("llm", [question["id"]], dataset)
                 state = dashboard.build_state(run)
                 self.assertEqual([r["id"] for r in state["rows"]], [question["id"]])
                 self.assertEqual(state["dataset"], dataset)
@@ -110,7 +110,7 @@ class DashboardDatasetTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             dashboard.build_state(dataset_id="../../.env")
         with self.assertRaises(ValueError):
-            dashboard.start_run("offline", None, ["public"])
+            dashboard.start_run("llm", None, ["public"])
 
     def test_datasets_lists_public_and_test_suites(self):
         # Test/ đã có 5 suite sau gen_test_suites.py
@@ -130,7 +130,7 @@ class DashboardDatasetTest(unittest.TestCase):
             with tempfile.TemporaryDirectory(dir=dashboard.OUTPUTS) as tmp:
                 path = Path(tmp)
                 (path / "questions.jsonl").write_text(json.dumps({"id": "t_q001", "answer": "42", "status": "ok"}) + "\n", encoding="utf-8")
-                (path / "metadata.json").write_text(json.dumps({"mode": "offline", "dataset": "test_tmp_ds", "ids": ["t_q001"]}), encoding="utf-8")
+                (path / "metadata.json").write_text(json.dumps({"mode": "llm", "dataset": "test_tmp_ds", "ids": ["t_q001"]}), encoding="utf-8")
                 with patch.object(dashboard, "run_dirs", return_value={"run1": path}):
                     state = dashboard.build_state("run1")
                 self.assertEqual(state["dataset"], "test_tmp_ds")

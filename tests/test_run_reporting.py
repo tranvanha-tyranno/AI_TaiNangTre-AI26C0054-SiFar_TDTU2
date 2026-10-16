@@ -68,7 +68,7 @@ class RunReportingTest(unittest.TestCase):
             (p/'queries.json').write_text('[]',encoding='utf-8')
             (p/'a.xlsx').write_bytes(b'fixture')
             args=(p,p/'queries.json',p,[{'file_name':'a.xlsx'}],
-                  {'max_tokens_plan':3000,'api_key':'must not be recorded'},'offline',1,'model')
+                  {'max_tokens_plan':3000,'api_key':'must not be recorded'},'llm',1,'model')
             before=run_context(*args)
             self.assertNotIn('api_key',before['settings'])
             (p/'src/a.py').write_text('# changed',encoding='utf-8')

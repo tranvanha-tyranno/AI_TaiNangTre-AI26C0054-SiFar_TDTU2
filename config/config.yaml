@@ -12,6 +12,8 @@ max_tokens_plan: 3000
 max_cost_per_question: 0.10
 max_api_calls: 4
 max_plan_repairs: 2
+max_inspection_rounds: 2
+semantic_review: risky  # off | risky (labels, joins, ratios, unit conversion) | all
 question_timeout: 115
 run_timeout: 2400
 # Provider price caps in USD per million tokens; API rejects more expensive routes.
@@ -22,5 +24,6 @@ retrieval_top_k: 4
 preview_rows: 45
 
 # Pipeline
-mode: llm  # llm/hybrid: planner + tools; offline: legacy rules for comparison only
+mode: llm  # LLM + Tools là luồng xử lý duy nhất
 concurrency: 1
+# Dùng --mode llm-v2 để bật khám phá/review sâu; mode mặc định giữ baseline.
