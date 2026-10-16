@@ -8,11 +8,23 @@ import re
 import time
 import unicodedata
 from collections import Counter
+from contextvars import ContextVar
 from openpyxl.utils import get_column_letter
 
 
 class PlanError(ValueError):
     pass
+
+
+_RELIABILITY = ContextVar('executor_reliability', default=False)
+
+
+def numeric_text(value):
+    """Recognize clear numeric text for ordering; preserve identifier equality."""
+    if not isinstance(value, str): return False
+    raw = unicodedata.normalize('NFKC', value).strip()
+    if re.match(r'^[+-]?0\d', raw): return False
+    return bool(re.fullmatch(r'[+-]?(?:\d+(?:\.\d+)?|\d{1,3}(?:,\d{3})+(?:\.\d+)?)', raw))
 
 
 @dataclass
@@ -154,6 +166,12 @@ def expression(expr, row, results, depth=0):
             except PlanError: pass
         if op in {'eq','ne'} and (a is None or b is None):
             return Result((a==b) if op=='eq' else (a!=b),sources)
+        if _RELIABILITY.get() and (isinstance(a,bool) or isinstance(b,bool)):
+            if op in {'eq','ne'} and isinstance(a,bool) and isinstance(b,bool):
+                return Result(a==b if op=='eq' else a!=b,sources)
+            raise PlanError('Boolean comparison requires two booleans and eq/ne; do not mix numbers and booleans.')
+        if _RELIABILITY.get() and op in {'gt','ge','lt','le'} and numeric_text(a) and numeric_text(b):
+            a,b=number(a),number(b)
         if isinstance(a,(int,float,Decimal)) or isinstance(b,(int,float,Decimal)):
             a,b=number(a),number(b)
         elif op not in {'eq','ne'} and (a is None or b is None):
@@ -183,6 +201,10 @@ def rows_of(results, name):
 
 def aggregate(rows, metric, expr, results, missing='error'):
     if metric=='count':
+        if _RELIABILITY.get() and expr is not None:
+            for row in rows:
+                if isinstance(expression(expr,row,results).value,bool):
+                    raise PlanError('count counts all rows, including False. Filter by the boolean predicate first, then aggregate count without expr.')
         return Result(len(rows),set().union(*(set(row.get('__filter_sources',[])) | set().union(*(set(v) for v in row.get('__sources',{}).values())) for row in rows)))
     if metric=='distinct_count':
         values=[];sources=set()
@@ -251,7 +273,15 @@ def format_value(value, fmt):
     return re.sub(r'\s+',' ',cleaned).strip()
 
 
-def execute(plan, regions):
+def execute(plan, regions, *, reliability=False):
+    token=_RELIABILITY.set(reliability)
+    try:
+        return _execute(plan,regions)
+    finally:
+        _RELIABILITY.reset(token)
+
+
+def _execute(plan, regions):
     if not isinstance(plan,dict) or not isinstance(plan.get('steps'),list) or not 1<=len(plan['steps'])<=25:
         raise PlanError("Plan requires 1..25 steps")
     final=plan.get('output')

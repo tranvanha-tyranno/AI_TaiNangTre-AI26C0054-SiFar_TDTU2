@@ -25,7 +25,7 @@ retrieval_top_k: 4
 preview_rows: 45
 
 # Pipeline
-mode: llm  # LLM + Tools là luồng xử lý duy nhất
+mode: llm-v3
 concurrency: 1
 # Dùng --mode llm-v2 để bật khám phá/review sâu; mode mặc định giữ baseline.
 
@@ -41,3 +41,6 @@ lite_context_chars: 16000
 
 # Current LMMv3: one change on top of LLMv2; false restores identical baseline input.
 v3_deduplicate_context: true
+
+# Experimental reliability patch; false restores original v3 behavior.
+v3_reliability: true
