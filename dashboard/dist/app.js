@@ -1,6 +1,7 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const escapeHTML=esc;
 const duration=value=>Number(value||0)>=60?`${Math.floor(value/60)}m ${Math.floor(value%60)}s`:`${Number(value||0).toFixed(1)}s`;
 const number=value=>Number(value||0).toLocaleString('vi-VN');
 const outcomes={match:['Khớp','green'],mismatch:['Đáp án khác','red'],api_error:['Lỗi API','amber'],error:['Lỗi xử lý','red'],unanswered:['Chưa trả lời','amber'],pending:['Đang chờ','gray'],uncompared:['Chưa đối chiếu','gray']};
@@ -23,7 +24,7 @@ function sameDatasets(a,b){return String(a).split(',').sort().join(',')===String
 function datasetList(){return dataset.split(',').filter(Boolean);}
 function label(id){return state?.datasets.find(d=>d.id===id)?.label||id;}
 function cost(usage){if(!usage)return 'Chưa đo';if(usage.cost_complete)return '$'+Number(usage.actual_cost_usd||0).toFixed(6);return usage.actual_cost_usd>0?'$'+usage.actual_cost_usd.toFixed(6)+'+':'Chưa xác nhận';}
-function badge(row){const [text,color]=outcomes[row.outcome]||outcomes.uncompared;return `<span class="badge ${color}">${esc(text)}${row.finalized_with_warning?' · Đã chốt đáp án':''}${row.api_statuses?.length?' · '+row.api_statuses.join(', '):''}</span>`;}
+function badge(row){const [text,color]=outcomes[row.outcome]||outcomes.uncompared;return `<span class="badge ${color}">${esc(text)}${row.finalized_with_warning?(row.llm_variant==='llm-v3'?' · Tính được, chưa qua review':' · Đã chốt đáp án'):''}${row.api_statuses?.length?' · '+row.api_statuses.join(', '):''}</span>`;}
 function setDataset(ids){dataset=[...new Set(ids)].join(',')||'public';selected='';selectedIds.clear();page=0;remember();refresh();}
 function view(name){activeView=name;document.querySelectorAll('.view').forEach(el=>el.classList.toggle('hidden',el.id!==name));document.querySelectorAll('.nav').forEach(el=>el.classList.toggle('active',el.dataset.view===name));if(name==='data')loadWorkbook();if(name==='history')renderHistory();}
 function openRun(id){selected=id;selectedIds.clear();page=0;remember();refresh();view('overview');}
@@ -47,6 +48,7 @@ async function refresh(){
   }finally{polling=false;if(dataset!==requested.dataset||selected!==requested.selected)refresh();}
 }
 function render(){
+  renderDiagnostics();
   const sum=state.summary,a=state.analysis,chosen=new Set(datasetList());
   $('datasetMenu').innerHTML=state.datasets.map(d=>`<label class="multi-option"><input type="checkbox" value="${esc(d.id)}" ${chosen.has(d.id)?'checked':''}><span>${esc(d.label)}</span><small>${d.question_count} câu</small></label>`).join('');
   $('datasetButton').textContent=chosen.size===1?label([...chosen][0]):`${chosen.size} bộ dữ liệu`;
@@ -56,9 +58,9 @@ function render(){
   $('runSelect').value=selected;
   const context=state.context||{};
   $('runProvenance').textContent=context.source_fingerprint?`Mã nguồn ${context.source_fingerprint} · ${context.model||sum.model||''}`:(sum.model||'Chưa có thông tin phiên bản');
-  $('modeBadge').textContent=sum.mode==='llm-v2'?'LLMv2 + Tools':'LLM + Tools';
+  $('modeBadge').textContent=sum.mode==='llm-v3'?(String(sum.pipeline_version||'').startsWith('lmmv3-v2-')?'LMMv3 · nền LLMv2':String(sum.pipeline_version||'').startsWith('lmmv3-lite')?'LMMv3 Lite':'LMMv3 · 8 phase'):sum.mode==='llm-v2'?'LLMv2 + Tools':'LLM + Tools';
   $('modeBadge').className='badge';
-  $('projectVersion').textContent=`Project v${state.config.app_version||'2.0.0'} · ${sum.mode==='llm-v2'?'LLMv2 + Tools':'LLM + Tools'} · ${sum.pipeline_version||'tools-v2'}`;
+  $('projectVersion').textContent=`Project v${state.config.app_version||'2.0.0'} · ${sum.mode==='llm-v3'?(String(sum.pipeline_version||'').startsWith('lmmv3-v2-')?'LMMv3 · nền LLMv2':String(sum.pipeline_version||'').startsWith('lmmv3-lite')?'LMMv3 Lite':'LMMv3 · 8 phase'):sum.mode==='llm-v2'?'LLMv2 + Tools':'LLM + Tools'} · ${sum.pipeline_version||'tools-v2'}`;
   $('runStatus').textContent=state.running?'● Đang xử lý…':`${sum.completed}/${sum.questions} câu hoàn thành`;
   $('answered').innerHTML=`${sum.answered}<span class="denom"> / ${sum.questions}</span>`;
   $('completionText').textContent=`${sum.completed} câu đã xử lý · ${sum.questions-sum.completed} câu đang chờ`;
@@ -147,7 +149,7 @@ function renderCharts(){
 }
 function filteredRows(){
   const query=$('search').value.toLowerCase(),filter=$('filter').value,sort=$('sortRows').value;
-  const rows=state.rows.filter(r=>`${r.id} ${r.query} ${r.file_name} ${r.answer}`.toLowerCase().includes(query)).filter(r=>filter==='all'||(filter==='error'&&['error','api_error','unanswered'].includes(r.outcome))||(filter==='processing_error'&&r.outcome==='error')||(filter==='validation'&&r.had_validation_errors)||(filter==='repaired'&&r.repairs>0)||r.outcome===filter).filter(r=>!visualFilter||(charts.finite(r.elapsed_seconds)&&r.elapsed_seconds>=visualFilter.lower&&(visualFilter.last?r.elapsed_seconds<=visualFilter.upper:r.elapsed_seconds<visualFilter.upper)));
+  const rows=state.rows.filter(r=>!$("phaseFilter")||$("phaseFilter").value==="all"||r.diagnostics?.issues.some(issue=>issue.phase===$("phaseFilter").value&&!issue.recovered)).filter(r=>`${r.id} ${r.query} ${r.file_name} ${r.answer}`.toLowerCase().includes(query)).filter(r=>filter==='all'||(filter==='error'&&['error','api_error','unanswered'].includes(r.outcome))||(filter==='processing_error'&&r.outcome==='error')||(filter==='validation'&&r.had_validation_errors)||(filter==='repaired'&&r.repairs>0)||r.outcome===filter).filter(r=>!visualFilter||(charts.finite(r.elapsed_seconds)&&r.elapsed_seconds>=visualFilter.lower&&(visualFilter.last?r.elapsed_seconds<=visualFilter.upper:r.elapsed_seconds<visualFilter.upper)));
   if(sort==='slow')rows.sort((a,b)=>(b.elapsed_seconds||0)-(a.elapsed_seconds||0));
   if(sort==='cost')rows.sort((a,b)=>(b.usage?.actual_cost_usd??-1)-(a.usage?.actual_cost_usd??-1));
   if(sort==='repairs')rows.sort((a,b)=>b.repairs-a.repairs);
@@ -221,8 +223,8 @@ function renderComparison(){
   $('comparisonResult').querySelector('.compare-tabs').before(board);
 }
 function renderPipeline(){
-  const modern=['tools-v1','tools-v2'].includes(state.summary.pipeline_version);
-  const steps=[['Đọc Excel','Giữ tọa độ, ô gộp và tiêu đề.'],['Chọn vùng','Tìm sheet/bảng liên quan.'],['Lập kế hoạch','LLM chọn thao tác tính.'],['Tính bằng công cụ','Lọc, nhóm, tổng, xếp hạng.'],['Kiểm tra đáp án','Kiểm tra phạm vi và dạng đáp án.'],['Xuất kết quả','CSV, căn cứ, log và chi phí.']];
+  const modern=String(state.summary.pipeline_version||'').startsWith('tools-')||state.summary.mode==='llm-v3';
+  const steps=String(state.summary.pipeline_version||'').startsWith('lmmv3-lite')?[['Đọc dữ liệu gọn','Giữ tọa độ, tiêu đề và tránh gửi vùng trùng.'],['Lập kế hoạch','Một lượt LLM; tối đa một lượt sửa hoặc đọc thêm.'],['Python tính toán','Chỉ thực thi công cụ cho phép, giữ nguồn ô.'],['Xuất đáp án','Định dạng từ kế hoạch; chưa có review ngữ nghĩa.']]:state.summary.mode==='llm-v3'&&!String(state.summary.pipeline_version||'').startsWith('lmmv3-v2-')?[['Đọc workbook','Giá trị gốc, ô gộp, tiêu đề, kiểu dữ liệu.'],['Đặc tả câu hỏi','Yêu cầu đa ngôn ngữ, phạm vi và định dạng.'],['Khám phá dữ liệu','Đọc sheet, bảng, ô, vùng và thống kê cột.'],['Đủ bằng chứng?','Đối chiếu từng yêu cầu với ô đã quan sát.'],['Lập kế hoạch','Kiểm tra cấu trúc, kiểu và tham chiếu.'],['Thực thi','Python tính theo kế hoạch, giữ nguồn ô.'],['Kiểm chứng và sửa','Review có chọn lọc, ghi lỗi và giới hạn retry.'],['Xuất đáp án','Định dạng theo đặc tả và lưu log.']]:[['Đọc Excel','Giữ tọa độ, ô gộp và tiêu đề.'],['Chọn vùng','Tìm sheet/bảng liên quan.'],['Lập kế hoạch','LLM chọn thao tác tính.'],['Tính bằng công cụ','Lọc, nhóm, tổng, xếp hạng.'],['Kiểm tra đáp án','Kiểm tra phạm vi và dạng đáp án.'],['Xuất kết quả','CSV, căn cứ, log và chi phí.']];
   $('pipelineSteps').innerHTML=steps.map(([title,text],i)=>`<div class="step"><div class="step-number">0${i+1}</div><h3>${title}</h3><p>${text}</p></div>`).join('');
   document.querySelector('.future').innerHTML=`<span class="badge ${modern?'green':'gray'}">${modern?'LLM + TOOLS':'LOG CŨ'}</span><h3>${modern?'Kế hoạch hợp lệ chưa đồng nghĩa đáp án đúng':'Chỉ có các thông tin được ghi ở phiên bản cũ'}</h3><p>${modern?'Dùng đối chiếu tham chiếu và ô căn cứ để đánh giá. Câu sai vẫn có thể xuất phát từ cách hiểu câu hỏi hoặc lựa chọn dữ liệu.':'Không suy ngược token/chi phí từ đáp án. Chạy phiên bản mới để có log chi tiết hơn.'}</p>`;
 }
@@ -243,7 +245,12 @@ function detail(id){
   if(r.plans?.length)html+='<h3 class="detail-section">Các lần lập kế hoạch</h3>'+r.plans.map(p=>`<details class="plan"><summary>Lần ${p.attempt}${p.validation_error?' · có lỗi kiểm tra':''}</summary>${p.validation_error?'<p class="detail-note">'+esc(p.validation_error)+'</p>':''}<pre>${esc(JSON.stringify(p.plan,null,2))}</pre></details>`).join('');
   if(r.retrieval)html+='<details class="plan"><summary>Vùng dữ liệu được chọn</summary><pre>'+esc(JSON.stringify(r.retrieval.filter(t=>t.selected),null,2))+'</pre></details>';
   if(r.previews)html+='<details class="plan"><summary>Excel đã đưa vào prompt</summary><pre>'+esc(JSON.stringify(r.previews,null,2))+'</pre></details>';
-  $('toolDetails').innerHTML=html;$('detailNote').textContent='Căn cứ và kiểm tra kế hoạch giúp truy lỗi. Mức khớp tham chiếu không bảo đảm khả năng trả lời trên tập ẩn.';
+  if(r.phases)html+='<h3 class="detail-section">LMMv3 · Lịch sử 8 phase</h3><div class="tool-trace">'+r.phases.map(p=>`<div><b>${p.phase}. ${esc(p.name)} · ${esc(p.status)}</b><span>${duration(p.elapsed_seconds)}${p.message?' · '+esc(p.message):''}</span></div>`).join('')+'</div>';
+  for(const [key,title] of [['context_dedup','Giảm dữ liệu trùng (đo ký tự)'],['verification_level','Mức kiểm chứng'],['finalized_reason','Lý do giữ kết quả kèm cảnh báo'],['unanswerable_reason','Lý do chưa có đáp án'],['specification_warnings','Cảnh báo đặc tả'],['model_responses','Phản hồi LLM gốc'],['candidate_answer','Ứng viên tính toán (xem trạng thái kiểm chứng)'],['question_spec','Đặc tả câu hỏi'],['readiness','Đối chiếu yêu cầu và bằng chứng'],['verification_warnings','Cảnh báo cần kiểm chứng'],['interactions','Đọc thêm và điều phối sửa lỗi']])if(r[key])html+=`<details class="plan"><summary>${title}</summary><pre>${esc(JSON.stringify(r[key],null,2))}</pre></details>`;
+  $('toolDetails').innerHTML=html;
+  $('toolDetails').insertAdjacentHTML('afterbegin','<h3 class="detail-section">Chẩn đoán theo phase</h3>'+renderIssueList(r.diagnostics?.issues||[])+'<p class="detail-note">Phase là nơi quan sát lỗi; nguyên nhân gốc chưa xác nhận.</p><div id="diagnosticHistory">Đang đọc lịch sử phiên…</div>');
+  loadDiagnosticHistory(String(r.id));
+$('detailNote').textContent=r.verification_level==='tool_execution_only'?'LMMv3 Lite: Python đã thực thi kế hoạch; chưa có bước review ý nghĩa hoặc xác nhận đáp án đúng.':'Căn cứ và kiểm tra kế hoạch giúp truy lỗi. Mức khớp tham chiếu không bảo đảm khả năng trả lời trên tập ẩn.';
   $('detailRerun').disabled=state.job.running;$('detailDialog').showModal();
 }
 async function loadWorkbook(sheet){

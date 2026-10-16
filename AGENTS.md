@@ -206,3 +206,22 @@ Phạm vi lần cập nhật này: sửa hướng dẫn và ghi nhận việc c�
 ---
 
 *Nguồn: Đề thi Chủ đề 2 — Hỏi đáp trên bảng tính Excel (trang 1–3); Giải đáp thắc mắc của đội thi — Vòng Khu vực, Bảng C (trang 1–3, câu 01–07), bản sao trong `docs/`. Các mô tả hiện trạng và đề xuất ở mục 8–10, 12 là ghi chú của dự án, không phải phát biểu của BTC.*
+
+## 13. Nhánh thử nghiệm LMMv3
+
+Trên `Bao_LMMv3`, `--mode llm-v3` gọi pipeline riêng `src/lmmv3/`, tên hiển thị LMMv3. Giữ baseline `llm` và `llm-v2`; không merge main nếu chưa được yêu cầu. Thiết kế và giới hạn: `docs/LMMv3.md`. Tám phase ghi đặc tả, coverage, trace và điều phối sửa; grounding tọa độ không chứng minh đúng ngữ nghĩa. Không dùng đáp án mẫu/ID/file-specific resolver. Chỉ có kiểm tra tổng hợp/client giả lập cho v3, chưa có điểm dataset hay chứng nhận tài nguyên. Test dashboard đã được sửa để không gọi CLI thật; không gọi API khi chạy unit tests.
+
+
+## 14. LMMv3 Lite — lịch sử thử nghiệm
+
+Trên Bao_LMMv3, `--mode llm-v3` hiện dispatch sang `src/lmmv3/lite.py`, version `lmmv3-lite-v1`. Mục 13/mô tả tám phase là lịch sử, không phải luồng mặc định mới. Giữ llm/llm-v2 và các run cũ để so sánh. Baseline Lite: một kế hoạch, executor cơ bản, tối đa một follow-up theo mặc định; không tự khôi phục đặc tả/reviewer/coverage gate. Thêm từng khả năng sau khi có số đo đối chứng, không đưa tất cả cải tiến vào một lượt. `validated` trong Lite chỉ xác nhận thực thi công cụ, không chứng minh đúng ngữ nghĩa; xem docs/LMMv3_LITE.md. Không có kết quả benchmark/API trong lần xây lại này.
+
+
+## 15. Khôi phục nền LLMv2 — hiện tại
+
+`--mode llm-v3` hiện dùng chung pipeline và cấu hình LLMv2, version `lmmv3-v2-baseline-v1`; không chạy Lite hay tám phase. Đây là mốc khôi phục, chưa có cải tiến mới. Giữ LLMv2 để đối chứng, nâng cấp từng thay đổi sau khi đo baseline. Xem [hướng dẫn baseline](docs/LMMv3_V2_BASELINE.md). Các mô tả Lite/tám phase trước đó là lịch sử. Chưa gọi API để đánh giá trong lần khôi phục.
+
+
+## 16. LMMv3 hiện tại — chỉ nâng cấp giảm trùng context
+
+Mục 15 là mốc nền; hiện mặc định `--mode llm-v3` dùng version `lmmv3-v2-dedup-v1`, cùng pipeline/cấu hình LLMv2 và chỉ thêm `src/context_dedup.py` tại ranh giới gửi request. Tắt bằng `v3_deduplicate_context: false` để khôi phục `lmmv3-v2-baseline-v1`. Không đổi lựa chọn bảng, kế hoạch, phép tính hay chính sách review trong lần này. Xem docs/LMMv3_CONTEXT_DEDUP.md. Số đo offline là ký tự; chưa chứng minh tiết kiệm token thực hoặc giữ điểm. Tiếp tục phát triển từng thay đổi có đối chứng.

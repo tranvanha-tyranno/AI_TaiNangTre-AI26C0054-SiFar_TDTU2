@@ -85,7 +85,7 @@ class PlannerClient:
 
     def complete(self, messages, ledger, purpose='plan'):
         from .planner import tool_schema
-        schema=tool_schema(purpose)
+        schema=getattr(ledger,'response_schema',None) or tool_schema(purpose)
         tools=[{'type':'function','function':{'name':'execute_spreadsheet_plan',
                 'description':'Request workbook inspection or submit a spreadsheet computation plan; during review, audit the candidate.',
                 'parameters':schema}}]
@@ -105,6 +105,7 @@ class PlannerClient:
                                 'provider':{'max_price':{'prompt':self.prompt_cap,'completion':self.completion_cap}}})
                 payload=response.model_dump()
                 usage=payload.get('usage') or {}
+                call['raw_usage']=usage
                 cost=usage.get('cost')
                 source='usage.cost' if cost is not None else 'unknown'
                 if cost is None and payload.get('id'):

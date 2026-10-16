@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import io
 import json
+import hashlib
 import os
 import re
 from pathlib import Path
@@ -19,6 +20,7 @@ import threading
 import time
 from urllib.parse import parse_qs, urlparse
 from src.usage import summarize_usage
+from src.diagnostics import diagnose, summarize as summarize_diagnostics, identity, history
 from src.dashboard_analysis import decorate, summarize, compare_states, safe_context, cohort
 
 ROOT = Path(__file__).resolve().parent
@@ -94,6 +96,22 @@ def datasets():
             "xlsx_dir": str(p / "xlsx_files"), "queries": str(p / "queries.json"),
             "reference": str(ref),
         })
+    # Extracted archives may wrap a dataset in Test/name/name/. Preserve the
+    # external-path identity so earlier manually registered runs remain linked.
+    known_paths = {Path(d['queries']).parent.resolve() for d in result}
+    if TEST_ROOT.is_dir():
+        for query_path in sorted(TEST_ROOT.glob('*/*/queries.json')):
+            p = query_path.parent.resolve()
+            if p in known_paths or not (p/'xlsx_files').is_dir():
+                continue
+            ref = p/'expected_submission.csv'
+            if not ref.is_file():
+                ref = p/'sample_submission.csv'
+            result.append({'id': 'external-' + hashlib.sha256(str(p).casefold().encode()).hexdigest()[:16],
+                           'label': f'Test / {p.name}', 'kind': 'test',
+                           'xlsx_dir': str(p/'xlsx_files'), 'queries': str(query_path.resolve()),
+                           'reference': str(ref)})
+            known_paths.add(p)
     for dataset in result:
         dataset["question_count"] = len(read_json(Path(dataset["queries"]), []))
     return result
@@ -311,6 +329,7 @@ def build_state(selected=None, dataset_id: str | None = None, include_history=Tr
         match = answer == sample if complete and sample is not None else None
         rows.append(decorate({**q, **record, "answer": answer, "reference": sample, "match": match,
                      "status": record.get("status", "pending")}))
+        rows[-1]['diagnostics']=diagnose(rows[-1])
     with LOCK:
         job = dict(JOB)
         job["messages"] = list(JOB["messages"][-20:])
@@ -327,6 +346,7 @@ def build_state(selected=None, dataset_id: str | None = None, include_history=Tr
     compared = sum(row["match"] is not None for row in rows)
     measured_usage = summarize_usage([row for row in rows if row['status'] != 'pending'])
     return {"csrf": TOKEN, "config": safe_config(), "datasets": datasets(), "dataset": effective_dataset,
+            "diagnostics_summary":summarize_diagnostics(rows),
             "runs": choices, "selected": selected,
             "analysis":{**summarize(rows),'cohort':cohort(rows,effective_dataset)},"context":safe_context(read_json(path/'run_context.json',{}) if path else {}),
             "rows": rows, "job": job, "running": running,
@@ -339,8 +359,42 @@ def build_state(selected=None, dataset_id: str | None = None, include_history=Tr
             "catalog": queries(effective_dataset), "files": sorted({q["file_name"] for q in all_queries})}
 
 
+def diagnostics_report(selected=None, dataset_id=None):
+    state=build_state(selected,dataset_id)
+    entries=[]
+    for run,path in list(run_dirs().items())[:100]:
+        meta=read_json(path/'metadata.json',{})
+        summary=read_json(path/'summary.json',{})
+        spec=meta.get('dataset','public')
+        catalog={str(q['id']):q for q in meta.get('catalog',[])}
+        try: expected=meta.get('reference') if 'reference' in meta else reference(spec)
+        except ValueError: expected={}
+        for key,record in records(path).items():
+            q=catalog.get(key,{})
+            dataset=q.get('dataset') or record.get('dataset') or (key.split('::')[0] if '::' in key else spec)
+            source=q.get('source_file') or record.get('source_file') or record.get('file_name','')
+            if source.startswith(dataset+'/'): source=source[len(dataset)+1:]
+            row={**q,**record,'dataset':dataset,'source_file':source,'reference':expected.get(key),
+                 'status':record.get('status','pending')}
+            row['match']=row.get('answer','')==row['reference'] if row['reference'] is not None else None
+            row['diagnostics']=diagnose(row)
+            entries.append({'run':run,'row':row,'timestamp':(path/'questions.jsonl').stat().st_mtime,
+                'pipeline_version':summary.get('pipeline_version'), 'model':summary.get('model'),
+                'code_fingerprint':meta.get('code_fingerprint'),
+                'reference_basis':'snapshot' if 'reference' in meta else 'current'})
+    histories=history(entries)
+    question_history={}
+    for row in state['rows']:
+        normalized={**row,'source_file':row.get('source_file') or row.get('file_name',''),
+                    'dataset':row.get('dataset') or state['dataset']}
+        question_history[str(row['id'])]=histories.get((identity(normalized),row.get('reference')),[])
+    return {'summary_all_runs':summarize_diagnostics([entry['row'] for entry in entries]),
+            'question_history':question_history,'runs_scanned':len({entry['run'] for entry in entries}),
+            'limit_runs':100,'note':'Số lần ghi nhận không phải số câu độc lập; lịch sử so sánh cùng dataset, file, câu hỏi và tham chiếu.'}
+
+
 def start_run(mode, ids, dataset_id: str | None = None):
-    if mode not in {"llm", "llm-v2"}:
+    if mode not in {"llm", "llm-v2", "llm-v3"}:
         raise ValueError("Chế độ không hợp lệ")
     ds_list = datasets_for(dataset_id)
     combined_id = ",".join(d["id"] for d in ds_list)
@@ -384,6 +438,12 @@ def start_run(mode, ids, dataset_id: str | None = None):
         metadata = {"mode": mode, "dataset": combined_id, "ids": [q["id"] for q in all_queries],
                     "catalog": all_queries, "reference": reference(combined_id),
                     "label": now.strftime("%d/%m %H:%M:%S"), "timezone": "Asia/Ho_Chi_Minh", "finished": False}
+        source_files=[ROOT/'main.py',ROOT/'config/config.yaml',*sorted((ROOT/'src').rglob('*.py'))]
+        digest=hashlib.sha256()
+        for source in source_files:
+            digest.update(str(source.relative_to(ROOT)).encode());digest.update(source.read_bytes())
+        metadata['code_fingerprint']=digest.hexdigest()
+        metadata['diagnostics_version']='1'
         (directory / "metadata.json").write_text(json.dumps(metadata, ensure_ascii=False), encoding="utf-8")
         (directory / "queries.json").write_text(json.dumps(all_queries, ensure_ascii=False), encoding="utf-8")
         JOB.update(running=True, run_id=name, returncode=None, messages=[], started=time.time())
@@ -479,6 +539,8 @@ class Handler(BaseHTTPRequestHandler):
         try:
             if parsed.path == "/api/state":
                 self.send(build_state(params.get("run", [None])[0], params.get("dataset", [None])[0]))
+            elif parsed.path == '/api/diagnostics':
+                self.send(diagnostics_report(params.get('run',[None])[0],params.get('dataset',[None])[0]))
             elif parsed.path == "/api/workbook":
                 self.send(workbook(params.get("file", [""])[0], params.get("sheet", [None])[0], params.get("dataset", [None])[0],
                                    int(params.get('row',['1'])[0]),int(params.get('col',['1'])[0])))
@@ -500,7 +562,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send({"catalog": queries(params.get("dataset", [None])[0])})
             elif parsed.path == "/api/datasets":
                 self.send({"datasets": datasets(), "default": DATASET_DEFAULT})
-            elif parsed.path in {"/", "/app.js", "/style.css", "/details.css", "/workspace.css",'/visuals.css','/chart-math.js'}:
+            elif parsed.path in {"/", "/app.js", "/style.css", "/details.css", "/workspace.css", '/visuals.css', '/chart-math.js', '/diagnostics.js', '/diagnostics.css'}:
                 name = 'index.html' if parsed.path=='/' else parsed.path[1:]
                 mime = 'text/html' if name.endswith('.html') else 'text/javascript' if name.endswith('.js') else 'text/css'
                 self.send((STATIC / name).read_bytes(), mime + "; charset=utf-8")

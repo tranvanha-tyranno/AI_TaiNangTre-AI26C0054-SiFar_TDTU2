@@ -217,13 +217,24 @@ def fallback_shape_plan(question, contract, regions):
 
 
 def answer_with_tools(path, question, client, record, settings):
+    if settings.get("pipeline_variant") == "llm-v3":
+        from .variants import settings_for_mode
+        return answer_with_tools(path,question,client,record,settings_for_mode(settings,'llm-v3'))
     reserve_prompt=min(client.prompt_cap, getattr(client,'prompt_rate',0)*1e6 or client.prompt_cap)
     reserve_completion=min(client.completion_cap, getattr(client,'completion_rate',0)*1e6 or client.completion_cap)
     ledger=UsageLedger(limit_usd=settings.get('max_cost_per_question',.10),max_calls=settings.get('max_api_calls',4),
         seconds=settings.get('question_timeout',115),prompt_cap=reserve_prompt,completion_cap=reserve_completion)
     variant=settings.get('pipeline_variant','llm')
-    record.update(stage='parse',pipeline_version='tools-v4',
+    from .variants import v3_version
+    record.update(stage='parse',pipeline_version=v3_version(settings) if settings.get('v3_base_variant') else 'tools-v4',
                   plans=[],timings={},interactions=[],reviews=[],llm_variant=variant)
+    if settings.get('v3_base_variant'): record['baseline_variant']='llm-v2'
+    def context_messages(request,purpose):
+        if settings.get('v3_base_variant') and settings.get('v3_deduplicate_context',True):
+            from .context_dedup import prepare
+            request,metrics=prepare(request)
+            record.setdefault('context_dedup',[]).append({'purpose':purpose,**metrics})
+        return request
     contract=infer_answer_contract(question)
     record['answer_contract']=contract
     last_candidate=None
@@ -276,7 +287,7 @@ def answer_with_tools(path, question, client, record, settings):
                 previous=record['plans'][-1] if record['plans'] else {}
                 correction['execution_context']={'tool_trace':previous.get('tool_trace',[]),
                                                  'row_samples':previous.get('row_samples',{})}
-            raw=client.complete(messages(question,previews,catalog,correction,observations,variant),ledger,
+            raw=client.complete(context_messages(messages(question,previews,catalog,correction,observations,variant),'plan'),ledger,
                                 'repair' if correction else 'plan' if turn==0 else 'explore')
             record['timings']['plan']=record['timings'].get('plan',0)+time.monotonic()-start
             plan=None
@@ -318,6 +329,8 @@ def answer_with_tools(path, question, client, record, settings):
                 record['stage']='execute'
                 start=time.monotonic()
                 result=execute(plan,selected)
+                record['stage']='validate_output'
+                record['tool_trace']=result['trace']
                 last_candidate={'answer':result.get('answer'),'plan':plan,'result':result}
                 record['last_candidate_answer']=result.get('answer','')
                 record['plans'][-1]['tool_trace']=result['trace']
@@ -337,7 +350,7 @@ def answer_with_tools(path, question, client, record, settings):
                     review_rounds=1
                     for review_index in range(review_rounds):
                         try:
-                            raw_review=client.complete(review_messages(question,previews,plan,result),ledger,'review')
+                            raw_review=client.complete(context_messages(review_messages(question,previews,plan,result),'review'),ledger,'review')
                         except (BudgetError,RuntimeError) as error:
                             # Deterministic checks already passed. Optional review
                             # cannot turn that candidate into a budget failure.
@@ -456,6 +469,8 @@ def answer_with_tools(path, question, client, record, settings):
                 if record['plans'] and record['plans'][-1]['turn']==turn+1:
                     record['plans'][-1]['validation_error']=str(error)[:500]
                 record['validation_errors']=record.get('validation_errors',[])+[str(error)[:500]]
+                record.setdefault('validation_events',[]).append({'attempt':turn+1,
+                    'detected_at':record['stage'],'error_type':type(error).__name__,'message':str(error)[:500]})
                 repairs+=1
                 if repairs>settings.get('max_plan_repairs',2):
                     answer=finalize_candidate(f'Final validation failed after bounded repairs: {error}')
@@ -465,5 +480,9 @@ def answer_with_tools(path, question, client, record, settings):
         answer=finalize_candidate('No validated answer within the API/inspection/repair limits')
         if answer is not None: return answer
         raise PlanError('No validated answer within the API/inspection/repair limits')
+    except Exception as error:
+        record['failure_event']={'phase':record['stage'],'error_type':type(error).__name__,
+            'message':str(error)[:500] if isinstance(error,(PlanError,BudgetError,ValueError)) else type(error).__name__}
+        raise
     finally:
         record['usage']=ledger.summary()

@@ -123,6 +123,20 @@ def expression(expr, row, results, depth=0):
         if op == 'div' and b == 0:
             raise PlanError("Division by zero")
         value = {'add':lambda:a+b,'sub':lambda:a-b,'mul':lambda:a*b,'div':lambda:a/b}[op]()
+    elif op == 'parse_number':
+        if len(values)!=2 or values[1] not in {'decimal_comma','decimal_dot'}:
+            raise PlanError('parse_number requires [text, decimal_comma|decimal_dot]')
+        raw=unicodedata.normalize('NFKC',str(values[0])).strip().replace('\u2212','-')
+        raw=raw.replace('\u00a0',' ').replace('\u202f',' ')
+        decimal,group=(',', '.') if values[1]=='decimal_comma' else ('.', ',')
+        pattern=rf'[+-]?(?:\d+|\d{{1,3}}(?:{re.escape(group)}\d{{3}})+|\d{{1,3}}(?: \d{{3}})+)(?:{re.escape(decimal)}\d+)?'
+        if not re.fullmatch(pattern,raw): raise PlanError('Number does not match declared locale; no implicit cleanup')
+        value=number(raw.replace(group,'').replace(' ','').replace(decimal,'.'))
+    elif op == 'parse_date':
+        if len(values)!=2 or not isinstance(values[1],str) or len(values[1])>30:
+            raise PlanError('parse_date requires [text, explicit strptime format]')
+        try: value=datetime.strptime(str(values[0]),values[1]).date()
+        except ValueError: raise PlanError('Date does not match declared format') from None
     elif op == 'abs': value = abs(numeric(args[0]))
     elif op == 'number': value = numeric(args[0])
     elif op == 'round':
@@ -209,6 +223,9 @@ def aggregate(rows, metric, expr, results, missing='error'):
     elif metric=='mean': value=sum(values,Decimal(0))/len(values)
     elif metric=='min': value=min(values)
     elif metric=='max': value=max(values)
+    elif metric=='median':
+        ordered=sorted(values);middle=len(ordered)//2
+        value=ordered[middle] if len(ordered)%2 else (ordered[middle-1]+ordered[middle])/Decimal(2)
     else: raise PlanError(f"Unknown aggregate {metric}")
     return Result(value,set().union(*(v.sources for v in selected)))
 

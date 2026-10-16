@@ -79,6 +79,17 @@ Kết quả nằm ở `outputs/cli-public/submission.csv`. Không cần chạy `
 
 **Git Bash** dùng cùng tham số:
 
+### Chẩn đoán phase lỗi (nhánh Bao)
+
+Dashboard có bảng phân loại phase, bộ lọc phase và chẩn đoán trong từng câu.
+Phân biệt dấu hiệu đã xác định, nghi ngờ và chưa xác định; lỗi đã sửa trong phiên
+được thống kê riêng. Một câu có thể có nhiều dấu hiệu; các phase không được cộng
+thành số câu sai độc lập. Khác tham chiếu không tự chứng minh lỗi RAG/LLM/TOOL.
+Lịch sử tổng hợp tối đa 100 phiên gần nhất, tách dataset/file/câu hỏi/tham chiếu.
+Phiên mới lưu fingerprint code; phiên cũ thiếu snapshot dùng tham chiếu hiện tại
+và ghi rõ hạn chế. Phân loại chỉ đọc nhật ký, không gọi thêm LLM, không sửa đáp án
+và không tự tối ưu thuật toán trả lời. Nguyên nhân gốc / lỗi dây chuyền cần xác minh.
+
 ```bash
 ./.venv/Scripts/python.exe main.py --mode llm --xlsx_dir ./Public_data_1/xlsx_files --queries ./Public_data_1/queries.json --output ./outputs/cli-public/submission.csv --log-dir ./outputs/cli-public/logs
 ```
@@ -275,3 +286,22 @@ docker run --rm \
 ```
 
 Chương trình chỉ ghi hai cột `id,answer` vào CSV; nhật ký tiến trình đi ra stdout/stderr. Cách viết cũ `--xlsx_dir` vẫn được hỗ trợ.
+
+## LMMv3 (nhánh Bao_LMMv3)
+
+Thêm lựa chọn `--mode llm-v3` và **LMMv3 · 8 phase có bằng chứng** trên dashboard. Giữ `llm`/`llm-v2` để so sánh. Xem [thiết kế, cách chạy và giới hạn LMMv3](docs/LMMv3.md). Chưa đánh giá độ chính xác trên dataset; các kiểm tra mới dùng client giả lập.
+
+
+## LMMv3 Lite — bản thử nghiệm đã lưu
+
+`--mode llm-v3` hiện dùng **LMMv3 Lite** (`lmmv3-lite-v1`): dữ liệu gọn → một kế hoạch LLM → Python tính → CSV. Mặc định tối đa 2 lượt API, không có đặc tả hoặc review riêng. Bản 8 phase được giữ làm lịch sử. Xem [cách chạy và phạm vi Lite](docs/LMMv3_LITE.md). Chưa đánh giá độ chính xác trên dataset thực.
+
+
+## LMMv3: mốc khôi phục từ LLMv2
+
+`--mode llm-v3` hiện dùng chung pipeline và cấu hình LLMv2, version `lmmv3-v2-baseline-v1`; không chạy Lite hay tám phase. Đây là mốc khôi phục, chưa có cải tiến mới. Giữ LLMv2 để đối chứng, nâng cấp từng thay đổi sau khi đo baseline. Xem [hướng dẫn baseline](docs/LMMv3_V2_BASELINE.md). Các mô tả Lite/tám phase trước đó là lịch sử. Chưa gọi API để đánh giá trong lần khôi phục.
+
+
+## LMMv3 hiện tại — bước 1 trên nền LLMv2
+
+Version `lmmv3-v2-dedup-v1`: chỉ giảm ô trùng trong request, giữ nguyên retrieval, thực thi và review. Đặt `v3_deduplicate_context: false` để quay về baseline đối chứng. Xem [cơ chế và số đo offline](docs/LMMv3_CONTEXT_DEDUP.md). Chưa đo token API hoặc độ chính xác dataset sau thay đổi.

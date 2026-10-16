@@ -39,10 +39,14 @@ class UsageLedger:
         tokens=[call['total_tokens'] for call in self.calls]
         known_cost=sum(value for value in costs if value is not None)
         known_tokens=sum(value for value in tokens if value is not None)
+        reasoning_known=all(c.get('reasoning_tokens') is not None for c in self.calls)
+        ranking_known=reasoning_known and all(c.get('prompt_tokens') is not None for c in self.calls)
         return {'calls':self.calls,'api_calls':len(self.calls),
                 'prompt_tokens':sum(c['prompt_tokens'] or 0 for c in self.calls),
                 'completion_tokens':sum(c['completion_tokens'] or 0 for c in self.calls),
                 'total_tokens':known_tokens,'tokens_complete':all(value is not None for value in tokens),
+                'reasoning_tokens':sum(c.get('reasoning_tokens') or 0 for c in self.calls) if reasoning_known else None,
+                'input_plus_reasoning_tokens':sum(c['prompt_tokens']+c['reasoning_tokens'] for c in self.calls) if ranking_known else None,
                 'actual_cost_usd':known_cost,'cost_complete':all(value is not None for value in costs),
                 'estimated_cost_usd':sum(c['estimated_cost_usd'] or 0 for c in self.calls),
                 'unknown_cost_calls':sum(value is None for value in costs),
@@ -53,7 +57,9 @@ class UsageLedger:
 def summarize_usage(records):
     entries=[r.get('usage') for r in records]
     known=[entry for entry in entries if entry is not None]
+    ranking_complete=len(known)==len(records) and all(u.get('input_plus_reasoning_tokens') is not None for u in known)
     return {'api_calls':sum(u['api_calls'] for u in known),
+            'input_plus_reasoning_tokens':sum(u['input_plus_reasoning_tokens'] for u in known) if ranking_complete else None,
             'prompt_tokens':sum(u['prompt_tokens'] for u in known),
             'completion_tokens':sum(u['completion_tokens'] for u in known),
             'total_tokens':sum(u['total_tokens'] for u in known),

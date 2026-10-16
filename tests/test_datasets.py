@@ -1,4 +1,5 @@
-import json, csv, tempfile, sys, unittest
+import json, csv, tempfile, sys, unittest, io
+from types import SimpleNamespace
 from pathlib import Path
 from unittest.mock import patch
 
@@ -64,6 +65,13 @@ class DashboardDatasetTest(unittest.TestCase):
             self.assertTrue(all(row["reference"] is not None for row in state["rows"]))
 
     def test_multi_run_separates_duplicate_ids_files_and_references(self):
+        def fake_process(command, **kwargs):
+            # Test dashboard routing/I/O only; never launch a paid LLM subprocess.
+            source=Path(command[command.index('--queries')+1])
+            output=Path(command[command.index('--output')+1])
+            query_rows=json.loads(source.read_text(encoding='utf-8'))
+            _write_expected(output,{q['id']:'11' if q['id'].startswith('a::') else '22' for q in query_rows})
+            return SimpleNamespace(stdout=io.StringIO('Synthetic CLI fixture\n'),wait=lambda:0)
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             for name, answer in [("a", "11"), ("b", "22")]:
@@ -77,7 +85,8 @@ class DashboardDatasetTest(unittest.TestCase):
                     {"id": 1, "file_name": "same.xlsx", "query": "What is in A1?"}
                 ]), encoding="utf-8")
                 _write_expected(folder / "expected_submission.csv", {1: answer})
-            with patch.object(dashboard, "TEST_ROOT", root / "Test"), patch.object(dashboard, "OUTPUTS", root / "outputs"):
+            with patch.object(dashboard, "TEST_ROOT", root / "Test"), patch.object(dashboard, "OUTPUTS", root / "outputs"), \
+                 patch.object(dashboard.subprocess,'Popen',side_effect=fake_process):
                 run = dashboard.start_run("llm", None, "a,b")
                 deadline = time.monotonic() + 30
                 while dashboard.JOB["running"] and time.monotonic() < deadline:
