@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "file_name": "p6_t01.xlsx",
+    "query": "Trong 3 nhóm vùng của bảng, nhóm nào mà Trạm vùng núi dành nhiều giờ nhất cho 'Ít mây'? Chỉ trả lời tên nhóm đúng như trong bảng."
+  },
+  {
+    "id": 2,
+    "file_name": "p6_t01.xlsx",
+    "query": "So sánh giờ dành cho 'Khô ráo' của Trạm ven biển và Trạm hải đảo trong nhóm 'Miền Nam'. Ai nhiều hơn và chênh bao nhiêu giờ? Trả lời dạng `nhóm, chênh lệch`, chênh lệch lấy đúng hai chữ số thập phân."
+  },
+  {
+    "id": 3,
+    "file_name": "p6_t01.xlsx",
+    "query": "Trạm hải đảo trong nhóm 'Miền Nam' có dành hơn 3.5 giờ cho 'Khô ráo' mỗi ngày không? Chỉ trả lời Có hoặc Không."
+  },
+  {
+    "id": 4,
+    "file_name": "p6_t01.xlsx",
+    "query": "Rank the groups by hours spent on 'Ít mây' within the 'Miền Bắc' group, from highest to lowest. Answer with the group names in that order, separated by a comma and one space, without numbering."
+  },
+  {
+    "id": 5,
+    "file_name": "p6_t02.xlsx",
+    "query": "% thay đổi của 'Nhiên liệu hóa thạch' cao hơn 'Nhập từ Trung Quốc' bao nhiêu điểm phần trăm? Chỉ trả lời bằng số với đúng một chữ số thập phân."
+  },
+  {
+    "id": 6,
+    "file_name": "p6_t02.xlsx",
+    "query": "Tỷ trọng của 'Nhiên liệu hóa thạch' lớn hơn 'Nhập từ Trung Quốc' bao nhiêu? Chỉ trả lời bằng số với đúng ba chữ số thập phân."
+  },
+  {
+    "id": 7,
+    "file_name": "p6_t02.xlsx",
+    "query": "Xếp hạng các mục trực thuộc 'Năng lượng tái tạo' theo % thay đổi từ cao đến thấp. Trả lời các tên mục theo thứ tự, cách nhau bởi dấu phẩy và một khoảng trắng, không đánh số."
+  },
+  {
+    "id": 8,
+    "file_name": "p6_t02.xlsx",
+    "query": "Có bao nhiêu mục có % thay đổi vượt quá 2.2%? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 9,
+    "file_name": "p6_t03.xlsx",
+    "query": "Năm nào sản lượng điện thương phẩm giảm mạnh nhất so với năm trước, và giảm bao nhiêu triệu kWh? Trả lời dạng `năm, mức giảm`, cách nhau bởi dấu phẩy và một khoảng trắng, số nguyên không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 10,
+    "file_name": "p6_t03.xlsx",
+    "query": "Xác định năm mà tỷ lệ điện hao hụt vượt quá 7.5% và tổng điện sản xuất dưới 181131 triệu kWh. Chỉ trả lời năm."
+  },
+  {
+    "id": 11,
+    "file_name": "p6_t03.xlsx",
+    "query": "Năm nào tỷ lệ điện hao hụt cao nhất? Chỉ trả lời năm."
+  },
+  {
+    "id": 12,
+    "file_name": "p6_t03.xlsx",
+    "query": "Tỷ lệ sản lượng điện thương phẩm trên công suất đặt năm 2017 là bao nhiêu phần trăm? Chỉ trả lời bằng số với đúng hai chữ số thập phân."
+  },
+  {
+    "id": 13,
+    "file_name": "p6_t04.xlsx",
+    "query": "Trong vùng 'Trung du miền núi Bắc Bộ' (không tính dòng 'Tổng mọi cấp'), nhóm quy mô nào có khoảng cách giữa Q3 và trung vị lớn nhất, và khoảng cách là bao nhiêu? Trả lời dạng `nhóm, khoảng cách`, cách nhau bởi dấu phẩy và một khoảng trắng, khoảng cách đúng một chữ số thập phân."
+  },
+  {
+    "id": 14,
+    "file_name": "p6_t04.xlsx",
+    "query": "Vùng nào có tỷ lệ trung bình cao nhất ở nhóm quy mô 'Trung áp 22kV'? Chỉ trả lời tên vùng đúng như trong bảng."
+  },
+  {
+    "id": 15,
+    "file_name": "p6_t04.xlsx",
+    "query": "Trong vùng 'Trung du miền núi Bắc Bộ', giá trị Q3 của nhóm 'Trung áp 22kV' có vượt quá 6.9 không? Chỉ trả lời Có hoặc Không."
+  },
+  {
+    "id": 16,
+    "file_name": "p6_t04.xlsx",
+    "query": "Có bao nhiêu vùng (xét dòng 'Tổng mọi cấp') có tỷ lệ trung bình vượt quá 10.4? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 17,
+    "file_name": "p6_t05.xlsx",
+    "query": "Tổng tài sản đã tăng bao nhiêu từ ngày 31/12/2023 đến ngày 31/12/2024, tính bằng triệu đồng? Chỉ trả lời số nguyên, không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 18,
+    "file_name": "p6_t05.xlsx",
+    "query": "Trong năm 2024, tổng doanh thu của tất cả các mảng được báo cáo là bao nhiêu triệu đồng? Chỉ trả lời số nguyên, không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 19,
+    "file_name": "p6_t05.xlsx",
+    "query": "Sheet nào báo cáo 'Thu dịch vụ và khác' cao hơn trong năm 2024, và giá trị là bao nhiêu triệu đồng? Trả lời dạng `tên sheet, giá trị`, cách nhau bởi dấu phẩy và một khoảng trắng, số không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 20,
+    "file_name": "p6_t05.xlsx",
+    "query": "Tỷ lệ Nợ vay trên Tổng tài sản tại ngày 31/12/2024 là bao nhiêu? Chỉ trả lời bằng số làm tròn đến ba chữ số thập phân."
+  },
+  {
+    "id": 21,
+    "file_name": "p6_t06.xlsx",
+    "query": "표의 그룹 중에서 '태양광 가구 보급률(%)'이 가장 높은 그룹은 무엇입니까? 표에 나온 그룹 이름만 답하십시오."
+  },
+  {
+    "id": 22,
+    "file_name": "p6_t06.xlsx",
+    "query": "그룹 간 '태양광 가구 보급률(%)'의 최고값과 최저값의 차이(퍼센트 포인트)는 얼마입니까? 소수점 첫째 자리까지 숫자만 답하십시오."
+  },
+  {
+    "id": 23,
+    "file_name": "p6_t06.xlsx",
+    "query": "'태양광 가구 보급률(%)'이 81.6%를 초과하는 그룹은 몇 개입니까? 정수만 답하십시오."
+  },
+  {
+    "id": 24,
+    "file_name": "p6_t06.xlsx",
+    "query": "'하이평시'의 '절전 실천율(%)'이 52.6%를 초과합니까? 네 또는 아니요로만 답하십시오."
+  }
+]

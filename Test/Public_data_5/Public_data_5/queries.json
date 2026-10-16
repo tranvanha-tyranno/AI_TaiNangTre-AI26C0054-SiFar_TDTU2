@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "file_name": "p5_t01.xlsx",
+    "query": "Trong 3 nhóm khoa của bảng, nhóm nào mà Hộ sinh dành nhiều giờ nhất cho 'Khám bệnh'? Chỉ trả lời tên nhóm đúng như trong bảng."
+  },
+  {
+    "id": 2,
+    "file_name": "p5_t01.xlsx",
+    "query": "So sánh giờ dành cho 'Hội chẩn' của Kỹ thuật viên và Điều dưỡng trong nhóm 'Khoa Nội'. Ai nhiều hơn và chênh bao nhiêu giờ? Trả lời dạng `nhóm, chênh lệch`, chênh lệch lấy đúng hai chữ số thập phân."
+  },
+  {
+    "id": 3,
+    "file_name": "p5_t01.xlsx",
+    "query": "Kỹ thuật viên trong nhóm 'Khoa Nội' có dành hơn 3.2 giờ cho 'Hội chẩn' mỗi ngày không? Chỉ trả lời Có hoặc Không."
+  },
+  {
+    "id": 4,
+    "file_name": "p5_t01.xlsx",
+    "query": "Rank the groups by hours spent on 'Trực' within the 'Khoa Nội' group, from highest to lowest. Answer with the group names in that order, separated by a comma and one space, without numbering."
+  },
+  {
+    "id": 5,
+    "file_name": "p5_t02.xlsx",
+    "query": "% thay đổi của 'Tiểu đường' cao hơn 'Huyết áp' bao nhiêu điểm phần trăm? Chỉ trả lời bằng số với đúng một chữ số thập phân."
+  },
+  {
+    "id": 6,
+    "file_name": "p5_t02.xlsx",
+    "query": "Tỷ trọng của 'Tiểu đường' lớn hơn 'Huyết áp' bao nhiêu? Chỉ trả lời bằng số với đúng ba chữ số thập phân."
+  },
+  {
+    "id": 7,
+    "file_name": "p5_t02.xlsx",
+    "query": "Xếp hạng các mục trực thuộc 'Thuốc kê đơn' theo % thay đổi từ cao đến thấp. Trả lời các tên mục theo thứ tự, cách nhau bởi dấu phẩy và một khoảng trắng, không đánh số."
+  },
+  {
+    "id": 8,
+    "file_name": "p5_t02.xlsx",
+    "query": "Có bao nhiêu mục có % thay đổi vượt quá 7.9%? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 9,
+    "file_name": "p5_t03.xlsx",
+    "query": "Năm nào số ca điều trị khỏi giảm mạnh nhất so với năm trước, và giảm bao nhiêu nghìn ca? Trả lời dạng `năm, mức giảm`, cách nhau bởi dấu phẩy và một khoảng trắng, số nguyên không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 10,
+    "file_name": "p5_t03.xlsx",
+    "query": "Xác định năm mà tỷ lệ tử vong vượt quá 9.9% và tổng số ca bệnh dưới 43332 nghìn ca. Chỉ trả lời năm."
+  },
+  {
+    "id": 11,
+    "file_name": "p5_t03.xlsx",
+    "query": "Năm nào tỷ lệ tử vong cao nhất? Chỉ trả lời năm."
+  },
+  {
+    "id": 12,
+    "file_name": "p5_t03.xlsx",
+    "query": "Tỷ lệ số ca điều trị khỏi trên dân số năm 2013 là bao nhiêu phần trăm? Chỉ trả lời bằng số với đúng hai chữ số thập phân."
+  },
+  {
+    "id": 13,
+    "file_name": "p5_t04.xlsx",
+    "query": "Trong tỉnh/thành phố 'Nghệ An' (không tính dòng 'Tổng mọi nhóm tuổi'), nhóm quy mô nào có khoảng cách giữa Q3 và trung vị lớn nhất, và khoảng cách là bao nhiêu? Trả lời dạng `nhóm, khoảng cách`, cách nhau bởi dấu phẩy và một khoảng trắng, khoảng cách đúng một chữ số thập phân."
+  },
+  {
+    "id": 14,
+    "file_name": "p5_t04.xlsx",
+    "query": "Tỉnh/thành phố nào có tỷ lệ trung bình cao nhất ở nhóm quy mô 'Trên 60 tuổi'? Chỉ trả lời tên tỉnh/thành phố đúng như trong bảng."
+  },
+  {
+    "id": 15,
+    "file_name": "p5_t04.xlsx",
+    "query": "Trong tỉnh/thành phố 'Đồng Nai', giá trị Q3 của nhóm '0 - 5 tuổi' có vượt quá 87.6 không? Chỉ trả lời Có hoặc Không."
+  },
+  {
+    "id": 16,
+    "file_name": "p5_t04.xlsx",
+    "query": "Có bao nhiêu tỉnh/thành phố (xét dòng 'Tổng mọi nhóm tuổi') có tỷ lệ trung bình vượt quá 94.6? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 17,
+    "file_name": "p5_t05.xlsx",
+    "query": "Tổng tài sản đã tăng bao nhiêu từ ngày 31/12/2023 đến ngày 31/12/2024, tính bằng triệu đồng? Chỉ trả lời số nguyên, không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 18,
+    "file_name": "p5_t05.xlsx",
+    "query": "Trong năm 2024, tổng doanh thu của tất cả các mảng được báo cáo là bao nhiêu triệu đồng? Chỉ trả lời số nguyên, không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 19,
+    "file_name": "p5_t05.xlsx",
+    "query": "Sheet nào báo cáo 'Thu dịch vụ và khác' cao hơn trong năm 2024, và giá trị là bao nhiêu triệu đồng? Trả lời dạng `tên sheet, giá trị`, cách nhau bởi dấu phẩy và một khoảng trắng, số không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 20,
+    "file_name": "p5_t05.xlsx",
+    "query": "Tỷ lệ Nợ phải trả trên Tổng tài sản tại ngày 31/12/2024 là bao nhiêu? Chỉ trả lời bằng số làm tròn đến ba chữ số thập phân."
+  },
+  {
+    "id": 21,
+    "file_name": "p5_t06.xlsx",
+    "query": "Parmi les groupes du tableau, quel groupe a le plus haut 'Taux de couverture AM (%)' ? Répondez uniquement par le nom du groupe tel qu'il apparaît dans le tableau."
+  },
+  {
+    "id": 22,
+    "file_name": "p5_t06.xlsx",
+    "query": "Quel est l'écart en points de pourcentage entre le plus haut et le plus bas 'Dépistage annuel (%)' parmi les groupes ? Répondez uniquement par le nombre avec une décimale."
+  },
+  {
+    "id": 23,
+    "file_name": "p5_t06.xlsx",
+    "query": "Combien de groupes ont un 'Taux de couverture AM (%)' supérieur à 77.5 % ? Répondez uniquement par l'entier."
+  },
+  {
+    "id": 24,
+    "file_name": "p5_t06.xlsx",
+    "query": "Le 'Taux de vaccination (%)' du groupe 'Étudiants' est-il supérieur à 76.4 % ? Répondez uniquement par Oui ou Non."
+  }
+]

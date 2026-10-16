@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "file_name": "p4_t01.xlsx",
+    "query": "Trong 3 nhóm nhóm tuổi của bảng, nhóm nào mà Người dùng TikTok Shop dành nhiều giờ nhất cho 'Đọc đánh giá sản phẩm'? Chỉ trả lời tên nhóm đúng như trong bảng."
+  },
+  {
+    "id": 2,
+    "file_name": "p4_t01.xlsx",
+    "query": "So sánh giờ dành cho 'Lướt sàn TMĐT' của Người dùng Shopee và Người dùng Lazada trong nhóm '18-24 tuổi'. Ai nhiều hơn và chênh bao nhiêu giờ? Trả lời dạng `nhóm, chênh lệch`, chênh lệch lấy đúng hai chữ số thập phân."
+  },
+  {
+    "id": 3,
+    "file_name": "p4_t01.xlsx",
+    "query": "Người dùng Shopee trong nhóm '18-24 tuổi' có dành hơn 0.8 giờ cho 'Lướt sàn TMĐT' mỗi ngày không? Chỉ trả lời Có hoặc Không."
+  },
+  {
+    "id": 4,
+    "file_name": "p4_t01.xlsx",
+    "query": "Rank the groups by hours spent on 'Xem livestream bán hàng' within the '18-24 tuổi' group, from highest to lowest. Answer with the group names in that order, separated by a comma and one space, without numbering."
+  },
+  {
+    "id": 5,
+    "file_name": "p4_t02.xlsx",
+    "query": "% thay đổi của 'Mẹ và bé' cao hơn 'Đồ gia dụng' bao nhiêu điểm phần trăm? Chỉ trả lời bằng số với đúng một chữ số thập phân."
+  },
+  {
+    "id": 6,
+    "file_name": "p4_t02.xlsx",
+    "query": "Tỷ trọng của 'Mẹ và bé' lớn hơn 'Đồ gia dụng' bao nhiêu? Chỉ trả lời bằng số với đúng ba chữ số thập phân."
+  },
+  {
+    "id": 7,
+    "file_name": "p4_t02.xlsx",
+    "query": "Xếp hạng các mục trực thuộc 'Điện tử' theo % thay đổi từ cao đến thấp. Trả lời các tên mục theo thứ tự, cách nhau bởi dấu phẩy và một khoảng trắng, không đánh số."
+  },
+  {
+    "id": 8,
+    "file_name": "p4_t02.xlsx",
+    "query": "Có bao nhiêu mục có % thay đổi vượt quá 5.9%? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 9,
+    "file_name": "p4_t03.xlsx",
+    "query": "Năm nào tổng giá trị đơn hàng thành công giảm mạnh nhất so với năm trước, và giảm bao nhiêu tỷ đồng? Trả lời dạng `năm, mức giảm`, cách nhau bởi dấu phẩy và một khoảng trắng, số nguyên không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 10,
+    "file_name": "p4_t03.xlsx",
+    "query": "Xác định năm mà tỷ lệ hoàn hàng vượt quá 8.7% và tổng GMV dưới 137470 tỷ đồng. Chỉ trả lời năm."
+  },
+  {
+    "id": 11,
+    "file_name": "p4_t03.xlsx",
+    "query": "Năm nào tỷ lệ hoàn hàng cao nhất? Chỉ trả lời năm."
+  },
+  {
+    "id": 12,
+    "file_name": "p4_t03.xlsx",
+    "query": "Tỷ lệ tổng giá trị đơn hàng thành công trên tổng số người mua online năm 2018 là bao nhiêu phần trăm? Chỉ trả lời bằng số với đúng hai chữ số thập phân."
+  },
+  {
+    "id": 13,
+    "file_name": "p4_t04.xlsx",
+    "query": "Trong danh mục 'Điện tử' (không tính dòng 'Tổng mọi quy mô'), nhóm quy mô nào có khoảng cách giữa Q3 và trung vị lớn nhất, và khoảng cách là bao nhiêu? Trả lời dạng `nhóm, khoảng cách`, cách nhau bởi dấu phẩy và một khoảng trắng, khoảng cách đúng một chữ số thập phân."
+  },
+  {
+    "id": 14,
+    "file_name": "p4_t04.xlsx",
+    "query": "Danh mục nào có tỷ lệ trung bình cao nhất ở nhóm quy mô '1.000 - 10.000 đơn/tháng'? Chỉ trả lời tên danh mục đúng như trong bảng."
+  },
+  {
+    "id": 15,
+    "file_name": "p4_t04.xlsx",
+    "query": "Trong danh mục 'Thời trang', giá trị Q3 của nhóm '100 - 1.000 đơn/tháng' có vượt quá 23.4 không? Chỉ trả lời Có hoặc Không."
+  },
+  {
+    "id": 16,
+    "file_name": "p4_t04.xlsx",
+    "query": "Có bao nhiêu danh mục (xét dòng 'Tổng mọi quy mô') có tỷ lệ trung bình vượt quá 17.5? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 17,
+    "file_name": "p4_t05.xlsx",
+    "query": "Tổng tài sản đã tăng bao nhiêu từ ngày 31/03/2024 đến ngày 31/03/2025, tính bằng triệu đồng? Chỉ trả lời số nguyên, không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 18,
+    "file_name": "p4_t05.xlsx",
+    "query": "Trong năm Q1/2025, tổng doanh thu của tất cả các mảng được báo cáo là bao nhiêu triệu đồng? Chỉ trả lời số nguyên, không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 19,
+    "file_name": "p4_t05.xlsx",
+    "query": "Sheet nào báo cáo 'Thu dịch vụ và khác' cao hơn trong năm Q1/2025, và giá trị là bao nhiêu triệu đồng? Trả lời dạng `tên sheet, giá trị`, cách nhau bởi dấu phẩy và một khoảng trắng, số không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 20,
+    "file_name": "p4_t05.xlsx",
+    "query": "Tỷ lệ Nợ phải trả trên Tổng tài sản tại ngày 31/03/2025 là bao nhiêu? Chỉ trả lời bằng số làm tròn đến ba chữ số thập phân."
+  },
+  {
+    "id": 21,
+    "file_name": "p4_t06.xlsx",
+    "query": "'网购渗透率(%)'最高的组是哪个？只回答表格中出现的组名。"
+  },
+  {
+    "id": 22,
+    "file_name": "p4_t06.xlsx",
+    "query": "各组'直播购物占比(%)'的最高值与最低值相差多少个百分点？只回答数字，保留一位小数。"
+  },
+  {
+    "id": 23,
+    "file_name": "p4_t06.xlsx",
+    "query": "有多少组的'网购渗透率(%)'超过76.7%？只回答整数。"
+  },
+  {
+    "id": 24,
+    "file_name": "p4_t06.xlsx",
+    "query": "'越南'的'电子钱包使用率(%)'是否超过47.8%？只回答是或否。"
+  }
+]

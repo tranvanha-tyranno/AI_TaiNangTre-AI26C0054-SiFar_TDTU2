@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "file_name": "p7_t01.xlsx",
+    "query": "Trong 3 nhóm loại hình du lịch của bảng, nhóm nào mà Khách nội địa dành nhiều đêm nhất cho 'Du thuyền'? Chỉ trả lời tên nhóm đúng như trong bảng."
+  },
+  {
+    "id": 2,
+    "file_name": "p7_t01.xlsx",
+    "query": "So sánh đêm dành cho 'Du thuyền' của Khách nội địa và Khách Trung Quốc trong nhóm 'Du lịch sinh thái'. Ai nhiều hơn và chênh bao nhiêu đêm? Trả lời dạng `nhóm, chênh lệch`, chênh lệch lấy đúng hai chữ số thập phân."
+  },
+  {
+    "id": 3,
+    "file_name": "p7_t01.xlsx",
+    "query": "Khách Hàn Quốc trong nhóm 'Du lịch sinh thái' có dành hơn 5.8 đêm cho 'Resort' mỗi ngày không? Chỉ trả lời Có hoặc Không."
+  },
+  {
+    "id": 4,
+    "file_name": "p7_t01.xlsx",
+    "query": "Rank the groups by nights spent on 'Homestay' within the 'Du lịch biển' group, from highest to lowest. Answer with the group names in that order, separated by a comma and one space, without numbering."
+  },
+  {
+    "id": 5,
+    "file_name": "p7_t02.xlsx",
+    "query": "% thay đổi của 'Mua sắm' cao hơn 'Tour' bao nhiêu điểm phần trăm? Chỉ trả lời bằng số với đúng một chữ số thập phân."
+  },
+  {
+    "id": 6,
+    "file_name": "p7_t02.xlsx",
+    "query": "Tỷ trọng của 'Mua sắm' lớn hơn 'Tour' bao nhiêu? Chỉ trả lời bằng số với đúng ba chữ số thập phân."
+  },
+  {
+    "id": 7,
+    "file_name": "p7_t02.xlsx",
+    "query": "Xếp hạng các mục trực thuộc 'Vui chơi' theo % thay đổi từ cao đến thấp. Trả lời các tên mục theo thứ tự, cách nhau bởi dấu phẩy và một khoảng trắng, không đánh số."
+  },
+  {
+    "id": 8,
+    "file_name": "p7_t02.xlsx",
+    "query": "Có bao nhiêu mục có % thay đổi vượt quá 4.0%? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 9,
+    "file_name": "p7_t03.xlsx",
+    "query": "Năm nào lượt khách quốc tế giảm mạnh nhất so với năm trước, và giảm bao nhiêu nghìn lượt? Trả lời dạng `năm, mức giảm`, cách nhau bởi dấu phẩy và một khoảng trắng, số nguyên không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 10,
+    "file_name": "p7_t03.xlsx",
+    "query": "Xác định năm mà tỷ lệ hủy tour vượt quá 7.8% và tổng lượt khách dưới 16288 nghìn lượt. Chỉ trả lời năm."
+  },
+  {
+    "id": 11,
+    "file_name": "p7_t03.xlsx",
+    "query": "Năm nào tỷ lệ hủy tour cao nhất? Chỉ trả lời năm."
+  },
+  {
+    "id": 12,
+    "file_name": "p7_t03.xlsx",
+    "query": "Tỷ lệ lượt khách quốc tế trên dân số năm 2018 là bao nhiêu phần trăm? Chỉ trả lời bằng số với đúng hai chữ số thập phân."
+  },
+  {
+    "id": 13,
+    "file_name": "p7_t04.xlsx",
+    "query": "Trong điểm đến 'Đà Lạt' (không tính dòng 'Tổng mọi nhóm tuổi'), nhóm quy mô nào có khoảng cách giữa Q3 và trung vị lớn nhất, và khoảng cách là bao nhiêu? Trả lời dạng `nhóm, khoảng cách`, cách nhau bởi dấu phẩy và một khoảng trắng, khoảng cách đúng một chữ số thập phân."
+  },
+  {
+    "id": 14,
+    "file_name": "p7_t04.xlsx",
+    "query": "Điểm đến nào có tỷ lệ trung bình cao nhất ở nhóm quy mô '30 - 44 tuổi'? Chỉ trả lời tên điểm đến đúng như trong bảng."
+  },
+  {
+    "id": 15,
+    "file_name": "p7_t04.xlsx",
+    "query": "Trong điểm đến 'Đà Lạt', giá trị Q3 của nhóm '45 - 59 tuổi' có vượt quá 87.6 không? Chỉ trả lời Có hoặc Không."
+  },
+  {
+    "id": 16,
+    "file_name": "p7_t04.xlsx",
+    "query": "Có bao nhiêu điểm đến (xét dòng 'Tổng mọi nhóm tuổi') có tỷ lệ trung bình vượt quá 90.4? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 17,
+    "file_name": "p7_t05.xlsx",
+    "query": "Tổng tài sản đã tăng bao nhiêu từ ngày 31/12/2023 đến ngày 31/12/2024, tính bằng triệu đồng? Chỉ trả lời số nguyên, không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 18,
+    "file_name": "p7_t05.xlsx",
+    "query": "Trong năm 2024, tổng doanh thu của tất cả các mảng được báo cáo là bao nhiêu triệu đồng? Chỉ trả lời số nguyên, không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 19,
+    "file_name": "p7_t05.xlsx",
+    "query": "Sheet nào báo cáo 'Thu dịch vụ và khác' cao hơn trong năm 2024, và giá trị là bao nhiêu triệu đồng? Trả lời dạng `tên sheet, giá trị`, cách nhau bởi dấu phẩy và một khoảng trắng, số không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 20,
+    "file_name": "p7_t05.xlsx",
+    "query": "Tỷ lệ Nợ phải trả trên Tổng tài sản tại ngày 31/12/2024 là bao nhiêu? Chỉ trả lời bằng số làm tròn đến ba chữ số thập phân."
+  },
+  {
+    "id": 21,
+    "file_name": "p7_t06.xlsx",
+    "query": "表のグループのうち、'長期滞在率(%)'が最も高いグループはどれですか？表記載のグループ名のみで答えてください。"
+  },
+  {
+    "id": 22,
+    "file_name": "p7_t06.xlsx",
+    "query": "グループ間の'リピート率(%)'の最大値と最小値の差は何ポイントですか？小数第一位までの数字のみで答えてください。"
+  },
+  {
+    "id": 23,
+    "file_name": "p7_t06.xlsx",
+    "query": "'リピート率(%)'が62.3%を超えるグループはいくつありますか？整数のみで答えてください。"
+  },
+  {
+    "id": 24,
+    "file_name": "p7_t06.xlsx",
+    "query": "'日本'の'満足度(%)'は67.9%を超えていますか？はい・いいえのみで答えてください。"
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "file_name": "p3_t01.xlsx",
+    "query": "Trong 3 nhóm cấp học của bảng, nhóm nào mà Học sinh nội trú dành nhiều giờ nhất cho 'Tự học ở nhà'? Chỉ trả lời tên nhóm đúng như trong bảng."
+  },
+  {
+    "id": 2,
+    "file_name": "p3_t01.xlsx",
+    "query": "So sánh giờ dành cho 'Học thêm' của Học sinh thành phố và Học sinh nội trú trong nhóm 'THPT'. Ai nhiều hơn và chênh bao nhiêu giờ? Trả lời dạng `nhóm, chênh lệch`, chênh lệch lấy đúng hai chữ số thập phân."
+  },
+  {
+    "id": 3,
+    "file_name": "p3_t01.xlsx",
+    "query": "Học sinh nội trú trong nhóm 'THPT' có dành hơn 1.6 giờ cho 'Tự học ở nhà' mỗi ngày không? Chỉ trả lời Có hoặc Không."
+  },
+  {
+    "id": 4,
+    "file_name": "p3_t01.xlsx",
+    "query": "Rank the groups by hours spent on 'Tự học ở nhà' within the 'Tiểu học' group, from highest to lowest. Answer with the group names in that order, separated by a comma and one space, without numbering."
+  },
+  {
+    "id": 5,
+    "file_name": "p3_t02.xlsx",
+    "query": "% thay đổi của 'Điều dưỡng' cao hơn 'Tài chính - Ngân hàng' bao nhiêu điểm phần trăm? Chỉ trả lời bằng số với đúng một chữ số thập phân."
+  },
+  {
+    "id": 6,
+    "file_name": "p3_t02.xlsx",
+    "query": "Tỷ trọng của 'Điều dưỡng' lớn hơn 'Tài chính - Ngân hàng' bao nhiêu? Chỉ trả lời bằng số với đúng ba chữ số thập phân."
+  },
+  {
+    "id": 7,
+    "file_name": "p3_t02.xlsx",
+    "query": "Xếp hạng các mục trực thuộc 'Khối Kinh tế' theo % thay đổi từ cao đến thấp. Trả lời các tên mục theo thứ tự, cách nhau bởi dấu phẩy và một khoảng trắng, không đánh số."
+  },
+  {
+    "id": 8,
+    "file_name": "p3_t02.xlsx",
+    "query": "Có bao nhiêu mục có % thay đổi vượt quá 5.3%? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 9,
+    "file_name": "p3_t03.xlsx",
+    "query": "Năm nào số thí sinh đỗ tốt nghiệp giảm mạnh nhất so với năm trước, và giảm bao nhiêu nghìn thí sinh? Trả lời dạng `năm, mức giảm`, cách nhau bởi dấu phẩy và một khoảng trắng, số nguyên không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 10,
+    "file_name": "p3_t03.xlsx",
+    "query": "Xác định năm mà tỷ lệ trượt tốt nghiệp vượt quá 5.8% và tổng số thí sinh dự thi dưới 1143 nghìn thí sinh. Chỉ trả lời năm."
+  },
+  {
+    "id": 11,
+    "file_name": "p3_t03.xlsx",
+    "query": "Năm nào tỷ lệ trượt tốt nghiệp cao nhất? Chỉ trả lời năm."
+  },
+  {
+    "id": 12,
+    "file_name": "p3_t03.xlsx",
+    "query": "Tỷ lệ số thí sinh đỗ tốt nghiệp trên số thí sinh đăng ký năm 2011 là bao nhiêu phần trăm? Chỉ trả lời bằng số với đúng hai chữ số thập phân."
+  },
+  {
+    "id": 13,
+    "file_name": "p3_t04.xlsx",
+    "query": "Trong khối ngành 'Luật' (không tính dòng 'Tổng mọi quy mô'), nhóm quy mô nào có khoảng cách giữa Q3 và trung vị lớn nhất, và khoảng cách là bao nhiêu? Trả lời dạng `nhóm, khoảng cách`, cách nhau bởi dấu phẩy và một khoảng trắng, khoảng cách đúng một chữ số thập phân."
+  },
+  {
+    "id": 14,
+    "file_name": "p3_t04.xlsx",
+    "query": "Khối ngành nào có tỷ lệ trung bình cao nhất ở nhóm quy mô '10.000 - 20.000 SV'? Chỉ trả lời tên khối ngành đúng như trong bảng."
+  },
+  {
+    "id": 15,
+    "file_name": "p3_t04.xlsx",
+    "query": "Trong khối ngành 'Luật', giá trị Q3 của nhóm '5.000 - 10.000 SV' có vượt quá 59.2 không? Chỉ trả lời Có hoặc Không."
+  },
+  {
+    "id": 16,
+    "file_name": "p3_t04.xlsx",
+    "query": "Có bao nhiêu khối ngành (xét dòng 'Tổng mọi quy mô') có tỷ lệ trung bình vượt quá 55.8? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 17,
+    "file_name": "p3_t05.xlsx",
+    "query": "Tổng tài sản đã tăng bao nhiêu từ ngày 31/12/2023 đến ngày 31/12/2024, tính bằng triệu đồng? Chỉ trả lời số nguyên, không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 18,
+    "file_name": "p3_t05.xlsx",
+    "query": "Trong năm 2024, tổng doanh thu của tất cả các mảng được báo cáo là bao nhiêu triệu đồng? Chỉ trả lời số nguyên, không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 19,
+    "file_name": "p3_t05.xlsx",
+    "query": "Sheet nào báo cáo 'Thu dịch vụ và khác' cao hơn trong năm 2024, và giá trị là bao nhiêu triệu đồng? Trả lời dạng `tên sheet, giá trị`, cách nhau bởi dấu phẩy và một khoảng trắng, số không dấu phẩy không đơn vị."
+  },
+  {
+    "id": 20,
+    "file_name": "p3_t05.xlsx",
+    "query": "Tỷ lệ Nợ phải trả trên Tổng tài sản tại ngày 31/12/2024 là bao nhiêu? Chỉ trả lời bằng số làm tròn đến ba chữ số thập phân."
+  },
+  {
+    "id": 21,
+    "file_name": "p3_t06.xlsx",
+    "query": "Trong các nhóm của bảng, nhóm nào có 'Tỷ lệ trúng tuyển đại học (%)' cao nhất? Chỉ trả lời tên nhóm đúng như trong bảng."
+  },
+  {
+    "id": 22,
+    "file_name": "p3_t06.xlsx",
+    "query": "Chênh lệch giữa mức cao nhất và thấp nhất của 'Tỷ lệ tốt nghiệp THPT (%)' giữa các nhóm là bao nhiêu điểm phần trăm? Chỉ trả lời bằng số với đúng một chữ số thập phân."
+  },
+  {
+    "id": 23,
+    "file_name": "p3_t06.xlsx",
+    "query": "Có bao nhiêu nhóm có 'Tỷ lệ tốt nghiệp THPT (%)' vượt quá 68.1%? Chỉ trả lời số nguyên."
+  },
+  {
+    "id": 24,
+    "file_name": "p3_t06.xlsx",
+    "query": "Among the groups in the table, which group has the highest 'Tỷ lệ trúng tuyển đại học (%)'? Answer with only the group name exactly as it appears in the table."
+  }
+]
