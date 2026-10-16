@@ -224,6 +224,8 @@ Trên Bao_LMMv3, `--mode llm-v3` hiện dispatch sang `src/lmmv3/lite.py`, versi
 
 ## 16. LMMv3 hiện tại — chỉ nâng cấp giảm trùng context
 
+Trên nhánh riêng `codex/llmv3-count-tool` từ `00f9822`: cờ `v3_count_tool` cùng reliability bật version `lmmv3-v2-count-tool-v1`. Chỉ câu scalar count được giới thiệu count_rows, Python biên dịch tham số rõ sang read/filter/count; câu khác giữ request cũ. Không đổi RAG, không nhận sửa direction từ nhánh khác. Baseline nguyên trạng ở `codex/llmv3-best-27`. Xem `docs/LMMv3_COUNT_TOOL.md`; chưa benchmark API hoặc merge main.
+
 Trên `codex/llmv3-output-review-fix`, cờ reliability dùng version `lmmv3-v2-reliability-v2`: hoàn tất count khi question contract và plan đồng thuận, phát hiện nhãn filter lặp bị trả nhầm làm identity, phân biệt raw source với final_output trong review. Không tăng ngân sách, không đổi RAG ranking, không tự bỏ qua reviewer revise. Chi tiết/giới hạn ở `docs/LMMv3_RELIABILITY.md`. Chưa benchmark API bản v2.
 
 Trên nhánh thử nghiệm `codex/llmv3-reliability` mới: cờ `v3_reliability: true` bật version `lmmv3-v2-reliability-v1`, sửa so sánh số text/boolean, báo count boolean, chuẩn hóa lag khai báo rõ, bổ sung section provenance và hướng dẫn cú pháp. Baseline nguyên trạng ở `codex/llmv3-restored-25` commit `e07698f`. Không đổi RAG ranking hoặc tăng ngân sách; chưa benchmark API, không tuyên bố đã sửa hết sáu câu. Xem `docs/LMMv3_RELIABILITY.md`. Mô tả dưới đây áp dụng khi cờ tắt hoặc trên baseline.

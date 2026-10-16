@@ -44,3 +44,6 @@ v3_deduplicate_context: true
 
 # Experimental reliability patch; false restores original v3 behavior.
 v3_reliability: true
+
+# Count-only experiment; false restores the 27/30 source behavior in this branch.
+v3_count_tool: true

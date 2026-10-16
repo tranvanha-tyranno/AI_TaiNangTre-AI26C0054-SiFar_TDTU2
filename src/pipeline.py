@@ -246,6 +246,10 @@ def answer_with_tools(path, question, client, record, settings):
             return preview(region,question,settings.get('preview_rows',45))
         return region.preview(question,settings.get('preview_rows',45))
     def context_messages(request,purpose):
+        if count_active:
+            from .count_tool import GUIDANCE as COUNT_GUIDANCE, REVIEW_NOTE, schema
+            ledger.response_schema=None if purpose=='review' else schema()
+            request=[{'role':'system','content':REVIEW_NOTE if purpose=='review' else COUNT_GUIDANCE},*request]
         if reliability:
             from .reliability import GUIDANCE
             request=[{'role':'system','content':GUIDANCE},*request]
@@ -261,6 +265,10 @@ def answer_with_tools(path, question, client, record, settings):
             request=review_request(request,result)
         return request
     contract=infer_answer_contract(question)
+    count_active=bool(reliability and settings.get('v3_count_tool',False)
+                      and contract.get('reduction')=='count' and contract.get('kind')=='scalar'
+                      and contract.get('count')==1 and not contract.get('yes_no'))
+    if settings.get('v3_count_tool',False):record['count_tool_available']=count_active
     record['answer_contract']=contract
     last_candidate=None
     def finalize_candidate(reason):
@@ -320,6 +328,13 @@ def answer_with_tools(path, question, client, record, settings):
                 syntax_repairs=[]
                 plan=parse_plan(raw,syntax_repairs)
                 if not isinstance(plan,dict): raise PlanError('Planner response must be an object')
+                if plan.get('action')=='count_rows':
+                    if not count_active:raise PlanError('count_rows is available only for an explicit scalar row-count question.')
+                    from .count_tool import compile_count
+                    request=plan
+                    plan=compile_count(request,regions)
+                    record.setdefault('count_tool_requests',[]).append({'turn':turn+1,'request':request})
+                    syntax_repairs.append({'kind':'count_rows_compiled','source_request':request})
                 if plan.get('action')=='inspect':
                     if set(plan)!={'action','requests'}: raise PlanError('Inspection cannot also include a computation plan')
                     if inspections>=max_inspections: raise PlanError('Inspection round limit reached; use already observed tables to plan')

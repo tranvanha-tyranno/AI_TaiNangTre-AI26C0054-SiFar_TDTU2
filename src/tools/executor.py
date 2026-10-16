@@ -122,7 +122,7 @@ def expression(expr, row, results, depth=0):
     args = [expression(a,row,results,depth+1) for a in arg]
     values = [a.value for a in args]
     sources = set().union(*(a.sources for a in args))
-    unary = {'abs','number','date','lower','trim','length','is_null','is_number','not'}
+    unary = {'abs','number','date','lower','trim','length','is_null','is_number','not','digit_length'}
     binary = {'sub','div','round','date_diff_days','age_years','eq','ne','gt','ge','lt','le','contains','starts_with'}
     if (op in unary and len(values)!=1) or (op in binary and len(values)!=2):
         raise PlanError(f"Wrong argument count for {op}")
@@ -182,6 +182,19 @@ def expression(expr, row, results, depth=0):
     elif op=='lower': value=str(values[0] or '').casefold()
     elif op=='trim': value=str(values[0] if values[0] is not None else '').strip()
     elif op=='length': value=len(str(values[0] if values[0] is not None else '').strip())
+    elif op=='digit_length':
+        if not _RELIABILITY.get():raise PlanError('digit_length requires reliability execution.')
+        raw=values[0]
+        if isinstance(raw,bool) or raw is None:value=0
+        elif isinstance(raw,(int,float,Decimal)):
+            try:
+                parsed=number(raw)
+                value=len(str(int(parsed))) if parsed>=0 and parsed==parsed.to_integral_value() else 0
+            except PlanError:value=0
+        elif isinstance(raw,str):
+            raw=unicodedata.normalize('NFKC',raw).strip()
+            value=len(raw) if re.fullmatch(r'[0-9]+',raw) else 0
+        else:value=0
     elif op=='is_null': value=values[0] is None or values[0]==''
     elif op=='is_number':
         try: number(values[0]); value=True
