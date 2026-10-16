@@ -145,6 +145,8 @@ def energy(s):
     base=datetime(2028,1,20)
     plants=[[f"NM-{i:03d}",["Miền Bắc","Miền Trung","Miền Nam","東部"][i%4],f"Trạm năng lượng {i:03d}",s.rng.randint(200,650)] for i in range(1,41)]
     s.table("plants","Nhà máy",[("plant","Mã nhà máy","TEXT"),("region","Vùng","TEXT"),("name","Tên","TEXT"),("carbon","gCO2 / kWh","INTEGER")],plants,widths={"C":35})
+    s.table("units","Nhà máy",[("quantity","Đại lượng","TEXT"),("conversion","Đổi đơn vị","TEXT"),("divisor","Chia cho","INTEGER")],
+            [["Carbon","gCO2 -> kgCO2",1000],["Thời gian","phút -> giờ",60],["Điện năng","Wh -> kWh",1000]],append_at=6,widths={"F":25,"G":29})
     tariffs=[]
     for p,*_ in plants:
         for block in range(50):
@@ -192,7 +194,7 @@ def energy(s):
     s.add("zh","peak_time","NM-040 的最大功率 peak_kw 首次出现于哪个UTC时刻？并列取最早时间。只回答 YYYY-MM-DD HH:MM:SS。","SELECT at FROM readings WHERE plant='NM-040' ORDER BY peak_kw DESC,at LIMIT 1",formats=["text"])
     s.add("fr","sum_tail","Quelle est la somme de net_kwh valide pour les identifiants ĐĐ-19001 à ĐĐ-20000 inclus ? Un entier uniquement.","SELECT sum(net_kwh) FROM valid_energy WHERE id BETWEEN 'ĐĐ-19001' AND 'ĐĐ-20000'")
     s.add("fr","distinct_outage","Combien de centrales distinctes ont au moins un incident Đã xác minh ? Un entier uniquement.","SELECT count(DISTINCT plant) FROM outages WHERE status='Đã xác minh'")
-    s.add("fr","average_peak","Quelle est la moyenne simple des puissances peak_kw de NM-040, toutes qualités incluses ? Deux décimales uniquement.","SELECT sum(peak_kw),count(*) FROM readings WHERE plant='NM-040'",ratio=R2)
+    s.add("fr","side_by_side_table","Dans la petite table à droite de la liste des centrales sur Nhà máy, par quel diviseur convertit-on gCO2 en kgCO2 pour Carbon ? Un entier uniquement.","SELECT divisor FROM units WHERE quantity='Carbon'")
     s.add("ko","hour_count","NM-040의 전체 측정 구간 수를 정수로 답하십시오. 품질이나 결측으로 제외하지 않습니다.","SELECT count(*) FROM readings WHERE plant='NM-040'")
     s.add("ko","top_three_energy","유효 순전력량 합계가 높은 상위 3개 발전소 코드를 답하십시오. 내림차순, 동률은 코드 오름차순, 쉼표와 공백으로 구분합니다.","SELECT plant FROM valid_energy GROUP BY plant ORDER BY sum(net_kwh) DESC,plant LIMIT 3",formats=["text"])
     s.add("ko","elapsed_outage","검증된 모든 사고의 개별 지속 시간 합계를 분으로 답하십시오. 사고 간 겹침은 이 질문에서는 각각 더합니다.","SELECT sum((strftime('%s',end)-strftime('%s',start))/60) FROM outages WHERE status='Đã xác minh'")

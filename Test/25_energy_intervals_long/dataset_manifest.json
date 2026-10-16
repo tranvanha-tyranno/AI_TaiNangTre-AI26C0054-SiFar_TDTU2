@@ -46,6 +46,34 @@
       ]
     },
     {
+      "table": "units",
+      "sheet": "Nhà máy",
+      "first_row": 2,
+      "last_row": 4,
+      "record_count": 3,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "quantity",
+          "label": "Đại lượng",
+          "type": "TEXT",
+          "column": 6
+        },
+        {
+          "key": "conversion",
+          "label": "Đổi đơn vị",
+          "type": "TEXT",
+          "column": 7
+        },
+        {
+          "key": "divisor",
+          "label": "Chia cho",
+          "type": "INTEGER",
+          "column": 8
+        }
+      ]
+    },
+    {
       "table": "tariffs",
       "sheet": "Giá theo hiệu lực",
       "first_row": 2,

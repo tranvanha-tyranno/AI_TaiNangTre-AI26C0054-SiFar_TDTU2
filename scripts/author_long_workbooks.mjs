@@ -14,17 +14,19 @@ for(const source of spec.sheets) {
   const width=Math.max(...source.rows.map(r=>r.length));
   const last=source.rows.length;
   let dateCount=0;
-  for(let offset=0;offset<last;offset+=1000) {
-    const rows=source.rows.slice(offset,offset+1000).map(row=>Array.from({length:width},(_,i)=> {
+  const rows=source.rows.map(row=>Array.from({length:width},(_,i)=> {
       const v=row[i]??null;
       if(typeof v==='string' && /^\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/.test(v)) {
         dateCount++;
-        return new Date(v.length===10 ? v+'T00:00:00Z' : v.replace(' ','T')+'Z');
+        // Native Excel dates are day serials. Writing the serial explicitly
+        // avoids local-midnight coercion of a JS Date in the authoring engine.
+        const iso=v.length===10 ? v+'T00:00:00Z' : v.replace(' ','T')+'Z';
+        return (Date.parse(iso)-Date.UTC(1899,11,30))/86400000;
       }
       return v;
-    }));
-    sh.getRange(`A${offset+1}`).write(rows);
-  }
+  }));
+  sh.getRange('A1').write(rows);
+  console.log(`Wrote ${source.name}: ${last} rows`);
   const used=sh.getUsedRange();
   used.format.font={name:'Arial',size:10,color:'#243247'};
   used.format.rowHeight=22;
@@ -60,3 +62,5 @@ await output.save(spec.file);
 try { await fs.rename(spec.file+'.inspect.ndjson',path.join(previews,'export.ndjson')); }
 catch(err) { if(err.code!=='ENOENT') throw err; }
 console.log(`Exported ${spec.suite}; RSS ${(process.memoryUsage().rss/1048576).toFixed(1)} MiB`);
+// All exports and diagnostic writes have been awaited; end this one-file CLI.
+process.exit(0);

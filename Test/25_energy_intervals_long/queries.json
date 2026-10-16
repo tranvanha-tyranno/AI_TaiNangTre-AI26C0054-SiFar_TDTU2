@@ -97,7 +97,7 @@
   {
     "id": 25027,
     "file_name": "data.xlsx",
-    "query": "Quelle est la moyenne simple des puissances peak_kw de NM-040, toutes qualités incluses ? Deux décimales uniquement."
+    "query": "Dans la petite table à droite de la liste des centrales sur Nhà máy, par quel diviseur convertit-on gCO2 en kgCO2 pour Carbon ? Un entier uniquement."
   },
   {
     "id": 25005,

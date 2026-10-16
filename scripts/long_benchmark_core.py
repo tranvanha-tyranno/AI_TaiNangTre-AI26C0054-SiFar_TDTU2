@@ -73,7 +73,7 @@ class LongSuite:
         self.db=sqlite3.connect(":memory:")
         self.sheets,self.tables,self.queries,self.checks,self.views=[],[],[],[],[]
 
-    def table(self, name, sheet, columns, records, header_rows=None, merges=(), widths=None, repeats=0):
+    def table(self, name, sheet, columns, records, header_rows=None, merges=(), widths=None, repeats=0, append_at=None):
         """Columns: (SQL key, visible label, SQLite type). Every record is meaningful data."""
         records=list(records)
         headers=header_rows or [[c[1] for c in columns]]
@@ -82,9 +82,10 @@ class LongSuite:
             if repeats and i and i%repeats==0:
                 excluded.append(len(raw)+1); raw.append([c[1] for c in columns])
             raw.append(list(record))
-        end=colname(len(columns)); first=len(headers)+1
+        offset=(append_at-1) if append_at else 0
+        end=colname(len(columns)+offset); first=len(headers)+1
         schema={"table":name,"sheet":sheet,"first_row":first,"last_row":len(raw),"record_count":len(records),
-                "skip_rows":excluded,"columns":[{"key":c[0],"label":c[1],"type":c[2],"column":i+1} for i,c in enumerate(columns)]}
+                "skip_rows":excluded,"columns":[{"key":c[0],"label":c[1],"type":c[2],"column":i+1+offset} for i,c in enumerate(columns)]}
         for i,column in enumerate(schema["columns"]):
             sample=next((r[i] for r in records if r[i] is not None),None)
             if isinstance(sample,datetime): column["temporal"]="datetime"
@@ -93,9 +94,20 @@ class LongSuite:
         self.tables.append(schema)
         formats={}
         for i,c in enumerate(columns):
-            if c[2]=="INTEGER": formats[f"{colname(i+1)}{first}:{colname(i+1)}{len(raw)}"]="0"
+            if c[2]=="INTEGER": formats[f"{colname(i+1+offset)}{first}:{colname(i+1+offset)}{len(raw)}"]="0"
             if schema["columns"][i].get("temporal"):
-                formats[f"{colname(i+1)}{first}:{colname(i+1)}{len(raw)}"]="yyyy-mm-dd hh:mm:ss" if schema["columns"][i]["temporal"]=="datetime" else "yyyy-mm-dd"
+                formats[f"{colname(i+1+offset)}{first}:{colname(i+1+offset)}{len(raw)}"]="yyyy-mm-dd hh:mm:ss" if schema["columns"][i]["temporal"]=="datetime" else "yyyy-mm-dd"
+        if append_at:
+            source=next(s for s in self.sheets if s["name"]==sheet)
+            while len(source["rows"])<len(raw): source["rows"].append([])
+            for i,row in enumerate(raw):
+                target=source["rows"][i]
+                assert len(target)<=offset,"Side table would overlap source data"
+                target.extend([None]*(offset-len(target))); target.extend(serial(v) for v in row)
+            source["headers"].append(f"{colname(append_at)}1:{end}{len(headers)}")
+            source["formats"].update(formats); source["widths"].update(widths or {})
+            source["previews"].append(f"{colname(append_at)}1:{end}{len(raw)}")
+            return schema
         self.sheets.append({"name":sheet,"start":"A1","rows":[[serial(v) for v in row] for row in raw],
                             "merges":list(merges),"formats":formats,"headers":[f"A1:{end}{len(headers)}"],
                             "widths":widths or {},"previews":[f"A1:{min_col(end,'H')}10",f"A{max(first,len(raw)-6)}:{min_col(end,'H')}{len(raw)}"]})
@@ -155,7 +167,7 @@ class LongSuite:
         spec_path=spec_root/(self.name+".json")
         spec_path.write_text(json.dumps([{"suite":self.name,"file":str(folder/"xlsx_files/data.xlsx"),"sheets":self.sheets}],ensure_ascii=False),encoding="utf-8")
         self.db.close()
-        return {"name":self.name,"questions":30,"main_records":self.count,"sheets":len(self.tables),"spec":str(spec_path)}
+        return {"name":self.name,"questions":30,"main_records":self.count,"sheets":len(self.sheets),"spec":str(spec_path)}
 
 
 def min_col(a,b): return a if len(a)==1 and a<b else b
@@ -171,8 +183,8 @@ def rebuild_database(folder):
         for table in manifest["tables"]:
             skip=set(table["skip_rows"])
             worksheet=book[table["sheet"]]
-            raw=worksheet.iter_rows(min_row=table["first_row"],max_row=table["last_row"],max_col=len(table["columns"]),values_only=True)
-            sql_table(db,table,(row for r,row in enumerate(raw,table["first_row"]) if r not in skip))
+            raw=worksheet.iter_rows(min_row=table["first_row"],max_row=table["last_row"],max_col=max(c["column"] for c in table["columns"]),values_only=True)
+            sql_table(db,table,([row[c["column"]-1] for c in table["columns"]] for r,row in enumerate(raw,table["first_row"]) if r not in skip))
         audit=json.loads((folder/"answer_audit.json").read_text(encoding="utf-8"))
         for sql in audit["views"]: db.execute(sql)
     except Exception:
