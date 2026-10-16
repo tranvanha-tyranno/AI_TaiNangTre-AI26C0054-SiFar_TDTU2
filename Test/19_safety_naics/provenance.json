@@ -1,0 +1,24 @@
+{
+  "seed": 261016,
+  "kind": "new synthetic data; structural transfer, not copied records",
+  "source_workbooks": [
+    "Public_data_2/xlsx_files/p2_t06.xlsx",
+    "Public_data_2/xlsx_files/p2_t07.xlsx"
+  ],
+  "description": "1.100 ngành mới, NAICS 3/6 chữ số, ô thiếu và bị ẩn, tỷ lệ tổng đã báo cáo, bảng quartile.",
+  "questions": 30,
+  "answer_rounding": "Decimal ROUND_HALF_UP; explicit precision in query",
+  "generator": "scripts/gen_public_transfer_suites.py",
+  "categories": [
+    "exact_boundary",
+    "full_scan_rank",
+    "ignore_suppressed",
+    "missing_count",
+    "missing_marker",
+    "quartile_lookup",
+    "quartile_rank",
+    "quartile_threshold",
+    "reported_not_components",
+    "six_digit_scope"
+  ]
+}

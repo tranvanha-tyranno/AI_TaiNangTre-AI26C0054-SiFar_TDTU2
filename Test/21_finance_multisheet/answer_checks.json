@@ -1,0 +1,740 @@
+[
+  {
+    "id": "21_q001",
+    "category": "cross_sheet_sum",
+    "expression": {
+      "sum": {
+        "list": [
+          {
+            "parse": {
+              "cell": "Cloud!B4"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Devices!B4"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Services!B4"
+            }
+          }
+        ]
+      }
+    },
+    "decimals": null,
+    "answer": "11913"
+  },
+  {
+    "id": "21_q002",
+    "category": "sheet_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "records": [
+            {
+              "label": "Cloud",
+              "value": {
+                "parse": {
+                  "cell": "Cloud!B3"
+                }
+              }
+            },
+            {
+              "label": "Devices",
+              "value": {
+                "parse": {
+                  "cell": "Devices!B3"
+                }
+              }
+            },
+            {
+              "label": "Services",
+              "value": {
+                "parse": {
+                  "cell": "Services!B3"
+                }
+              }
+            }
+          ]
+        },
+        "by": [
+          [
+            "value",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label",
+          "value"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Services, 2969"
+  },
+  {
+    "id": "21_q003",
+    "category": "accounting_negative",
+    "expression": {
+      "sum": {
+        "list": [
+          {
+            "parse": {
+              "cell": "Cloud!B6"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Devices!B6"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Services!B6"
+            }
+          }
+        ]
+      }
+    },
+    "decimals": null,
+    "answer": "-109"
+  },
+  {
+    "id": "21_q004",
+    "category": "cross_sheet_sum",
+    "expression": {
+      "sum": {
+        "list": [
+          {
+            "parse": {
+              "cell": "Cloud!C4"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Devices!C4"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Services!C4"
+            }
+          }
+        ]
+      }
+    },
+    "decimals": null,
+    "answer": "9631"
+  },
+  {
+    "id": "21_q005",
+    "category": "sheet_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "records": [
+            {
+              "label": "Cloud",
+              "value": {
+                "parse": {
+                  "cell": "Cloud!C3"
+                }
+              }
+            },
+            {
+              "label": "Devices",
+              "value": {
+                "parse": {
+                  "cell": "Devices!C3"
+                }
+              }
+            },
+            {
+              "label": "Services",
+              "value": {
+                "parse": {
+                  "cell": "Services!C3"
+                }
+              }
+            }
+          ]
+        },
+        "by": [
+          [
+            "value",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label",
+          "value"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Services, 2557"
+  },
+  {
+    "id": "21_q006",
+    "category": "accounting_negative",
+    "expression": {
+      "sum": {
+        "list": [
+          {
+            "parse": {
+              "cell": "Cloud!C6"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Devices!C6"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Services!C6"
+            }
+          }
+        ]
+      }
+    },
+    "decimals": null,
+    "answer": "-179"
+  },
+  {
+    "id": "21_q007",
+    "category": "cross_sheet_sum",
+    "expression": {
+      "sum": {
+        "list": [
+          {
+            "parse": {
+              "cell": "Cloud!D4"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Devices!D4"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Services!D4"
+            }
+          }
+        ]
+      }
+    },
+    "decimals": null,
+    "answer": "8003"
+  },
+  {
+    "id": "21_q008",
+    "category": "sheet_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "records": [
+            {
+              "label": "Cloud",
+              "value": {
+                "parse": {
+                  "cell": "Cloud!D3"
+                }
+              }
+            },
+            {
+              "label": "Devices",
+              "value": {
+                "parse": {
+                  "cell": "Devices!D3"
+                }
+              }
+            },
+            {
+              "label": "Services",
+              "value": {
+                "parse": {
+                  "cell": "Services!D3"
+                }
+              }
+            }
+          ]
+        },
+        "by": [
+          [
+            "value",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label",
+          "value"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Services, 2359"
+  },
+  {
+    "id": "21_q009",
+    "category": "accounting_negative",
+    "expression": {
+      "sum": {
+        "list": [
+          {
+            "parse": {
+              "cell": "Cloud!D6"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Devices!D6"
+            }
+          },
+          {
+            "parse": {
+              "cell": "Services!D6"
+            }
+          }
+        ]
+      }
+    },
+    "decimals": null,
+    "answer": "-174"
+  },
+  {
+    "id": "21_q010",
+    "category": "revenue_growth",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "parse": {
+                    "cell": "Cloud!B4"
+                  }
+                },
+                {
+                  "parse": {
+                    "cell": "Cloud!C4"
+                  }
+                }
+              ]
+            },
+            {
+              "parse": {
+                "cell": "Cloud!C4"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "30.49"
+  },
+  {
+    "id": "21_q011",
+    "category": "operating_margin",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "parse": {
+                "cell": "Cloud!B5"
+              }
+            },
+            {
+              "parse": {
+                "cell": "Cloud!B4"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "3.55"
+  },
+  {
+    "id": "21_q012",
+    "category": "revenue_growth",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "parse": {
+                    "cell": "Devices!B4"
+                  }
+                },
+                {
+                  "parse": {
+                    "cell": "Devices!C4"
+                  }
+                }
+              ]
+            },
+            {
+              "parse": {
+                "cell": "Devices!C4"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "20.23"
+  },
+  {
+    "id": "21_q013",
+    "category": "operating_margin",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "parse": {
+                "cell": "Devices!B5"
+              }
+            },
+            {
+              "parse": {
+                "cell": "Devices!B4"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "25.31"
+  },
+  {
+    "id": "21_q014",
+    "category": "revenue_growth",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "parse": {
+                    "cell": "Services!B4"
+                  }
+                },
+                {
+                  "parse": {
+                    "cell": "Services!C4"
+                  }
+                }
+              ]
+            },
+            {
+              "parse": {
+                "cell": "Services!C4"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "18.63"
+  },
+  {
+    "id": "21_q015",
+    "category": "operating_margin",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "parse": {
+                "cell": "Services!B5"
+              }
+            },
+            {
+              "parse": {
+                "cell": "Services!B4"
+              }
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "3.36"
+  },
+  {
+    "id": "21_q016",
+    "category": "fair_value_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Fair value!E3"
+        },
+        {
+          "cell": "Fair value!I3"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-260"
+  },
+  {
+    "id": "21_q017",
+    "category": "fair_value_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Fair value!E4"
+        },
+        {
+          "cell": "Fair value!I4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "496"
+  },
+  {
+    "id": "21_q018",
+    "category": "fair_value_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Fair value!E5"
+        },
+        {
+          "cell": "Fair value!I5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "525"
+  },
+  {
+    "id": "21_q019",
+    "category": "fair_value_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Fair value!E6"
+        },
+        {
+          "cell": "Fair value!I6"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-371"
+  },
+  {
+    "id": "21_q020",
+    "category": "fair_value_difference",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Fair value!E7"
+        },
+        {
+          "cell": "Fair value!I7"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "880"
+  },
+  {
+    "id": "21_q021",
+    "category": "avoid_total_double_count",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Fair value!E8"
+        },
+        {
+          "cell": "Fair value!I8"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1270"
+  },
+  {
+    "id": "21_q022",
+    "category": "cross_table_ratio",
+    "expression": {
+      "div": [
+        {
+          "cell": "Funding!B5"
+        },
+        {
+          "cell": "Funding!B6"
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "0.376"
+  },
+  {
+    "id": "21_q023",
+    "category": "cross_table_ratio",
+    "expression": {
+      "div": [
+        {
+          "cell": "Funding!C5"
+        },
+        {
+          "cell": "Funding!C6"
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "0.719"
+  },
+  {
+    "id": "21_q024",
+    "category": "cross_table_ratio",
+    "expression": {
+      "div": [
+        {
+          "cell": "Funding!D5"
+        },
+        {
+          "cell": "Funding!D6"
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "1.169"
+  },
+  {
+    "id": "21_q025",
+    "category": "cross_table_ratio",
+    "expression": {
+      "div": [
+        {
+          "cell": "Funding!E5"
+        },
+        {
+          "cell": "Funding!E6"
+        }
+      ]
+    },
+    "decimals": 3,
+    "answer": "0.377"
+  },
+  {
+    "id": "21_q026",
+    "category": "year_end_vs_average",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Funding!B5"
+        },
+        {
+          "cell": "Funding!D5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-13397"
+  },
+  {
+    "id": "21_q027",
+    "category": "parentheses",
+    "expression": {
+      "parse": {
+        "cell": "Funding!B7"
+      }
+    },
+    "decimals": null,
+    "answer": "-1275"
+  },
+  {
+    "id": "21_q028",
+    "category": "fair_value_share",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "cell": "Fair value!C8"
+            },
+            {
+              "cell": "Fair value!E8"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "40.07"
+  },
+  {
+    "id": "21_q029",
+    "category": "boolean",
+    "expression": {
+      "gt": [
+        {
+          "parse": {
+            "cell": "Cloud!B4"
+          }
+        },
+        {
+          "parse": {
+            "cell": "Devices!B4"
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  },
+  {
+    "id": "21_q030",
+    "category": "exact_text",
+    "expression": {
+      "cell": "Funding!C7"
+    },
+    "decimals": null,
+    "answer": "—"
+  }
+]

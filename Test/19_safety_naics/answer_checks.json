@@ -1,0 +1,1319 @@
+[
+  {
+    "id": "19_q001",
+    "category": "six_digit_scope",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "Incidence",
+                      "columns": {
+                        "label": "A",
+                        "code": "B",
+                        "total": "C",
+                        "combined": "D",
+                        "away": "E",
+                        "restriction": "F",
+                        "other": "G"
+                      },
+                      "first": 3,
+                      "last": 1102
+                    }
+                  },
+                  "fields": {
+                    "total": {
+                      "parse": {
+                        "field": "total"
+                      }
+                    }
+                  }
+                }
+              },
+              "fields": {
+                "digits": {
+                  "length": {
+                    "field": "code"
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "digits": 6,
+            "total": {
+              "gt": 0
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "873"
+  },
+  {
+    "id": "19_q002",
+    "category": "six_digit_scope",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "Incidence",
+                      "columns": {
+                        "label": "A",
+                        "code": "B",
+                        "total": "C",
+                        "combined": "D",
+                        "away": "E",
+                        "restriction": "F",
+                        "other": "G"
+                      },
+                      "first": 3,
+                      "last": 1102
+                    }
+                  },
+                  "fields": {
+                    "total": {
+                      "parse": {
+                        "field": "total"
+                      }
+                    }
+                  }
+                }
+              },
+              "fields": {
+                "digits": {
+                  "length": {
+                    "field": "code"
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "digits": 6,
+            "total": {
+              "gt": 2.5
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "692"
+  },
+  {
+    "id": "19_q003",
+    "category": "six_digit_scope",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "Incidence",
+                      "columns": {
+                        "label": "A",
+                        "code": "B",
+                        "total": "C",
+                        "combined": "D",
+                        "away": "E",
+                        "restriction": "F",
+                        "other": "G"
+                      },
+                      "first": 3,
+                      "last": 1102
+                    }
+                  },
+                  "fields": {
+                    "total": {
+                      "parse": {
+                        "field": "total"
+                      }
+                    }
+                  }
+                }
+              },
+              "fields": {
+                "digits": {
+                  "length": {
+                    "field": "code"
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "digits": 6,
+            "total": {
+              "gt": 5
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "469"
+  },
+  {
+    "id": "19_q004",
+    "category": "six_digit_scope",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "Incidence",
+                      "columns": {
+                        "label": "A",
+                        "code": "B",
+                        "total": "C",
+                        "combined": "D",
+                        "away": "E",
+                        "restriction": "F",
+                        "other": "G"
+                      },
+                      "first": 3,
+                      "last": 1102
+                    }
+                  },
+                  "fields": {
+                    "total": {
+                      "parse": {
+                        "field": "total"
+                      }
+                    }
+                  }
+                }
+              },
+              "fields": {
+                "digits": {
+                  "length": {
+                    "field": "code"
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "digits": 6,
+            "total": {
+              "gt": 7.5
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "276"
+  },
+  {
+    "id": "19_q005",
+    "category": "six_digit_scope",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "Incidence",
+                      "columns": {
+                        "label": "A",
+                        "code": "B",
+                        "total": "C",
+                        "combined": "D",
+                        "away": "E",
+                        "restriction": "F",
+                        "other": "G"
+                      },
+                      "first": 3,
+                      "last": 1102
+                    }
+                  },
+                  "fields": {
+                    "total": {
+                      "parse": {
+                        "field": "total"
+                      }
+                    }
+                  }
+                }
+              },
+              "fields": {
+                "digits": {
+                  "length": {
+                    "field": "code"
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "digits": 6,
+            "total": {
+              "gt": 10
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "74"
+  },
+  {
+    "id": "19_q006",
+    "category": "reported_not_components",
+    "expression": {
+      "cell": "Incidence!D3"
+    },
+    "decimals": 2,
+    "answer": "5.80"
+  },
+  {
+    "id": "19_q007",
+    "category": "reported_not_components",
+    "expression": {
+      "cell": "Incidence!D501"
+    },
+    "decimals": 2,
+    "answer": "0.30"
+  },
+  {
+    "id": "19_q008",
+    "category": "reported_not_components",
+    "expression": {
+      "cell": "Incidence!D552"
+    },
+    "decimals": 2,
+    "answer": "3.50"
+  },
+  {
+    "id": "19_q009",
+    "category": "reported_not_components",
+    "expression": {
+      "cell": "Incidence!D1001"
+    },
+    "decimals": 2,
+    "answer": "5.20"
+  },
+  {
+    "id": "19_q010",
+    "category": "reported_not_components",
+    "expression": {
+      "cell": "Incidence!D1101"
+    },
+    "decimals": 2,
+    "answer": "0.10"
+  },
+  {
+    "id": "19_q011",
+    "category": "reported_not_components",
+    "expression": {
+      "cell": "Incidence!D1102"
+    },
+    "decimals": 2,
+    "answer": "5.20"
+  },
+  {
+    "id": "19_q012",
+    "category": "full_scan_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "derive": {
+                "data": {
+                  "derive": {
+                    "data": {
+                      "table": {
+                        "sheet": "Incidence",
+                        "columns": {
+                          "label": "A",
+                          "code": "B",
+                          "total": "C",
+                          "combined": "D",
+                          "away": "E",
+                          "restriction": "F",
+                          "other": "G"
+                        },
+                        "first": 3,
+                        "last": 1102
+                      }
+                    },
+                    "fields": {
+                      "total": {
+                        "parse": {
+                          "field": "total"
+                        }
+                      }
+                    }
+                  }
+                },
+                "fields": {
+                  "digits": {
+                    "length": {
+                      "field": "code"
+                    }
+                  }
+                }
+              }
+            },
+            "conditions": {
+              "label": {
+                "ge": "Industry 0001",
+                "le": "Industry 0300"
+              },
+              "total": {
+                "not_blank": true
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "total",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Industry 0165"
+  },
+  {
+    "id": "19_q013",
+    "category": "full_scan_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "derive": {
+                "data": {
+                  "derive": {
+                    "data": {
+                      "table": {
+                        "sheet": "Incidence",
+                        "columns": {
+                          "label": "A",
+                          "code": "B",
+                          "total": "C",
+                          "combined": "D",
+                          "away": "E",
+                          "restriction": "F",
+                          "other": "G"
+                        },
+                        "first": 3,
+                        "last": 1102
+                      }
+                    },
+                    "fields": {
+                      "total": {
+                        "parse": {
+                          "field": "total"
+                        }
+                      }
+                    }
+                  }
+                },
+                "fields": {
+                  "digits": {
+                    "length": {
+                      "field": "code"
+                    }
+                  }
+                }
+              }
+            },
+            "conditions": {
+              "label": {
+                "ge": "Industry 0301",
+                "le": "Industry 0700"
+              },
+              "total": {
+                "not_blank": true
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "total",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Industry 0366"
+  },
+  {
+    "id": "19_q014",
+    "category": "full_scan_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "derive": {
+                "data": {
+                  "derive": {
+                    "data": {
+                      "table": {
+                        "sheet": "Incidence",
+                        "columns": {
+                          "label": "A",
+                          "code": "B",
+                          "total": "C",
+                          "combined": "D",
+                          "away": "E",
+                          "restriction": "F",
+                          "other": "G"
+                        },
+                        "first": 3,
+                        "last": 1102
+                      }
+                    },
+                    "fields": {
+                      "total": {
+                        "parse": {
+                          "field": "total"
+                        }
+                      }
+                    }
+                  }
+                },
+                "fields": {
+                  "digits": {
+                    "length": {
+                      "field": "code"
+                    }
+                  }
+                }
+              }
+            },
+            "conditions": {
+              "label": {
+                "ge": "Industry 0701",
+                "le": "Industry 1100"
+              },
+              "total": {
+                "not_blank": true
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "total",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Industry 0885"
+  },
+  {
+    "id": "19_q015",
+    "category": "quartile_rank",
+    "expression": {
+      "list": [
+        {
+          "rank": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "Quartiles",
+                    "columns": {
+                      "label": "A",
+                      "median": "D",
+                      "q3": "E"
+                    },
+                    "first": 4,
+                    "last": 7
+                  }
+                },
+                "fields": {
+                  "gap": {
+                    "sub": [
+                      {
+                        "field": "q3"
+                      },
+                      {
+                        "field": "median"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "by": [
+              [
+                "gap",
+                "desc"
+              ],
+              [
+                "label",
+                "asc"
+              ]
+            ],
+            "columns": [
+              "label"
+            ],
+            "offset": 0,
+            "limit": 1
+          }
+        },
+        {
+          "format": {
+            "value": {
+              "max": {
+                "rank": {
+                  "data": {
+                    "derive": {
+                      "data": {
+                        "table": {
+                          "sheet": "Quartiles",
+                          "columns": {
+                            "label": "A",
+                            "median": "D",
+                            "q3": "E"
+                          },
+                          "first": 4,
+                          "last": 7
+                        }
+                      },
+                      "fields": {
+                        "gap": {
+                          "sub": [
+                            {
+                              "field": "q3"
+                            },
+                            {
+                              "field": "median"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "by": [
+                    [
+                      "gap",
+                      "desc"
+                    ],
+                    [
+                      "label",
+                      "asc"
+                    ]
+                  ],
+                  "columns": [
+                    "gap"
+                  ],
+                  "offset": 0,
+                  "limit": 1
+                }
+              }
+            },
+            "decimals": 1
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "11 - 49, 3.5"
+  },
+  {
+    "id": "19_q016",
+    "category": "quartile_threshold",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Quartiles!E5"
+        },
+        5
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  },
+  {
+    "id": "19_q017",
+    "category": "quartile_lookup",
+    "expression": {
+      "cell": "Quartiles!D7"
+    },
+    "decimals": 1,
+    "answer": "2.4"
+  },
+  {
+    "id": "19_q018",
+    "category": "quartile_rank",
+    "expression": {
+      "list": [
+        {
+          "rank": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "Quartiles",
+                    "columns": {
+                      "label": "A",
+                      "median": "D",
+                      "q3": "E"
+                    },
+                    "first": 10,
+                    "last": 13
+                  }
+                },
+                "fields": {
+                  "gap": {
+                    "sub": [
+                      {
+                        "field": "q3"
+                      },
+                      {
+                        "field": "median"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "by": [
+              [
+                "gap",
+                "desc"
+              ],
+              [
+                "label",
+                "asc"
+              ]
+            ],
+            "columns": [
+              "label"
+            ],
+            "offset": 0,
+            "limit": 1
+          }
+        },
+        {
+          "format": {
+            "value": {
+              "max": {
+                "rank": {
+                  "data": {
+                    "derive": {
+                      "data": {
+                        "table": {
+                          "sheet": "Quartiles",
+                          "columns": {
+                            "label": "A",
+                            "median": "D",
+                            "q3": "E"
+                          },
+                          "first": 10,
+                          "last": 13
+                        }
+                      },
+                      "fields": {
+                        "gap": {
+                          "sub": [
+                            {
+                              "field": "q3"
+                            },
+                            {
+                              "field": "median"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "by": [
+                    [
+                      "gap",
+                      "desc"
+                    ],
+                    [
+                      "label",
+                      "asc"
+                    ]
+                  ],
+                  "columns": [
+                    "gap"
+                  ],
+                  "offset": 0,
+                  "limit": 1
+                }
+              }
+            },
+            "decimals": 1
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "1 - 10, 1.9"
+  },
+  {
+    "id": "19_q019",
+    "category": "quartile_threshold",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Quartiles!E11"
+        },
+        5
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  },
+  {
+    "id": "19_q020",
+    "category": "quartile_lookup",
+    "expression": {
+      "cell": "Quartiles!D13"
+    },
+    "decimals": 1,
+    "answer": "2.9"
+  },
+  {
+    "id": "19_q021",
+    "category": "quartile_rank",
+    "expression": {
+      "list": [
+        {
+          "rank": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "Quartiles",
+                    "columns": {
+                      "label": "A",
+                      "median": "D",
+                      "q3": "E"
+                    },
+                    "first": 16,
+                    "last": 19
+                  }
+                },
+                "fields": {
+                  "gap": {
+                    "sub": [
+                      {
+                        "field": "q3"
+                      },
+                      {
+                        "field": "median"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "by": [
+              [
+                "gap",
+                "desc"
+              ],
+              [
+                "label",
+                "asc"
+              ]
+            ],
+            "columns": [
+              "label"
+            ],
+            "offset": 0,
+            "limit": 1
+          }
+        },
+        {
+          "format": {
+            "value": {
+              "max": {
+                "rank": {
+                  "data": {
+                    "derive": {
+                      "data": {
+                        "table": {
+                          "sheet": "Quartiles",
+                          "columns": {
+                            "label": "A",
+                            "median": "D",
+                            "q3": "E"
+                          },
+                          "first": 16,
+                          "last": 19
+                        }
+                      },
+                      "fields": {
+                        "gap": {
+                          "sub": [
+                            {
+                              "field": "q3"
+                            },
+                            {
+                              "field": "median"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "by": [
+                    [
+                      "gap",
+                      "desc"
+                    ],
+                    [
+                      "label",
+                      "asc"
+                    ]
+                  ],
+                  "columns": [
+                    "gap"
+                  ],
+                  "offset": 0,
+                  "limit": 1
+                }
+              }
+            },
+            "decimals": 1
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "250 - 999, 3.4"
+  },
+  {
+    "id": "19_q022",
+    "category": "quartile_threshold",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Quartiles!E17"
+        },
+        5
+      ]
+    },
+    "decimals": null,
+    "answer": "No"
+  },
+  {
+    "id": "19_q023",
+    "category": "quartile_lookup",
+    "expression": {
+      "cell": "Quartiles!D19"
+    },
+    "decimals": 1,
+    "answer": "1.0"
+  },
+  {
+    "id": "19_q024",
+    "category": "quartile_rank",
+    "expression": {
+      "list": [
+        {
+          "rank": {
+            "data": {
+              "derive": {
+                "data": {
+                  "table": {
+                    "sheet": "Quartiles",
+                    "columns": {
+                      "label": "A",
+                      "median": "D",
+                      "q3": "E"
+                    },
+                    "first": 22,
+                    "last": 25
+                  }
+                },
+                "fields": {
+                  "gap": {
+                    "sub": [
+                      {
+                        "field": "q3"
+                      },
+                      {
+                        "field": "median"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "by": [
+              [
+                "gap",
+                "desc"
+              ],
+              [
+                "label",
+                "asc"
+              ]
+            ],
+            "columns": [
+              "label"
+            ],
+            "offset": 0,
+            "limit": 1
+          }
+        },
+        {
+          "format": {
+            "value": {
+              "max": {
+                "rank": {
+                  "data": {
+                    "derive": {
+                      "data": {
+                        "table": {
+                          "sheet": "Quartiles",
+                          "columns": {
+                            "label": "A",
+                            "median": "D",
+                            "q3": "E"
+                          },
+                          "first": 22,
+                          "last": 25
+                        }
+                      },
+                      "fields": {
+                        "gap": {
+                          "sub": [
+                            {
+                              "field": "q3"
+                            },
+                            {
+                              "field": "median"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "by": [
+                    [
+                      "gap",
+                      "desc"
+                    ],
+                    [
+                      "label",
+                      "asc"
+                    ]
+                  ],
+                  "columns": [
+                    "gap"
+                  ],
+                  "offset": 0,
+                  "limit": 1
+                }
+              }
+            },
+            "decimals": 1
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "250 - 999, 3.0"
+  },
+  {
+    "id": "19_q025",
+    "category": "quartile_threshold",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Quartiles!E23"
+        },
+        5
+      ]
+    },
+    "decimals": null,
+    "answer": "No"
+  },
+  {
+    "id": "19_q026",
+    "category": "quartile_lookup",
+    "expression": {
+      "cell": "Quartiles!D25"
+    },
+    "decimals": 1,
+    "answer": "2.6"
+  },
+  {
+    "id": "19_q027",
+    "category": "missing_marker",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "table": {
+                  "sheet": "Quartiles",
+                  "columns": {
+                    "label": "A",
+                    "mean": "B"
+                  },
+                  "first": 2,
+                  "last": 25
+                }
+              },
+              "fields": {
+                "mean": {
+                  "parse": {
+                    "field": "mean"
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "label": "250 - 999",
+            "mean": {
+              "not_blank": false
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "1"
+  },
+  {
+    "id": "19_q028",
+    "category": "ignore_suppressed",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "records": [
+                {
+                  "label": "Crop production",
+                  "value": {
+                    "parse": {
+                      "cell": "Quartiles!B7"
+                    }
+                  }
+                },
+                {
+                  "label": "Machinery manufacturing",
+                  "value": {
+                    "parse": {
+                      "cell": "Quartiles!B13"
+                    }
+                  }
+                },
+                {
+                  "label": "Food manufacturing",
+                  "value": {
+                    "parse": {
+                      "cell": "Quartiles!B19"
+                    }
+                  }
+                },
+                {
+                  "label": "Warehousing",
+                  "value": {
+                    "parse": {
+                      "cell": "Quartiles!B25"
+                    }
+                  }
+                }
+              ]
+            },
+            "conditions": {
+              "value": {
+                "not_blank": true
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "value",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Machinery manufacturing"
+  },
+  {
+    "id": "19_q029",
+    "category": "exact_boundary",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "Incidence",
+                      "columns": {
+                        "label": "A",
+                        "code": "B",
+                        "total": "C",
+                        "combined": "D",
+                        "away": "E",
+                        "restriction": "F",
+                        "other": "G"
+                      },
+                      "first": 3,
+                      "last": 1102
+                    }
+                  },
+                  "fields": {
+                    "total": {
+                      "parse": {
+                        "field": "total"
+                      }
+                    }
+                  }
+                }
+              },
+              "fields": {
+                "digits": {
+                  "length": {
+                    "field": "code"
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "digits": 6,
+            "total": 5
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "25"
+  },
+  {
+    "id": "19_q030",
+    "category": "missing_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "table": {
+                      "sheet": "Incidence",
+                      "columns": {
+                        "label": "A",
+                        "code": "B",
+                        "total": "C",
+                        "combined": "D",
+                        "away": "E",
+                        "restriction": "F",
+                        "other": "G"
+                      },
+                      "first": 3,
+                      "last": 1102
+                    }
+                  },
+                  "fields": {
+                    "total": {
+                      "parse": {
+                        "field": "total"
+                      }
+                    }
+                  }
+                }
+              },
+              "fields": {
+                "digits": {
+                  "length": {
+                    "field": "code"
+                  }
+                }
+              }
+            }
+          },
+          "conditions": {
+            "total": {
+              "not_blank": false
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "2"
+  }
+]

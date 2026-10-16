@@ -1,0 +1,152 @@
+[
+  {
+    "id": "17_q001",
+    "file_name": "data.xlsx",
+    "query": "In Employment, how many more employed people are 20 to 24 than 16 to 19 in Agriculture? Keep the table's thousands unit. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q002",
+    "file_name": "data.xlsx",
+    "query": "In Agriculture, what percentage of persons at work worked 1 to 34 hours? Use part-time count/(part-time+35 hours or more)*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "17_q003",
+    "file_name": "data.xlsx",
+    "query": "In Employment, how many more employed people are 20 to 24 than 16 to 19 in Manufacturing? Keep the table's thousands unit. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q004",
+    "file_name": "data.xlsx",
+    "query": "In Manufacturing, what percentage of persons at work worked 1 to 34 hours? Use part-time count/(part-time+35 hours or more)*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "17_q005",
+    "file_name": "data.xlsx",
+    "query": "In Employment, how many more employed people are 20 to 24 than 16 to 19 in Construction? Keep the table's thousands unit. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q006",
+    "file_name": "data.xlsx",
+    "query": "In Construction, what percentage of persons at work worked 1 to 34 hours? Use part-time count/(part-time+35 hours or more)*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "17_q007",
+    "file_name": "data.xlsx",
+    "query": "In Employment, how many more employed people are 20 to 24 than 16 to 19 in Financial activities? Keep the table's thousands unit. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q008",
+    "file_name": "data.xlsx",
+    "query": "In Financial activities, what percentage of persons at work worked 1 to 34 hours? Use part-time count/(part-time+35 hours or more)*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "17_q009",
+    "file_name": "data.xlsx",
+    "query": "In Employment, how many more employed people are 20 to 24 than 16 to 19 in Transportation and utilities? Keep the table's thousands unit. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q010",
+    "file_name": "data.xlsx",
+    "query": "In Transportation and utilities, what percentage of persons at work worked 1 to 34 hours? Use part-time count/(part-time+35 hours or more)*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "17_q011",
+    "file_name": "data.xlsx",
+    "query": "In Employment, how many more employed people are 20 to 24 than 16 to 19 in Education? Keep the table's thousands unit. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q012",
+    "file_name": "data.xlsx",
+    "query": "In Education, what percentage of persons at work worked 1 to 34 hours? Use part-time count/(part-time+35 hours or more)*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "17_q013",
+    "file_name": "data.xlsx",
+    "query": "In Employment, how many more employed people are 20 to 24 than 16 to 19 in Hospitality? Keep the table's thousands unit. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q014",
+    "file_name": "data.xlsx",
+    "query": "In Hospitality, what percentage of persons at work worked 1 to 34 hours? Use part-time count/(part-time+35 hours or more)*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "17_q015",
+    "file_name": "data.xlsx",
+    "query": "In Employment, how many more employed people are 20 to 24 than 16 to 19 in Information? Keep the table's thousands unit. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q016",
+    "file_name": "data.xlsx",
+    "query": "In Information, what percentage of persons at work worked 1 to 34 hours? Use part-time count/(part-time+35 hours or more)*100. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "17_q017",
+    "file_name": "data.xlsx",
+    "query": "In Occupations, what is Protective service plus Other service for Agriculture? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q018",
+    "file_name": "data.xlsx",
+    "query": "In Occupations, what is Protective service plus Other service for Manufacturing? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q019",
+    "file_name": "data.xlsx",
+    "query": "In Occupations, what is Protective service plus Other service for Construction? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q020",
+    "file_name": "data.xlsx",
+    "query": "In Occupations, what is Protective service plus Other service for Financial activities? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q021",
+    "file_name": "data.xlsx",
+    "query": "Excluding TOTAL, which industry has the highest 16 to 19 employed count? Break ties by the label in ascending Unicode order. Answer only the industry name."
+  },
+  {
+    "id": "17_q022",
+    "file_name": "data.xlsx",
+    "query": "Excluding TOTAL, which industry has the highest 35 hours or more count? Break ties by the label in ascending Unicode order. Answer only the industry name."
+  },
+  {
+    "id": "17_q023",
+    "file_name": "data.xlsx",
+    "query": "Excluding TOTAL, which industry has the highest Average hours? Break ties by the label in ascending Unicode order. Answer only the industry name."
+  },
+  {
+    "id": "17_q024",
+    "file_name": "data.xlsx",
+    "query": "Excluding TOTAL, which industry has the highest 20 to 24 minus 16 to 19 employed gap? Break ties by the label in ascending Unicode order. Answer only the industry name."
+  },
+  {
+    "id": "17_q025",
+    "file_name": "data.xlsx",
+    "query": "Rank Agriculture, Manufacturing and Construction by Transportation and material moving count descending. Break ties by the label in ascending Unicode order. Separate names with comma and one space."
+  },
+  {
+    "id": "17_q026",
+    "file_name": "data.xlsx",
+    "query": "What is total 1 to 34 hours across the eight industries? Do not add TOTAL again. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q027",
+    "file_name": "data.xlsx",
+    "query": "Return TOTAL 1 to 34 hours and TOTAL 35 hours or more, in that order, as two integers separated by comma and one space."
+  },
+  {
+    "id": "17_q028",
+    "file_name": "data.xlsx",
+    "query": "For Manufacturing, what percentage of all employed people work in Production occupations? Use Production from Occupations divided by the three age counts in Employment. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "17_q029",
+    "file_name": "data.xlsx",
+    "query": "What is combined 20 to 24 employed count in Construction and Manufacturing? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "17_q030",
+    "file_name": "data.xlsx",
+    "query": "Does Financial activities have more employed persons aged 25 and over than Transportation and utilities? Answer only Yes or No."
+  }
+]

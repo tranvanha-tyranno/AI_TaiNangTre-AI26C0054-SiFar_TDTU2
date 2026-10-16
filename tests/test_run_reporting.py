@@ -12,6 +12,31 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 class RunReportingTest(unittest.TestCase):
+    def test_cli_exports_blank_for_rejected_candidate(self):
+        import csv
+        import io
+        import sys
+        import main
+        from src.tools.executor import PlanError
+        def reject(path,question,client,record,settings):
+            record['last_candidate_answer']='known rejected answer'
+            raise PlanError('Output field does not match the question')
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);(root/'book.xlsx').write_bytes(b'not read by mocked solver')
+            (root/'queries.json').write_text(json.dumps([{'id':1,'file_name':'book.xlsx','query':'Q'}]),encoding='utf-8')
+            argv=['main.py','--config',str(root/'none.yaml'),'--xlsx_dir',str(root),'--queries',str(root/'queries.json'),
+                  '--output',str(root/'submission.csv'),'--log-dir',str(root/'logs')]
+            with patch.object(sys,'argv',argv),patch('main.get_client',return_value=object()), \
+                 patch('main.PlannerClient',return_value=object()),patch('main.answer_with_tools',side_effect=reject), \
+                 patch('sys.stdout',new=io.StringIO()),patch('sys.stderr',new=io.StringIO()),self.assertRaises(SystemExit) as caught:
+                main.main()
+            self.assertEqual(caught.exception.code,3)
+            with (root/'submission.csv').open(encoding='utf-8',newline='') as stream:
+                self.assertEqual(list(csv.DictReader(stream)),[{'id':'1','answer':''}])
+            record=json.loads((root/'logs/questions.jsonl').read_text(encoding='utf-8'))
+            self.assertEqual(record['last_candidate_answer'],'known rejected answer')
+            self.assertEqual(record['status'],'error')
+
     def test_http_402_is_reported_separately_from_solver_regression(self):
         old={'run':'old','rows':[{'id':'a','query':'Q','expected':'right','match':True}]}
         new={'run':'new','rows':[{'id':'a','query':'Q','expected':'right','match':False,'api_failed':True}]}

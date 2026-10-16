@@ -10,6 +10,7 @@ from .scope_validation import validate_aggregate_scope
 from .answer_contract import infer_answer_contract, validate_answer_contract, validate_answer_field
 from .semantic_validation import validate_semantics, validate_rank_labels, requested_rank_labels
 from .exploration import observe
+from .plan_normalization import normalize_plan
 
 
 def review_needed(plan, contract, mode):
@@ -36,7 +37,8 @@ def add_numeric_guards(plan):
             if cols and step.get('input'):
                 guard_id='numeric_'+step['id']
                 if not any(s.get('id')==guard_id for s in steps):
-                    where={'and':[{'is_number':[{'col':col}]} for col in cols]}
+                    predicates=[{'is_number':[{'col':col}]} for col in cols]
+                    where=predicates[0] if len(predicates)==1 else {'and':predicates}
                     output.append({'id':guard_id,'op':'filter','input':step['input'],'where':where})
                     step=dict(step);step['input']=guard_id;changed=True
         output.append(step)
@@ -220,7 +222,7 @@ def answer_with_tools(path, question, client, record, settings):
     ledger=UsageLedger(limit_usd=settings.get('max_cost_per_question',.10),max_calls=settings.get('max_api_calls',4),
         seconds=settings.get('question_timeout',115),prompt_cap=reserve_prompt,completion_cap=reserve_completion)
     variant=settings.get('pipeline_variant','llm')
-    record.update(stage='parse',pipeline_version='tools-v3' if variant=='llm-v2' else 'tools-v2',
+    record.update(stage='parse',pipeline_version='tools-v4',
                   plans=[],timings={},interactions=[],reviews=[],llm_variant=variant)
     contract=infer_answer_contract(question)
     record['answer_contract']=contract
@@ -228,15 +230,16 @@ def answer_with_tools(path, question, client, record, settings):
     def finalize_candidate(reason):
         if not last_candidate or not last_candidate.get('answer'):
             return None
-        record.update(stage='finalized', finalized_with_warning=True,
-                      finalized_reason=reason, validated=False,
+        record.update(candidate_rejected=True, validation_failure_reason=reason, validated=False,
                       plan=last_candidate.get('plan'),
                       tool_trace=last_candidate.get('result',{}).get('trace',[]),
                       evidence=last_candidate.get('result',{}).get('evidence',[]),
                       evidence_count=last_candidate.get('result',{}).get('evidence_count',0),
                       row_samples=last_candidate.get('result',{}).get('row_samples',{}),
                       answer_spec=last_candidate.get('plan',{}).get('answer_spec'))
-        return last_candidate['answer']
+        # Preserve evidence for debugging, but never promote a known rejected
+        # candidate into submission.csv. The CLI writes an empty failed row.
+        return None
     review_mode=settings.get('semantic_review','all' if variant=='llm-v2' else 'off')
     if review_mode not in {'off','risky','all'}: raise ValueError('semantic_review must be off, risky or all')
     try:
@@ -268,12 +271,18 @@ def answer_with_tools(path, question, client, record, settings):
             if time.monotonic()>ledger.deadline: raise BudgetError('Question time budget exhausted')
             record['stage']='plan'
             start=time.monotonic()
+            if correction:
+                correction['previous_errors']=record.get('validation_errors',[])[-4:]
+                previous=record['plans'][-1] if record['plans'] else {}
+                correction['execution_context']={'tool_trace':previous.get('tool_trace',[]),
+                                                 'row_samples':previous.get('row_samples',{})}
             raw=client.complete(messages(question,previews,catalog,correction,observations,variant),ledger,
                                 'repair' if correction else 'plan' if turn==0 else 'explore')
             record['timings']['plan']=record['timings'].get('plan',0)+time.monotonic()-start
             plan=None
             try:
-                plan=parse_plan(raw)
+                syntax_repairs=[]
+                plan=parse_plan(raw,syntax_repairs)
                 if not isinstance(plan,dict): raise PlanError('Planner response must be an object')
                 if plan.get('action')=='inspect':
                     if set(plan)!={'action','requests'}: raise PlanError('Inspection cannot also include a computation plan')
@@ -287,7 +296,12 @@ def answer_with_tools(path, question, client, record, settings):
                     continue
                 if contract.get('yes_no') and not plan.get('answer_spec'):
                     plan=dict(plan);plan['answer_spec']={'answer_type':'boolean','answer_field':'boolean','operation':'other'}
-                record['plans'].append({'attempt':len(record['plans'])+1,'turn':turn+1,'plan':plan})
+                raw_plan=plan
+                plan,normalizations=normalize_plan(plan,regions,contract)
+                normalizations=syntax_repairs+normalizations
+                record['plans'].append({'attempt':len(record['plans'])+1,'turn':turn+1,'plan':plan,
+                                        **({'raw_plan':raw_plan,'normalizations':normalizations} if normalizations else {}),
+                                        **({'raw_planner_response':raw} if syntax_repairs else {})})
                 known={r.id:r for r in regions}
                 available={r.id for r in selected}
                 missing={step[key] for step in plan.get('steps',[]) if isinstance(step,dict)
@@ -320,9 +334,15 @@ def answer_with_tools(path, question, client, record, settings):
                 if review_needed(plan,contract,review_mode):
                     record['stage']='review'
                     started=time.monotonic()
-                    review_rounds=2 if variant=='llm-v2' else 1
+                    review_rounds=1
                     for review_index in range(review_rounds):
-                        raw_review=client.complete(review_messages(question,previews,plan,result),ledger,'review')
+                        try:
+                            raw_review=client.complete(review_messages(question,previews,plan,result),ledger,'review')
+                        except (BudgetError,RuntimeError) as error:
+                            # Deterministic checks already passed. Optional review
+                            # cannot turn that candidate into a budget failure.
+                            record['reviews'].append({'turn':turn+1,'verdict':'unavailable','issues':[],'error':str(error)})
+                            break
                         record['timings']['review']=record['timings'].get('review',0)+time.monotonic()-started
                         try:
                             review=parse_plan(raw_review)
@@ -393,7 +413,7 @@ def answer_with_tools(path, question, client, record, settings):
                             return total_result['answer']
                         except (PlanError,ValueError,TypeError,KeyError,AttributeError):
                             pass
-                if plan and 'Expected a number' in str(error):
+                if plan and 'Expected a number' in str(error) and 'got bool' not in str(error):
                     guarded,changed=add_numeric_guards(plan)
                     if changed:
                         correction={'plan':guarded,'error':'The previous arithmetic touched blank/non-numeric cells. Numeric guards were inserted for every source column; return the complete plan using the guarded input.'}

@@ -42,7 +42,7 @@ class ExtendedFixturesTest(unittest.TestCase):
                 finally:
                     book.close()
                 total += len(queries)
-        self.assertEqual(total, 200)
+        self.assertEqual(total, 500)
 
     def test_independent_edge_and_date_controls(self):
         folder = ROOT / "Test/11_missing_ties_unicode"

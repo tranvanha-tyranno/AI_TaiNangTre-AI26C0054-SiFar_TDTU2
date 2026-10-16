@@ -71,8 +71,11 @@ class PlannerClient:
         entry=next((item for item in catalog if item['id']==self.model),None)
         if entry is None: raise BudgetError(f"Model ID not in OpenRouter catalog: {self.model}")
         prices=entry.get('pricing',{})
-        self.prompt_rate=float(prices.get('prompt',0))
-        self.completion_rate=float(prices.get('completion',0))
+        # Long-context price tiers must also fit the reservation. Using only
+        # the cheapest tier can underestimate a repair on a large workbook.
+        tiers=[prices,*prices.get('overrides',[])]
+        self.prompt_rate=max(float(tier.get('prompt',prices.get('prompt',0))) for tier in tiers)
+        self.completion_rate=max(float(tier.get('completion',prices.get('completion',0))) for tier in tiers)
         self.request_rate=float(prices.get('request',0))
         if self.prompt_rate*1e6>prompt_cap or self.completion_rate*1e6>completion_cap:
             raise BudgetError("Model price exceeds configured provider price caps")

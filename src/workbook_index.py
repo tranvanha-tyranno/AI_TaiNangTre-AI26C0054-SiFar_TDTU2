@@ -64,6 +64,16 @@ class Region:
             dimensions.append({'column':get_column_letter(c),'column_index':c,'headers':headers,'data_rows':rows,'total_rows':totals})
         return dimensions
 
+    def section_labels(self):
+        """Standalone text rows are section candidates; preserve their cells."""
+        sections=[]
+        for row in range(self.start_row,self.end_row+1):
+            nonempty=[(c,self.cells.get((row,c))) for c in range(self.start_col,self.end_col+1)
+                      if self.cells.get((row,c)) not in (None,'') and text(self.cells.get((row,c))).strip()]
+            if len(nonempty)==1 and nonempty[0][0]<=self.start_col+1 and isinstance(nonempty[0][1],str) and len(nonempty[0][1])<=240:
+                sections.append({'row':row,'column':get_column_letter(nonempty[0][0]),'label':text(nonempty[0][1]).strip()})
+        return sections
+
     def preview(self, query, max_rows=45):
         all_rows = list(range(self.start_row, self.end_row + 1))
         tokens = words(query)
@@ -72,6 +82,10 @@ class Region:
             included = all_rows
         else:
             included = sorted(set(all_rows[:10] + all_rows[-3:] + ranked[:max_rows-13]))
+        # Keep section labels near matching detail rows even when the section
+        # starts far outside the preview. These are candidates, not a schema.
+        sections=self.section_labels()
+        label_rows=sorted(set(included+[s['row'] for s in sections]+self.header_rows))[:max(100,max_rows*3)]
         # Retain merged ranges explicitly while sending the anchor text once.
         # Expanded values remain available to the executor.
         merged_bounds=[range_boundaries(region) for region in self.merged]
@@ -88,7 +102,8 @@ class Region:
                                    'distinct_labels':list(dict.fromkeys(text(self.cells[(r,d['column_index'])]) for r in d['data_rows']))[:40]}
                                   for d in self.row_dimensions()],
                 "whole_sheet": self.whole_sheet,
-                "row_labels": [{'row':r,'label':' | '.join(dict.fromkeys(text(self.cells.get((r,c)))[:300] for c in range(self.start_col,min(self.start_col+2,self.end_col+1)) if self.cells.get((r,c)) is not None))} for r in all_rows[:500]],
+                "section_labels":sections[:100],
+                "row_labels": [{'row':r,'label':' | '.join(dict.fromkeys(text(self.cells.get((r,c)))[:300] for c in range(self.start_col,min(self.start_col+2,self.end_col+1)) if self.cells.get((r,c)) is not None))} for r in label_rows],
                 "percent_cells": [f'{get_column_letter(c)}{r}' for (r,c),fmt in (self.formats or {}).items() if '%' in fmt][:100],
                 "merged_ranges": self.merged, "total_rows": len(all_rows),
                 "preview_is_complete": len(included) == len(all_rows),

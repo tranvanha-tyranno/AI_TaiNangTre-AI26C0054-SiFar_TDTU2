@@ -1,0 +1,24 @@
+{
+  "seed": 261016,
+  "kind": "new synthetic data; structural transfer, not copied records",
+  "source_workbooks": [
+    "Public_data_1/xlsx_files/p4_t03.xlsx",
+    "Public_data_2/xlsx_files/p2_t02.xlsx"
+  ],
+  "description": "CPI mới với mức thụt cấp 0–3, con trực tiếp khác cháu, điều chỉnh mùa vụ khác chưa điều chỉnh.",
+  "questions": 30,
+  "answer_rounding": "Decimal ROUND_HALF_UP; explicit precision in query",
+  "generator": "scripts/gen_public_transfer_suites.py",
+  "categories": [
+    "adjusted_disambiguation",
+    "comparison",
+    "direct_children",
+    "filter",
+    "hierarchy_average",
+    "hierarchy_scope",
+    "index_difference",
+    "percent_points",
+    "ranking",
+    "weight_gap"
+  ]
+}

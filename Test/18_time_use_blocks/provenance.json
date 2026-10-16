@@ -1,0 +1,19 @@
+{
+  "seed": 261016,
+  "kind": "new synthetic data; structural transfer, not copied records",
+  "source_workbooks": [
+    "Public_data_2/xlsx_files/p2_t01.xlsx"
+  ],
+  "description": "3 nhóm tuổi trẻ, mẹ/cha và tình trạng việc làm; giờ khác tỷ lệ tham gia, so sánh nhiều khối.",
+  "questions": 30,
+  "answer_rounding": "Decimal ROUND_HALF_UP; explicit precision in query",
+  "generator": "scripts/gen_public_transfer_suites.py",
+  "categories": [
+    "activity_sum",
+    "cross_block_rank",
+    "group_hours_gap",
+    "mixed_output",
+    "percent_vs_hours",
+    "unit_conversion"
+  ]
+}

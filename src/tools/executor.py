@@ -6,6 +6,7 @@ from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 import math
 import re
 import time
+import unicodedata
 from collections import Counter
 from openpyxl.utils import get_column_letter
 
@@ -24,7 +25,17 @@ def number(value):
     if isinstance(value, bool) or value is None or isinstance(value,(date,datetime)):
         raise PlanError(f"Expected a number, got {type(value).__name__}")
     try:
-        result = Decimal(str(value).strip().replace(',','').rstrip('%'))
+        raw = unicodedata.normalize('NFKC', str(value)).strip().replace('\u2212','-')
+        # Financial exports frequently store formatted amounts as text.
+        # Recognize explicit currency/accounting syntax, never strip arbitrary notes.
+        raw = re.sub(r'^[\$\u20ac\u00a3\u00a5]\s*', '', raw)
+        if raw.startswith('(') and raw.endswith(')'):
+            raw = '-' + re.sub(r'^[\$\u20ac\u00a3\u00a5]\s*', '', raw[1:-1].strip())
+        raw = raw.replace('\u00a0',' ').replace('\u202f',' ')
+        if re.fullmatch(r'-?\d{1,3}(?: \d{3})+(?:\.\d+)?%?', raw): raw = raw.replace(' ','')
+        if ',' in raw and not re.fullmatch(r'[+-]?\d{1,3}(?:,\d{3})+(?:\.\d+)?%?',raw):
+            raise PlanError('Ambiguous numeric separators')
+        result = Decimal(raw.replace(',','').rstrip('%'))
     except InvalidOperation:
         raise PlanError("Non-numeric or missing cell; filter the correct data rows")
     if not result.is_finite():
@@ -74,10 +85,18 @@ def expression(expr, row, results, depth=0):
         return Result(arg,set())
     if op == 'ref':
         if arg not in results or isinstance(results[arg].value,list):
-            raise PlanError(f"Scalar reference does not exist: {arg}")
+            scalars=[key for key,result in results.items() if not isinstance(result.value,list)]
+            raise PlanError(f'Scalar reference does not exist: {arg}. ref only names preceding scalar steps: {scalars}. '
+                            'To read the current row, use col (including col:_row), never ref. For group labels, use actual section-heading cells or derive section before filtering details.')
         return results[arg]
     if not isinstance(arg,list):
         raise PlanError(f"{op} expects an array of expressions")
+    if op == 'if':
+        if len(arg)!=3: raise PlanError('if requires [condition, true expression, false expression]')
+        condition=expression(arg[0],row,results,depth+1)
+        if not isinstance(condition.value,bool): raise PlanError('if condition must be boolean')
+        branch=expression(arg[1 if condition.value else 2],row,results,depth+1)
+        return Result(branch.value,condition.sources|branch.sources)
     if op in {'and','or'}:
         if len(arg)<2: raise PlanError(f'{op} needs at least two conditions')
         sources=set()
@@ -91,8 +110,8 @@ def expression(expr, row, results, depth=0):
     args = [expression(a,row,results,depth+1) for a in arg]
     values = [a.value for a in args]
     sources = set().union(*(a.sources for a in args))
-    unary = {'abs','number','date','lower','is_null','is_number','not'}
-    binary = {'sub','div','date_diff_days','age_years','eq','ne','gt','ge','lt','le','contains','starts_with'}
+    unary = {'abs','number','date','lower','trim','length','is_null','is_number','not'}
+    binary = {'sub','div','round','date_diff_days','age_years','eq','ne','gt','ge','lt','le','contains','starts_with'}
     if (op in unary and len(values)!=1) or (op in binary and len(values)!=2):
         raise PlanError(f"Wrong argument count for {op}")
     if op in {'add','sub','mul','div'}:
@@ -106,6 +125,10 @@ def expression(expr, row, results, depth=0):
         value = {'add':lambda:a+b,'sub':lambda:a-b,'mul':lambda:a*b,'div':lambda:a/b}[op]()
     elif op == 'abs': value = abs(numeric(args[0]))
     elif op == 'number': value = numeric(args[0])
+    elif op == 'round':
+        digits=number(values[1])
+        if digits!=int(digits) or not 0<=digits<=10: raise PlanError('round digits must be an integer 0..10')
+        value=numeric(args[0]).quantize(Decimal(1).scaleb(-int(digits)),rounding=ROUND_HALF_UP)
     elif op == 'date': value = as_date(values[0])
     elif op in {'date_diff_days','age_years'}:
         end,start = map(as_date,values)
@@ -125,6 +148,8 @@ def expression(expr, row, results, depth=0):
     elif op=='contains': value=str(values[1]).casefold() in str(values[0] or '').casefold()
     elif op=='starts_with': value=str(values[0] or '').casefold().startswith(str(values[1]).casefold())
     elif op=='lower': value=str(values[0] or '').casefold()
+    elif op=='trim': value=str(values[0] if values[0] is not None else '').strip()
+    elif op=='length': value=len(str(values[0] if values[0] is not None else '').strip())
     elif op=='is_null': value=values[0] is None or values[0]==''
     elif op=='is_number':
         try: number(values[0]); value=True
@@ -190,7 +215,9 @@ def aggregate(rows, metric, expr, results, missing='error'):
 
 def format_value(value, fmt):
     decimals=fmt.get('decimals')
-    if decimals is not None:
+    if decimals is not None and not isinstance(value,(bool,date,datetime)):
+        try: number(value)
+        except PlanError: return format_value(value,{})
         if not isinstance(decimals,int) or not 0<=decimals<=10:
             raise PlanError("decimals must be 0..10")
         return format(number(value).quantize(Decimal(1).scaleb(-decimals),rounding=ROUND_HALF_UP),f'.{decimals}f')
@@ -227,7 +254,8 @@ def execute(plan, regions):
         allowed={
             'read':{'table','start_row','end_row'},'cell':{'table','row','column'},
             'sum_columns':{'table','row','columns'},
-            'concat':{'inputs'},'collect':{'inputs'},'unpivot':{'input','columns','label_table','label_row','keep_columns'},
+            'concat':{'inputs'},'collect':{'inputs'},'record':{'fields'},'unpivot':{'input','columns','label_table','label_row','keep_columns'},
+            'lag':{'input','column','source','offset'},'fill_down':{'input','columns'},
             'filter':{'input','where'},'derive':{'input','column','expr'},'sort':{'input','by'},
             'take':{'input','offset','limit'},'select':{'input','columns'},
             'aggregate':{'input','metric','expr','missing'},'group':{'input','by','metric','expr','column','missing'},
@@ -235,7 +263,8 @@ def execute(plan, regions):
         if op not in allowed: raise PlanError(f'Tool not allowed: {op}')
         required={
             'read':['table'],'cell':['table','row','column'],'sum_columns':['table','row','columns'],
-            'concat':['inputs'],'collect':['inputs'],'unpivot':['input','columns'],
+            'concat':['inputs'],'collect':['inputs'],'record':['fields'],'unpivot':['input','columns'],
+            'lag':['input','column','source'],'fill_down':['input','columns'],
             'filter':['input','where'],'derive':['input','column','expr'],'sort':['input','by'],
             'take':['input'],'select':['input','columns'],'aggregate':['input','metric'],
             'group':['input','by','metric'],'join':['left','right','left_on','right_on'],'calculate':['expr']}
@@ -246,7 +275,9 @@ def execute(plan, regions):
                             f'For input, explicitly name the intended preceding row dataset: {datasets}. '
                             'Return the complete plan with those fields present.')
         unexpected=set(step)-allowed[op]-{'id','op'}
-        if unexpected: raise PlanError(f'Unsupported fields for {op}: {sorted(unexpected)}. Apply filter in a separate step before aggregate.')
+        if unexpected: raise PlanError(f'Unsupported fields for {op}: {sorted(unexpected)}. '
+                                      f'Allowed fields: {sorted(allowed[op])}. Each operation is a separate step; '
+                                      'put where in filter and by in sort, never on derive/aggregate.')
         if not isinstance(name,str) or not re.fullmatch(r'[a-zA-Z][a-zA-Z0-9_]{0,30}',name) or name in results:
             raise PlanError("Invalid/duplicate step id")
         if op=='read':
@@ -256,8 +287,16 @@ def execute(plan, regions):
             if not isinstance(start,int) or not isinstance(end,int) or not region.start_row<=start<=end<=region.end_row:
                 raise PlanError("Read bounds outside retrieved table")
             value=[]
+            sections=iter(region.section_labels()); upcoming=next(sections,None); section=None
             for r in range(start,end+1):
-                row={'_row':r,'__sources':{}}
+                while upcoming and upcoming['row']<=r:
+                    section=upcoming;upcoming=next(sections,None)
+                anchor=f'{region.sheet}!{get_column_letter(region.start_col)}{r}'
+                row={'_row':r,'_sheet':region.sheet,'__sources':{'_sheet':[anchor],'_row':[anchor]}}
+                row.update(_section=section['label'] if section else None,
+                           _section_row=section['row'] if section else None)
+                section_sources=[f"{region.sheet}!{section['column']}{section['row']}"] if section else []
+                row['__sources'].update(_section=section_sources,_section_row=section_sources)
                 for c in range(region.start_col,region.end_col+1):
                     col=get_column_letter(c)
                     row[col]=region.cells.get((r,c))
@@ -301,6 +340,46 @@ def execute(plan, regions):
                 if input_id not in results or isinstance(results[input_id].value,list): raise PlanError('collect inputs must be scalar cells/calculations')
                 scalar=results[input_id]
                 value.append({'value':scalar.value,'__sources':{'value':sorted(scalar.sources)}})
+            result=Result(value,set())
+        elif op=='record':
+            fields=step.get('fields')
+            if not isinstance(fields,dict) or not fields or len(fields)>20: raise PlanError('record requires named scalar step IDs in fields')
+            row={'__sources':{}}
+            for column,expr in fields.items():
+                if not isinstance(column,str) or column.startswith('_'): raise PlanError('Invalid record column')
+                if isinstance(expr,str): expr={'ref':expr}
+                scalar=expression(expr,{},results)
+                if not scalar.sources and isinstance(scalar.value,str) and scalar.value.strip():
+                    # A literal label is acceptable only if tools can resolve
+                    # it to real cells. Numeric literals cannot become answers.
+                    label=' '.join(scalar.value.split())
+                    scalar.sources={f'{r.sheet}!{get_column_letter(c)}{row}' for r in regions
+                                    for (row,c),v in r.cells.items()
+                                    if isinstance(v,str) and ' '.join(v.split())==label}
+                if not scalar.sources: raise PlanError('record fields must depend on spreadsheet scalars; labels can be cells or conditionals on cells')
+                row[column]=scalar.value; row['__sources'][column]=sorted(scalar.sources)
+            result=Result([row],set())
+        elif op in {'lag','fill_down'}:
+            rows=rows_of(results,step.get('input')); value=[]
+            if op=='lag':
+                column,source,offset=step.get('column'),step.get('source'),step.get('offset',1)
+                if not isinstance(column,str) or column.startswith('_') or not isinstance(offset,int) or not 1<=offset<=1000:
+                    raise PlanError('lag requires new column and offset 1..1000')
+                for i,row in enumerate(rows):
+                    if source not in row or column in row: raise PlanError('lag source missing or column already exists')
+                    prior=rows[i-offset] if i>=offset else None
+                    value.append({**row,column:prior[source] if prior else None,
+                        '__sources':{**row['__sources'],column:prior['__sources'].get(source,[]) if prior else []}})
+            else:
+                columns=step.get('columns'); carried={}
+                if not isinstance(columns,list) or not columns: raise PlanError('fill_down requires columns')
+                for row in rows:
+                    cloned={**row,'__sources':dict(row['__sources'])}
+                    for column in columns:
+                        if column not in row: raise PlanError('Unknown fill_down column')
+                        if row[column] not in (None,''): carried[column]=(row[column],row['__sources'].get(column,[]))
+                        elif column in carried: cloned[column],cloned['__sources'][column]=carried[column]
+                    value.append(cloned)
             result=Result(value,set())
         elif op=='unpivot':
             rows=rows_of(results,step.get('input'))

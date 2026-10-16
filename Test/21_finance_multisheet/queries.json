@@ -1,0 +1,152 @@
+[
+  {
+    "id": "21_q001",
+    "file_name": "data.xlsx",
+    "query": "Across Cloud, Devices and Services, what is combined Total segment revenue in Fiscal2027, in millions? Do not sum Product, Service and Total together. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q002",
+    "file_name": "data.xlsx",
+    "query": "Which sheet has the highest Service and other revenue in Fiscal2027? Break ties by sheet name ascending. Answer `sheet name, integer value` without thousands separators."
+  },
+  {
+    "id": "21_q003",
+    "file_name": "data.xlsx",
+    "query": "What is combined signed Restructuring expense across the three segments in Fiscal2027? Parentheses denote negative values. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q004",
+    "file_name": "data.xlsx",
+    "query": "Across Cloud, Devices and Services, what is combined Total segment revenue in Fiscal2026, in millions? Do not sum Product, Service and Total together. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q005",
+    "file_name": "data.xlsx",
+    "query": "Which sheet has the highest Service and other revenue in Fiscal2026? Break ties by sheet name ascending. Answer `sheet name, integer value` without thousands separators."
+  },
+  {
+    "id": "21_q006",
+    "file_name": "data.xlsx",
+    "query": "What is combined signed Restructuring expense across the three segments in Fiscal2026? Parentheses denote negative values. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q007",
+    "file_name": "data.xlsx",
+    "query": "Across Cloud, Devices and Services, what is combined Total segment revenue in Fiscal2025, in millions? Do not sum Product, Service and Total together. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q008",
+    "file_name": "data.xlsx",
+    "query": "Which sheet has the highest Service and other revenue in Fiscal2025? Break ties by sheet name ascending. Answer `sheet name, integer value` without thousands separators."
+  },
+  {
+    "id": "21_q009",
+    "file_name": "data.xlsx",
+    "query": "What is combined signed Restructuring expense across the three segments in Fiscal2025? Parentheses denote negative values. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q010",
+    "file_name": "data.xlsx",
+    "query": "What is percentage revenue growth of Cloud from Fiscal2026 to Fiscal2027? Use Total segment revenue. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "21_q011",
+    "file_name": "data.xlsx",
+    "query": "What is Cloud operating income as a percentage of Total segment revenue in Fiscal2027? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "21_q012",
+    "file_name": "data.xlsx",
+    "query": "What is percentage revenue growth of Devices from Fiscal2026 to Fiscal2027? Use Total segment revenue. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "21_q013",
+    "file_name": "data.xlsx",
+    "query": "What is Devices operating income as a percentage of Total segment revenue in Fiscal2027? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "21_q014",
+    "file_name": "data.xlsx",
+    "query": "What is percentage revenue growth of Services from Fiscal2026 to Fiscal2027? Use Total segment revenue. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "21_q015",
+    "file_name": "data.xlsx",
+    "query": "What is Services operating income as a percentage of Total segment revenue in Fiscal2027? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "21_q016",
+    "file_name": "data.xlsx",
+    "query": "What is July 31 2027 Total fair value minus July 31 2026 Total fair value for Cash equivalents, in millions? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q017",
+    "file_name": "data.xlsx",
+    "query": "What is July 31 2027 Total fair value minus July 31 2026 Total fair value for Municipal bonds, in millions? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q018",
+    "file_name": "data.xlsx",
+    "query": "What is July 31 2027 Total fair value minus July 31 2026 Total fair value for Corporate notes, in millions? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q019",
+    "file_name": "data.xlsx",
+    "query": "What is July 31 2027 Total fair value minus July 31 2026 Total fair value for Agency securities, in millions? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q020",
+    "file_name": "data.xlsx",
+    "query": "What is July 31 2027 Total fair value minus July 31 2026 Total fair value for Equity securities, in millions? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q021",
+    "file_name": "data.xlsx",
+    "query": "By how much did TOTAL recurring fair value increase from July 31 2026 to July 31 2027, in millions? Use the TOTAL row once. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q022",
+    "file_name": "data.xlsx",
+    "query": "What is the ratio of Other borrowed funds to Preferred stock for year end 2027? Answer exactly 3 decimal places."
+  },
+  {
+    "id": "21_q023",
+    "file_name": "data.xlsx",
+    "query": "What is the ratio of Other borrowed funds to Preferred stock for year end 2026? Answer exactly 3 decimal places."
+  },
+  {
+    "id": "21_q024",
+    "file_name": "data.xlsx",
+    "query": "What is the ratio of Other borrowed funds to Preferred stock for annual average 2027? Answer exactly 3 decimal places."
+  },
+  {
+    "id": "21_q025",
+    "file_name": "data.xlsx",
+    "query": "What is the ratio of Other borrowed funds to Preferred stock for annual average 2026? Answer exactly 3 decimal places."
+  },
+  {
+    "id": "21_q026",
+    "file_name": "data.xlsx",
+    "query": "For Other borrowed funds in 2027, what is year-end value minus annual average? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q027",
+    "file_name": "data.xlsx",
+    "query": "What is signed Net adjustment at year end 2027? Parentheses indicate negatives. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "21_q028",
+    "file_name": "data.xlsx",
+    "query": "What percent of July 31 2027 TOTAL fair value is Level 2? Use the TOTAL row. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "21_q029",
+    "file_name": "data.xlsx",
+    "query": "Is Cloud Fiscal2027 Total segment revenue greater than Devices Fiscal2027 Total segment revenue? Answer only Yes or No."
+  },
+  {
+    "id": "21_q030",
+    "file_name": "data.xlsx",
+    "query": "What literal missing marker appears in Funding for Net adjustment at year end 2026? Answer only that symbol."
+  }
+]

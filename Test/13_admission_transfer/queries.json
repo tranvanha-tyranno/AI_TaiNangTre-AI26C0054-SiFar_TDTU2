@@ -1,0 +1,152 @@
+[
+  {
+    "id": "13_q001",
+    "file_name": "data.xlsx",
+    "query": "Rank people by exact age in days on their own Admission date, youngest first, ties by No ascending. What is the last name at position 2 (1-based)? Answer only the last name."
+  },
+  {
+    "id": "13_q002",
+    "file_name": "data.xlsx",
+    "query": "Rank people by exact age in days on their own Admission date, youngest first, ties by No ascending. What is the last name at position 3 (1-based)? Answer only the last name."
+  },
+  {
+    "id": "13_q003",
+    "file_name": "data.xlsx",
+    "query": "Rank people by exact age in days on their own Admission date, youngest first, ties by No ascending. What is the last name at position 5 (1-based)? Answer only the last name."
+  },
+  {
+    "id": "13_q004",
+    "file_name": "data.xlsx",
+    "query": "Rank people by exact age in days on their own Admission date, youngest first, ties by No ascending. What is the last name at position 9 (1-based)? Answer only the last name."
+  },
+  {
+    "id": "13_q005",
+    "file_name": "data.xlsx",
+    "query": "For No 1, what is the age in completed years on Admission? A Feb 29 birthday is reached on March 1 in a non-leap year. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q006",
+    "file_name": "data.xlsx",
+    "query": "For No 2, what is the age in completed years on Admission? A Feb 29 birthday is reached on March 1 in a non-leap year. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q007",
+    "file_name": "data.xlsx",
+    "query": "For No 19, what is the age in completed years on Admission? A Feb 29 birthday is reached on March 1 in a non-leap year. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q008",
+    "file_name": "data.xlsx",
+    "query": "For No 64, what is the age in completed years on Admission? A Feb 29 birthday is reached on March 1 in a non-leap year. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q009",
+    "file_name": "data.xlsx",
+    "query": "Among the 5 youngest people by exact age in days at Admission, what is the highest Score? Ties in age use No ascending. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q010",
+    "file_name": "data.xlsx",
+    "query": "Among the 10 youngest people by exact age in days at Admission, what is the highest Score? Ties in age use No ascending. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q011",
+    "file_name": "data.xlsx",
+    "query": "Among the 15 youngest people by exact age in days at Admission, what is the highest Score? Ties in age use No ascending. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q012",
+    "file_name": "data.xlsx",
+    "query": "What is the mean Score for Campus Hue? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "13_q013",
+    "file_name": "data.xlsx",
+    "query": "How many people in Campus Hue have Score >= 75 and completed age at Admission < 30? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q014",
+    "file_name": "data.xlsx",
+    "query": "Which No in Campus Hue has the highest Score, ties by No ascending? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q015",
+    "file_name": "data.xlsx",
+    "query": "What is the mean Score for Campus Can Tho? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "13_q016",
+    "file_name": "data.xlsx",
+    "query": "How many people in Campus Can Tho have Score >= 75 and completed age at Admission < 30? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q017",
+    "file_name": "data.xlsx",
+    "query": "Which No in Campus Can Tho has the highest Score, ties by No ascending? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q018",
+    "file_name": "data.xlsx",
+    "query": "What is the mean Score for Campus Da Lat? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "13_q019",
+    "file_name": "data.xlsx",
+    "query": "How many people in Campus Da Lat have Score >= 75 and completed age at Admission < 30? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q020",
+    "file_name": "data.xlsx",
+    "query": "Which No in Campus Da Lat has the highest Score, ties by No ascending? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q021",
+    "file_name": "data.xlsx",
+    "query": "How many people have Score strictly greater than 60? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q022",
+    "file_name": "data.xlsx",
+    "query": "How many people have Score strictly greater than 75? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q023",
+    "file_name": "data.xlsx",
+    "query": "How many people have Score strictly greater than 90? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q024",
+    "file_name": "data.xlsx",
+    "query": "How many admissions fall from 2026-01-01 through 2026-12-31 inclusive? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q025",
+    "file_name": "data.xlsx",
+    "query": "What Score did the second-oldest person receive, using exact age in days at Admission and No ascending to break ties? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q026",
+    "file_name": "data.xlsx",
+    "query": "List No of the 3 highest-scoring people, Score descending then No ascending. Separate with comma and one space."
+  },
+  {
+    "id": "13_q027",
+    "file_name": "data.xlsx",
+    "query": "How many people have Score above 100? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q028",
+    "file_name": "data.xlsx",
+    "query": "How many days old was No 64 on their Admission date? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q029",
+    "file_name": "data.xlsx",
+    "query": "How many distinct last names appear in People? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "13_q030",
+    "file_name": "data.xlsx",
+    "query": "What is No 2 completed age at Admission minus No 1 completed age at Admission? Use March 1 for Feb 29 birthdays in non-leap years. Answer only the integer, without thousands separators or units."
+  }
+]

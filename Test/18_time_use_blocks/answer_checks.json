@@ -1,0 +1,704 @@
+[
+  {
+    "id": "18_q001",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E6"
+        },
+        {
+          "cell": "Time use!B6"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "-0.18"
+  },
+  {
+    "id": "18_q002",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E7"
+        },
+        {
+          "cell": "Time use!B7"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "-1.38"
+  },
+  {
+    "id": "18_q003",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E8"
+        },
+        {
+          "cell": "Time use!B8"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "-0.42"
+  },
+  {
+    "id": "18_q004",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E9"
+        },
+        {
+          "cell": "Time use!B9"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "-1.69"
+  },
+  {
+    "id": "18_q005",
+    "category": "percent_vs_hours",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!G6"
+        },
+        {
+          "cell": "Time use!F6"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "53.5"
+  },
+  {
+    "id": "18_q006",
+    "category": "percent_vs_hours",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!G7"
+        },
+        {
+          "cell": "Time use!F7"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "22.0"
+  },
+  {
+    "id": "18_q007",
+    "category": "mixed_output",
+    "expression": {
+      "list": [
+        {
+          "winner": {
+            "left": {
+              "cell": "Time use!B6"
+            },
+            "right": {
+              "cell": "Time use!E6"
+            },
+            "left_label": "full-time employed mothers",
+            "right_label": "not-employed fathers"
+          }
+        },
+        {
+          "format": {
+            "value": {
+              "abs": {
+                "sub": [
+                  {
+                    "cell": "Time use!B6"
+                  },
+                  {
+                    "cell": "Time use!E6"
+                  }
+                ]
+              }
+            },
+            "decimals": 2
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "full-time employed mothers, 0.18"
+  },
+  {
+    "id": "18_q008",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E14"
+        },
+        {
+          "cell": "Time use!B14"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "-0.34"
+  },
+  {
+    "id": "18_q009",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E15"
+        },
+        {
+          "cell": "Time use!B15"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "1.33"
+  },
+  {
+    "id": "18_q010",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E16"
+        },
+        {
+          "cell": "Time use!B16"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "0.90"
+  },
+  {
+    "id": "18_q011",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E17"
+        },
+        {
+          "cell": "Time use!B17"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "0.45"
+  },
+  {
+    "id": "18_q012",
+    "category": "percent_vs_hours",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!G14"
+        },
+        {
+          "cell": "Time use!F14"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-38.5"
+  },
+  {
+    "id": "18_q013",
+    "category": "percent_vs_hours",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!G15"
+        },
+        {
+          "cell": "Time use!F15"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-37.8"
+  },
+  {
+    "id": "18_q014",
+    "category": "mixed_output",
+    "expression": {
+      "list": [
+        {
+          "winner": {
+            "left": {
+              "cell": "Time use!B14"
+            },
+            "right": {
+              "cell": "Time use!E14"
+            },
+            "left_label": "full-time employed mothers",
+            "right_label": "not-employed fathers"
+          }
+        },
+        {
+          "format": {
+            "value": {
+              "abs": {
+                "sub": [
+                  {
+                    "cell": "Time use!B14"
+                  },
+                  {
+                    "cell": "Time use!E14"
+                  }
+                ]
+              }
+            },
+            "decimals": 2
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "full-time employed mothers, 0.34"
+  },
+  {
+    "id": "18_q015",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E22"
+        },
+        {
+          "cell": "Time use!B22"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "1.09"
+  },
+  {
+    "id": "18_q016",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E23"
+        },
+        {
+          "cell": "Time use!B23"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "-1.09"
+  },
+  {
+    "id": "18_q017",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E24"
+        },
+        {
+          "cell": "Time use!B24"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "-0.64"
+  },
+  {
+    "id": "18_q018",
+    "category": "group_hours_gap",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!E25"
+        },
+        {
+          "cell": "Time use!B25"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "0.82"
+  },
+  {
+    "id": "18_q019",
+    "category": "percent_vs_hours",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!G22"
+        },
+        {
+          "cell": "Time use!F22"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "33.7"
+  },
+  {
+    "id": "18_q020",
+    "category": "percent_vs_hours",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Time use!G23"
+        },
+        {
+          "cell": "Time use!F23"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "10.3"
+  },
+  {
+    "id": "18_q021",
+    "category": "mixed_output",
+    "expression": {
+      "list": [
+        {
+          "winner": {
+            "left": {
+              "cell": "Time use!B22"
+            },
+            "right": {
+              "cell": "Time use!E22"
+            },
+            "left_label": "full-time employed mothers",
+            "right_label": "not-employed fathers"
+          }
+        },
+        {
+          "format": {
+            "value": {
+              "abs": {
+                "sub": [
+                  {
+                    "cell": "Time use!B22"
+                  },
+                  {
+                    "cell": "Time use!E22"
+                  }
+                ]
+              }
+            },
+            "decimals": 2
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "not-employed fathers, 1.09"
+  },
+  {
+    "id": "18_q022",
+    "category": "cross_block_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "records": [
+            {
+              "label": "Own household children under 6",
+              "value": {
+                "cell": "Time use!B6"
+              }
+            },
+            {
+              "label": "Own household children 6-12",
+              "value": {
+                "cell": "Time use!B14"
+              }
+            },
+            {
+              "label": "Own household children 13-17",
+              "value": {
+                "cell": "Time use!B22"
+              }
+            }
+          ]
+        },
+        "by": [
+          [
+            "value",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Own household children 13-17"
+  },
+  {
+    "id": "18_q023",
+    "category": "cross_block_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "records": [
+            {
+              "label": "Own household children under 6",
+              "value": {
+                "cell": "Time use!B7"
+              }
+            },
+            {
+              "label": "Own household children 6-12",
+              "value": {
+                "cell": "Time use!B15"
+              }
+            },
+            {
+              "label": "Own household children 13-17",
+              "value": {
+                "cell": "Time use!B23"
+              }
+            }
+          ]
+        },
+        "by": [
+          [
+            "value",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Own household children under 6"
+  },
+  {
+    "id": "18_q024",
+    "category": "cross_block_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "records": [
+            {
+              "label": "Own household children under 6",
+              "value": {
+                "cell": "Time use!B8"
+              }
+            },
+            {
+              "label": "Own household children 6-12",
+              "value": {
+                "cell": "Time use!B16"
+              }
+            },
+            {
+              "label": "Own household children 13-17",
+              "value": {
+                "cell": "Time use!B24"
+              }
+            }
+          ]
+        },
+        "by": [
+          [
+            "value",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Own household children 13-17"
+  },
+  {
+    "id": "18_q025",
+    "category": "cross_block_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "records": [
+            {
+              "label": "Own household children under 6",
+              "value": {
+                "cell": "Time use!B9"
+              }
+            },
+            {
+              "label": "Own household children 6-12",
+              "value": {
+                "cell": "Time use!B17"
+              }
+            },
+            {
+              "label": "Own household children 13-17",
+              "value": {
+                "cell": "Time use!B25"
+              }
+            }
+          ]
+        },
+        "by": [
+          [
+            "value",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Own household children under 6"
+  },
+  {
+    "id": "18_q026",
+    "category": "cross_block_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "records": [
+            {
+              "label": "Own household children under 6",
+              "value": {
+                "cell": "Time use!B10"
+              }
+            },
+            {
+              "label": "Own household children 6-12",
+              "value": {
+                "cell": "Time use!B18"
+              }
+            },
+            {
+              "label": "Own household children 13-17",
+              "value": {
+                "cell": "Time use!B26"
+              }
+            }
+          ]
+        },
+        "by": [
+          [
+            "value",
+            "desc"
+          ],
+          [
+            "label",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "label"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "Own household children 13-17"
+  },
+  {
+    "id": "18_q027",
+    "category": "activity_sum",
+    "expression": {
+      "add": [
+        {
+          "cell": "Time use!D6"
+        },
+        {
+          "cell": "Time use!D7"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "4.88"
+  },
+  {
+    "id": "18_q028",
+    "category": "activity_sum",
+    "expression": {
+      "add": [
+        {
+          "cell": "Time use!D14"
+        },
+        {
+          "cell": "Time use!D15"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "3.16"
+  },
+  {
+    "id": "18_q029",
+    "category": "activity_sum",
+    "expression": {
+      "add": [
+        {
+          "cell": "Time use!D22"
+        },
+        {
+          "cell": "Time use!D23"
+        }
+      ]
+    },
+    "decimals": 2,
+    "answer": "4.40"
+  },
+  {
+    "id": "18_q030",
+    "category": "unit_conversion",
+    "expression": {
+      "mul": [
+        {
+          "cell": "Time use!B10"
+        },
+        60
+      ]
+    },
+    "decimals": 2,
+    "answer": "92.40"
+  }
+]

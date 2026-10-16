@@ -1,0 +1,152 @@
+[
+  {
+    "id": "16_q001",
+    "file_name": "data.xlsx",
+    "query": "For Women with No diploma, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q002",
+    "file_name": "data.xlsx",
+    "query": "For Women with High school, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q003",
+    "file_name": "data.xlsx",
+    "query": "For Women with Some college, no degree, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q004",
+    "file_name": "data.xlsx",
+    "query": "For Women with Associate degree, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q005",
+    "file_name": "data.xlsx",
+    "query": "For Women with Bachelor degree, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q006",
+    "file_name": "data.xlsx",
+    "query": "For Women with Advanced degree, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q007",
+    "file_name": "data.xlsx",
+    "query": "What is the simple unweighted average Unemployment rate across the six education levels for Women? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "16_q008",
+    "file_name": "data.xlsx",
+    "query": "Using summed unemployed divided by summed civilian labor force across the six disjoint education groups for Women, what is the unemployment rate in percent? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "16_q009",
+    "file_name": "data.xlsx",
+    "query": "What percentage of the population is in the civilian labor force for Women with No diploma? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "16_q010",
+    "file_name": "data.xlsx",
+    "query": "What percentage of the population is in the civilian labor force for Women with Some college, no degree? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "16_q011",
+    "file_name": "data.xlsx",
+    "query": "What percentage of the population is in the civilian labor force for Women with Advanced degree? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "16_q012",
+    "file_name": "data.xlsx",
+    "query": "For Men with No diploma, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q013",
+    "file_name": "data.xlsx",
+    "query": "For Men with High school, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q014",
+    "file_name": "data.xlsx",
+    "query": "For Men with Some college, no degree, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q015",
+    "file_name": "data.xlsx",
+    "query": "For Men with Associate degree, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q016",
+    "file_name": "data.xlsx",
+    "query": "For Men with Bachelor degree, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q017",
+    "file_name": "data.xlsx",
+    "query": "For Men with Advanced degree, what is population minus civilian labor force? All counts are in thousands; do not multiply by 1000. Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q018",
+    "file_name": "data.xlsx",
+    "query": "What is the simple unweighted average Unemployment rate across the six education levels for Men? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "16_q019",
+    "file_name": "data.xlsx",
+    "query": "Using summed unemployed divided by summed civilian labor force across the six disjoint education groups for Men, what is the unemployment rate in percent? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "16_q020",
+    "file_name": "data.xlsx",
+    "query": "What percentage of the population is in the civilian labor force for Men with No diploma? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "16_q021",
+    "file_name": "data.xlsx",
+    "query": "What percentage of the population is in the civilian labor force for Men with Some college, no degree? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "16_q022",
+    "file_name": "data.xlsx",
+    "query": "What percentage of the population is in the civilian labor force for Men with Advanced degree? Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "16_q023",
+    "file_name": "data.xlsx",
+    "query": "For No diploma, what is men's employed count minus women's employed count, in thousands? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q024",
+    "file_name": "data.xlsx",
+    "query": "For High school, what is men's employed count minus women's employed count, in thousands? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q025",
+    "file_name": "data.xlsx",
+    "query": "For Some college, no degree, what is men's employed count minus women's employed count, in thousands? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q026",
+    "file_name": "data.xlsx",
+    "query": "For Associate degree, what is men's employed count minus women's employed count, in thousands? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q027",
+    "file_name": "data.xlsx",
+    "query": "For Bachelor degree, what is men's employed count minus women's employed count, in thousands? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q028",
+    "file_name": "data.xlsx",
+    "query": "For Advanced degree, what is men's employed count minus women's employed count, in thousands? Answer only the integer, without thousands separators or units."
+  },
+  {
+    "id": "16_q029",
+    "file_name": "data.xlsx",
+    "query": "Is the unemployment rate for Women with Advanced degree higher than Men with Advanced degree? Answer only Yes or No."
+  },
+  {
+    "id": "16_q030",
+    "file_name": "data.xlsx",
+    "query": "Sum Employed across all six education levels and both sexes, in thousands. Answer only the integer, without thousands separators or units."
+  }
+]

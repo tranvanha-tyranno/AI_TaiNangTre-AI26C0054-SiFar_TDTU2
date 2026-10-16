@@ -1,0 +1,152 @@
+[
+  {
+    "id": "18_q001",
+    "file_name": "data.xlsx",
+    "query": "For Own household children under 6, what is not-employed fathers' average hours on Housework minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q002",
+    "file_name": "data.xlsx",
+    "query": "For Own household children under 6, what is not-employed fathers' average hours on Childcare minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q003",
+    "file_name": "data.xlsx",
+    "query": "For Own household children under 6, what is not-employed fathers' average hours on Sleeping minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q004",
+    "file_name": "data.xlsx",
+    "query": "For Own household children under 6, what is not-employed fathers' average hours on Leisure minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q005",
+    "file_name": "data.xlsx",
+    "query": "For Own household children under 6, what is not-employed mothers' participation percent minus full-time mothers' participation percent for Housework, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "18_q006",
+    "file_name": "data.xlsx",
+    "query": "For Own household children under 6, what is not-employed mothers' participation percent minus full-time mothers' participation percent for Childcare, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "18_q007",
+    "file_name": "data.xlsx",
+    "query": "For Own household children under 6, who spends more average hours on Housework: full-time employed mothers or not-employed fathers? Answer `group, difference`, using one of those two group labels and exactly 2 decimals for the positive difference. If equal, choose full-time employed mothers."
+  },
+  {
+    "id": "18_q008",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 6-12, what is not-employed fathers' average hours on Housework minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q009",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 6-12, what is not-employed fathers' average hours on Childcare minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q010",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 6-12, what is not-employed fathers' average hours on Sleeping minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q011",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 6-12, what is not-employed fathers' average hours on Leisure minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q012",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 6-12, what is not-employed mothers' participation percent minus full-time mothers' participation percent for Housework, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "18_q013",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 6-12, what is not-employed mothers' participation percent minus full-time mothers' participation percent for Childcare, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "18_q014",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 6-12, who spends more average hours on Housework: full-time employed mothers or not-employed fathers? Answer `group, difference`, using one of those two group labels and exactly 2 decimals for the positive difference. If equal, choose full-time employed mothers."
+  },
+  {
+    "id": "18_q015",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 13-17, what is not-employed fathers' average hours on Housework minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q016",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 13-17, what is not-employed fathers' average hours on Childcare minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q017",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 13-17, what is not-employed fathers' average hours on Sleeping minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q018",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 13-17, what is not-employed fathers' average hours on Leisure minus full-time mothers' average hours? Use hours, not participation percent. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q019",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 13-17, what is not-employed mothers' participation percent minus full-time mothers' participation percent for Housework, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "18_q020",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 13-17, what is not-employed mothers' participation percent minus full-time mothers' participation percent for Childcare, in percentage points? Answer only the number with exactly 1 decimal place, no units or percent sign."
+  },
+  {
+    "id": "18_q021",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 13-17, who spends more average hours on Housework: full-time employed mothers or not-employed fathers? Answer `group, difference`, using one of those two group labels and exactly 2 decimals for the positive difference. If equal, choose full-time employed mothers."
+  },
+  {
+    "id": "18_q022",
+    "file_name": "data.xlsx",
+    "query": "Across the three child groups, which has the highest full-time mothers' average hours on Housework? Break ties by the label in ascending Unicode order. Answer the group name exactly."
+  },
+  {
+    "id": "18_q023",
+    "file_name": "data.xlsx",
+    "query": "Across the three child groups, which has the highest full-time mothers' average hours on Childcare? Break ties by the label in ascending Unicode order. Answer the group name exactly."
+  },
+  {
+    "id": "18_q024",
+    "file_name": "data.xlsx",
+    "query": "Across the three child groups, which has the highest full-time mothers' average hours on Sleeping? Break ties by the label in ascending Unicode order. Answer the group name exactly."
+  },
+  {
+    "id": "18_q025",
+    "file_name": "data.xlsx",
+    "query": "Across the three child groups, which has the highest full-time mothers' average hours on Leisure? Break ties by the label in ascending Unicode order. Answer the group name exactly."
+  },
+  {
+    "id": "18_q026",
+    "file_name": "data.xlsx",
+    "query": "Across the three child groups, which has the highest full-time mothers' average hours on Travel? Break ties by the label in ascending Unicode order. Answer the group name exactly."
+  },
+  {
+    "id": "18_q027",
+    "file_name": "data.xlsx",
+    "query": "For Own household children under 6, sum full-time fathers' average hours on Housework and Childcare. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q028",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 6-12, sum full-time fathers' average hours on Housework and Childcare. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q029",
+    "file_name": "data.xlsx",
+    "query": "For Own household children 13-17, sum full-time fathers' average hours on Housework and Childcare. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  },
+  {
+    "id": "18_q030",
+    "file_name": "data.xlsx",
+    "query": "For Own household children under 6, how many minutes per day do full-time mothers spend on Travel? Multiply average hours by 60. Answer only the number with exactly 2 decimal places, no units or percent sign."
+  }
+]

@@ -1,0 +1,683 @@
+[
+  {
+    "id": "14_q001",
+    "category": "fiscal_vs_ytd",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Trade!E4"
+        },
+        {
+          "cell": "Trade!D4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  },
+  {
+    "id": "14_q002",
+    "category": "trade_balance",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E4"
+        },
+        {
+          "cell": "Trade!E5"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "119"
+  },
+  {
+    "id": "14_q003",
+    "category": "period_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E26"
+        },
+        {
+          "cell": "Trade!E4"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-162"
+  },
+  {
+    "id": "14_q004",
+    "category": "growth",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "cell": "Trade!C4"
+                },
+                {
+                  "cell": "Trade!B4"
+                }
+              ]
+            },
+            {
+              "cell": "Trade!B4"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "-4.76"
+  },
+  {
+    "id": "14_q005",
+    "category": "fiscal_vs_ytd",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Trade!E7"
+        },
+        {
+          "cell": "Trade!D7"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "No"
+  },
+  {
+    "id": "14_q006",
+    "category": "trade_balance",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E7"
+        },
+        {
+          "cell": "Trade!E8"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-64"
+  },
+  {
+    "id": "14_q007",
+    "category": "period_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E27"
+        },
+        {
+          "cell": "Trade!E7"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-4"
+  },
+  {
+    "id": "14_q008",
+    "category": "growth",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "cell": "Trade!C7"
+                },
+                {
+                  "cell": "Trade!B7"
+                }
+              ]
+            },
+            {
+              "cell": "Trade!B7"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "80.39"
+  },
+  {
+    "id": "14_q009",
+    "category": "fiscal_vs_ytd",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Trade!E10"
+        },
+        {
+          "cell": "Trade!D10"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "No"
+  },
+  {
+    "id": "14_q010",
+    "category": "trade_balance",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E10"
+        },
+        {
+          "cell": "Trade!E11"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-32"
+  },
+  {
+    "id": "14_q011",
+    "category": "period_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E28"
+        },
+        {
+          "cell": "Trade!E10"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-22"
+  },
+  {
+    "id": "14_q012",
+    "category": "growth",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "cell": "Trade!C10"
+                },
+                {
+                  "cell": "Trade!B10"
+                }
+              ]
+            },
+            {
+              "cell": "Trade!B10"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "51.06"
+  },
+  {
+    "id": "14_q013",
+    "category": "fiscal_vs_ytd",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Trade!E13"
+        },
+        {
+          "cell": "Trade!D13"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  },
+  {
+    "id": "14_q014",
+    "category": "trade_balance",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E13"
+        },
+        {
+          "cell": "Trade!E14"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-101"
+  },
+  {
+    "id": "14_q015",
+    "category": "period_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E29"
+        },
+        {
+          "cell": "Trade!E13"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-46"
+  },
+  {
+    "id": "14_q016",
+    "category": "growth",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "cell": "Trade!C13"
+                },
+                {
+                  "cell": "Trade!B13"
+                }
+              ]
+            },
+            {
+              "cell": "Trade!B13"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "110.00"
+  },
+  {
+    "id": "14_q017",
+    "category": "fiscal_vs_ytd",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Trade!E16"
+        },
+        {
+          "cell": "Trade!D16"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "Yes"
+  },
+  {
+    "id": "14_q018",
+    "category": "trade_balance",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E16"
+        },
+        {
+          "cell": "Trade!E17"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "47"
+  },
+  {
+    "id": "14_q019",
+    "category": "period_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E30"
+        },
+        {
+          "cell": "Trade!E16"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-209"
+  },
+  {
+    "id": "14_q020",
+    "category": "growth",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "cell": "Trade!C16"
+                },
+                {
+                  "cell": "Trade!B16"
+                }
+              ]
+            },
+            {
+              "cell": "Trade!B16"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "-44.96"
+  },
+  {
+    "id": "14_q021",
+    "category": "fiscal_vs_ytd",
+    "expression": {
+      "gt": [
+        {
+          "cell": "Trade!E19"
+        },
+        {
+          "cell": "Trade!D19"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "No"
+  },
+  {
+    "id": "14_q022",
+    "category": "trade_balance",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E19"
+        },
+        {
+          "cell": "Trade!E20"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "-105"
+  },
+  {
+    "id": "14_q023",
+    "category": "period_disambiguation",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Trade!E31"
+        },
+        {
+          "cell": "Trade!E19"
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "118"
+  },
+  {
+    "id": "14_q024",
+    "category": "growth",
+    "expression": {
+      "mul": [
+        {
+          "div": [
+            {
+              "sub": [
+                {
+                  "cell": "Trade!C19"
+                },
+                {
+                  "cell": "Trade!B19"
+                }
+              ]
+            },
+            {
+              "cell": "Trade!B19"
+            }
+          ]
+        },
+        100
+      ]
+    },
+    "decimals": 2,
+    "answer": "20.98"
+  },
+  {
+    "id": "14_q025",
+    "category": "noncontiguous_sum",
+    "expression": {
+      "add": [
+        {
+          "add": [
+            {
+              "add": [
+                {
+                  "cell": "Trade!B4"
+                },
+                {
+                  "cell": "Trade!B7"
+                }
+              ]
+            },
+            {
+              "add": [
+                {
+                  "cell": "Trade!B10"
+                },
+                {
+                  "cell": "Trade!B13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "add": [
+            {
+              "cell": "Trade!B16"
+            },
+            {
+              "cell": "Trade!B19"
+            }
+          ]
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "801"
+  },
+  {
+    "id": "14_q026",
+    "category": "noncontiguous_sum",
+    "expression": {
+      "add": [
+        {
+          "add": [
+            {
+              "add": [
+                {
+                  "cell": "Trade!C4"
+                },
+                {
+                  "cell": "Trade!C7"
+                }
+              ]
+            },
+            {
+              "add": [
+                {
+                  "cell": "Trade!C10"
+                },
+                {
+                  "cell": "Trade!C13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "add": [
+            {
+              "cell": "Trade!C16"
+            },
+            {
+              "cell": "Trade!C19"
+            }
+          ]
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "888"
+  },
+  {
+    "id": "14_q027",
+    "category": "noncontiguous_sum",
+    "expression": {
+      "add": [
+        {
+          "add": [
+            {
+              "add": [
+                {
+                  "cell": "Trade!D4"
+                },
+                {
+                  "cell": "Trade!D7"
+                }
+              ]
+            },
+            {
+              "add": [
+                {
+                  "cell": "Trade!D10"
+                },
+                {
+                  "cell": "Trade!D13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "add": [
+            {
+              "cell": "Trade!D16"
+            },
+            {
+              "cell": "Trade!D19"
+            }
+          ]
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "978"
+  },
+  {
+    "id": "14_q028",
+    "category": "noncontiguous_sum",
+    "expression": {
+      "add": [
+        {
+          "add": [
+            {
+              "add": [
+                {
+                  "cell": "Trade!E4"
+                },
+                {
+                  "cell": "Trade!E7"
+                }
+              ]
+            },
+            {
+              "add": [
+                {
+                  "cell": "Trade!E10"
+                },
+                {
+                  "cell": "Trade!E13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "add": [
+            {
+              "cell": "Trade!E16"
+            },
+            {
+              "cell": "Trade!E19"
+            }
+          ]
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "798"
+  },
+  {
+    "id": "14_q029",
+    "category": "signed_balance",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "table": {
+              "sheet": "Trade",
+              "columns": {
+                "label": "A",
+                "balance": "E"
+              },
+              "first": 4,
+              "last": 21
+            }
+          },
+          "conditions": {
+            "label": {
+              "not_blank": true
+            },
+            "balance": {
+              "lt": 0
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "4"
+  },
+  {
+    "id": "14_q030",
+    "category": "absolute_difference",
+    "expression": {
+      "abs": {
+        "sub": [
+          {
+            "cell": "Trade!F10"
+          },
+          {
+            "cell": "Trade!F19"
+          }
+        ]
+      }
+    },
+    "decimals": null,
+    "answer": "85"
+  }
+]

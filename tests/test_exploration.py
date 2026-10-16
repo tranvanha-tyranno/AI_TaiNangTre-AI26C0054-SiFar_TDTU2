@@ -92,7 +92,7 @@ class ExplorationTest(unittest.TestCase):
         self.assertEqual(answer,'60')
         self.assertEqual(record['reviews'][0]['verdict'],'unavailable')
 
-    def test_finalization_never_returns_empty_after_validation_failure(self):
+    def test_rejected_candidate_is_diagnostic_only(self):
         from src.pipeline import answer_with_tools
         class Client:
             prompt_cap=1; completion_cap=4; calls=0
@@ -103,10 +103,12 @@ class ExplorationTest(unittest.TestCase):
                     'output':{'step':'r','columns':['A']}})
         client=Client();record={}
         with patch('src.pipeline.load_regions', return_value=regions()), \
-             patch('src.pipeline.retrieve', return_value=([regions()[0]], [{'table_id':'t1','selected':True}])):
-            answer=answer_with_tools(Path('unused'),'What is the total Score?',client,record,{'max_api_calls':3,'max_plan_repairs':1})
-        self.assertTrue(answer)
-        self.assertTrue(record.get('finalized_with_warning'))
+             patch('src.pipeline.retrieve', return_value=([regions()[0]], [{'table_id':'t1','selected':True}])), \
+             self.assertRaises(PlanError):
+            answer_with_tools(Path('unused'),'What is the total Score?',client,record,{'max_api_calls':3,'max_plan_repairs':1})
+        self.assertTrue(record.get('last_candidate_answer'))
+        self.assertTrue(record.get('candidate_rejected'))
+        self.assertFalse(record.get('validated'))
 
 
 if __name__ == '__main__': unittest.main()

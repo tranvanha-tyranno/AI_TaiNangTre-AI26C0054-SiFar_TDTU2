@@ -1,0 +1,25 @@
+{
+  "seed": 261016,
+  "kind": "new synthetic data; structural transfer, not copied records",
+  "source_workbooks": [
+    "Public_data_2/xlsx_files/p2_t03.xlsx",
+    "Public_data_2/xlsx_files/p2_t08.xlsx"
+  ],
+  "description": "20 năm xen 80 quý và bảng level riêng, chênh lệch liên năm, xếp hạng, phạm vi annual/quarter.",
+  "questions": 30,
+  "answer_rounding": "Decimal ROUND_HALF_UP; explicit precision in query",
+  "generator": "scripts/gen_public_transfer_suites.py",
+  "categories": [
+    "annual_comparison_count",
+    "annual_gap_rank",
+    "annual_max",
+    "annual_mean",
+    "annual_threshold",
+    "largest_drop",
+    "level_lookup",
+    "period_count",
+    "quarter_max",
+    "recent_mean",
+    "year_on_year"
+  ]
+}

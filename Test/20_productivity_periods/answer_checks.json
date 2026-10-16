@@ -1,0 +1,1633 @@
+[
+  {
+    "id": "20_q001",
+    "category": "annual_max",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "derive": {
+                "data": {
+                  "filter": {
+                    "data": {
+                      "table": {
+                        "sheet": "Productivity",
+                        "columns": {
+                          "year": "A",
+                          "type": "B",
+                          "rubber": "C",
+                          "chem": "D",
+                          "machine": "E",
+                          "food": "F"
+                        },
+                        "first": 3,
+                        "last": 102
+                      }
+                    },
+                    "conditions": {
+                      "type": "Annual"
+                    }
+                  }
+                },
+                "fields": {
+                  "gap": {
+                    "sub": [
+                      {
+                        "field": "rubber"
+                      },
+                      {
+                        "field": "chem"
+                      }
+                    ]
+                  },
+                  "higher": {
+                    "gt": [
+                      {
+                        "field": "rubber"
+                      },
+                      {
+                        "field": "chem"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "fields": {
+              "label": {
+                "field": "year"
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "rubber",
+            "desc"
+          ],
+          [
+            "year",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "year"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "2024"
+  },
+  {
+    "id": "20_q002",
+    "category": "annual_mean",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "derive": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Productivity",
+                      "columns": {
+                        "year": "A",
+                        "type": "B",
+                        "rubber": "C",
+                        "chem": "D",
+                        "machine": "E",
+                        "food": "F"
+                      },
+                      "first": 3,
+                      "last": 102
+                    }
+                  },
+                  "conditions": {
+                    "type": "Annual"
+                  }
+                }
+              },
+              "fields": {
+                "gap": {
+                  "sub": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                },
+                "higher": {
+                  "gt": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "name": "rubber"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "96.56"
+  },
+  {
+    "id": "20_q003",
+    "category": "quarter_max",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "table": {
+                "sheet": "Productivity",
+                "columns": {
+                  "year": "A",
+                  "type": "B",
+                  "rubber": "C",
+                  "chem": "D",
+                  "machine": "E",
+                  "food": "F"
+                },
+                "first": 3,
+                "last": 102
+              }
+            },
+            "conditions": {
+              "type": "Quarter"
+            }
+          }
+        },
+        "by": [
+          [
+            "rubber",
+            "desc"
+          ],
+          [
+            "year",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "year"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "2013 Q3"
+  },
+  {
+    "id": "20_q004",
+    "category": "year_on_year",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Productivity!C48"
+        },
+        {
+          "cell": "Productivity!C43"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-38.3"
+  },
+  {
+    "id": "20_q005",
+    "category": "year_on_year",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Productivity!C98"
+        },
+        {
+          "cell": "Productivity!C93"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-13.2"
+  },
+  {
+    "id": "20_q006",
+    "category": "annual_max",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "derive": {
+                "data": {
+                  "filter": {
+                    "data": {
+                      "table": {
+                        "sheet": "Productivity",
+                        "columns": {
+                          "year": "A",
+                          "type": "B",
+                          "rubber": "C",
+                          "chem": "D",
+                          "machine": "E",
+                          "food": "F"
+                        },
+                        "first": 3,
+                        "last": 102
+                      }
+                    },
+                    "conditions": {
+                      "type": "Annual"
+                    }
+                  }
+                },
+                "fields": {
+                  "gap": {
+                    "sub": [
+                      {
+                        "field": "rubber"
+                      },
+                      {
+                        "field": "chem"
+                      }
+                    ]
+                  },
+                  "higher": {
+                    "gt": [
+                      {
+                        "field": "rubber"
+                      },
+                      {
+                        "field": "chem"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "fields": {
+              "label": {
+                "field": "year"
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "chem",
+            "desc"
+          ],
+          [
+            "year",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "year"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "2019"
+  },
+  {
+    "id": "20_q007",
+    "category": "annual_mean",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "derive": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Productivity",
+                      "columns": {
+                        "year": "A",
+                        "type": "B",
+                        "rubber": "C",
+                        "chem": "D",
+                        "machine": "E",
+                        "food": "F"
+                      },
+                      "first": 3,
+                      "last": 102
+                    }
+                  },
+                  "conditions": {
+                    "type": "Annual"
+                  }
+                }
+              },
+              "fields": {
+                "gap": {
+                  "sub": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                },
+                "higher": {
+                  "gt": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "name": "chem"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "101.41"
+  },
+  {
+    "id": "20_q008",
+    "category": "quarter_max",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "table": {
+                "sheet": "Productivity",
+                "columns": {
+                  "year": "A",
+                  "type": "B",
+                  "rubber": "C",
+                  "chem": "D",
+                  "machine": "E",
+                  "food": "F"
+                },
+                "first": 3,
+                "last": 102
+              }
+            },
+            "conditions": {
+              "type": "Quarter"
+            }
+          }
+        },
+        "by": [
+          [
+            "chem",
+            "desc"
+          ],
+          [
+            "year",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "year"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "2008 Q2"
+  },
+  {
+    "id": "20_q009",
+    "category": "year_on_year",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Productivity!D48"
+        },
+        {
+          "cell": "Productivity!D43"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-3.1"
+  },
+  {
+    "id": "20_q010",
+    "category": "year_on_year",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Productivity!D98"
+        },
+        {
+          "cell": "Productivity!D93"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "5.5"
+  },
+  {
+    "id": "20_q011",
+    "category": "annual_max",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "derive": {
+                "data": {
+                  "filter": {
+                    "data": {
+                      "table": {
+                        "sheet": "Productivity",
+                        "columns": {
+                          "year": "A",
+                          "type": "B",
+                          "rubber": "C",
+                          "chem": "D",
+                          "machine": "E",
+                          "food": "F"
+                        },
+                        "first": 3,
+                        "last": 102
+                      }
+                    },
+                    "conditions": {
+                      "type": "Annual"
+                    }
+                  }
+                },
+                "fields": {
+                  "gap": {
+                    "sub": [
+                      {
+                        "field": "rubber"
+                      },
+                      {
+                        "field": "chem"
+                      }
+                    ]
+                  },
+                  "higher": {
+                    "gt": [
+                      {
+                        "field": "rubber"
+                      },
+                      {
+                        "field": "chem"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "fields": {
+              "label": {
+                "field": "year"
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "machine",
+            "desc"
+          ],
+          [
+            "year",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "year"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "2025"
+  },
+  {
+    "id": "20_q012",
+    "category": "annual_mean",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "derive": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Productivity",
+                      "columns": {
+                        "year": "A",
+                        "type": "B",
+                        "rubber": "C",
+                        "chem": "D",
+                        "machine": "E",
+                        "food": "F"
+                      },
+                      "first": 3,
+                      "last": 102
+                    }
+                  },
+                  "conditions": {
+                    "type": "Annual"
+                  }
+                }
+              },
+              "fields": {
+                "gap": {
+                  "sub": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                },
+                "higher": {
+                  "gt": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "name": "machine"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "101.87"
+  },
+  {
+    "id": "20_q013",
+    "category": "quarter_max",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "table": {
+                "sheet": "Productivity",
+                "columns": {
+                  "year": "A",
+                  "type": "B",
+                  "rubber": "C",
+                  "chem": "D",
+                  "machine": "E",
+                  "food": "F"
+                },
+                "first": 3,
+                "last": 102
+              }
+            },
+            "conditions": {
+              "type": "Quarter"
+            }
+          }
+        },
+        "by": [
+          [
+            "machine",
+            "desc"
+          ],
+          [
+            "year",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "year"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "2009 Q3"
+  },
+  {
+    "id": "20_q014",
+    "category": "year_on_year",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Productivity!E48"
+        },
+        {
+          "cell": "Productivity!E43"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-11.0"
+  },
+  {
+    "id": "20_q015",
+    "category": "year_on_year",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Productivity!E98"
+        },
+        {
+          "cell": "Productivity!E93"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-13.2"
+  },
+  {
+    "id": "20_q016",
+    "category": "annual_max",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "derive": {
+                "data": {
+                  "filter": {
+                    "data": {
+                      "table": {
+                        "sheet": "Productivity",
+                        "columns": {
+                          "year": "A",
+                          "type": "B",
+                          "rubber": "C",
+                          "chem": "D",
+                          "machine": "E",
+                          "food": "F"
+                        },
+                        "first": 3,
+                        "last": 102
+                      }
+                    },
+                    "conditions": {
+                      "type": "Annual"
+                    }
+                  }
+                },
+                "fields": {
+                  "gap": {
+                    "sub": [
+                      {
+                        "field": "rubber"
+                      },
+                      {
+                        "field": "chem"
+                      }
+                    ]
+                  },
+                  "higher": {
+                    "gt": [
+                      {
+                        "field": "rubber"
+                      },
+                      {
+                        "field": "chem"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "fields": {
+              "label": {
+                "field": "year"
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "food",
+            "desc"
+          ],
+          [
+            "year",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "year"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "2015"
+  },
+  {
+    "id": "20_q017",
+    "category": "annual_mean",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "derive": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Productivity",
+                      "columns": {
+                        "year": "A",
+                        "type": "B",
+                        "rubber": "C",
+                        "chem": "D",
+                        "machine": "E",
+                        "food": "F"
+                      },
+                      "first": 3,
+                      "last": 102
+                    }
+                  },
+                  "conditions": {
+                    "type": "Annual"
+                  }
+                }
+              },
+              "fields": {
+                "gap": {
+                  "sub": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                },
+                "higher": {
+                  "gt": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "name": "food"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "106.01"
+  },
+  {
+    "id": "20_q018",
+    "category": "quarter_max",
+    "expression": {
+      "rank": {
+        "data": {
+          "filter": {
+            "data": {
+              "table": {
+                "sheet": "Productivity",
+                "columns": {
+                  "year": "A",
+                  "type": "B",
+                  "rubber": "C",
+                  "chem": "D",
+                  "machine": "E",
+                  "food": "F"
+                },
+                "first": 3,
+                "last": 102
+              }
+            },
+            "conditions": {
+              "type": "Quarter"
+            }
+          }
+        },
+        "by": [
+          [
+            "food",
+            "desc"
+          ],
+          [
+            "year",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "year"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "2018 Q1"
+  },
+  {
+    "id": "20_q019",
+    "category": "year_on_year",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Productivity!F48"
+        },
+        {
+          "cell": "Productivity!F43"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "26.2"
+  },
+  {
+    "id": "20_q020",
+    "category": "year_on_year",
+    "expression": {
+      "sub": [
+        {
+          "cell": "Productivity!F98"
+        },
+        {
+          "cell": "Productivity!F93"
+        }
+      ]
+    },
+    "decimals": 1,
+    "answer": "-21.0"
+  },
+  {
+    "id": "20_q021",
+    "category": "annual_comparison_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Productivity",
+                      "columns": {
+                        "year": "A",
+                        "type": "B",
+                        "rubber": "C",
+                        "chem": "D",
+                        "machine": "E",
+                        "food": "F"
+                      },
+                      "first": 3,
+                      "last": 102
+                    }
+                  },
+                  "conditions": {
+                    "type": "Annual"
+                  }
+                }
+              },
+              "fields": {
+                "gap": {
+                  "sub": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                },
+                "higher": {
+                  "gt": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "conditions": {
+            "higher": true
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "8"
+  },
+  {
+    "id": "20_q022",
+    "category": "annual_gap_rank",
+    "expression": {
+      "rank": {
+        "data": {
+          "derive": {
+            "data": {
+              "filter": {
+                "data": {
+                  "table": {
+                    "sheet": "Productivity",
+                    "columns": {
+                      "year": "A",
+                      "type": "B",
+                      "rubber": "C",
+                      "chem": "D",
+                      "machine": "E",
+                      "food": "F"
+                    },
+                    "first": 3,
+                    "last": 102
+                  }
+                },
+                "conditions": {
+                  "type": "Annual"
+                }
+              }
+            },
+            "fields": {
+              "gap": {
+                "sub": [
+                  {
+                    "field": "rubber"
+                  },
+                  {
+                    "field": "chem"
+                  }
+                ]
+              },
+              "higher": {
+                "gt": [
+                  {
+                    "field": "rubber"
+                  },
+                  {
+                    "field": "chem"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "by": [
+          [
+            "gap",
+            "desc"
+          ],
+          [
+            "year",
+            "asc"
+          ]
+        ],
+        "columns": [
+          "year"
+        ],
+        "offset": 0,
+        "limit": 1
+      }
+    },
+    "decimals": null,
+    "answer": "2022"
+  },
+  {
+    "id": "20_q023",
+    "category": "annual_threshold",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Productivity",
+                      "columns": {
+                        "year": "A",
+                        "type": "B",
+                        "rubber": "C",
+                        "chem": "D",
+                        "machine": "E",
+                        "food": "F"
+                      },
+                      "first": 3,
+                      "last": 102
+                    }
+                  },
+                  "conditions": {
+                    "type": "Annual"
+                  }
+                }
+              },
+              "fields": {
+                "gap": {
+                  "sub": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                },
+                "higher": {
+                  "gt": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "conditions": {
+            "machine": {
+              "ge": 90
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "14"
+  },
+  {
+    "id": "20_q024",
+    "category": "annual_threshold",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Productivity",
+                      "columns": {
+                        "year": "A",
+                        "type": "B",
+                        "rubber": "C",
+                        "chem": "D",
+                        "machine": "E",
+                        "food": "F"
+                      },
+                      "first": 3,
+                      "last": 102
+                    }
+                  },
+                  "conditions": {
+                    "type": "Annual"
+                  }
+                }
+              },
+              "fields": {
+                "gap": {
+                  "sub": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                },
+                "higher": {
+                  "gt": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "conditions": {
+            "machine": {
+              "ge": 100
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "11"
+  },
+  {
+    "id": "20_q025",
+    "category": "annual_threshold",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Productivity",
+                      "columns": {
+                        "year": "A",
+                        "type": "B",
+                        "rubber": "C",
+                        "chem": "D",
+                        "machine": "E",
+                        "food": "F"
+                      },
+                      "first": 3,
+                      "last": 102
+                    }
+                  },
+                  "conditions": {
+                    "type": "Annual"
+                  }
+                }
+              },
+              "fields": {
+                "gap": {
+                  "sub": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                },
+                "higher": {
+                  "gt": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "conditions": {
+            "machine": {
+              "ge": 110
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "7"
+  },
+  {
+    "id": "20_q026",
+    "category": "largest_drop",
+    "expression": {
+      "list": [
+        {
+          "rank": {
+            "data": {
+              "derive": {
+                "data": {
+                  "previous": {
+                    "data": {
+                      "derive": {
+                        "data": {
+                          "filter": {
+                            "data": {
+                              "table": {
+                                "sheet": "Productivity",
+                                "columns": {
+                                  "year": "A",
+                                  "type": "B",
+                                  "rubber": "C",
+                                  "chem": "D",
+                                  "machine": "E",
+                                  "food": "F"
+                                },
+                                "first": 3,
+                                "last": 102
+                              }
+                            },
+                            "conditions": {
+                              "type": "Annual"
+                            }
+                          }
+                        },
+                        "fields": {
+                          "gap": {
+                            "sub": [
+                              {
+                                "field": "rubber"
+                              },
+                              {
+                                "field": "chem"
+                              }
+                            ]
+                          },
+                          "higher": {
+                            "gt": [
+                              {
+                                "field": "rubber"
+                              },
+                              {
+                                "field": "chem"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "order": "year",
+                    "value": "rubber"
+                  }
+                },
+                "fields": {
+                  "decrease": {
+                    "sub": [
+                      {
+                        "field": "previous"
+                      },
+                      {
+                        "field": "rubber"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "by": [
+              [
+                "decrease",
+                "desc"
+              ],
+              [
+                "year",
+                "asc"
+              ]
+            ],
+            "columns": [
+              "year"
+            ],
+            "offset": 0,
+            "limit": 1
+          }
+        },
+        {
+          "format": {
+            "value": {
+              "max": {
+                "rank": {
+                  "data": {
+                    "derive": {
+                      "data": {
+                        "previous": {
+                          "data": {
+                            "derive": {
+                              "data": {
+                                "filter": {
+                                  "data": {
+                                    "table": {
+                                      "sheet": "Productivity",
+                                      "columns": {
+                                        "year": "A",
+                                        "type": "B",
+                                        "rubber": "C",
+                                        "chem": "D",
+                                        "machine": "E",
+                                        "food": "F"
+                                      },
+                                      "first": 3,
+                                      "last": 102
+                                    }
+                                  },
+                                  "conditions": {
+                                    "type": "Annual"
+                                  }
+                                }
+                              },
+                              "fields": {
+                                "gap": {
+                                  "sub": [
+                                    {
+                                      "field": "rubber"
+                                    },
+                                    {
+                                      "field": "chem"
+                                    }
+                                  ]
+                                },
+                                "higher": {
+                                  "gt": [
+                                    {
+                                      "field": "rubber"
+                                    },
+                                    {
+                                      "field": "chem"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          },
+                          "order": "year",
+                          "value": "rubber"
+                        }
+                      },
+                      "fields": {
+                        "decrease": {
+                          "sub": [
+                            {
+                              "field": "previous"
+                            },
+                            {
+                              "field": "rubber"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "by": [
+                    [
+                      "decrease",
+                      "desc"
+                    ],
+                    [
+                      "year",
+                      "asc"
+                    ]
+                  ],
+                  "columns": [
+                    "decrease"
+                  ],
+                  "offset": 0,
+                  "limit": 1
+                }
+              }
+            },
+            "decimals": 1
+          }
+        }
+      ]
+    },
+    "decimals": null,
+    "answer": "2021, 50.0"
+  },
+  {
+    "id": "20_q027",
+    "category": "period_count",
+    "expression": {
+      "count": {
+        "filter": {
+          "data": {
+            "derive": {
+              "data": {
+                "filter": {
+                  "data": {
+                    "table": {
+                      "sheet": "Productivity",
+                      "columns": {
+                        "year": "A",
+                        "type": "B",
+                        "rubber": "C",
+                        "chem": "D",
+                        "machine": "E",
+                        "food": "F"
+                      },
+                      "first": 3,
+                      "last": 102
+                    }
+                  },
+                  "conditions": {
+                    "type": "Annual"
+                  }
+                }
+              },
+              "fields": {
+                "gap": {
+                  "sub": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                },
+                "higher": {
+                  "gt": [
+                    {
+                      "field": "rubber"
+                    },
+                    {
+                      "field": "chem"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "conditions": {
+            "year": {
+              "ge": 2015,
+              "le": 2022
+            }
+          }
+        }
+      }
+    },
+    "decimals": null,
+    "answer": "8"
+  },
+  {
+    "id": "20_q028",
+    "category": "recent_mean",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "filter": {
+                      "data": {
+                        "table": {
+                          "sheet": "Productivity",
+                          "columns": {
+                            "year": "A",
+                            "type": "B",
+                            "rubber": "C",
+                            "chem": "D",
+                            "machine": "E",
+                            "food": "F"
+                          },
+                          "first": 3,
+                          "last": 102
+                        }
+                      },
+                      "conditions": {
+                        "type": "Annual"
+                      }
+                    }
+                  },
+                  "fields": {
+                    "gap": {
+                      "sub": [
+                        {
+                          "field": "rubber"
+                        },
+                        {
+                          "field": "chem"
+                        }
+                      ]
+                    },
+                    "higher": {
+                      "gt": [
+                        {
+                          "field": "rubber"
+                        },
+                        {
+                          "field": "chem"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "year": {
+                  "ge": 2020,
+                  "le": 2027
+                }
+              }
+            }
+          },
+          "name": "chem"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "99.61"
+  },
+  {
+    "id": "20_q029",
+    "category": "recent_mean",
+    "expression": {
+      "mean": {
+        "column": {
+          "data": {
+            "filter": {
+              "data": {
+                "derive": {
+                  "data": {
+                    "filter": {
+                      "data": {
+                        "table": {
+                          "sheet": "Productivity",
+                          "columns": {
+                            "year": "A",
+                            "type": "B",
+                            "rubber": "C",
+                            "chem": "D",
+                            "machine": "E",
+                            "food": "F"
+                          },
+                          "first": 3,
+                          "last": 102
+                        }
+                      },
+                      "conditions": {
+                        "type": "Annual"
+                      }
+                    }
+                  },
+                  "fields": {
+                    "gap": {
+                      "sub": [
+                        {
+                          "field": "rubber"
+                        },
+                        {
+                          "field": "chem"
+                        }
+                      ]
+                    },
+                    "higher": {
+                      "gt": [
+                        {
+                          "field": "rubber"
+                        },
+                        {
+                          "field": "chem"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "conditions": {
+                "year": {
+                  "ge": 2020,
+                  "le": 2027
+                }
+              }
+            }
+          },
+          "name": "food"
+        }
+      }
+    },
+    "decimals": 2,
+    "answer": "100.84"
+  },
+  {
+    "id": "20_q030",
+    "category": "level_lookup",
+    "expression": {
+      "cell": "Productivity!D105"
+    },
+    "decimals": null,
+    "answer": "180"
+  }
+]

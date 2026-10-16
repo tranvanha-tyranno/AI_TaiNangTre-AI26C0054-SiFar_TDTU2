@@ -37,15 +37,24 @@ def infer_answer_contract(question):
     elif re.search(r'\banswer (?:with )?(?:only|the|exactly|to)\b|chỉ (?:trả|ghi|đưa ra)|\b(?:what is|how many|who was|who is|which\b.*(?:has|is))\b',q):
         contract.update(kind='scalar',count=1)
     if contract['yes_no']: contract.update(kind='scalar',count=1)
-    label_request=bool(re.search(r'^which\b|what is the (?:id|name|code|sector|industry|category)\b',q))
+    label_request=bool(re.search(r'\b(?:which|what)\s+(?:year|month|group|category|industry|sector)\b|^which\b|what is the (?:id|name|code|sector|industry|category)\b|\bfind the year\b',q))
+    label_request=label_request or bool(re.search(r'answer (?:with )?only the (?:year|month|date|name|id|code)\b',q))
     if not list_request and not label_request and re.search(r'\baverage\b|trung bình',intent_q): contract['reduction']='mean'
     elif not list_request and re.search(r'\b(?:absolute )?difference\b|chênh lệch|hiệu tuyệt đối',intent_q): contract['reduction']='difference'
     elif not list_request and not label_request and re.search(r'\b(?:sum|total)\b|\btổng\b',intent_q): contract['reduction']='sum'
     elif re.search(r'^how many(?! more)|^có bao nhiêu|^bao nhiêu',q): contract['reduction']='count'
+    if re.search(r'\b(?:in )?how many (?!more)\w+|^có bao nhiêu|^bao nhiêu',intent_q): contract['reduction']='count'
+    if re.search(r'\bhow many (?:more|percentage points)\b|\bby how much\b.*\b(?:increase|decrease|change)\b',intent_q): contract['reduction']='difference'
+    if label_request: contract['reduction']=None
     if contract['reduction'] and contract['kind']=='unknown': contract.update(kind='scalar',count=1)
-    decimals=re.search(r'(?:exactly|to|with)\s+(\d+|two|three|four) decimal places|(?:two|exactly two) decimals|hai (?:chữ số|số) thập phân',q)
+    decimals=re.search(r'(?:exactly|to|with|using)\s+(\d+|one|two|three|four) decimal places|(?:two|exactly two) decimals|hai (?:chữ số|số) thập phân',q)
     if decimals:
         contract['decimals']=count_value(decimals.group(1)) if decimals.group(1) else 2
+    if re.search(r'(?:đúng )?một (?:chữ số|số) thập phân',q): contract['decimals']=1
+    if '소수점 둘째' in q: contract['decimals']=2
+    if not list_request and not label_request and re.search(r'(?:percent(?:age)?|phần trăm|퍼센트).{0,35}(?:decreas|increas|giảm|tăng|감소|증가)|(?:decreas|increas).{0,35}(?:percent|percentage)|^what (?:is|was) the percent(?:age)? change',intent_q):
+        contract.update(reduction='percent_change',kind='scalar',count=1)
+        contract['percent_decrease']=bool(re.search(r'decreas|giảm|감소',intent_q))
     # Integer ID/code questions must preserve identifiers, including leading 0.
     contract['integer']=bool(re.search(r'\bintegers?\b|số nguyên',q))
     contract['unit_scale']=None
@@ -66,6 +75,17 @@ def infer_answer_contract(question):
         contract.update(answer_type='label',answer_field=which.group(1).strip())
     elif vietnamese:
         contract.update(answer_type='label',answer_field=vietnamese.group(1))
+    if contract['answer_type']=='label' and contract['reduction'] in {'mean','sum'}:
+        contract['reduction']=None
+    # Explicit answer templates take precedence over metric-name heuristics.
+    template=re.search(r'\banswer as\s+`([^`]+)`',q)
+    if template and ',' in template.group(1):
+        fields=[s.strip() for s in template.group(1).split(',')]
+        numeric=[i for i,field in enumerate(fields) if not re.search(r'group|name|class|category|industry|sector|label|id|code',field)]
+        contract.update(kind='tuple',count=len(fields),fields=fields,numeric_positions=numeric,
+                        answer_type=None,answer_field=None,reduction=None)
+    elif re.search(r'answer (?:with )?only the year\b',q):
+        contract['answer_field']='year'
     return contract
 
 
@@ -76,6 +96,7 @@ def validate_answer_field(contract, plan, result, regions):
     if spec and (spec.get('answer_type') not in {'label','number','boolean','date','text'} or
                  not isinstance(spec.get('answer_field'),str) or not isinstance(spec.get('operation'),str)):
         raise PlanError('answer_spec requires answer_type, answer_field and operation')
+    if contract.get('kind')=='tuple': return
     kind=contract.get('answer_type') or spec.get('answer_type')
     field=contract.get('answer_field') or spec.get('answer_field')
     requested=re.sub(r'[^\w]+',' ',str(field or '').casefold()).strip().rstrip('s')
@@ -109,7 +130,9 @@ def validate_answer_field(contract, plan, result, regions):
             for ref in source:
                 sheet,coordinate=ref.rsplit('!',1); col=re.sub(r'\d+$','',coordinate)
                 region=next((r for r in regions if r.sheet==sheet),None)
-                if region and col==re.sub(r'\d+$','',getattr(region,'bounds','').split(':')[0]) and sum(bool(h.strip()) for values in region.column_headers().values() for h in values)>4:
+                row_headers=' '.join(region.column_headers().get(col,[])).casefold() if region else ''
+                declares_row_field=any(token in row_headers for token in {'industry','industries'} if requested=='industry') or requested in row_headers
+                if region and not declares_row_field and col==re.sub(r'\d+$','',getattr(region,'bounds','').split(':')[0]) and sum(bool(h.strip()) for values in region.column_headers().values() for h in values)>4:
                     raise PlanError('Question asks for an industry/sector/category name, but the output came from the row-label column. For a horizontal table, unpivot metric columns and output their header labels.')
     # Generic names such as sector/industry can describe a horizontal axis;
     # only enforce heading identity when it is actually present in this file.
@@ -124,18 +147,19 @@ def validate_answer_field(contract, plan, result, regions):
 def ancestors(plan):
     steps={s['id']:s for s in plan['steps']}; visited={}
     def walk(ident):
-        if ident in visited or ident not in steps: return
+        if not isinstance(ident,str) or ident in visited or ident not in steps: return
         step=steps[ident];visited[ident]=step
         for key in ('input','left','right'):
             if key in step: walk(step[key])
         for source in step.get('inputs',[]): walk(source)
+        for source in step.get('fields',{}).values(): walk(source)
         def expr_refs(value):
             if isinstance(value,dict):
                 if 'ref' in value: walk(value['ref'])
                 for child in value.values(): expr_refs(child)
             elif isinstance(value,list):
                 for child in value: expr_refs(child)
-        expr_refs(step.get('expr'));expr_refs(step.get('where'))
+        expr_refs(step.get('expr'));expr_refs(step.get('where'));expr_refs(step.get('fields'))
     walk(plan['output']['step'])
     return list(visited.values())
 
@@ -169,18 +193,31 @@ def validate_answer_contract(contract,plan,result,question=''):
         if not any(s.get('offset',0)==contract['rank_offset'] and s.get('limit',1)==count for s in takes):
             raise PlanError(f'Ranking requires take offset={contract["rank_offset"]}, limit={count} on the sorted output.')
     final=next(s for s in lineage if s['id']==plan['output']['step'])
-    if reduction=='difference' and not any(s.get('op')=='calculate' and any(op in json.dumps(s.get('expr',{})) for op in ('sub','abs')) for s in lineage):
+    if reduction=='difference' and not any(s.get('op') in {'calculate','derive'} and '"sub"' in json.dumps(s.get('expr',{})) for s in lineage):
         raise PlanError('Question asks for an absolute difference. Compute the two requested totals separately, then calculate abs(sub(total_a,total_b)); do not aggregate the two rows together.')
-    if reduction and reduction!='difference' and final['op'] not in {'cell','sum_columns','calculate','aggregate'}:
+    if reduction and reduction not in {'difference','percent_change'} and final['op'] not in {'cell','sum_columns','calculate','aggregate'}:
         if not any(s['op'] in {'aggregate','group'} and s.get('metric')==reduction for s in lineage):
             raise PlanError(f'Question requires a computed {reduction}, but the output is unreduced rows. '
                             f'Use aggregate metric={reduction} on the intended data, or an explicit total cell.')
     if contract['yes_no'] and result['answer'] not in {'Yes','No'}:
         raise PlanError('Question requires Yes or No. Use a boolean comparison on computed scalar refs, not a numeric cell.')
+    numeric_values=[v for i,v in enumerate(result['values']) if contract.get('kind')!='tuple' or i in contract['numeric_positions']]
     if contract['decimals'] is not None:
         digits=contract['decimals']
         pattern=rf'-?\d+\.\d{{{digits}}}' if digits else r'-?\d+'
-        if any(not re.fullmatch(pattern,v) for v in result['values']):
+        if any(not re.fullmatch(pattern,v) for v in numeric_values):
             raise PlanError(f'Question requires exactly {digits} decimal places; set output.decimals={digits}.')
-    if contract['integer'] and any(not re.fullmatch(r'-?\d+',v) for v in result['values']):
+    if contract['integer'] and any(not re.fullmatch(r'-?\d+',v) for v in numeric_values):
         raise PlanError('Question requires integers without commas or units.')
+    if contract.get('kind')=='tuple':
+        for i,field in enumerate(contract['fields']):
+            if i not in contract['numeric_positions'] and re.fullmatch(r'-?\d+(?:\.\d+)?',result['values'][i]):
+                raise PlanError(f'Answer component {i+1} requires {field}, not its numeric metric.')
+            if 'decrease' in field and result['values'][i].startswith('-'):
+                raise PlanError('A decrease is the positive size of a decline. Return abs(previous-current), not a negative signed change, alongside the year/group.')
+    if reduction=='percent_change':
+        expressions=json.dumps([s.get('expr',{}) for s in lineage])
+        if '"div"' not in expressions or '"sub"' not in expressions or not re.search(r'"value":\s*100(?:\D|$)',expressions):
+            raise PlanError('Percent change requires (new-old)/old*100; percent decrease requires (old-new)/old*100. Return percentage units, not a raw fraction or source count.')
+        if contract.get('percent_decrease') and any(v.startswith('-') for v in numeric_values):
+            raise PlanError('Question requests a percent decrease; use (old-new)/old*100, positive for a decline.')
