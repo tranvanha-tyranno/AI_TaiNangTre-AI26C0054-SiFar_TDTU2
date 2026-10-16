@@ -170,7 +170,7 @@ class V3Test(unittest.TestCase):
         with output.open(encoding='utf-8',newline='') as stream: rows=list(csv.DictReader(stream))
         self.assertEqual([r['id'] for r in rows],['1','2','10'])
         self.assertEqual([r['answer'] for r in rows],['60.00']*3)
-        self.assertEqual(json.loads((logs/'summary.json').read_text())['pipeline_version'],'lmmv3-8phase-v1')
+        self.assertEqual(json.loads((logs/'summary.json').read_text())['pipeline_version'],'lmmv3-8phase-v2')
 
     def test_dashboard_accepts_v3_without_launching_a_worker(self):
         import dashboard
@@ -189,6 +189,64 @@ class V3Test(unittest.TestCase):
         client=FakeClient([ambiguous,revise,response()]);record={}
         self.assertEqual(answer(self.path,QUESTION,client,record,{}),'60.00')
         self.assertEqual(len(record['specification_revisions']),1)
+
+    def test_provider_numeric_spellings_are_normalized_without_guessing(self):
+        for count in (1.0,'1','1.0'):
+            with self.subTest(count=count):
+                spec=specification();spec['output_count']=count;spec['fields'][0]['decimals']='2'
+                client=FakeClient([spec,response()]);record={}
+                self.assertEqual(answer(self.path,QUESTION,client,record,{}),'60.00')
+                self.assertTrue(record['specification_normalizations'])
+                self.assertEqual(client.purposes,['v3_spec','v3_plan'])
+        from src.lmmv3.contracts import normalize_spec
+        for value in (True,1.5,'one','1,0','',float('inf')):
+            spec=specification();spec['output_count']=value
+            with self.assertRaises(PlanError): check_spec(normalize_spec(spec)[0],QUESTION)
+        spec=specification();spec['output_count']='null'
+        self.assertIsNone(check_spec(normalize_spec(spec)[0],QUESTION)['output_count'])
+
+    def test_spec_failure_logs_raw_type_and_retry_has_previous_response(self):
+        spec=specification();spec['output_count']='several'
+        class Client(FakeClient):
+            def complete(self,messages,ledger,purpose):
+                if self.purposes:
+                    feedback=json.loads(messages[1]['content'])['feedback']
+                    assert 'previous_response' in feedback
+                    assert "received str" in feedback['error']
+                return super().complete(messages,ledger,purpose)
+        record={}
+        with self.assertRaises(PlanError): answer(self.path,QUESTION,Client([spec,spec]),record,{})
+        self.assertEqual(len(record['model_responses']),2)
+        self.assertEqual(json.loads(record['model_responses'][0]['raw'])['output_count'],'several')
+
+    def test_dynamic_schema_rejects_unknown_ids_and_bounds_feedback_is_precise(self):
+        active=schema('v3_plan',specification(),[{'table_id':'t1'}])
+        bad=response();bad['coverage'][0]['requirement']='fabricated'
+        with self.assertRaises(PlanError): validate(bad,active)
+        book=Workbook(self.path);book.preview(book.index['t1'],QUESTION,45)
+        bad=response();bad['coverage'][0]['range']='B1:B100'
+        with self.assertRaisesRegex(PlanError,'bounds are A1:C4'): coverage_check(specification(),bad['coverage'],book)
+
+    def test_context_ambiguity_resolves_with_grounded_evidence_then_review(self):
+        spec=specification();spec['ambiguities']=['Which column holds the amount?']
+        ready=response();ready['ambiguity_resolutions']=[{'index':0,'requirement':'metric','explanation':'B1 is the amount heading; B2:B4 contain the requested data.'}]
+        class Client(FakeClient):
+            def complete(self,messages,ledger,purpose):
+                if purpose=='v3_plan':
+                    assert ledger.response_schema['anyOf'][0]['properties']['coverage']['items']['properties']['requirement']['enum']==['metric']
+                if purpose=='v3_review': assert json.loads(messages[1]['content'])['ambiguity_resolutions']
+                return super().complete(messages,ledger,purpose)
+        record={};client=Client([spec,ready,{'verdict':'accept','issues':[]}])
+        self.assertEqual(answer(self.path,QUESTION,client,record,{}),'60.00')
+        self.assertTrue(record['readiness']['ambiguity_resolutions'])
+
+    def test_unresolved_ambiguity_cannot_pass_readiness(self):
+        spec=specification();spec['ambiguities']=['Which period?']
+        ready=response();ready['ambiguity_resolutions']=[];record={}
+        with self.assertRaisesRegex(PlanError,'Unresolved ambiguities'):
+            answer(self.path,QUESTION,FakeClient([spec,ready]),record,{'v3_max_repairs':0})
+        self.assertFalse(record['validated'])
+        self.assertFalse(any(p['phase']==6 for p in record['phases']))
 
 
 if __name__=='__main__': unittest.main()

@@ -167,13 +167,14 @@ def coverage_check(spec,coverage,workbook):
     """Check grounding, not semantic truth: LLM still owns meaning alignment."""
     required={r['id'] for r in spec['requirements']};covered=set();issues=[]
     for item in coverage:
-        if item['requirement'] not in required: raise PlanError('Coverage uses unknown requirement')
+        if item['requirement'] not in required:
+            raise PlanError(f'Coverage uses unknown requirement {item["requirement"]!r}; valid IDs: {sorted(required)}')
         region=workbook.index.get(item['table'])
         if region is None: raise PlanError('Coverage uses unknown table')
         try: c1,r1,c2,r2=range_boundaries(item['range'])
         except (ValueError,TypeError): raise PlanError('Invalid coverage A1 range') from None
         if None in (c1,r1,c2,r2) or not(region.start_col<=c1<=c2<=region.end_col and region.start_row<=r1<=r2<=region.end_row):
-            raise PlanError('Coverage outside table')
+            raise PlanError(f'Coverage outside table: {item["range"]!r}; {region.id} bounds are {region.bounds}. Cite an observed range inside these bounds; do not clamp or invent evidence.')
         if (c2-c1+1)*(r2-r1+1)>600:
             raise PlanError('Coverage evidence must cite <=600 observed cells, not an uninspected full data range')
         observed_bounds=[range_boundaries(o['range']) for o in workbook.observed if o['table']==region.id]

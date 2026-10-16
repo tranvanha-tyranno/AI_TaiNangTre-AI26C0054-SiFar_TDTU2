@@ -62,3 +62,13 @@ Kiểm tra mới dùng workbook tổng hợp/client giả lập. Không chạy d
 Chưa khẳng định chính xác hơn baseline/v2. Sau triển khai cần test bộ chưa dùng chỉnh solver, cùng model/cấu hình, nhiều lần chạy; báo strict exact match, thời gian, phí và lỗi từng phase. Không đưa reference/answer_checks vào solver.
 
 Header/table segmentation còn suy đoán; không tự tính lại công thức thiếu cache; ô preview có giới hạn; tìm kiếm chưa có embedding đa ngôn ngữ; đặc tả và reviewer có thể cùng hiểu sai. Không hỗ trợ mọi bài toán và không bảo đảm đúng trên mọi dataset. Các giới hạn workbook/executor vẫn áp dụng.
+
+
+## Sửa giao thức sau run lỗi — lmmv3-8phase-v2
+
+- Chuẩn hóa output_count/decimals từ số thực nguyên, chuỗi số nguyên và chuỗi null sang kiểu JSON chuẩn, ghi từng thay đổi. Không đoán từ ngữ như one/several, không chấp nhận boolean hoặc số lẻ làm count. Validator chấp nhận số thực nguyên theo ý nghĩa JSON Schema integer.
+- ID yêu cầu là chuỗi định danh, có thể đa ngôn ngữ; vẫn kiểm tra không trùng và không tự đổi ID. Schema gửi provider cho từng lượt plan/inspect chứa enum các requirement/table ID thật. Không ánh xạ theo kiểu fuzzy hoặc tự cắt bounds sai.
+- Log model_responses lưu raw phản hồi spec/plan/review (giới hạn 24.000 ký tự mỗi lượt, kèm độ dài/hash/truncated) để xác định giá trị và kiểu thực tế gây lỗi. Retry spec có phản hồi trước, lỗi kèm kiểu và hướng dẫn cụ thể.
+- Thiếu ngữ cảnh workbook trong ambiguities được giải quyết bằng inspect rồi ambiguity_resolutions: index, requirement có coverage, giải thích. Readiness kiểm tra đủ từng index; reviewer phải xem giải thích. Không được bỏ qua mơ hồ còn tồn tại.
+- Feedback coverage chỉ rõ danh sách ID hợp lệ và bounds bảng; giữ kiểm tra vùng đã quan sát. Không tự sửa tọa độ để làm cho một kế hoạch sai vượt kiểm tra.
+- Chỉ kiểm chứng bằng client giả lập; chưa chạy lại dataset hoặc gọi API. Kiểm thử này không chứng minh Qwen sẽ luôn tuân thủ schema hay LMMv3 sẽ đạt điểm cao hơn.

@@ -85,7 +85,7 @@ class PlannerClient:
 
     def complete(self, messages, ledger, purpose='plan'):
         from .planner import tool_schema
-        schema=tool_schema(purpose)
+        schema=getattr(ledger,'response_schema',None) or tool_schema(purpose)
         tools=[{'type':'function','function':{'name':'execute_spreadsheet_plan',
                 'description':'Request workbook inspection or submit a spreadsheet computation plan; during review, audit the candidate.',
                 'parameters':schema}}]
