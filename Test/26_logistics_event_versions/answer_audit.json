@@ -1,0 +1,432 @@
+{
+  "schema_version": 1,
+  "views": [
+    "CREATE VIEW canonical_events AS SELECT event,shipment,at,status,revision,ingested FROM (SELECT *,row_number() OVER(PARTITION BY event ORDER BY revision DESC,ingested DESC) rn FROM events) WHERE rn=1",
+    "CREATE VIEW final_events AS SELECT event,shipment,at,status FROM (SELECT *,row_number() OVER(PARTITION BY shipment ORDER BY at DESC,event DESC) rn FROM canonical_events) WHERE rn=1",
+    "CREATE VIEW delivery AS SELECT s.*,d.region,f.status,f.at AS final_at,(strftime('%s',f.at)-strftime('%s',s.created))/3600 AS elapsed_hours,CASE WHEN f.status='Đã giao' AND f.at<=s.due THEN 1 ELSE 0 END AS on_time FROM shipments s JOIN depots d USING(depot) JOIN final_events f USING(shipment)"
+  ],
+  "checks": [
+    {
+      "id": 26001,
+      "language": "vi",
+      "category": "deduplicated_final_state",
+      "sql": "SELECT count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Bắc"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1638"
+    },
+    {
+      "id": 26002,
+      "language": "vi",
+      "category": "on_time_rate",
+      "sql": "SELECT sum(on_time),count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Bắc"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "48.78"
+    },
+    {
+      "id": 26003,
+      "language": "vi",
+      "category": "deduplicated_final_state",
+      "sql": "SELECT count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Trung"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1583"
+    },
+    {
+      "id": 26004,
+      "language": "vi",
+      "category": "on_time_rate",
+      "sql": "SELECT sum(on_time),count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Trung"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "47.95"
+    },
+    {
+      "id": 26005,
+      "language": "vi",
+      "category": "deduplicated_final_state",
+      "sql": "SELECT count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Nam"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1582"
+    },
+    {
+      "id": 26006,
+      "language": "vi",
+      "category": "on_time_rate",
+      "sql": "SELECT sum(on_time),count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Nam"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "45.45"
+    },
+    {
+      "id": 26007,
+      "language": "vi",
+      "category": "version_correction",
+      "sql": "SELECT status FROM delivery WHERE shipment='VD-008000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "Đã giao"
+    },
+    {
+      "id": 26008,
+      "language": "vi",
+      "category": "raw_vs_unique",
+      "sql": "SELECT count(*)-count(DISTINCT event) FROM events",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "800"
+    },
+    {
+      "id": 26009,
+      "language": "vi",
+      "category": "transit_mean",
+      "sql": "SELECT sum(elapsed_hours),count(*) FROM delivery WHERE service='Nhanh' AND status='Đã giao'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "66.75"
+    },
+    {
+      "id": 26010,
+      "language": "vi",
+      "category": "failed_first_attempt",
+      "sql": "SELECT count(*) FROM delivery d WHERE status='Đã giao' AND EXISTS (SELECT 1 FROM canonical_events e WHERE e.shipment=d.shipment AND e.status='Giao thất bại' AND e.at<d.final_at)",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "908"
+    },
+    {
+      "id": 26011,
+      "language": "vi",
+      "category": "cod_sum",
+      "sql": "SELECT sum(cod) FROM delivery WHERE status='Hoàn trả'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2568872000"
+    },
+    {
+      "id": 26012,
+      "language": "vi",
+      "category": "weight_conversion",
+      "sql": "SELECT sum(grams),1000 FROM delivery WHERE on_time=1",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "44954.80"
+    },
+    {
+      "id": 26013,
+      "language": "vi",
+      "category": "late_rank",
+      "sql": "SELECT shipment FROM delivery WHERE status='Đã giao' ORDER BY strftime('%s',final_at)-strftime('%s',due) DESC,shipment LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "VD-001773"
+    },
+    {
+      "id": 26014,
+      "language": "vi",
+      "category": "cross_month",
+      "sql": "SELECT count(*) FROM delivery WHERE created<'2028-03-01 00:00:00' AND final_at>='2028-03-01 00:00:00' AND final_at<'2028-04-01 00:00:00'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "329"
+    },
+    {
+      "id": 26015,
+      "language": "vi",
+      "category": "unavailable_field",
+      "sql": "SELECT NULL",
+      "params": [],
+      "presentation": {
+        "kind": "empty"
+      },
+      "answer": ""
+    },
+    {
+      "id": 26016,
+      "language": "en",
+      "category": "latest_not_last_row",
+      "sql": "SELECT revision FROM canonical_events WHERE event='E-008000-4'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2"
+    },
+    {
+      "id": 26017,
+      "language": "en",
+      "category": "cancelled_state",
+      "sql": "SELECT count(*) FROM delivery WHERE status='Đã hủy'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "421"
+    },
+    {
+      "id": 26018,
+      "language": "en",
+      "category": "p95_nearest_rank",
+      "sql": "WITH x AS (SELECT elapsed_hours,row_number() OVER(ORDER BY elapsed_hours,shipment) rn,count(*) OVER() n FROM delivery WHERE status='Đã giao') SELECT elapsed_hours FROM x WHERE rn=(95*n+99)/100",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "115"
+    },
+    {
+      "id": 26019,
+      "language": "en",
+      "category": "count_equal_deadline",
+      "sql": "SELECT count(*) FROM delivery WHERE status='Đã giao' AND final_at=due",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "60"
+    },
+    {
+      "id": 26020,
+      "language": "en",
+      "category": "tail_pending",
+      "sql": "SELECT count(*) FROM delivery WHERE shipment BETWEEN 'VD-007501' AND 'VD-008000' AND status='Đang giao'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "40"
+    },
+    {
+      "id": 26021,
+      "language": "zh",
+      "category": "port_scope",
+      "sql": "SELECT count(*) FROM delivery WHERE region='港口' AND status='Đã giao'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1557"
+    },
+    {
+      "id": 26022,
+      "language": "zh",
+      "category": "return_percentage",
+      "sql": "SELECT sum(status='Hoàn trả'),count(*) FROM delivery WHERE region='港口'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "7.26"
+    },
+    {
+      "id": 26023,
+      "language": "zh",
+      "category": "gram_tail",
+      "sql": "SELECT grams FROM shipments WHERE shipment='VD-008000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "15471"
+    },
+    {
+      "id": 26024,
+      "language": "zh",
+      "category": "service_scope",
+      "sql": "SELECT count(*) FROM delivery WHERE service='Nhanh' AND status='Đã giao' AND final_at>due",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1433"
+    },
+    {
+      "id": 26025,
+      "language": "fr",
+      "category": "event_count",
+      "sql": "SELECT count(*) FROM canonical_events",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "32000"
+    },
+    {
+      "id": 26026,
+      "language": "fr",
+      "category": "mean_lateness",
+      "sql": "SELECT sum((strftime('%s',final_at)-strftime('%s',due))/3600),count(*) FROM delivery WHERE status='Đã giao' AND final_at>due",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "29.55"
+    },
+    {
+      "id": 26027,
+      "language": "fr",
+      "category": "depot_rank",
+      "sql": "SELECT depot FROM delivery WHERE status='Đã giao' GROUP BY depot ORDER BY count(*) DESC,depot LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "K-0193"
+    },
+    {
+      "id": 26028,
+      "language": "ko",
+      "category": "tail_final_date",
+      "sql": "SELECT final_at FROM delivery WHERE shipment='VD-008000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "2028-04-04 13:00:00"
+    },
+    {
+      "id": 26029,
+      "language": "ko",
+      "category": "top_late_list",
+      "sql": "SELECT shipment FROM delivery WHERE status='Đã giao' AND final_at>due ORDER BY strftime('%s',final_at)-strftime('%s',due) DESC,shipment LIMIT 3",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "VD-001773, VD-002628, VD-003612"
+    },
+    {
+      "id": 26030,
+      "language": "ko",
+      "category": "distinct_created_date",
+      "sql": "SELECT count(DISTINCT date(created)) FROM shipments",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "60"
+    }
+  ]
+}

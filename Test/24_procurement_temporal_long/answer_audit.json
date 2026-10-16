@@ -1,0 +1,431 @@
+{
+  "schema_version": 1,
+  "views": [
+    "CREATE VIEW spend AS SELECT l.*,v.name,v.region,v.tier,f.rate,c.contract,c.rebate,c.cap, l.amount*f.rate*(100-l.discount)/100*l.sign AS net_vnd FROM lines l JOIN vendors v USING(vendor) JOIN fx f ON l.day=f.day AND l.currency=f.currency JOIN contracts c ON l.vendor=c.vendor AND l.day>=c.start AND l.day<c.end WHERE l.status='Đã duyệt'"
+  ],
+  "checks": [
+    {
+      "id": 24001,
+      "language": "vi",
+      "category": "fx_signed_sum",
+      "sql": "SELECT sum(net_vnd) FROM spend WHERE region=?",
+      "params": [
+        "Bắc"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "25031212786965"
+    },
+    {
+      "id": 24002,
+      "language": "vi",
+      "category": "distinct_invoice",
+      "sql": "SELECT count(DISTINCT invoice) FROM spend WHERE region=?",
+      "params": [
+        "Bắc"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3442"
+    },
+    {
+      "id": 24003,
+      "language": "vi",
+      "category": "fx_signed_sum",
+      "sql": "SELECT sum(net_vnd) FROM spend WHERE region=?",
+      "params": [
+        "Trung"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "24950133381285"
+    },
+    {
+      "id": 24004,
+      "language": "vi",
+      "category": "distinct_invoice",
+      "sql": "SELECT count(DISTINCT invoice) FROM spend WHERE region=?",
+      "params": [
+        "Trung"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3418"
+    },
+    {
+      "id": 24005,
+      "language": "vi",
+      "category": "fx_signed_sum",
+      "sql": "SELECT sum(net_vnd) FROM spend WHERE region=?",
+      "params": [
+        "Nam"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "25614654463450"
+    },
+    {
+      "id": 24006,
+      "language": "vi",
+      "category": "distinct_invoice",
+      "sql": "SELECT count(DISTINCT invoice) FROM spend WHERE region=?",
+      "params": [
+        "Nam"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3401"
+    },
+    {
+      "id": 24007,
+      "language": "vi",
+      "category": "asof_contract",
+      "sql": "SELECT c.contract FROM lines l JOIN contracts c ON l.vendor=c.vendor AND l.day>=c.start AND l.day<c.end WHERE l.id='CT-15999'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NCC-0233-Q3"
+    },
+    {
+      "id": 24008,
+      "language": "vi",
+      "category": "tail_fx",
+      "sql": "SELECT f.rate FROM lines l JOIN fx f ON l.day=f.day AND l.currency=f.currency WHERE id='CT-16000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "24900"
+    },
+    {
+      "id": 24009,
+      "language": "vi",
+      "category": "rebate_join",
+      "sql": "SELECT sum(net_vnd*rebate),100 FROM spend WHERE sign=1 AND day>='2028-10-01'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "2637863895351.75"
+    },
+    {
+      "id": 24010,
+      "language": "vi",
+      "category": "supplier_rank",
+      "sql": "SELECT vendor FROM spend GROUP BY vendor ORDER BY sum(net_vnd) DESC,vendor LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NCC-0262"
+    },
+    {
+      "id": 24011,
+      "language": "vi",
+      "category": "quarter_change",
+      "sql": "SELECT sum(CASE WHEN day>='2028-10-01' THEN net_vnd ELSE -net_vnd END) FROM spend WHERE day>='2028-07-01'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "313942833875"
+    },
+    {
+      "id": 24012,
+      "language": "vi",
+      "category": "currency_scope",
+      "sql": "SELECT count(*) FROM spend WHERE currency='EUR' AND day='2028-02-29'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "18"
+    },
+    {
+      "id": 24013,
+      "language": "vi",
+      "category": "weighted_discount",
+      "sql": "SELECT sum(amount*discount),sum(amount) FROM spend WHERE currency='USD' AND sign=1",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "7.43"
+    },
+    {
+      "id": 24014,
+      "language": "vi",
+      "category": "quoted_unicode_name",
+      "sql": "SELECT v.name FROM lines l JOIN vendors v USING(vendor) WHERE id='CT-16000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "Công ty \"Sông Xanh\", chi nhánh 0155"
+    },
+    {
+      "id": 24015,
+      "language": "vi",
+      "category": "unavailable_field",
+      "sql": "SELECT NULL",
+      "params": [],
+      "presentation": {
+        "kind": "empty"
+      },
+      "answer": ""
+    },
+    {
+      "id": 24016,
+      "language": "en",
+      "category": "top_three_concentration",
+      "sql": "WITH x AS (SELECT vendor,sum(net_vnd) n FROM spend GROUP BY vendor ORDER BY n DESC,vendor LIMIT 3) SELECT (SELECT sum(n) FROM x),(SELECT sum(net_vnd) FROM spend)",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "0.41"
+    },
+    {
+      "id": 24017,
+      "language": "en",
+      "category": "reconciliation",
+      "sql": "SELECT sum(amount*rate*sign-net_vnd) FROM spend",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "8195572988805"
+    },
+    {
+      "id": 24018,
+      "language": "en",
+      "category": "cancelled_fx",
+      "sql": "SELECT l.amount*f.rate*(100-discount)/100*sign FROM lines l JOIN fx f ON l.day=f.day AND l.currency=f.currency WHERE id='CT-00031'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "16962495000"
+    },
+    {
+      "id": 24019,
+      "language": "en",
+      "category": "contract_boundary",
+      "sql": "SELECT contract FROM contracts WHERE vendor='NCC-0001' AND start<='2028-04-01' AND end>'2028-04-01'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NCC-0001-Q2"
+    },
+    {
+      "id": 24020,
+      "language": "en",
+      "category": "average_invoice",
+      "sql": "SELECT sum(net_vnd),count(DISTINCT invoice) FROM spend",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "12679331417.10"
+    },
+    {
+      "id": 24021,
+      "language": "zh",
+      "category": "overseas_sum",
+      "sql": "SELECT sum(net_vnd) FROM spend WHERE region='海外'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "25838650705095"
+    },
+    {
+      "id": 24022,
+      "language": "zh",
+      "category": "credit_count",
+      "sql": "SELECT count(*) FROM spend WHERE sign=-1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "673"
+    },
+    {
+      "id": 24023,
+      "language": "zh",
+      "category": "priority_share",
+      "sql": "SELECT sum(CASE WHEN tier='Ưu tiên' THEN net_vnd ELSE 0 END),sum(net_vnd) FROM spend WHERE sign=1",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "14.87"
+    },
+    {
+      "id": 24024,
+      "language": "zh",
+      "category": "tail_contract_rebate",
+      "sql": "SELECT c.rebate FROM lines l JOIN contracts c ON l.vendor=c.vendor AND l.day>=c.start AND l.day<c.end WHERE id='CT-15999'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "14"
+    },
+    {
+      "id": 24025,
+      "language": "fr",
+      "category": "euro_net",
+      "sql": "SELECT sum(net_vnd) FROM spend WHERE currency='EUR'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "53778394755000"
+    },
+    {
+      "id": 24026,
+      "language": "fr",
+      "category": "vendor_cardinality",
+      "sql": "SELECT count(DISTINCT vendor) FROM spend",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2395"
+    },
+    {
+      "id": 24027,
+      "language": "fr",
+      "category": "negative_vendor",
+      "sql": "SELECT count(*) FROM (SELECT vendor FROM spend GROUP BY vendor HAVING sum(net_vnd)<0)",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "39"
+    },
+    {
+      "id": 24028,
+      "language": "ko",
+      "category": "rare_date",
+      "sql": "SELECT coalesce(sum(net_vnd),0) FROM spend WHERE day='2028-12-31'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "210505994635"
+    },
+    {
+      "id": 24029,
+      "language": "ko",
+      "category": "amount_ratio",
+      "sql": "SELECT amount,units FROM lines WHERE id='CT-16000'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "16413.79"
+    },
+    {
+      "id": 24030,
+      "language": "ko",
+      "category": "top_list",
+      "sql": "SELECT vendor FROM spend GROUP BY vendor ORDER BY sum(net_vnd) DESC,vendor LIMIT 3",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NCC-0262, NCC-0731, NCC-1846"
+    }
+  ]
+}

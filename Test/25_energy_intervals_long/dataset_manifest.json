@@ -1,0 +1,214 @@
+{
+  "suite": "25_energy_intervals_long",
+  "seed": 261017,
+  "description": "20000 khoảng điện 1 giờ: kWh khác kW, giá hiệu lực, giao khoảng nửa mở, sự cố chồng nhau, CO2, pin và dữ liệu ước tính/thiếu.",
+  "questions": 30,
+  "language_counts": {
+    "vi": 15,
+    "en": 5,
+    "zh": 4,
+    "fr": 3,
+    "ko": 3
+  },
+  "tables": [
+    {
+      "table": "plants",
+      "sheet": "Nhà máy",
+      "first_row": 2,
+      "last_row": 41,
+      "record_count": 40,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "plant",
+          "label": "Mã nhà máy",
+          "type": "TEXT",
+          "column": 1
+        },
+        {
+          "key": "region",
+          "label": "Vùng",
+          "type": "TEXT",
+          "column": 2
+        },
+        {
+          "key": "name",
+          "label": "Tên",
+          "type": "TEXT",
+          "column": 3
+        },
+        {
+          "key": "carbon",
+          "label": "gCO2 / kWh",
+          "type": "INTEGER",
+          "column": 4
+        }
+      ]
+    },
+    {
+      "table": "tariffs",
+      "sheet": "Giá theo hiệu lực",
+      "first_row": 2,
+      "last_row": 2001,
+      "record_count": 2000,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "plant",
+          "label": "Mã nhà máy",
+          "type": "TEXT",
+          "column": 1
+        },
+        {
+          "key": "start",
+          "label": "Từ (UTC, gồm)",
+          "type": "TEXT",
+          "column": 2,
+          "temporal": "datetime"
+        },
+        {
+          "key": "end",
+          "label": "Đến (UTC, không gồm)",
+          "type": "TEXT",
+          "column": 3,
+          "temporal": "datetime"
+        },
+        {
+          "key": "tariff",
+          "label": "VND/kWh nhập ròng",
+          "type": "INTEGER",
+          "column": 4
+        }
+      ]
+    },
+    {
+      "table": "readings",
+      "sheet": "Điện năng 1 giờ",
+      "first_row": 3,
+      "last_row": 20002,
+      "record_count": 20000,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "id",
+          "label": "Mã đo",
+          "type": "TEXT",
+          "column": 1
+        },
+        {
+          "key": "plant",
+          "label": "Nhà máy",
+          "type": "TEXT",
+          "column": 2
+        },
+        {
+          "key": "at",
+          "label": "Bắt đầu UTC",
+          "type": "TEXT",
+          "column": 3,
+          "temporal": "datetime"
+        },
+        {
+          "key": "import_kwh",
+          "label": "Điện nhập kWh",
+          "type": "INTEGER",
+          "column": 4
+        },
+        {
+          "key": "export_kwh",
+          "label": "Điện xuất kWh",
+          "type": "INTEGER",
+          "column": 5
+        },
+        {
+          "key": "solar_kwh",
+          "label": "Mặt trời kWh",
+          "type": "INTEGER",
+          "column": 6
+        },
+        {
+          "key": "wind_kwh",
+          "label": "Gió kWh",
+          "type": "INTEGER",
+          "column": 7
+        },
+        {
+          "key": "charge",
+          "label": "Nạp pin kWh",
+          "type": "INTEGER",
+          "column": 8
+        },
+        {
+          "key": "discharge",
+          "label": "Xả pin kWh",
+          "type": "INTEGER",
+          "column": 9
+        },
+        {
+          "key": "peak_kw",
+          "label": "Công suất đỉnh kW",
+          "type": "INTEGER",
+          "column": 10
+        },
+        {
+          "key": "quality",
+          "label": "Chất lượng",
+          "type": "TEXT",
+          "column": 11
+        },
+        {
+          "key": "minutes",
+          "label": "Độ dài phút",
+          "type": "INTEGER",
+          "column": 12
+        }
+      ]
+    },
+    {
+      "table": "outages",
+      "sheet": "Sự cố",
+      "first_row": 2,
+      "last_row": 1201,
+      "record_count": 1200,
+      "skip_rows": [],
+      "columns": [
+        {
+          "key": "event",
+          "label": "Mã sự cố",
+          "type": "TEXT",
+          "column": 1
+        },
+        {
+          "key": "plant",
+          "label": "Nhà máy",
+          "type": "TEXT",
+          "column": 2
+        },
+        {
+          "key": "start",
+          "label": "Bắt đầu UTC",
+          "type": "TEXT",
+          "column": 3,
+          "temporal": "datetime"
+        },
+        {
+          "key": "end",
+          "label": "Kết thúc UTC",
+          "type": "TEXT",
+          "column": 4,
+          "temporal": "datetime"
+        },
+        {
+          "key": "status",
+          "label": "Trạng thái",
+          "type": "TEXT",
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "agrees_with": "AGENTS.md sections 3, 11.1, 11.2; synthetic benchmark, not an official scoring replica",
+  "gold_order": "ascending numeric ID",
+  "unknown_answer": "",
+  "data_kind": "new fictional records"
+}

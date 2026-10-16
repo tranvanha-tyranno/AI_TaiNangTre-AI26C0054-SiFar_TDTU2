@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "views": [
+    "CREATE VIEW valid_energy AS SELECT r.*,p.region,p.carbon,t.tariff,import_kwh-export_kwh net_kwh,(import_kwh-export_kwh)*t.tariff net_cost FROM readings r JOIN plants p USING(plant) JOIN tariffs t ON r.plant=t.plant AND r.at>=t.start AND r.at<t.end WHERE r.quality='Đo thật' AND r.import_kwh IS NOT NULL",
+    "CREATE VIEW affected AS SELECT r.* FROM readings r WHERE EXISTS (SELECT 1 FROM outages o WHERE o.plant=r.plant AND o.status='Đã xác minh' AND r.at<o.end AND datetime(r.at,'+1 hour')>o.start)"
+  ],
+  "checks": [
+    {
+      "id": 25001,
+      "language": "vi",
+      "category": "net_energy",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Bắc"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1743660"
+    },
+    {
+      "id": 25002,
+      "language": "vi",
+      "category": "asof_tariff_cost",
+      "sql": "SELECT sum(net_cost) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Bắc"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3866170567"
+    },
+    {
+      "id": 25003,
+      "language": "vi",
+      "category": "net_energy",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Trung"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1736907"
+    },
+    {
+      "id": 25004,
+      "language": "vi",
+      "category": "asof_tariff_cost",
+      "sql": "SELECT sum(net_cost) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Trung"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3846039003"
+    },
+    {
+      "id": 25005,
+      "language": "vi",
+      "category": "net_energy",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Nam"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1725664"
+    },
+    {
+      "id": 25006,
+      "language": "vi",
+      "category": "asof_tariff_cost",
+      "sql": "SELECT sum(net_cost) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Nam"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3831706892"
+    },
+    {
+      "id": 25007,
+      "language": "vi",
+      "category": "weighted_unit_price",
+      "sql": "SELECT sum(net_cost),sum(net_kwh) FROM valid_energy WHERE net_kwh>0",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "2210.40"
+    },
+    {
+      "id": 25008,
+      "language": "vi",
+      "category": "power_not_energy",
+      "sql": "SELECT max(peak_kw) FROM readings",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "938"
+    },
+    {
+      "id": 25009,
+      "language": "vi",
+      "category": "overlap_distinct",
+      "sql": "SELECT count(*) FROM affected",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2056"
+    },
+    {
+      "id": 25010,
+      "language": "vi",
+      "category": "month_boundary",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE at>='2028-02-01 00:00:00'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2950944"
+    },
+    {
+      "id": 25011,
+      "language": "vi",
+      "category": "tail_lookup",
+      "sql": "SELECT export_kwh FROM readings WHERE id='ĐĐ-20000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "85"
+    },
+    {
+      "id": 25012,
+      "language": "vi",
+      "category": "missing_not_zero",
+      "sql": "SELECT count(*) FROM readings WHERE import_kwh IS NULL",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "94"
+    },
+    {
+      "id": 25013,
+      "language": "vi",
+      "category": "renewable_share",
+      "sql": "SELECT sum(solar_kwh),sum(solar_kwh+wind_kwh) FROM valid_energy",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "42.98"
+    },
+    {
+      "id": 25014,
+      "language": "vi",
+      "category": "plant_rank",
+      "sql": "SELECT plant FROM valid_energy GROUP BY plant ORDER BY sum(net_cost) DESC,plant LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NM-035"
+    },
+    {
+      "id": 25015,
+      "language": "vi",
+      "category": "unavailable_field",
+      "sql": "SELECT NULL",
+      "params": [],
+      "presentation": {
+        "kind": "empty"
+      },
+      "answer": ""
+    },
+    {
+      "id": 25016,
+      "language": "en",
+      "category": "half_open_price",
+      "sql": "SELECT tariff FROM tariffs WHERE plant='NM-040' AND start<='2028-01-20 10:00:00' AND end>'2028-01-20 10:00:00'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2188"
+    },
+    {
+      "id": 25017,
+      "language": "en",
+      "category": "estimated_exclusion",
+      "sql": "SELECT count(*) FROM readings WHERE quality='Ước tính'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "145"
+    },
+    {
+      "id": 25018,
+      "language": "en",
+      "category": "carbon_conversion",
+      "sql": "SELECT sum(net_kwh*carbon),1000 FROM valid_energy WHERE net_kwh>0",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "3204258.81"
+    },
+    {
+      "id": 25019,
+      "language": "en",
+      "category": "storage_balance",
+      "sql": "SELECT sum(discharge-charge) FROM valid_energy",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "-7054"
+    },
+    {
+      "id": 25020,
+      "language": "en",
+      "category": "tail_region",
+      "sql": "SELECT p.region FROM readings r JOIN plants p USING(plant) WHERE id='ĐĐ-19999'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "東部"
+    },
+    {
+      "id": 25021,
+      "language": "zh",
+      "category": "east_region",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE region='東部'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1738272"
+    },
+    {
+      "id": 25022,
+      "language": "zh",
+      "category": "negative_flow",
+      "sql": "SELECT count(*) FROM valid_energy WHERE net_kwh<0",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1727"
+    },
+    {
+      "id": 25023,
+      "language": "zh",
+      "category": "zero_distinction",
+      "sql": "SELECT count(*) FROM readings WHERE import_kwh=0",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "24"
+    },
+    {
+      "id": 25024,
+      "language": "zh",
+      "category": "peak_time",
+      "sql": "SELECT at FROM readings WHERE plant='NM-040' ORDER BY peak_kw DESC,at LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "2028-02-05 12:00:00"
+    },
+    {
+      "id": 25025,
+      "language": "fr",
+      "category": "sum_tail",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE id BETWEEN 'ĐĐ-19001' AND 'ĐĐ-20000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "353698"
+    },
+    {
+      "id": 25026,
+      "language": "fr",
+      "category": "distinct_outage",
+      "sql": "SELECT count(DISTINCT plant) FROM outages WHERE status='Đã xác minh'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "40"
+    },
+    {
+      "id": 25027,
+      "language": "fr",
+      "category": "average_peak",
+      "sql": "SELECT sum(peak_kw),count(*) FROM readings WHERE plant='NM-040'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "477.39"
+    },
+    {
+      "id": 25028,
+      "language": "ko",
+      "category": "hour_count",
+      "sql": "SELECT count(*) FROM readings WHERE plant='NM-040'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "500"
+    },
+    {
+      "id": 25029,
+      "language": "ko",
+      "category": "top_three_energy",
+      "sql": "SELECT plant FROM valid_energy GROUP BY plant ORDER BY sum(net_kwh) DESC,plant LIMIT 3",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NM-011, NM-026, NM-024"
+    },
+    {
+      "id": 25030,
+      "language": "ko",
+      "category": "elapsed_outage",
+      "sql": "SELECT sum((strftime('%s',end)-strftime('%s',start))/60) FROM outages WHERE status='Đã xác minh'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "94950"
+    }
+  ]
+}

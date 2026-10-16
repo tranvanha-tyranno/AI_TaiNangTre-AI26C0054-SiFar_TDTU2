@@ -30,8 +30,11 @@ def sql_table(connection, spec, rows):
     columns=spec["columns"]
     declaration=", ".join(f'{quote(c["key"])} {c["type"]}' for c in columns)
     connection.execute(f'CREATE TABLE {quote(spec["table"])} ({declaration})')
+    def value(v, c):
+        if c.get("temporal")=="date" and isinstance(v,datetime): return v.date().isoformat()
+        return serial(v)
     connection.executemany(f'INSERT INTO {quote(spec["table"])} VALUES ({",".join("?" for _ in columns)})',
-                           ([serial(v) for v in row] for row in rows))
+                           ([value(v,c) for v,c in zip(row,columns)] for row in rows))
 
 
 def number_text(value, digits=None):
@@ -82,11 +85,17 @@ class LongSuite:
         end=colname(len(columns)); first=len(headers)+1
         schema={"table":name,"sheet":sheet,"first_row":first,"last_row":len(raw),"record_count":len(records),
                 "skip_rows":excluded,"columns":[{"key":c[0],"label":c[1],"type":c[2],"column":i+1} for i,c in enumerate(columns)]}
+        for i,column in enumerate(schema["columns"]):
+            sample=next((r[i] for r in records if r[i] is not None),None)
+            if isinstance(sample,datetime): column["temporal"]="datetime"
+            elif isinstance(sample,date): column["temporal"]="date"
         sql_table(self.db,schema,records)
         self.tables.append(schema)
         formats={}
         for i,c in enumerate(columns):
             if c[2]=="INTEGER": formats[f"{colname(i+1)}{first}:{colname(i+1)}{len(raw)}"]="0"
+            if schema["columns"][i].get("temporal"):
+                formats[f"{colname(i+1)}{first}:{colname(i+1)}{len(raw)}"]="yyyy-mm-dd hh:mm:ss" if schema["columns"][i]["temporal"]=="datetime" else "yyyy-mm-dd"
         self.sheets.append({"name":sheet,"start":"A1","rows":[[serial(v) for v in row] for row in raw],
                             "merges":list(merges),"formats":formats,"headers":[f"A1:{end}{len(headers)}"],
                             "widths":widths or {},"previews":[f"A1:{min_col(end,'H')}10",f"A{max(first,len(raw)-6)}:{min_col(end,'H')}{len(raw)}"]})
