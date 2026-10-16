@@ -25,9 +25,9 @@ retrieval_top_k: 4
 preview_rows: 45
 
 # Pipeline
-mode: llm  # LLM + Tools là luồng xử lý duy nhất
+mode: llm-v3  # Bản chính đã chọn để đối chứng các cải tiến tiếp theo.
 concurrency: 1
-# Dùng --mode llm-v2 để bật khám phá/review sâu; mode mặc định giữ baseline.
+# LLMv4 giữ để thử nghiệm, chỉ bật khi chọn --mode llm-v4.
 
 # Archived eight-phase v3 options (inactive for current LLMv2-based baseline).
 v3_max_api_calls: 8

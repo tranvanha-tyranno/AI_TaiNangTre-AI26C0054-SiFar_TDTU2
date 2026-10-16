@@ -93,7 +93,7 @@ def main():
     queries_path = Path(args.queries or cfg.get("queries") or "./Public_data_1/queries.json")
     output_path = Path(args.output or cfg.get("output") or "./submission.csv")
     concurrency = args.concurrency if args.concurrency is not None else cfg.get("concurrency", 1)
-    mode = args.mode or cfg.get("mode") or "llm"
+    mode = args.mode or cfg.get("mode") or "llm-v3"
     from src.variants import settings_for_mode, version_for_mode
     cfg = settings_for_mode(cfg,mode)
     if not isinstance(concurrency, int) or concurrency < 1 or concurrency > 6:
