@@ -19,7 +19,7 @@ def run_context(root,queries_path,xlsx_dir,queries,settings,mode,concurrency,mod
         revision=subprocess.run(['git','rev-parse','HEAD'],cwd=root,capture_output=True,text=True,timeout=2)
         revision=revision.stdout.strip() if revision.returncode==0 else None
     except (OSError,subprocess.TimeoutExpired): revision=None
-    keys=['max_tokens_plan','max_cost_per_question','max_api_calls','max_plan_repairs',
+    keys=['max_tokens_plan','llm_seed','max_cost_per_question','max_api_calls','max_plan_repairs',
           'question_timeout','run_timeout','max_prompt_price_per_million',
           'max_completion_price_per_million','max_workbook_cells','retrieval_top_k','preview_rows',
           'max_inspection_rounds','semantic_review']
