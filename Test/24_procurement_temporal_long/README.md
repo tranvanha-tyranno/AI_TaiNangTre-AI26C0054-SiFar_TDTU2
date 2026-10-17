@@ -1,8 +1,8 @@
 # 24_procurement_temporal_long
 
-Mua sắm 16000 dòng: tỷ giá đúng ngày, hợp đồng hiệu lực [từ,đến), nhiều dòng một hóa đơn, ghi có, hoàn tiền, tập trung nhà cung cấp.
+Mua sắm 1000 dòng: tỷ giá đúng ngày, hợp đồng hiệu lực [từ,đến), nhiều dòng một hóa đơn, ghi có, hoàn tiền, tập trung nhà cung cấp.
 
-`Nhà cung cấp`: 2,400 bản ghi / 2,401 dòng vật lý; `Tỷ giá ngày`: 1,098 bản ghi / 1,099 dòng vật lý; `Hợp đồng hiệu lực`: 9,600 bản ghi / 9,601 dòng vật lý; `Chi tiết mua sắm`: 16,000 bản ghi / 16,001 dòng vật lý.
+`Nhà cung cấp`: 200 bản ghi / 201 dòng vật lý; `Tỷ giá ngày`: 1,098 bản ghi / 1,099 dòng vật lý; `Hợp đồng hiệu lực`: 800 bản ghi / 801 dòng vật lý; `Chi tiết mua sắm`: 1,000 bản ghi / 1,001 dòng vật lý.
 
 30 câu: **15 Việt, 5 Anh, 4 Trung, 3 Pháp, 3 Hàn**. ID là số tự nhiên; câu hỏi cố ý xáo trộn. CSV chuẩn dùng UTF-8 và sắp ID theo giá trị số tăng dần. Một câu thiếu trường dữ liệu có đáp án chuỗi rỗng. Câu đó không tính là lỗi fixture; không tự đổi đáp án thành N/A.
 

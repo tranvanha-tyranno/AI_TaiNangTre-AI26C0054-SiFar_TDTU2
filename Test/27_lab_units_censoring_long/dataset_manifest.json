@@ -1,7 +1,7 @@
 {
   "suite": "27_lab_units_censoring_long",
   "seed": 261017,
-  "description": "30000 phép kiểm nghiệm, 27 cột tới AA: đổi mg/L–µg/L, kiểm duyệt '<', ô thiếu, tiêu đề lặp, trung vị, phân vị, điều kiện đủ cả ba chất.",
+  "description": "1500 phép kiểm nghiệm, 27 cột tới AA: đổi mg/L–µg/L, kiểm duyệt '<', ô thiếu, tiêu đề lặp, trung vị, phân vị, điều kiện đủ cả ba chất.",
   "questions": 30,
   "language_counts": {
     "vi": 15,
@@ -15,8 +15,8 @@
       "table": "sites",
       "sheet": "Điểm quan trắc",
       "first_row": 2,
-      "last_row": 1501,
-      "record_count": 1500,
+      "last_row": 301,
+      "record_count": 300,
       "skip_rows": [],
       "columns": [
         {
@@ -37,8 +37,7 @@
           "type": "TEXT",
           "column": 3
         }
-      ],
-      "content_sha256": "d1b4518996bb7e9d887be55e108010eabb1df0af3c333048bd4afa842eb6693c"
+      ]
     },
     {
       "table": "limits",
@@ -66,45 +65,16 @@
           "type": "INTEGER",
           "column": 3
         }
-      ],
-      "content_sha256": "06c3a998723bf296f7ae3c1ef169ddcdf644c890952b7fdbe4e0ac498f4e589a"
+      ]
     },
     {
       "table": "results",
       "sheet": "Résultats dài",
       "first_row": 2,
-      "last_row": 30030,
-      "record_count": 30000,
+      "last_row": 1502,
+      "record_count": 1500,
       "skip_rows": [
-        1002,
-        2003,
-        3004,
-        4005,
-        5006,
-        6007,
-        7008,
-        8009,
-        9010,
-        10011,
-        11012,
-        12013,
-        13014,
-        14015,
-        15016,
-        16017,
-        17018,
-        18019,
-        19020,
-        20021,
-        21022,
-        22023,
-        23024,
-        24025,
-        25026,
-        26027,
-        27028,
-        28029,
-        29030
+        1002
       ],
       "columns": [
         {
@@ -270,8 +240,7 @@
           "type": "REAL",
           "column": 27
         }
-      ],
-      "content_sha256": "a87081457f476930ec33bfbbd1a22b77620252f32fccdcaa65a232507124365e"
+      ]
     }
   ],
   "agrees_with": "AGENTS.md sections 3, 11.1, 11.2; synthetic benchmark, not an official scoring replica",

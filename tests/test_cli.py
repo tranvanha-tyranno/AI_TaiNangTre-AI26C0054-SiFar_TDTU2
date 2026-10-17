@@ -13,12 +13,13 @@ class CLITest(unittest.TestCase):
                                 capture_output=True, text=True, encoding='utf-8', errors='replace')
         self.assertEqual(result.returncode, 0)
         help_text=(result.stdout or '')+(result.stderr or '')
-        self.assertIn('--mode {llm,llm-v2,llm-v3}', help_text)
+        self.assertIn('--mode {llm-v3}', help_text)
+        self.assertNotIn('--log-dir',help_text)
         self.assertNotIn('offline', help_text.lower())
         self.assertNotIn('hybrid', help_text.lower())
 
     def test_removed_modes_are_rejected_before_output(self):
-        for mode in ('offline', 'hybrid'):
+        for mode in ('offline', 'hybrid', 'llm', 'llm-v2'):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory(dir=ROOT / "outputs") as temp:
                 result = subprocess.run([sys.executable, str(ROOT / "main.py"), "--mode", mode,
                     "--queries", str(ROOT / "Public_data_1/queries.json"), "--output", str(Path(temp) / "out.csv")],
@@ -26,10 +27,11 @@ class CLITest(unittest.TestCase):
                 self.assertNotEqual(result.returncode, 0)
                 self.assertFalse((Path(temp) / "out.csv").exists())
 
-    def test_llm_v2_is_accepted(self):
+    def test_only_submission_pipeline_is_accepted(self):
         result = subprocess.run([sys.executable, str(ROOT / "main.py"), "--help"], cwd=ROOT,
                                 capture_output=True, text=True, encoding='utf-8', errors='replace')
-        self.assertIn('llm-v2', (result.stdout or '')+(result.stderr or ''))
+        self.assertIn('llm-v3', (result.stdout or '')+(result.stderr or ''))
+        self.assertNotIn('llm-v2', (result.stdout or '')+(result.stderr or ''))
 
 
 if __name__ == "__main__":

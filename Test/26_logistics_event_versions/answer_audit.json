@@ -20,7 +20,7 @@
           "int"
         ]
       },
-      "answer": "1638"
+      "answer": "74"
     },
     {
       "id": 26002,
@@ -35,7 +35,7 @@
         "digits": 2,
         "scale": 100
       },
-      "answer": "48.78"
+      "answer": "39.19"
     },
     {
       "id": 26003,
@@ -51,7 +51,7 @@
           "int"
         ]
       },
-      "answer": "1583"
+      "answer": "97"
     },
     {
       "id": 26004,
@@ -66,7 +66,7 @@
         "digits": 2,
         "scale": 100
       },
-      "answer": "47.95"
+      "answer": "52.58"
     },
     {
       "id": 26005,
@@ -82,7 +82,7 @@
           "int"
         ]
       },
-      "answer": "1582"
+      "answer": "114"
     },
     {
       "id": 26006,
@@ -97,13 +97,13 @@
         "digits": 2,
         "scale": 100
       },
-      "answer": "45.45"
+      "answer": "50.88"
     },
     {
       "id": 26007,
       "language": "vi",
       "category": "version_correction",
-      "sql": "SELECT status FROM delivery WHERE shipment='VD-008000'",
+      "sql": "SELECT status FROM delivery WHERE shipment='VD-000500'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -125,7 +125,7 @@
           "int"
         ]
       },
-      "answer": "800"
+      "answer": "50"
     },
     {
       "id": 26009,
@@ -138,7 +138,7 @@
         "digits": 2,
         "scale": 1
       },
-      "answer": "66.75"
+      "answer": "69.45"
     },
     {
       "id": 26010,
@@ -152,7 +152,7 @@
           "int"
         ]
       },
-      "answer": "908"
+      "answer": "57"
     },
     {
       "id": 26011,
@@ -166,7 +166,7 @@
           "int"
         ]
       },
-      "answer": "2568872000"
+      "answer": "166101000"
     },
     {
       "id": 26012,
@@ -179,7 +179,7 @@
         "digits": 2,
         "scale": 1
       },
-      "answer": "44954.80"
+      "answer": "2988.40"
     },
     {
       "id": 26013,
@@ -193,7 +193,7 @@
           "text"
         ]
       },
-      "answer": "VD-001773"
+      "answer": "VD-000072"
     },
     {
       "id": 26014,
@@ -207,7 +207,7 @@
           "int"
         ]
       },
-      "answer": "329"
+      "answer": "14"
     },
     {
       "id": 26015,
@@ -224,7 +224,7 @@
       "id": 26016,
       "language": "en",
       "category": "latest_not_last_row",
-      "sql": "SELECT revision FROM canonical_events WHERE event='E-008000-4'",
+      "sql": "SELECT revision FROM canonical_events WHERE event='E-000500-4'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -246,7 +246,7 @@
           "int"
         ]
       },
-      "answer": "421"
+      "answer": "26"
     },
     {
       "id": 26018,
@@ -260,7 +260,7 @@
           "int"
         ]
       },
-      "answer": "115"
+      "answer": "114"
     },
     {
       "id": 26019,
@@ -274,13 +274,13 @@
           "int"
         ]
       },
-      "answer": "60"
+      "answer": "4"
     },
     {
       "id": 26020,
       "language": "en",
       "category": "tail_pending",
-      "sql": "SELECT count(*) FROM delivery WHERE shipment BETWEEN 'VD-007501' AND 'VD-008000' AND status='Đang giao'",
+      "sql": "SELECT count(*) FROM delivery WHERE shipment BETWEEN 'VD-000001' AND 'VD-000500' AND status='Đang giao'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -302,7 +302,7 @@
           "int"
         ]
       },
-      "answer": "1557"
+      "answer": "113"
     },
     {
       "id": 26022,
@@ -315,13 +315,13 @@
         "digits": 2,
         "scale": 100
       },
-      "answer": "7.26"
+      "answer": "7.30"
     },
     {
       "id": 26023,
       "language": "zh",
       "category": "gram_tail",
-      "sql": "SELECT grams FROM shipments WHERE shipment='VD-008000'",
+      "sql": "SELECT grams FROM shipments WHERE shipment='VD-000500'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -329,7 +329,7 @@
           "int"
         ]
       },
-      "answer": "15471"
+      "answer": "21681"
     },
     {
       "id": 26024,
@@ -343,7 +343,7 @@
           "int"
         ]
       },
-      "answer": "1433"
+      "answer": "92"
     },
     {
       "id": 26025,
@@ -357,7 +357,7 @@
           "int"
         ]
       },
-      "answer": "32000"
+      "answer": "2000"
     },
     {
       "id": 26026,
@@ -370,7 +370,7 @@
         "digits": 2,
         "scale": 1
       },
-      "answer": "29.55"
+      "answer": "29.40"
     },
     {
       "id": 26027,
@@ -384,13 +384,13 @@
           "text"
         ]
       },
-      "answer": "K-0193"
+      "answer": "K-0065"
     },
     {
       "id": 26028,
       "language": "ko",
       "category": "tail_final_date",
-      "sql": "SELECT final_at FROM delivery WHERE shipment='VD-008000'",
+      "sql": "SELECT final_at FROM delivery WHERE shipment='VD-000500'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -398,7 +398,7 @@
           "text"
         ]
       },
-      "answer": "2028-04-04 13:00:00"
+      "answer": "2028-04-11 23:00:00"
     },
     {
       "id": 26029,
@@ -412,7 +412,7 @@
           "text"
         ]
       },
-      "answer": "VD-001773, VD-002628, VD-003612"
+      "answer": "VD-000072, VD-000294, VD-000300"
     },
     {
       "id": 26030,

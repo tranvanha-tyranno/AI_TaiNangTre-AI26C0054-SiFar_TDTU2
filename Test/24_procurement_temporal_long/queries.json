@@ -1,43 +1,8 @@
 [
   {
-    "id": 24004,
+    "id": 24011,
     "file_name": "data.xlsx",
-    "query": "Có bao nhiêu hóa đơn khác nhau có ít nhất một dòng Đã duyệt của NCC vùng Trung? Không đếm số dòng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
-  },
-  {
-    "id": 24025,
-    "file_name": "data.xlsx",
-    "query": "Quel est le montant net total en VND des lignes EUR approuvées, crédits négatifs inclus, au taux du jour ? Un entier uniquement."
-  },
-  {
-    "id": 24007,
-    "file_name": "data.xlsx",
-    "query": "Dòng CT-15999 áp dụng mã hợp đồng nào? Dùng ngày bắt đầu có gồm và ngày kết thúc không gồm; không lấy hợp đồng mới nhất toàn bộ. Chỉ trả mã hợp đồng."
-  },
-  {
-    "id": 24006,
-    "file_name": "data.xlsx",
-    "query": "Có bao nhiêu hóa đơn khác nhau có ít nhất một dòng Đã duyệt của NCC vùng Nam? Không đếm số dòng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
-  },
-  {
-    "id": 24020,
-    "file_name": "data.xlsx",
-    "query": "What is mean approved net VND per distinct invoice with an approved line? Sum all approved lines including credits before dividing by distinct invoice count. Return exactly 2 decimals."
-  },
-  {
-    "id": 24016,
-    "file_name": "data.xlsx",
-    "query": "What percent of total approved net VND spend belongs to the three suppliers with largest net spend? Include signed credits, ties by supplier ID. Return exactly 2 decimals without %."
-  },
-  {
-    "id": 24014,
-    "file_name": "data.xlsx",
-    "query": "Tên NCC của dòng CT-16000 là gì? Giữ nguyên dấu ngoặc kép và dấu phẩy trong tên; chỉ trả tên."
-  },
-  {
-    "id": 24022,
-    "file_name": "data.xlsx",
-    "query": "已批准行中有多少个贷项行（sign=-1）？只回答整数。"
+    "query": "Giá trị mua ròng Đã duyệt quý 4 trừ quý 3/2028 là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
   },
   {
     "id": 24002,
@@ -45,9 +10,29 @@
     "query": "Có bao nhiêu hóa đơn khác nhau có ít nhất một dòng Đã duyệt của NCC vùng Bắc? Không đếm số dòng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
   },
   {
-    "id": 24017,
+    "id": 24007,
     "file_name": "data.xlsx",
-    "query": "For all approved lines, what is gross signed VND before discounts minus approved net VND? Return an integer."
+    "query": "Dòng CT-00999 áp dụng mã hợp đồng nào? Dùng ngày bắt đầu có gồm và ngày kết thúc không gồm; không lấy hợp đồng mới nhất toàn bộ. Chỉ trả mã hợp đồng."
+  },
+  {
+    "id": 24008,
+    "file_name": "data.xlsx",
+    "query": "Tỷ giá VND cho 1 đơn vị tiền của dòng CT-01000 tại đúng ngày chứng từ là bao nhiêu? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24012,
+    "file_name": "data.xlsx",
+    "query": "Có bao nhiêu dòng EUR Đã duyệt có ngày 29/02/2028? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24022,
+    "file_name": "data.xlsx",
+    "query": "已批准行中有多少个贷项行（sign=-1）？只回答整数。"
+  },
+  {
+    "id": 24024,
+    "file_name": "data.xlsx",
+    "query": "CT-00999 对应生效合同的返利率是多少？只回答整数，不加%。"
   },
   {
     "id": 24027,
@@ -55,14 +40,19 @@
     "query": "Combien de fournisseurs ont un total net approuvé en VND strictement négatif ? Un entier uniquement."
   },
   {
-    "id": 24011,
+    "id": 24006,
     "file_name": "data.xlsx",
-    "query": "Giá trị mua ròng Đã duyệt quý 4 trừ quý 3/2028 là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+    "query": "Có bao nhiêu hóa đơn khác nhau có ít nhất một dòng Đã duyệt của NCC vùng Nam? Không đếm số dòng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
   },
   {
-    "id": 24001,
+    "id": 24029,
     "file_name": "data.xlsx",
-    "query": "Tổng giá trị mua ròng của vùng Bắc, chỉ Đã duyệt, quy đổi tỷ giá đúng ngày, trừ chiết khấu và tính âm dòng ghi có, là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+    "query": "CT-01000의 원래 Giá trị gốc을 Số lượng로 나눈 값을 소수점 둘째 자리까지 답하십시오. 환산하지 않습니다."
+  },
+  {
+    "id": 24030,
+    "file_name": "data.xlsx",
+    "query": "순 VND 합계가 높은 상위 3개 공급업체 코드를 내림차순으로 답하십시오. 동률이면 코드 오름차순, 쉼표와 공백으로 구분합니다."
   },
   {
     "id": 24005,
@@ -70,34 +60,24 @@
     "query": "Tổng giá trị mua ròng của vùng Nam, chỉ Đã duyệt, quy đổi tỷ giá đúng ngày, trừ chiết khấu và tính âm dòng ghi có, là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
   },
   {
+    "id": 24013,
+    "file_name": "data.xlsx",
+    "query": "Chiết khấu trung bình gia quyền theo Giá trị gốc của các dòng USD Đã duyệt, sign=1, là bao nhiêu phần trăm? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 24021,
+    "file_name": "data.xlsx",
+    "query": "只计已批准（Đã duyệt）的行，海外供应商的净采购总额是多少VND？按当天汇率、折扣及贷项负号计算。只回答整数。"
+  },
+  {
     "id": 24028,
     "file_name": "data.xlsx",
     "query": "2028-12-31에 승인된 행의 순 VND 합계를 정수로 답하십시오. 할인과 대변 음수를 포함합니다."
   },
   {
-    "id": 24024,
+    "id": 24017,
     "file_name": "data.xlsx",
-    "query": "CT-15999 对应生效合同的返利率是多少？只回答整数，不加%。"
-  },
-  {
-    "id": 24018,
-    "file_name": "data.xlsx",
-    "query": "What is the signed net VND amount of cancelled line CT-00031, using its daily FX and discount? Include this line despite its cancellation for this question only. Return an integer."
-  },
-  {
-    "id": 24019,
-    "file_name": "data.xlsx",
-    "query": "Which contract applies to NCC-0001 on 2028-04-01, with start inclusive and end exclusive? Return only the contract ID."
-  },
-  {
-    "id": 24008,
-    "file_name": "data.xlsx",
-    "query": "Tỷ giá VND cho 1 đơn vị tiền của dòng CT-16000 tại đúng ngày chứng từ là bao nhiêu? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
-  },
-  {
-    "id": 24003,
-    "file_name": "data.xlsx",
-    "query": "Tổng giá trị mua ròng của vùng Trung, chỉ Đã duyệt, quy đổi tỷ giá đúng ngày, trừ chiết khấu và tính âm dòng ghi có, là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+    "query": "For all approved lines, what is gross signed VND before discounts minus approved net VND? Return an integer."
   },
   {
     "id": 24026,
@@ -105,9 +85,29 @@
     "query": "Combien de fournisseurs distincts ont au moins une ligne approuvée ? Un entier uniquement."
   },
   {
-    "id": 24013,
+    "id": 24018,
     "file_name": "data.xlsx",
-    "query": "Chiết khấu trung bình gia quyền theo Giá trị gốc của các dòng USD Đã duyệt, sign=1, là bao nhiêu phần trăm? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+    "query": "What is the signed net VND amount of cancelled line CT-00031, using its daily FX and discount? Include this line despite its cancellation for this question only. Return an integer."
+  },
+  {
+    "id": 24016,
+    "file_name": "data.xlsx",
+    "query": "What percent of total approved net VND spend belongs to the three suppliers with largest net spend? Include signed credits, ties by supplier ID. Return exactly 2 decimals without %."
+  },
+  {
+    "id": 24010,
+    "file_name": "data.xlsx",
+    "query": "NCC nào có giá trị mua ròng VND Đã duyệt cao nhất? Nếu bằng nhau, chọn mã tăng dần. Chỉ trả mã."
+  },
+  {
+    "id": 24019,
+    "file_name": "data.xlsx",
+    "query": "Which contract applies to NCC-0001 on 2028-04-01, with start inclusive and end exclusive? Return only the contract ID."
+  },
+  {
+    "id": 24004,
+    "file_name": "data.xlsx",
+    "query": "Có bao nhiêu hóa đơn khác nhau có ít nhất một dòng Đã duyệt của NCC vùng Trung? Không đếm số dòng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
   },
   {
     "id": 24023,
@@ -120,33 +120,33 @@
     "query": "Tổng hoàn tiền hợp đồng cho các dòng Đã duyệt, không phải ghi có, trong quý 4/2028 là bao nhiêu VND? Tính net_vnd*rebate/100, cộng trước rồi làm tròn. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
   },
   {
-    "id": 24030,
+    "id": 24001,
     "file_name": "data.xlsx",
-    "query": "순 VND 합계가 높은 상위 3개 공급업체 코드를 내림차순으로 답하십시오. 동률이면 코드 오름차순, 쉼표와 공백으로 구분합니다."
+    "query": "Tổng giá trị mua ròng của vùng Bắc, chỉ Đã duyệt, quy đổi tỷ giá đúng ngày, trừ chiết khấu và tính âm dòng ghi có, là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
   },
   {
-    "id": 24029,
+    "id": 24003,
     "file_name": "data.xlsx",
-    "query": "CT-16000의 원래 Giá trị gốc을 Số lượng로 나눈 값을 소수점 둘째 자리까지 답하십시오. 환산하지 않습니다."
+    "query": "Tổng giá trị mua ròng của vùng Trung, chỉ Đã duyệt, quy đổi tỷ giá đúng ngày, trừ chiết khấu và tính âm dòng ghi có, là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
   },
   {
-    "id": 24021,
+    "id": 24020,
     "file_name": "data.xlsx",
-    "query": "只计已批准（Đã duyệt）的行，海外供应商的净采购总额是多少VND？按当天汇率、折扣及贷项负号计算。只回答整数。"
-  },
-  {
-    "id": 24010,
-    "file_name": "data.xlsx",
-    "query": "NCC nào có giá trị mua ròng VND Đã duyệt cao nhất? Nếu bằng nhau, chọn mã tăng dần. Chỉ trả mã."
-  },
-  {
-    "id": 24012,
-    "file_name": "data.xlsx",
-    "query": "Có bao nhiêu dòng EUR Đã duyệt có ngày 29/02/2028? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+    "query": "What is mean approved net VND per distinct invoice with an approved line? Sum all approved lines including credits before dividing by distinct invoice count. Return exactly 2 decimals."
   },
   {
     "id": 24015,
     "file_name": "data.xlsx",
-    "query": "Trong workbook này, số tài khoản ngân hàng của nhà cung cấp trên dòng CT-16000 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
+    "query": "Trong workbook này, số tài khoản ngân hàng của nhà cung cấp trên dòng CT-01000 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
+  },
+  {
+    "id": 24014,
+    "file_name": "data.xlsx",
+    "query": "Tên NCC của dòng CT-01000 là gì? Giữ nguyên dấu ngoặc kép và dấu phẩy trong tên; chỉ trả tên."
+  },
+  {
+    "id": 24025,
+    "file_name": "data.xlsx",
+    "query": "Quel est le montant net total en VND des lignes EUR approuvées, crédits négatifs inclus, au taux du jour ? Un entier uniquement."
   }
 ]

@@ -32,7 +32,7 @@ Each step has a unique id, references only preceding step IDs.
 - group: input, by:[columns], metric, expr (except count), column (aggregate output name), missing.
 - join: left,right,left_on,right_on, optional cardinality: many_to_one (default), one_to_one, one_to_many, many_to_many. Inner equality join, result columns are left.A/right.A etc. Put the lookup/mapping table on the right. Duplicate mapping keys are rejected unless the appropriate cardinality is explicitly selected. Never select many_to_many merely to bypass an error: first decide whether duplicates must be aggregated or filtered. Audit unmatched keys and output row expansion.
 - calculate: expr on scalar refs from preceding aggregate/calculate steps.
-- record: fields:{output_column: expression,...}. Builds ONE row combining scalar cells/calculations. Example fields={"label":{"ref":"group_cell"},"value":{"ref":"difference"}}. For label-and-number comparisons: cell label, cell metric, record; repeat for each group; concat record datasets; sort by value; take 1; output columns=[label,value]. Each field must depend on spreadsheet cells. Labels come from section-heading cells, or if:[comparison of scalar refs, value:label_from_question, value:other_label_from_question].
+- record: fields:{output_column: expression,...}, optional input. WITHOUT input builds ONE row combining scalar refs; col cannot see prior datasets. WITH input explicitly naming a preceding row dataset, projects one record per source row, allowing col expressions with provenance. After sort -> take, prefer output.columns directly, or record input=selected fields={"year":{"col":"A"},"total":{"col":"E"}} using ACTUAL columns. For scalar label-and-number comparisons: cell label, cell metric, record with refs; repeat for each group; concat record datasets; sort by value; take 1. Labels come from section-heading cells or conditionals depending on cells. Never infer record input from the most recent step.
 - lag: input, source (column), column (NEW output column), optional offset=1. Copies the previous row's source value with provenance. First offset rows have null. FIRST filter annual data and sort by year ascending; then lag; filter is_number on lagged value; derive change; sort/take and output year,change. No shift/prev fields on derive.
 - fill_down: input, columns. Fills ONLY null/empty values using the preceding nonempty value, retaining original label-cell provenance. For sectioned tables, derive a new section column with if:[condition identifying a section-heading row, col:A, value:null], fill_down section, THEN filter the requested detail rows. Never fill numeric missing-data cells to invent observations.
 Expression syntax (each object has EXACTLY ONE key):
@@ -126,9 +126,6 @@ def parse_plan(content, syntax_repairs=None):
 
 
 def tool_schema(purpose='plan'):
-    if purpose.startswith('v3_'):
-        from .lmmv3.contracts import schema
-        return schema(purpose)
     if purpose == 'review':
         return {'type':'object','properties':{'verdict':{'enum':['accept','revise']},
                 'issues':{'type':'array','maxItems':5,'items':{'type':'string','maxLength':300}}},
@@ -160,7 +157,7 @@ def tool_schema(purpose='plan'):
         'cell':(['table','row','column'],[]),
         'sum_columns':(['table','row','columns'],[]),
         'concat':(['inputs'],[]),'collect':(['inputs'],[]),
-        'record':(['fields'],[]),'lag':(['input','source','column'],['offset']),
+        'record':(['fields'],['input']),'lag':(['input','source','column'],['offset']),
         'fill_down':(['input','columns'],[]),
         'unpivot':(['input','columns'],['label_table','label_row','keep_columns']),
         'filter':(['input','where'],[]),'derive':(['input','column','expr'],[]),

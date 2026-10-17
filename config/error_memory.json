@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "lessons": [
+    {
+      "id": "chronological_change",
+      "support": 2
+    },
+    {
+      "id": "complete_read_scope",
+      "support": 14
+    },
+    {
+      "id": "conditional_count",
+      "support": 6
+    },
+    {
+      "id": "difference_direction",
+      "support": 26
+    },
+    {
+      "id": "empty_selection",
+      "support": 1
+    },
+    {
+      "id": "final_output_binding",
+      "support": 8
+    },
+    {
+      "id": "header_column_mapping",
+      "support": 3
+    },
+    {
+      "id": "header_missing_filter",
+      "support": 6
+    },
+    {
+      "id": "hierarchical_mean",
+      "support": 3
+    },
+    {
+      "id": "horizontal_series_axis",
+      "support": 1
+    },
+    {
+      "id": "json_plan_arrays",
+      "support": 9
+    },
+    {
+      "id": "numeric_text",
+      "support": 12
+    },
+    {
+      "id": "ratio_computation",
+      "support": 6
+    },
+    {
+      "id": "review_evidence_consistency",
+      "support": 10
+    },
+    {
+      "id": "row_record_input",
+      "support": 3
+    },
+    {
+      "id": "row_scalar_refs",
+      "support": 6
+    },
+    {
+      "id": "rowwise_extremum",
+      "support": 3
+    },
+    {
+      "id": "section_argmax",
+      "support": 3
+    },
+    {
+      "id": "section_identity",
+      "support": 6
+    },
+    {
+      "id": "sheet_identity",
+      "support": 2
+    },
+    {
+      "id": "threshold_semantics",
+      "support": 8
+    },
+    {
+      "id": "tuple_grounding",
+      "support": 21
+    }
+  ]
+}

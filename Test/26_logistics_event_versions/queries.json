@@ -1,123 +1,8 @@
 [
   {
-    "id": 26007,
-    "file_name": "data.xlsx",
-    "query": "Trạng thái cuối của VD-008000 sau khi giữ phiên bản lớn nhất cho từng mã sự kiện là gì? Chỉ trả đúng nhãn trạng thái."
-  },
-  {
-    "id": 26020,
-    "file_name": "data.xlsx",
-    "query": "Among VD-007501 through VD-008000 inclusive, how many have final status Đang giao? Return an integer."
-  },
-  {
-    "id": 26006,
-    "file_name": "data.xlsx",
-    "query": "Tại vùng Nam, tỷ lệ giao đúng hẹn trong các vận đơn có trạng thái cuối Đã giao là bao nhiêu phần trăm? Đúng hẹn gồm thời điểm giao bằng hẹn; khử trùng sự kiện theo phiên bản lớn nhất. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
-  },
-  {
-    "id": 26018,
-    "file_name": "data.xlsx",
-    "query": "Among delivered shipments, what is the 95th percentile of elapsed_hours using nearest-rank: sort ascending, select position ceil(0.95*N), 1-based? Return an integer."
-  },
-  {
-    "id": 26019,
-    "file_name": "data.xlsx",
-    "query": "How many delivered shipments arrived at exactly the promised UTC time? Count equality as on-time. Return an integer."
-  },
-  {
-    "id": 26004,
-    "file_name": "data.xlsx",
-    "query": "Tại vùng Trung, tỷ lệ giao đúng hẹn trong các vận đơn có trạng thái cuối Đã giao là bao nhiêu phần trăm? Đúng hẹn gồm thời điểm giao bằng hẹn; khử trùng sự kiện theo phiên bản lớn nhất. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
-  },
-  {
-    "id": 26026,
-    "file_name": "data.xlsx",
-    "query": "Parmi les livraisons Đã giao strictement en retard, quel est le retard moyen en heures ? Deux décimales uniquement."
-  },
-  {
-    "id": 26029,
-    "file_name": "data.xlsx",
-    "query": "지연된 배송 완료 운송장 중 지연 시간이 큰 상위 3개 코드를 답하십시오. 동률은 코드 오름차순, 쉼표와 공백으로 구분합니다."
-  },
-  {
-    "id": 26016,
-    "file_name": "data.xlsx",
-    "query": "For event E-008000-4, what is the retained revision under largest revision then latest ingestion time? Return an integer, regardless of physical row order."
-  },
-  {
-    "id": 26023,
-    "file_name": "data.xlsx",
-    "query": "VD-008000 的重量是多少克？只回答整数。"
-  },
-  {
-    "id": 26010,
-    "file_name": "data.xlsx",
-    "query": "Có bao nhiêu vận đơn đã giao thành công nhưng có sự kiện Giao thất bại trước đó, sau khử trùng phiên bản? Mỗi vận đơn chỉ đếm một lần. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
-  },
-  {
-    "id": 26001,
-    "file_name": "data.xlsx",
-    "query": "Vùng Bắc có bao nhiêu vận đơn có trạng thái cuối là Đã giao? Với sự kiện trùng mã, giữ phiên bản lớn nhất rồi thời điểm ghi nhận mới nhất trước khi chọn sự kiện cuối. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
-  },
-  {
-    "id": 26015,
-    "file_name": "data.xlsx",
-    "query": "Trong workbook này, số điện thoại người nhận của vận đơn VD-008000 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
-  },
-  {
-    "id": 26021,
-    "file_name": "data.xlsx",
-    "query": "港口区域最终状态为Đã giao的运单有多少个？先对相同事件编号保留最高版本。只回答整数。"
-  },
-  {
-    "id": 26011,
-    "file_name": "data.xlsx",
-    "query": "Tổng Thu hộ VND của các vận đơn có trạng thái cuối Hoàn trả là bao nhiêu? Không cộng nhiều lần theo lịch sử sự kiện. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
-  },
-  {
-    "id": 26017,
-    "file_name": "data.xlsx",
-    "query": "How many shipments have final status Đã hủy after event deduplication? Return an integer."
-  },
-  {
-    "id": 26013,
-    "file_name": "data.xlsx",
-    "query": "Vận đơn Đã giao nào trễ hẹn nhiều giờ nhất? So thời điểm cuối trừ hẹn UTC. Nếu bằng nhau, chọn mã tăng dần. Chỉ trả mã."
-  },
-  {
-    "id": 26028,
-    "file_name": "data.xlsx",
-    "query": "VD-008000의 최종 이벤트 UTC 시각을 YYYY-MM-DD HH:MM:SS 형식으로 답하십시오. 최고 버전으로 중복을 제거합니다."
-  },
-  {
     "id": 26008,
     "file_name": "data.xlsx",
     "query": "Số dòng thừa do nhiều phiên bản cùng mã sự kiện là bao nhiêu? Tính số dòng lịch sử trừ số mã sự kiện khác nhau. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
-  },
-  {
-    "id": 26012,
-    "file_name": "data.xlsx",
-    "query": "Tổng khối lượng các vận đơn Đã giao đúng hẹn là bao nhiêu kg? Khối lượng g phải chia 1000. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
-  },
-  {
-    "id": 26022,
-    "file_name": "data.xlsx",
-    "query": "在港口区域所有运单中，最终状态为Hoàn trả的运单占多少百分比？保留两位小数，不加%。"
-  },
-  {
-    "id": 26003,
-    "file_name": "data.xlsx",
-    "query": "Vùng Trung có bao nhiêu vận đơn có trạng thái cuối là Đã giao? Với sự kiện trùng mã, giữ phiên bản lớn nhất rồi thời điểm ghi nhận mới nhất trước khi chọn sự kiện cuối. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
-  },
-  {
-    "id": 26002,
-    "file_name": "data.xlsx",
-    "query": "Tại vùng Bắc, tỷ lệ giao đúng hẹn trong các vận đơn có trạng thái cuối Đã giao là bao nhiêu phần trăm? Đúng hẹn gồm thời điểm giao bằng hẹn; khử trùng sự kiện theo phiên bản lớn nhất. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
-  },
-  {
-    "id": 26009,
-    "file_name": "data.xlsx",
-    "query": "Trung bình thời gian từ Tạo UTC đến sự kiện giao cuối của các vận đơn Nhanh đã giao là bao nhiêu giờ? Dùng giờ thực trôi qua, không dùng ngày lịch. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
   },
   {
     "id": 26024,
@@ -125,9 +10,24 @@
     "query": "已成功交付的Nhanh运单中，迟于约定时间的有多少个？等于约定时间不算迟到。只回答整数。"
   },
   {
+    "id": 26005,
+    "file_name": "data.xlsx",
+    "query": "Vùng Nam có bao nhiêu vận đơn có trạng thái cuối là Đã giao? Với sự kiện trùng mã, giữ phiên bản lớn nhất rồi thời điểm ghi nhận mới nhất trước khi chọn sự kiện cuối. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 26015,
+    "file_name": "data.xlsx",
+    "query": "Trong workbook này, số điện thoại người nhận của vận đơn VD-000500 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
+  },
+  {
     "id": 26027,
     "file_name": "data.xlsx",
     "query": "Quel dépôt a le plus de livraisons finales Đã giao ? En cas d'égalité, code dépôt croissant. Répondez uniquement par le code."
+  },
+  {
+    "id": 26010,
+    "file_name": "data.xlsx",
+    "query": "Có bao nhiêu vận đơn đã giao thành công nhưng có sự kiện Giao thất bại trước đó, sau khử trùng phiên bản? Mỗi vận đơn chỉ đếm một lần. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
   },
   {
     "id": 26030,
@@ -135,18 +35,118 @@
     "query": "전체 운송장의 생성 UTC 날짜는 몇 종류입니까? 시각 부분은 제외하고 정수로 답하십시오."
   },
   {
+    "id": 26021,
+    "file_name": "data.xlsx",
+    "query": "港口区域最终状态为Đã giao的运单有多少个？先对相同事件编号保留最高版本。只回答整数。"
+  },
+  {
+    "id": 26019,
+    "file_name": "data.xlsx",
+    "query": "How many delivered shipments arrived at exactly the promised UTC time? Count equality as on-time. Return an integer."
+  },
+  {
+    "id": 26017,
+    "file_name": "data.xlsx",
+    "query": "How many shipments have final status Đã hủy after event deduplication? Return an integer."
+  },
+  {
+    "id": 26007,
+    "file_name": "data.xlsx",
+    "query": "Trạng thái cuối của VD-000500 sau khi giữ phiên bản lớn nhất cho từng mã sự kiện là gì? Chỉ trả đúng nhãn trạng thái."
+  },
+  {
+    "id": 26016,
+    "file_name": "data.xlsx",
+    "query": "For event E-000500-4, what is the retained revision under largest revision then latest ingestion time? Return an integer, regardless of physical row order."
+  },
+  {
+    "id": 26009,
+    "file_name": "data.xlsx",
+    "query": "Trung bình thời gian từ Tạo UTC đến sự kiện giao cuối của các vận đơn Nhanh đã giao là bao nhiêu giờ? Dùng giờ thực trôi qua, không dùng ngày lịch. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 26028,
+    "file_name": "data.xlsx",
+    "query": "VD-000500의 최종 이벤트 UTC 시각을 YYYY-MM-DD HH:MM:SS 형식으로 답하십시오. 최고 버전으로 중복을 제거합니다."
+  },
+  {
+    "id": 26001,
+    "file_name": "data.xlsx",
+    "query": "Vùng Bắc có bao nhiêu vận đơn có trạng thái cuối là Đã giao? Với sự kiện trùng mã, giữ phiên bản lớn nhất rồi thời điểm ghi nhận mới nhất trước khi chọn sự kiện cuối. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 26026,
+    "file_name": "data.xlsx",
+    "query": "Parmi les livraisons Đã giao strictement en retard, quel est le retard moyen en heures ? Deux décimales uniquement."
+  },
+  {
+    "id": 26004,
+    "file_name": "data.xlsx",
+    "query": "Tại vùng Trung, tỷ lệ giao đúng hẹn trong các vận đơn có trạng thái cuối Đã giao là bao nhiêu phần trăm? Đúng hẹn gồm thời điểm giao bằng hẹn; khử trùng sự kiện theo phiên bản lớn nhất. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 26022,
+    "file_name": "data.xlsx",
+    "query": "在港口区域所有运单中，最终状态为Hoàn trả的运单占多少百分比？保留两位小数，不加%。"
+  },
+  {
+    "id": 26020,
+    "file_name": "data.xlsx",
+    "query": "Among VD-000001 through VD-000500 inclusive, how many have final status Đang giao? Return an integer."
+  },
+  {
+    "id": 26006,
+    "file_name": "data.xlsx",
+    "query": "Tại vùng Nam, tỷ lệ giao đúng hẹn trong các vận đơn có trạng thái cuối Đã giao là bao nhiêu phần trăm? Đúng hẹn gồm thời điểm giao bằng hẹn; khử trùng sự kiện theo phiên bản lớn nhất. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
     "id": 26014,
     "file_name": "data.xlsx",
     "query": "Có bao nhiêu vận đơn được tạo trong tháng 02/2028 nhưng sự kiện cuối nằm trong tháng 03/2028? Dùng UTC và sự kiện đã khử trùng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
   },
   {
-    "id": 26005,
-    "file_name": "data.xlsx",
-    "query": "Vùng Nam có bao nhiêu vận đơn có trạng thái cuối là Đã giao? Với sự kiện trùng mã, giữ phiên bản lớn nhất rồi thời điểm ghi nhận mới nhất trước khi chọn sự kiện cuối. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
-  },
-  {
     "id": 26025,
     "file_name": "data.xlsx",
     "query": "Après conservation de la plus grande version par code événement, combien d'événements uniques restent-ils ? Un entier uniquement."
+  },
+  {
+    "id": 26013,
+    "file_name": "data.xlsx",
+    "query": "Vận đơn Đã giao nào trễ hẹn nhiều giờ nhất? So thời điểm cuối trừ hẹn UTC. Nếu bằng nhau, chọn mã tăng dần. Chỉ trả mã."
+  },
+  {
+    "id": 26018,
+    "file_name": "data.xlsx",
+    "query": "Among delivered shipments, what is the 95th percentile of elapsed_hours using nearest-rank: sort ascending, select position ceil(0.95*N), 1-based? Return an integer."
+  },
+  {
+    "id": 26003,
+    "file_name": "data.xlsx",
+    "query": "Vùng Trung có bao nhiêu vận đơn có trạng thái cuối là Đã giao? Với sự kiện trùng mã, giữ phiên bản lớn nhất rồi thời điểm ghi nhận mới nhất trước khi chọn sự kiện cuối. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 26023,
+    "file_name": "data.xlsx",
+    "query": "VD-000500 的重量是多少克？只回答整数。"
+  },
+  {
+    "id": 26029,
+    "file_name": "data.xlsx",
+    "query": "지연된 배송 완료 운송장 중 지연 시간이 큰 상위 3개 코드를 답하십시오. 동률은 코드 오름차순, 쉼표와 공백으로 구분합니다."
+  },
+  {
+    "id": 26012,
+    "file_name": "data.xlsx",
+    "query": "Tổng khối lượng các vận đơn Đã giao đúng hẹn là bao nhiêu kg? Khối lượng g phải chia 1000. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 26002,
+    "file_name": "data.xlsx",
+    "query": "Tại vùng Bắc, tỷ lệ giao đúng hẹn trong các vận đơn có trạng thái cuối Đã giao là bao nhiêu phần trăm? Đúng hẹn gồm thời điểm giao bằng hẹn; khử trùng sự kiện theo phiên bản lớn nhất. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 26011,
+    "file_name": "data.xlsx",
+    "query": "Tổng Thu hộ VND của các vận đơn có trạng thái cuối Hoàn trả là bao nhiêu? Không cộng nhiều lần theo lịch sử sự kiện. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
   }
 ]

@@ -1,6 +1,6 @@
 # Bộ kiểm thử Excel QA
 
-**22 bộ, 512 câu** với file Excel và đáp án mẫu. Các bộ 06–12 có 200 câu từ dữ liệu tổng hợp cố định; **10 bộ mới 13–22 có đúng 30 câu/bộ, tổng 300 câu**, dựa theo cả hai bộ công khai.
+**28 suites, 662 questions** with Excel files and reference answers. The compact suites 23-27 and the combined dataset are included below.
 
 | Bộ | Số câu | Nội dung |
 |---|---:|---|
@@ -26,6 +26,7 @@
 | [20_productivity_periods](20_productivity_periods/README.md) | 30 | 20 năm xen 80 quý, bảng level riêng, giảm liên năm |
 | [21_finance_multisheet](21_finance_multisheet/README.md) | 30 | 5 sheet, số chuỗi `$`, dấu phẩy, ngoặc âm, cuối kỳ/bình quân |
 | [22_multilingual_social](22_multilingual_social/README.md) | 30 | Việt/Pháp/Hàn/Trung; chăm sóc, thu nhập, tòa án, lao động, sức khỏe |
+| [28_long_multilingual_combined](28_long_multilingual_combined/README.md) | 150 | Five compact workbooks (suites 23-27), multiple Excel files, about 14,821 physical rows |
 
 Trong dashboard, tải lại trang để thấy các bộ tự được nhận diện. Chọn một hoặc nhiều bộ rồi **Chạy mới**. Nên bắt đầu bằng một bộ hoặc một câu ở chế độ **LLM + Tools**. Chọn tất cả sẽ gọi API cho nhiều câu và có thể phát sinh phí.
 

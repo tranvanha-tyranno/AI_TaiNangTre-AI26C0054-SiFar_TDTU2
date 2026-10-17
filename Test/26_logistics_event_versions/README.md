@@ -1,8 +1,8 @@
 # 26_logistics_event_versions
 
-32800 dòng lịch sử cho 8000 vận đơn: sửa phiên bản, thứ tự vật lý xáo trộn, trạng thái cuối, giao đúng hẹn, phân vị thời gian và ngày UTC.
+500 vận đơn với lịch sử sự kiện: sửa phiên bản, thứ tự vật lý xáo trộn, trạng thái cuối, giao đúng hẹn, phân vị thời gian và ngày UTC.
 
-`Danh mục kho`: 500 bản ghi / 501 dòng vật lý; `Vận đơn`: 8,000 bản ghi / 8,001 dòng vật lý; `Lịch sử sự kiện`: 32,800 bản ghi / 32,801 dòng vật lý.
+`Danh mục kho`: 100 bản ghi / 101 dòng vật lý; `Vận đơn`: 500 bản ghi / 501 dòng vật lý; `Lịch sử sự kiện`: 2,050 bản ghi / 2,051 dòng vật lý.
 
 30 câu: **15 Việt, 5 Anh, 4 Trung, 3 Pháp, 3 Hàn**. ID là số tự nhiên; câu hỏi cố ý xáo trộn. CSV chuẩn dùng UTF-8 và sắp ID theo giá trị số tăng dần. Một câu thiếu trường dữ liệu có đáp án chuỗi rỗng. Câu đó không tính là lỗi fixture; không tự đổi đáp án thành N/A.
 

@@ -220,6 +220,11 @@ def answer_with_tools(path, question, client, record, settings):
     if settings.get("pipeline_variant") == "llm-v3":
         from .variants import settings_for_mode
         return answer_with_tools(path,question,client,record,settings_for_mode(settings,'llm-v3'))
+    if settings.get('v3_base_variant') and settings.get('v3_program_tools', False):
+        from .program_pipeline import answer_with_program, use_program
+        program_regions = load_regions(path, settings.get('max_workbook_cells', 200000))
+        if use_program(program_regions):
+            return answer_with_program(program_regions, question, client, record, settings)
     reserve_prompt=min(client.prompt_cap, getattr(client,'prompt_rate',0)*1e6 or client.prompt_cap)
     reserve_completion=min(client.completion_cap, getattr(client,'completion_rate',0)*1e6 or client.completion_cap)
     ledger=UsageLedger(limit_usd=settings.get('max_cost_per_question',.10),max_calls=settings.get('max_api_calls',4),
@@ -230,6 +235,8 @@ def answer_with_tools(path, question, client, record, settings):
                   plans=[],timings={},interactions=[],reviews=[],llm_variant=variant)
     if settings.get('v3_base_variant'): record['baseline_variant']='llm-v2'
     reliability=bool(settings.get('v3_base_variant') and settings.get('v3_reliability',False))
+    memory_enabled=bool(settings.get('v3_base_variant') and settings.get('v3_error_memory',False))
+    memory=None; memory_digest=None
     def execute_plan(plan,selected):
         if not reliability: return execute(plan,selected)
         result=execute(plan,selected,reliability=True)
@@ -240,12 +247,28 @@ def answer_with_tools(path, question, client, record, settings):
             record.setdefault('output_normalizations',[]).extend(changes)
         return result
     def make_preview(region):
-        if reliability:
+        if reliability or memory_enabled:
             from .reliability import preview
             return preview(region,question,settings.get('preview_rows',45))
         return region.preview(question,settings.get('preview_rows',45))
     def context_messages(request,purpose):
-        if reliability:
+        if memory is not None:
+            from .error_memory import augment
+            request,metrics=augment(request,memory,memory_digest,question,contract,
+                record.get('validation_errors',[])[-3:],record.get('previews',[]),
+                settings.get('error_memory_top_k',3),settings.get('error_memory_max_chars',3600))
+            record.setdefault('error_memory',{}).setdefault('retrievals',[]).append({'purpose':purpose,**metrics})
+        if memory_enabled and purpose=='review':
+            request[0]=dict(request[0])
+            request[0]['content']+=(' Audit the FINAL executed plan, including downstream filters, not an abandoned or raw plan. '
+                'Report only concrete violations supported by the question and source coordinates. '
+                'Check numeric operator truth before alleging a threshold error: strictly above is gt, below is lt. '
+                'A label-only header removed by is_number did not participate in arithmetic. '
+                'Do not reject an exact coordinate lookup merely because an unrelated filter is empty. '
+                'If the result satisfies every requirement, accept with no issues. Revise must include an actionable issue; '
+                'do not speculate about missing values if the trace shows they were excluded. '
+                'Do not return computation steps; your only output is verdict and issues.')
+        if reliability and purpose!='review':
             from .reliability import GUIDANCE
             request=[{'role':'system','content':GUIDANCE},*request]
         if settings.get('v3_base_variant') and settings.get('v3_deduplicate_context',True):
@@ -272,6 +295,10 @@ def answer_with_tools(path, question, client, record, settings):
     review_mode=settings.get('semantic_review','all' if variant=='llm-v2' else 'off')
     if review_mode not in {'off','risky','all'}: raise ValueError('semantic_review must be off, risky or all')
     try:
+        if memory_enabled:
+            from .error_memory import load_memory
+            memory,memory_digest=load_memory(settings.get('error_memory_path'))
+            record['error_memory']={'memory_sha256':memory_digest,'active_lessons':len(memory['lessons'])}
         start=time.monotonic()
         regions=load_regions(path,settings.get('max_workbook_cells',200000))
         record['timings']['parse']=time.monotonic()-start
@@ -330,7 +357,7 @@ def answer_with_tools(path, question, client, record, settings):
                 if reliability:
                     from .reliability import normalize
                     plan,reliability_changes=normalize(plan)
-                plan,normalizations=normalize_plan(plan,regions,contract)
+                plan,normalizations=normalize_plan(plan,regions,contract,repair_split_literals=memory_enabled)
                 normalizations=syntax_repairs+reliability_changes+normalizations
                 record['plans'].append({'attempt':len(record['plans'])+1,'turn':turn+1,'plan':plan,
                                         **({'raw_plan':raw_plan,'normalizations':normalizations} if normalizations else {}),
@@ -350,6 +377,10 @@ def answer_with_tools(path, question, client, record, settings):
                     continue
                 record['stage']='execute'
                 start=time.monotonic()
+                if memory_enabled:
+                    from .read_scope import validate_read_scope, validate_numeric_label_filters
+                    validate_read_scope(question,plan,selected)
+                    validate_numeric_label_filters(plan,selected)
                 result=execute_plan(plan,selected)
                 record['stage']='validate_output'
                 record['tool_trace']=result['trace']
@@ -357,6 +388,9 @@ def answer_with_tools(path, question, client, record, settings):
                 record['last_candidate_answer']=result.get('answer','')
                 record['plans'][-1]['tool_trace']=result['trace']
                 record['plans'][-1]['row_samples']=result['row_samples']
+                if memory_enabled:
+                    from .read_scope import validate_group_identity
+                    validate_group_identity(question,plan,result,selected)
                 validate_aggregate_scope(question,plan,selected)
                 validate_answer_contract(contract,plan,result,question)
                 validate_answer_field(contract,plan,result,selected)
@@ -386,15 +420,23 @@ def answer_with_tools(path, question, client, record, settings):
                         # answer. A malformed reviewer response must not erase
                         # a candidate that passed deterministic checks.
                             record['reviews'].append({'turn':turn+1,'review_round':review_index+1,'verdict':'unavailable',
-                                                  'issues':[],'error':f'Invalid review JSON: {error}'})
+                                                  'issues':[],'error':f'Invalid review JSON: {error}',
+                                                  'raw_response':raw_review[:4000]})
                             review=None
                         if review is not None:
+                            if memory_enabled:
+                                from .review_validation import bounded_review
+                                bounded,changes=bounded_review(review)
+                                if changes:
+                                    record.setdefault('review_normalizations',[]).append({'turn':turn+1,'changes':changes})
+                                    review=bounded
                             valid=(isinstance(review,dict) and set(review)=={'verdict','issues'} and
                                review['verdict'] in {'accept','revise'} and isinstance(review['issues'],list) and
                                len(review['issues'])<=5 and all(isinstance(s,str) and s.strip() and len(s)<=300 for s in review['issues']))
                             if not valid:
                                 record['reviews'].append({'turn':turn+1,'review_round':review_index+1,'verdict':'unavailable','issues':[],
-                                                      'error':'Reviewer response did not match verdict/issues schema'})
+                                                      'error':'Reviewer response did not match verdict/issues schema',
+                                                      'raw_response':raw_review[:4000]})
                                 review=None
                             else:
                                 record['reviews'].append({'turn':turn+1,'review_round':review_index+1,**review})

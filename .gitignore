@@ -7,3 +7,5 @@ __pycache__/
 outputs/
 submission.csv
 .pytest_cache/
+input/
+output/

@@ -1,7 +1,7 @@
 {
   "suite": "25_energy_intervals_long",
   "seed": 261017,
-  "description": "20000 khoảng điện 1 giờ: kWh khác kW, giá hiệu lực, giao khoảng nửa mở, sự cố chồng nhau, CO2, pin và dữ liệu ước tính/thiếu.",
+  "description": "1000 khoảng điện 1 giờ: kWh khác kW, giá hiệu lực, giao khoảng nửa mở, sự cố chồng nhau, CO2, pin và dữ liệu ước tính/thiếu.",
   "questions": 30,
   "language_counts": {
     "vi": 15,
@@ -43,44 +43,14 @@
           "type": "INTEGER",
           "column": 4
         }
-      ],
-      "content_sha256": "ef3febf1dae4441a074c763082f7d99733ed8d8e37ad7b98101c15c83eda604e"
-    },
-    {
-      "table": "units",
-      "sheet": "Nhà máy",
-      "first_row": 2,
-      "last_row": 4,
-      "record_count": 3,
-      "skip_rows": [],
-      "columns": [
-        {
-          "key": "quantity",
-          "label": "Đại lượng",
-          "type": "TEXT",
-          "column": 6
-        },
-        {
-          "key": "conversion",
-          "label": "Đổi đơn vị",
-          "type": "TEXT",
-          "column": 7
-        },
-        {
-          "key": "divisor",
-          "label": "Chia cho",
-          "type": "INTEGER",
-          "column": 8
-        }
-      ],
-      "content_sha256": "8cf2a8f4e928f54c57c2d564fcd8897f00c1bc28e1c20e80daf7e65238a8f3a6"
+      ]
     },
     {
       "table": "tariffs",
       "sheet": "Giá theo hiệu lực",
       "first_row": 2,
-      "last_row": 2001,
-      "record_count": 2000,
+      "last_row": 2401,
+      "record_count": 2400,
       "skip_rows": [],
       "columns": [
         {
@@ -109,15 +79,14 @@
           "type": "INTEGER",
           "column": 4
         }
-      ],
-      "content_sha256": "aec4f9150ac37a6e6035363ec7da5c4f0e67b5de3acecc9236b5732b8d2d4ec3"
+      ]
     },
     {
       "table": "readings",
       "sheet": "Điện năng 1 giờ",
       "first_row": 3,
-      "last_row": 20002,
-      "record_count": 20000,
+      "last_row": 1002,
+      "record_count": 1000,
       "skip_rows": [],
       "columns": [
         {
@@ -193,8 +162,7 @@
           "type": "INTEGER",
           "column": 12
         }
-      ],
-      "content_sha256": "11bb588659fac026332b3cfed93b93589fdbaa3067da3743409aba70e8c4e718"
+      ]
     },
     {
       "table": "outages",
@@ -236,8 +204,7 @@
           "type": "TEXT",
           "column": 5
         }
-      ],
-      "content_sha256": "6f88c8099ea6090d5a6010687a9efa400ee451514970bbc1d2da74051a53a99e"
+      ]
     }
   ],
   "agrees_with": "AGENTS.md sections 3, 11.1, 11.2; synthetic benchmark, not an official scoring replica",

@@ -1,46 +1,32 @@
-xlsx_dir: ./Public_data_1/xlsx_files
-queries: ./Public_data_1/queries.json
-output: ./outputs/submission.csv
+# Submission defaults; Docker workdir is /.
+xlsx_dir: ./input/xlsx_files
+queries: ./input/queries.json
+output: ./output/submission.csv
 
-# LLM
-model: qwen/qwen3-7-flash
+model: qwen/qwen3.7-flash
 base_url: https://openrouter.ai/api/v1
-# Đặt OPENROUTER_API_KEY trong env, không ghi vào đây
+concurrency: 1
 
-# Giới hạn đề thi
-max_tokens_plan: 3000
-llm_seed: 42  # Used only when the configured model advertises seed support.
+# Shared cost/time limits, including retries.
 max_cost_per_question: 0.10
-max_api_calls: 4
-max_plan_repairs: 2
-max_inspection_rounds: 2
-semantic_review: risky  # off | risky (labels, joins, ratios, unit conversion) | all
 question_timeout: 115
 run_timeout: 2400
-# Provider price caps in USD per million tokens; API rejects more expensive routes.
 max_prompt_price_per_million: 1.0
 max_completion_price_per_million: 4.0
+max_tokens_plan: 3000
+llm_seed: 42
+max_api_calls: 8
+max_plan_repairs: 4
+max_inspection_rounds: 3
+
 max_workbook_cells: 200000
-retrieval_top_k: 4
-preview_rows: 45
-
-# Pipeline
-mode: llm-v3
-concurrency: 1
-# Dùng --mode llm-v2 để bật khám phá/review sâu; mode mặc định giữ baseline.
-
-# Archived eight-phase v3 options (inactive for current LLMv2-based baseline).
-v3_max_api_calls: 8
-v3_max_repairs: 3
-v3_max_inspections: 3
-
-# Archived Lite options (inactive for current LLMv2-based baseline).
-# Old v3_* options above apply only to the archived eight-phase implementation.
-lite_max_api_calls: 2
-lite_context_chars: 16000
-
-# Current LMMv3: one change on top of LLMv2; false restores identical baseline input.
+retrieval_top_k: 6
+preview_rows: 60
+semantic_review: all
 v3_deduplicate_context: true
-
-# Experimental reliability patch; false restores original v3 behavior.
 v3_reliability: true
+v3_error_memory: true
+v3_program_tools: true
+error_memory_path: config/error_memory.json
+error_memory_top_k: 3
+error_memory_max_chars: 3600

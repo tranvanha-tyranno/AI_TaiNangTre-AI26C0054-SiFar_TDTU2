@@ -1,0 +1,2297 @@
+{
+  "schema_version": 1,
+  "checks": [
+    {
+      "id": 23001,
+      "language": "vi",
+      "category": "mean_all_includes_totals",
+      "sql": "SELECT all_sum,8 FROM scores WHERE id=?",
+      "params": [
+        "DV-00001"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "66.16",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23002,
+      "language": "vi",
+      "category": "mean_excludes_totals",
+      "sql": "SELECT leaf_sum,6 FROM scores WHERE id=?",
+      "params": [
+        "DV-00001"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "64.72",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23003,
+      "language": "vi",
+      "category": "sum_no_double_count",
+      "sql": "SELECT basic+advanced+special+residential+commercial+public FROM counts WHERE id=?",
+      "params": [
+        "DV-00001"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3071",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23004,
+      "language": "vi",
+      "category": "mean_all_includes_totals",
+      "sql": "SELECT all_sum,8 FROM scores WHERE id=?",
+      "params": [
+        "DV-01199"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "52.74",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23005,
+      "language": "vi",
+      "category": "mean_excludes_totals",
+      "sql": "SELECT leaf_sum,6 FROM scores WHERE id=?",
+      "params": [
+        "DV-01199"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "53.63",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23006,
+      "language": "vi",
+      "category": "sum_no_double_count",
+      "sql": "SELECT basic+advanced+special+residential+commercial+public FROM counts WHERE id=?",
+      "params": [
+        "DV-01199"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3146",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23007,
+      "language": "vi",
+      "category": "weighted_pool",
+      "sql": "SELECT s.basic*c.basic+s.advanced*c.advanced+s.special*c.special+s.residential*c.residential+s.commercial*c.commercial+s.public*c.public,c.basic+c.advanced+c.special+c.residential+c.commercial+c.public FROM civic s JOIN counts c USING(id) WHERE id=?",
+      "params": [
+        "DV-01199"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "49.94",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23008,
+      "language": "vi",
+      "category": "tail_lookup",
+      "sql": "SELECT ward FROM civic WHERE id=?",
+      "params": [
+        "DV-01200"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "P0050",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23009,
+      "language": "vi",
+      "category": "multi_filter",
+      "sql": "SELECT count(*) FROM civic WHERE metric='Hài lòng' AND city='Huế' AND status='Đã xác nhận' AND basic>=80",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "31",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23010,
+      "language": "vi",
+      "category": "group_rank",
+      "sql": "SELECT ward FROM scores WHERE period='2028-12' AND metric='Hài lòng' ORDER BY all_sum DESC,ward LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "P0006",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23011,
+      "language": "vi",
+      "category": "date_scope",
+      "sql": "SELECT sum(respondents) FROM civic WHERE metric='Đúng hạn' AND city='Cần Thơ' AND period BETWEEN '2028-10' AND '2028-12'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "77856",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23012,
+      "language": "vi",
+      "category": "conditional_percentage",
+      "sql": "SELECT sum(status='Tạm tính'),count(*) FROM civic",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "1.00",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23013,
+      "language": "vi",
+      "category": "paired_metric",
+      "sql": "SELECT a.all_sum-b.all_sum,8 FROM scores a JOIN scores b ON a.ward=b.ward AND a.period=b.period WHERE a.ward=? AND a.period='2028-12' AND a.metric='Hài lòng' AND b.metric='Đúng hạn'",
+      "params": [
+        "P0050"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "10.60",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23014,
+      "language": "vi",
+      "category": "cross_sheet_archive",
+      "sql": "SELECT score FROM archive WHERE id='OLD-00200'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "21",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23015,
+      "language": "vi",
+      "category": "unavailable_field",
+      "sql": "SELECT NULL",
+      "params": [],
+      "presentation": {
+        "kind": "empty"
+      },
+      "answer": "",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23016,
+      "language": "en",
+      "category": "all_vs_leaf_gap",
+      "sql": "SELECT all_sum/8.0-leaf_sum/6.0 FROM scores WHERE id=?",
+      "params": [
+        "DV-01199"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "-0.90",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23017,
+      "language": "en",
+      "category": "top_k",
+      "sql": "SELECT id FROM scores WHERE metric='Hài lòng' AND period='2028-12' AND status='Đã xác nhận' ORDER BY leaf_sum DESC,id LIMIT 3",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "DV-01185, DV-01156, DV-01153",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23018,
+      "language": "en",
+      "category": "strict_boundary",
+      "sql": "SELECT count(*) FROM civic WHERE metric='Đúng hạn' AND status='Đã xác nhận' AND water_total>75",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "101",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23019,
+      "language": "en",
+      "category": "distinct_count",
+      "sql": "SELECT count(DISTINCT ward) FROM civic",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "50",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23020,
+      "language": "en",
+      "category": "minimum_tail",
+      "sql": "SELECT id FROM civic WHERE id BETWEEN ? AND ? ORDER BY waste_total,id LIMIT 1",
+      "params": [
+        "DV-00701",
+        "DV-01200"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "DV-01173",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23021,
+      "language": "zh",
+      "category": "unicode_filter",
+      "sql": "SELECT count(*) FROM civic WHERE city='海港' AND metric='Hài lòng'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "120",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23022,
+      "language": "zh",
+      "category": "weighted_city",
+      "sql": "SELECT sum(water_total*respondents),sum(respondents) FROM civic WHERE city='海港' AND metric='Hài lòng' AND period='2028-12'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "63.16",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23023,
+      "language": "zh",
+      "category": "difference",
+      "sql": "SELECT water_total-waste_total FROM civic WHERE id=?",
+      "params": [
+        "DV-01200"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "-7.40",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23024,
+      "language": "zh",
+      "category": "nonempty_zero",
+      "sql": "SELECT count(*) FROM civic WHERE respondents=0",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "0",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23025,
+      "language": "fr",
+      "category": "mean_all_scope",
+      "sql": "SELECT all_sum,8 FROM scores WHERE id=?",
+      "params": [
+        "DV-00601"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "58.43",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23026,
+      "language": "fr",
+      "category": "leaf_scope",
+      "sql": "SELECT leaf_sum,6 FROM scores WHERE id=?",
+      "params": [
+        "DV-00601"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "57.45",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23027,
+      "language": "fr",
+      "category": "scope_count",
+      "sql": "SELECT count(*) FROM civic WHERE metric='Hài lòng' AND status='Đã xác nhận' AND period='2028-12'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "49",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23028,
+      "language": "ko",
+      "category": "cross_column_max",
+      "sql": "SELECT max(basic,advanced,special,residential,commercial,public) FROM civic WHERE id=?",
+      "params": [
+        "DV-01200"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "81.80",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23029,
+      "language": "ko",
+      "category": "sum_tail",
+      "sql": "SELECT sum(respondents) FROM civic WHERE id BETWEEN ? AND ?",
+      "params": [
+        "DV-00701",
+        "DV-01200"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1386973",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 23030,
+      "language": "ko",
+      "category": "header_position",
+      "sql": "SELECT waste_total FROM civic WHERE id=?",
+      "params": [
+        "DV-01200"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "72.50",
+      "source_suite": "23_civic_service_long"
+    },
+    {
+      "id": 24001,
+      "language": "vi",
+      "category": "fx_signed_sum",
+      "sql": "SELECT sum(net_vnd) FROM spend WHERE region=?",
+      "params": [
+        "Bắc"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1567052732625",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24002,
+      "language": "vi",
+      "category": "distinct_invoice",
+      "sql": "SELECT count(DISTINCT invoice) FROM spend WHERE region=?",
+      "params": [
+        "Bắc"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "215",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24003,
+      "language": "vi",
+      "category": "fx_signed_sum",
+      "sql": "SELECT sum(net_vnd) FROM spend WHERE region=?",
+      "params": [
+        "Trung"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1660586692285",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24004,
+      "language": "vi",
+      "category": "distinct_invoice",
+      "sql": "SELECT count(DISTINCT invoice) FROM spend WHERE region=?",
+      "params": [
+        "Trung"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "207",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24005,
+      "language": "vi",
+      "category": "fx_signed_sum",
+      "sql": "SELECT sum(net_vnd) FROM spend WHERE region=?",
+      "params": [
+        "Nam"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1769791420465",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24006,
+      "language": "vi",
+      "category": "distinct_invoice",
+      "sql": "SELECT count(DISTINCT invoice) FROM spend WHERE region=?",
+      "params": [
+        "Nam"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "222",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24007,
+      "language": "vi",
+      "category": "asof_contract",
+      "sql": "SELECT c.contract FROM lines l JOIN contracts c ON l.vendor=c.vendor AND l.day>=c.start AND l.day<c.end WHERE l.id='CT-00999'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NCC-0175-Q1",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24008,
+      "language": "vi",
+      "category": "tail_fx",
+      "sql": "SELECT f.rate FROM lines l JOIN fx f ON l.day=f.day AND l.currency=f.currency WHERE id='CT-01000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "24510",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24009,
+      "language": "vi",
+      "category": "rebate_join",
+      "sql": "SELECT sum(net_vnd*rebate),100 FROM spend WHERE sign=1 AND day>='2028-10-01'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "187222018156.20",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24010,
+      "language": "vi",
+      "category": "supplier_rank",
+      "sql": "SELECT vendor FROM spend GROUP BY vendor ORDER BY sum(net_vnd) DESC,vendor LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NCC-0158",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24011,
+      "language": "vi",
+      "category": "quarter_change",
+      "sql": "SELECT sum(CASE WHEN day>='2028-10-01' THEN net_vnd ELSE -net_vnd END) FROM spend WHERE day>='2028-07-01'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "312500495860",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24012,
+      "language": "vi",
+      "category": "currency_scope",
+      "sql": "SELECT count(*) FROM spend WHERE currency='EUR' AND day='2028-02-29'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "0",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24013,
+      "language": "vi",
+      "category": "weighted_discount",
+      "sql": "SELECT sum(amount*discount),sum(amount) FROM spend WHERE currency='USD' AND sign=1",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "7.15",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24014,
+      "language": "vi",
+      "category": "quoted_unicode_name",
+      "sql": "SELECT v.name FROM lines l JOIN vendors v USING(vendor) WHERE id='CT-01000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "Công ty \"Sông Xanh\", chi nhánh 0040",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24015,
+      "language": "vi",
+      "category": "unavailable_field",
+      "sql": "SELECT NULL",
+      "params": [],
+      "presentation": {
+        "kind": "empty"
+      },
+      "answer": "",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24016,
+      "language": "en",
+      "category": "top_three_concentration",
+      "sql": "WITH x AS (SELECT vendor,sum(net_vnd) n FROM spend GROUP BY vendor ORDER BY n DESC,vendor LIMIT 3) SELECT (SELECT sum(n) FROM x),(SELECT sum(net_vnd) FROM spend)",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "4.47",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24017,
+      "language": "en",
+      "category": "reconciliation",
+      "sql": "SELECT sum(amount*rate*sign-net_vnd) FROM spend",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "513740334445",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24018,
+      "language": "en",
+      "category": "cancelled_fx",
+      "sql": "SELECT l.amount*f.rate*(100-discount)/100*sign FROM lines l JOIN fx f ON l.day=f.day AND l.currency=f.currency WHERE id='CT-00031'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2399976000",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24019,
+      "language": "en",
+      "category": "contract_boundary",
+      "sql": "SELECT contract FROM contracts WHERE vendor='NCC-0001' AND start<='2028-04-01' AND end>'2028-04-01'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NCC-0001-Q2",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24020,
+      "language": "en",
+      "category": "average_invoice",
+      "sql": "SELECT sum(net_vnd),count(DISTINCT invoice) FROM spend",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "12786471437.31",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24021,
+      "language": "zh",
+      "category": "overseas_sum",
+      "sql": "SELECT sum(net_vnd) FROM spend WHERE region='海外'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1395804873280",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24022,
+      "language": "zh",
+      "category": "credit_count",
+      "sql": "SELECT count(*) FROM spend WHERE sign=-1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "42",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24023,
+      "language": "zh",
+      "category": "priority_share",
+      "sql": "SELECT sum(CASE WHEN tier='Ưu tiên' THEN net_vnd ELSE 0 END),sum(net_vnd) FROM spend WHERE sign=1",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "11.25",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24024,
+      "language": "zh",
+      "category": "tail_contract_rebate",
+      "sql": "SELECT c.rebate FROM lines l JOIN contracts c ON l.vendor=c.vendor AND l.day>=c.start AND l.day<c.end WHERE id='CT-00999'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "13",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24025,
+      "language": "fr",
+      "category": "euro_net",
+      "sql": "SELECT sum(net_vnd) FROM spend WHERE currency='EUR'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3269518302650",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24026,
+      "language": "fr",
+      "category": "vendor_cardinality",
+      "sql": "SELECT count(DISTINCT vendor) FROM spend",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "200",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24027,
+      "language": "fr",
+      "category": "negative_vendor",
+      "sql": "SELECT count(*) FROM (SELECT vendor FROM spend GROUP BY vendor HAVING sum(net_vnd)<0)",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "4",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24028,
+      "language": "ko",
+      "category": "rare_date",
+      "sql": "SELECT coalesce(sum(net_vnd),0) FROM spend WHERE day='2028-12-31'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "38286455115",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24029,
+      "language": "ko",
+      "category": "amount_ratio",
+      "sql": "SELECT amount,units FROM lines WHERE id='CT-01000'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "24690.00",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 24030,
+      "language": "ko",
+      "category": "top_list",
+      "sql": "SELECT vendor FROM spend GROUP BY vendor ORDER BY sum(net_vnd) DESC,vendor LIMIT 3",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NCC-0158, NCC-0152, NCC-0014",
+      "source_suite": "24_procurement_temporal_long"
+    },
+    {
+      "id": 25001,
+      "language": "vi",
+      "category": "net_energy",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Bắc"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "84667",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25002,
+      "language": "vi",
+      "category": "asof_tariff_cost",
+      "sql": "SELECT sum(net_cost) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Bắc"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "190909280",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25003,
+      "language": "vi",
+      "category": "net_energy",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Trung"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "82754",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25004,
+      "language": "vi",
+      "category": "asof_tariff_cost",
+      "sql": "SELECT sum(net_cost) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Trung"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "184290988",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25005,
+      "language": "vi",
+      "category": "net_energy",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Nam"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "88723",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25006,
+      "language": "vi",
+      "category": "asof_tariff_cost",
+      "sql": "SELECT sum(net_cost) FROM valid_energy WHERE region=?",
+      "params": [
+        "Miền Nam"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "189185775",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25007,
+      "language": "vi",
+      "category": "weighted_unit_price",
+      "sql": "SELECT sum(net_cost),sum(net_kwh) FROM valid_energy WHERE net_kwh>0",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "2212.02",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25008,
+      "language": "vi",
+      "category": "power_not_energy",
+      "sql": "SELECT max(peak_kw) FROM readings",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "933",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25009,
+      "language": "vi",
+      "category": "overlap_distinct",
+      "sql": "SELECT count(*) FROM affected",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "94",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25010,
+      "language": "vi",
+      "category": "month_boundary",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE at>='2028-02-01 00:00:00'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "173627",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25011,
+      "language": "vi",
+      "category": "tail_lookup",
+      "sql": "SELECT export_kwh FROM readings WHERE id=?",
+      "params": [
+        "ĐĐ-01000"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "34",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25012,
+      "language": "vi",
+      "category": "missing_not_zero",
+      "sql": "SELECT count(*) FROM readings WHERE import_kwh IS NULL",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "4",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25013,
+      "language": "vi",
+      "category": "renewable_share",
+      "sql": "SELECT sum(solar_kwh),sum(solar_kwh+wind_kwh) FROM valid_energy",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "44.18",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25014,
+      "language": "vi",
+      "category": "plant_rank",
+      "sql": "SELECT plant FROM valid_energy GROUP BY plant ORDER BY sum(net_cost) DESC,plant LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NM-005",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25015,
+      "language": "vi",
+      "category": "unavailable_field",
+      "sql": "SELECT NULL",
+      "params": [],
+      "presentation": {
+        "kind": "empty"
+      },
+      "answer": "",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25016,
+      "language": "en",
+      "category": "half_open_price",
+      "sql": "SELECT tariff FROM tariffs WHERE plant='NM-040' AND start<='2028-01-20 10:00:00' AND end>'2028-01-20 10:00:00'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2141",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25017,
+      "language": "en",
+      "category": "estimated_exclusion",
+      "sql": "SELECT count(*) FROM readings WHERE quality='Ước tính'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "7",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25018,
+      "language": "en",
+      "category": "carbon_conversion",
+      "sql": "SELECT sum(net_kwh*carbon),1000 FROM valid_energy WHERE net_kwh>0",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "156329.43",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25019,
+      "language": "en",
+      "category": "storage_balance",
+      "sql": "SELECT sum(discharge-charge) FROM valid_energy",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "-1501",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25020,
+      "language": "en",
+      "category": "tail_region",
+      "sql": "SELECT p.region FROM readings r JOIN plants p USING(plant) WHERE id='ĐĐ-00999'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "東部",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25021,
+      "language": "zh",
+      "category": "east_region",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE region='東部'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "80838",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25022,
+      "language": "zh",
+      "category": "negative_flow",
+      "sql": "SELECT count(*) FROM valid_energy WHERE net_kwh<0",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "94",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25023,
+      "language": "zh",
+      "category": "zero_distinction",
+      "sql": "SELECT count(*) FROM readings WHERE import_kwh=0",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25024,
+      "language": "zh",
+      "category": "peak_time",
+      "sql": "SELECT at FROM readings WHERE plant='NM-040' ORDER BY peak_kw DESC,at LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "2028-02-12 00:00:00",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25025,
+      "language": "fr",
+      "category": "sum_tail",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE id BETWEEN '??-00001' AND 'ĐĐ-01000'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "336982",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25026,
+      "language": "fr",
+      "category": "distinct_outage",
+      "sql": "SELECT count(DISTINCT plant) FROM outages WHERE status='Đã xác minh'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "40",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25027,
+      "language": "fr",
+      "category": "average_peak",
+      "sql": "SELECT sum(peak_kw),count(*) FROM readings WHERE plant='NM-040'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "498.20",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25028,
+      "language": "ko",
+      "category": "hour_count",
+      "sql": "SELECT count(*) FROM readings WHERE plant='NM-040'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "25",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25029,
+      "language": "ko",
+      "category": "top_three_energy",
+      "sql": "SELECT plant FROM valid_energy GROUP BY plant ORDER BY sum(net_kwh) DESC,plant LIMIT 3",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "NM-006, NM-029, NM-005",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 25030,
+      "language": "ko",
+      "category": "elapsed_outage",
+      "sql": "SELECT sum((strftime('%s',end)-strftime('%s',start))/60) FROM outages WHERE status='Đã xác minh'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "95310",
+      "source_suite": "25_energy_intervals_long"
+    },
+    {
+      "id": 26001,
+      "language": "vi",
+      "category": "deduplicated_final_state",
+      "sql": "SELECT count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Bắc"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "74",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26002,
+      "language": "vi",
+      "category": "on_time_rate",
+      "sql": "SELECT sum(on_time),count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Bắc"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "39.19",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26003,
+      "language": "vi",
+      "category": "deduplicated_final_state",
+      "sql": "SELECT count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Trung"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "97",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26004,
+      "language": "vi",
+      "category": "on_time_rate",
+      "sql": "SELECT sum(on_time),count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Trung"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "52.58",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26005,
+      "language": "vi",
+      "category": "deduplicated_final_state",
+      "sql": "SELECT count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Nam"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "114",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26006,
+      "language": "vi",
+      "category": "on_time_rate",
+      "sql": "SELECT sum(on_time),count(*) FROM delivery WHERE region=? AND status='Đã giao'",
+      "params": [
+        "Nam"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "50.88",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26007,
+      "language": "vi",
+      "category": "version_correction",
+      "sql": "SELECT status FROM delivery WHERE shipment='VD-000500'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "Đã giao",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26008,
+      "language": "vi",
+      "category": "raw_vs_unique",
+      "sql": "SELECT count(*)-count(DISTINCT event) FROM events",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "50",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26009,
+      "language": "vi",
+      "category": "transit_mean",
+      "sql": "SELECT sum(elapsed_hours),count(*) FROM delivery WHERE service='Nhanh' AND status='Đã giao'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "69.45",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26010,
+      "language": "vi",
+      "category": "failed_first_attempt",
+      "sql": "SELECT count(*) FROM delivery d WHERE status='Đã giao' AND EXISTS (SELECT 1 FROM canonical_events e WHERE e.shipment=d.shipment AND e.status='Giao thất bại' AND e.at<d.final_at)",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "57",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26011,
+      "language": "vi",
+      "category": "cod_sum",
+      "sql": "SELECT sum(cod) FROM delivery WHERE status='Hoàn trả'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "166101000",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26012,
+      "language": "vi",
+      "category": "weight_conversion",
+      "sql": "SELECT sum(grams),1000 FROM delivery WHERE on_time=1",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "2988.40",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26013,
+      "language": "vi",
+      "category": "late_rank",
+      "sql": "SELECT shipment FROM delivery WHERE status='Đã giao' ORDER BY strftime('%s',final_at)-strftime('%s',due) DESC,shipment LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "VD-000072",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26014,
+      "language": "vi",
+      "category": "cross_month",
+      "sql": "SELECT count(*) FROM delivery WHERE created<'2028-03-01 00:00:00' AND final_at>='2028-03-01 00:00:00' AND final_at<'2028-04-01 00:00:00'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "14",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26015,
+      "language": "vi",
+      "category": "unavailable_field",
+      "sql": "SELECT NULL",
+      "params": [],
+      "presentation": {
+        "kind": "empty"
+      },
+      "answer": "",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26016,
+      "language": "en",
+      "category": "latest_not_last_row",
+      "sql": "SELECT revision FROM canonical_events WHERE event='E-000500-4'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26017,
+      "language": "en",
+      "category": "cancelled_state",
+      "sql": "SELECT count(*) FROM delivery WHERE status='Đã hủy'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "26",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26018,
+      "language": "en",
+      "category": "p95_nearest_rank",
+      "sql": "WITH x AS (SELECT elapsed_hours,row_number() OVER(ORDER BY elapsed_hours,shipment) rn,count(*) OVER() n FROM delivery WHERE status='Đã giao') SELECT elapsed_hours FROM x WHERE rn=(95*n+99)/100",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "114",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26019,
+      "language": "en",
+      "category": "count_equal_deadline",
+      "sql": "SELECT count(*) FROM delivery WHERE status='Đã giao' AND final_at=due",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "4",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26020,
+      "language": "en",
+      "category": "tail_pending",
+      "sql": "SELECT count(*) FROM delivery WHERE shipment BETWEEN 'VD-000001' AND 'VD-000500' AND status='Đang giao'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "40",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26021,
+      "language": "zh",
+      "category": "port_scope",
+      "sql": "SELECT count(*) FROM delivery WHERE region='港口' AND status='Đã giao'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "113",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26022,
+      "language": "zh",
+      "category": "return_percentage",
+      "sql": "SELECT sum(status='Hoàn trả'),count(*) FROM delivery WHERE region='港口'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "7.30",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26023,
+      "language": "zh",
+      "category": "gram_tail",
+      "sql": "SELECT grams FROM shipments WHERE shipment='VD-000500'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "21681",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26024,
+      "language": "zh",
+      "category": "service_scope",
+      "sql": "SELECT count(*) FROM delivery WHERE service='Nhanh' AND status='Đã giao' AND final_at>due",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "92",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26025,
+      "language": "fr",
+      "category": "event_count",
+      "sql": "SELECT count(*) FROM canonical_events",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "2000",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26026,
+      "language": "fr",
+      "category": "mean_lateness",
+      "sql": "SELECT sum((strftime('%s',final_at)-strftime('%s',due))/3600),count(*) FROM delivery WHERE status='Đã giao' AND final_at>due",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "29.40",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26027,
+      "language": "fr",
+      "category": "depot_rank",
+      "sql": "SELECT depot FROM delivery WHERE status='Đã giao' GROUP BY depot ORDER BY count(*) DESC,depot LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "K-0065",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26028,
+      "language": "ko",
+      "category": "tail_final_date",
+      "sql": "SELECT final_at FROM delivery WHERE shipment='VD-000500'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "2028-04-11 23:00:00",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26029,
+      "language": "ko",
+      "category": "top_late_list",
+      "sql": "SELECT shipment FROM delivery WHERE status='Đã giao' AND final_at>due ORDER BY strftime('%s',final_at)-strftime('%s',due) DESC,shipment LIMIT 3",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "VD-000072, VD-000294, VD-000300",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 26030,
+      "language": "ko",
+      "category": "distinct_created_date",
+      "sql": "SELECT count(DISTINCT date(created)) FROM shipments",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "60",
+      "source_suite": "26_logistics_event_versions"
+    },
+    {
+      "id": 27001,
+      "language": "vi",
+      "category": "unit_harmonized_mean",
+      "sql": "SELECT sum(ug),count(*) FROM quantified WHERE analyte=?",
+      "params": [
+        "Chì"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "76.59",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27002,
+      "language": "vi",
+      "category": "limit_exceedance",
+      "sql": "SELECT count(*) FROM quantified WHERE analyte=? AND ug>limit_ug",
+      "params": [
+        "Chì"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "305",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27003,
+      "language": "vi",
+      "category": "unit_harmonized_mean",
+      "sql": "SELECT sum(ug),count(*) FROM quantified WHERE analyte=?",
+      "params": [
+        "Đồng"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "2588.13",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27004,
+      "language": "vi",
+      "category": "limit_exceedance",
+      "sql": "SELECT count(*) FROM quantified WHERE analyte=? AND ug>limit_ug",
+      "params": [
+        "Đồng"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "286",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27005,
+      "language": "vi",
+      "category": "unit_harmonized_mean",
+      "sql": "SELECT sum(ug),count(*) FROM quantified WHERE analyte=?",
+      "params": [
+        "Nitrat"
+      ],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "9920.79",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27006,
+      "language": "vi",
+      "category": "limit_exceedance",
+      "sql": "SELECT count(*) FROM quantified WHERE analyte=? AND ug>limit_ug",
+      "params": [
+        "Nitrat"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "225",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27007,
+      "language": "vi",
+      "category": "volume_weighted",
+      "sql": "SELECT sum(ug*volume),sum(volume) FROM quantified WHERE analyte='Chì'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "76.50",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27008,
+      "language": "vi",
+      "category": "censored_not_zero",
+      "sql": "SELECT count(*) FROM results WHERE qualifier='<'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "88",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27009,
+      "language": "vi",
+      "category": "missing_vs_censored",
+      "sql": "SELECT count(*) FROM results WHERE result IS NULL",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "5",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27010,
+      "language": "vi",
+      "category": "wide_tail_lookup",
+      "sql": "SELECT recovery FROM results WHERE id=?",
+      "params": [
+        "KQ-01500"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "95.20",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27011,
+      "language": "vi",
+      "category": "nearest_rank_p95",
+      "sql": "WITH x AS (SELECT ug,row_number() OVER(ORDER BY ug,id) rn,count(*) OVER() n FROM quantified WHERE analyte='Đồng') SELECT ug FROM x WHERE rn=(95*n+99)/100",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "4765",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27012,
+      "language": "vi",
+      "category": "median_even",
+      "sql": "WITH x AS (SELECT ug,row_number() OVER(ORDER BY ug,id) rn,count(*) OVER() n FROM quantified WHERE analyte='Nitrat') SELECT avg(ug) FROM x WHERE rn IN ((n+1)/2,(n+2)/2)",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "9833.00",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27013,
+      "language": "vi",
+      "category": "distinct_sample",
+      "sql": "SELECT count(DISTINCT sample) FROM quantified WHERE ug>limit_ug",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "450",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27014,
+      "language": "vi",
+      "category": "repeat_header_exclusion",
+      "sql": "SELECT count(*) FROM results",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "1500",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27015,
+      "language": "vi",
+      "category": "unavailable_field",
+      "sql": "SELECT NULL",
+      "params": [],
+      "presentation": {
+        "kind": "empty"
+      },
+      "answer": "",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27016,
+      "language": "en",
+      "category": "matrix_top_site",
+      "sql": "SELECT site FROM quantified WHERE analyte='Chì' AND matrix='Sông' GROUP BY site ORDER BY avg(ug) DESC,site LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "QT-0184",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27017,
+      "language": "en",
+      "category": "zero_is_quantified",
+      "sql": "SELECT count(*) FROM quantified WHERE ug=0",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "7",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27018,
+      "language": "en",
+      "category": "tail_quantified_sum",
+      "sql": "SELECT sum(ug) FROM quantified WHERE id BETWEEN ? AND ?",
+      "params": [
+        "KQ-00501",
+        "KQ-01500"
+      ],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "3814802",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27019,
+      "language": "en",
+      "category": "sample_all_analytes",
+      "sql": "SELECT count(*) FROM (SELECT sample FROM quantified GROUP BY sample HAVING count(*)=3 AND sum(ug<limit_ug)=3)",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "24",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27020,
+      "language": "en",
+      "category": "unit_diagnostic",
+      "sql": "SELECT sum(unit='mg/L'),count(*) FROM results",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "50.00",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27021,
+      "language": "zh",
+      "category": "estuary_scope",
+      "sql": "SELECT count(*) FROM quantified WHERE matrix='河口' AND ug>limit_ug",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "201",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27022,
+      "language": "zh",
+      "category": "recovery_tail",
+      "sql": "SELECT recovery FROM results WHERE id='KQ-01499'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          2
+        ]
+      },
+      "answer": "102.60",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27023,
+      "language": "zh",
+      "category": "rejected_count",
+      "sql": "SELECT count(*) FROM results WHERE quality='Rejeté'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "51",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27024,
+      "language": "zh",
+      "category": "max_id",
+      "sql": "SELECT id FROM quantified WHERE analyte='Chì' ORDER BY ug DESC,id LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "KQ-00025",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27025,
+      "language": "fr",
+      "category": "lake_mean",
+      "sql": "SELECT sum(ug),count(*) FROM quantified WHERE analyte='Nitrat' AND matrix='Hồ'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
+      },
+      "answer": "9696.82",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27026,
+      "language": "fr",
+      "category": "censor_ratio",
+      "sql": "SELECT sum(qualifier='<'),count(*) FROM results WHERE analyte='Chì' AND quality='Valide'",
+      "params": [],
+      "presentation": {
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 100
+      },
+      "answer": "5.80",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27027,
+      "language": "fr",
+      "category": "maximum_batch",
+      "sql": "SELECT batch FROM quantified WHERE ug>limit_ug GROUP BY batch ORDER BY count(*) DESC,batch LIMIT 1",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "L-001",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27028,
+      "language": "ko",
+      "category": "lower_bound_exclusion",
+      "sql": "SELECT count(*) FROM quantified WHERE analyte='Đồng' AND ug=limit_ug",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "int"
+        ]
+      },
+      "answer": "0",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27029,
+      "language": "ko",
+      "category": "middle_lookup",
+      "sql": "SELECT instrument FROM results WHERE id='KQ-00750'",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "Máy-07",
+      "source_suite": "27_lab_units_censoring_long"
+    },
+    {
+      "id": 27030,
+      "language": "ko",
+      "category": "top_three_sites",
+      "sql": "SELECT site FROM quantified WHERE ug>limit_ug GROUP BY site ORDER BY count(*) DESC,site LIMIT 3",
+      "params": [],
+      "presentation": {
+        "kind": "scalar",
+        "formats": [
+          "text"
+        ]
+      },
+      "answer": "QT-0045, QT-0059, QT-0073",
+      "source_suite": "27_lab_units_censoring_long"
+    }
+  ]
+}

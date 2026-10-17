@@ -9,40 +9,40 @@
     "fr": 15,
     "ko": 15
   },
-  "ag_instruction_sha256": "3c07bce4097e1b154de9d7b753d3f6eb3354b060e4f9ea1de09ec8d31e8d41b1",
+  "ag_instruction_sha256": "ea829c68ef2c2c39d0c59a7f0fc657e573c84be62b471b50b15b367313e5840b",
   "suites": [
     {
       "name": "23_civic_service_long",
       "questions": 30,
-      "main_records": 12000,
+      "main_records": 1200,
       "sheets": 3,
       "spec": "C:\\Users\\tyranno\\Documents\\Project\\AI_TaiNangTre-AI26C0054-SiFar_TDTU2\\outputs\\long-multilingual\\specs\\23_civic_service_long.json"
     },
     {
       "name": "24_procurement_temporal_long",
       "questions": 30,
-      "main_records": 16000,
+      "main_records": 1000,
       "sheets": 4,
       "spec": "C:\\Users\\tyranno\\Documents\\Project\\AI_TaiNangTre-AI26C0054-SiFar_TDTU2\\outputs\\long-multilingual\\specs\\24_procurement_temporal_long.json"
     },
     {
       "name": "25_energy_intervals_long",
       "questions": 30,
-      "main_records": 20000,
+      "main_records": 1000,
       "sheets": 4,
       "spec": "C:\\Users\\tyranno\\Documents\\Project\\AI_TaiNangTre-AI26C0054-SiFar_TDTU2\\outputs\\long-multilingual\\specs\\25_energy_intervals_long.json"
     },
     {
       "name": "26_logistics_event_versions",
       "questions": 30,
-      "main_records": 32800,
+      "main_records": 500,
       "sheets": 3,
       "spec": "C:\\Users\\tyranno\\Documents\\Project\\AI_TaiNangTre-AI26C0054-SiFar_TDTU2\\outputs\\long-multilingual\\specs\\26_logistics_event_versions.json"
     },
     {
       "name": "27_lab_units_censoring_long",
       "questions": 30,
-      "main_records": 30000,
+      "main_records": 1500,
       "sheets": 3,
       "spec": "C:\\Users\\tyranno\\Documents\\Project\\AI_TaiNangTre-AI26C0054-SiFar_TDTU2\\outputs\\long-multilingual\\specs\\27_lab_units_censoring_long.json"
     }

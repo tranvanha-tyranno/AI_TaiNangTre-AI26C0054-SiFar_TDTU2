@@ -15,8 +15,8 @@
       "table": "civic",
       "sheet": "Khảo sát 2028",
       "first_row": 4,
-      "last_row": 12003,
-      "record_count": 12000,
+      "last_row": 1203,
+      "record_count": 1200,
       "skip_rows": [],
       "columns": [
         {
@@ -109,15 +109,14 @@
           "type": "TEXT",
           "column": 15
         }
-      ],
-      "content_sha256": "ad7af168e2328c6748c9b8a0ff54007e4397c9bae067afb816d74e64804caef0"
+      ]
     },
     {
       "table": "counts",
       "sheet": "Cỡ mẫu",
       "first_row": 2,
-      "last_row": 12001,
-      "record_count": 12000,
+      "last_row": 1201,
+      "record_count": 1200,
       "skip_rows": [],
       "columns": [
         {
@@ -174,15 +173,14 @@
           "type": "INTEGER",
           "column": 9
         }
-      ],
-      "content_sha256": "06252594cd2c1389fec5783af20b146837ca060468152de2c623a0616f4cb217"
+      ]
     },
     {
       "table": "archive",
       "sheet": "Lưu trữ 2027",
       "first_row": 2,
-      "last_row": 2401,
-      "record_count": 2400,
+      "last_row": 201,
+      "record_count": 200,
       "skip_rows": [],
       "columns": [
         {
@@ -221,8 +219,7 @@
           "type": "INTEGER",
           "column": 6
         }
-      ],
-      "content_sha256": "db27f1e6b5a46866c0ec6dd1f5573c1638fcc7bf8dc5e99f9919a937967e6837"
+      ]
     }
   ],
   "agrees_with": "AGENTS.md sections 3, 11.1, 11.2; synthetic benchmark, not an official scoring replica",

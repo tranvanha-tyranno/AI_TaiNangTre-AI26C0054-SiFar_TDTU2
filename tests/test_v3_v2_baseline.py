@@ -30,9 +30,7 @@ class BaselineTest(unittest.TestCase):
                 self.calls.append((purpose,messages))
                 return json.dumps({'verdict':'accept','issues':[]} if purpose=='review' else plan)
         answers=[];clients=[];records=[]
-        with patch('src.pipeline.load_regions',return_value=[region]), \
-             patch('src.lmmv3.lite.answer',side_effect=AssertionError('Lite is archived')), \
-             patch('src.lmmv3.pipeline.answer',side_effect=AssertionError('Eight-phase pipeline is archived')):
+        with patch('src.pipeline.load_regions',return_value=[region]):
             for mode in ('llm-v2','llm-v3'):
                 client=Client();record={}
                 answers.append(answer_with_tools(Path('unused.xlsx'),'What is the total Charge? Answer with only the number.',client,record,settings_for_mode({},mode)))

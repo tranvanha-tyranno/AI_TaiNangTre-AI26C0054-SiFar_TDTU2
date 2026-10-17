@@ -2,7 +2,7 @@
 
 Nguồn: AGENTS.md, mục 4 của đề thi và [giải đáp BTC](docs/AI2026_Giai_dap_thac_mac_Vong_khu_vuc_bang_C.pdf), câu 03–07. Cập nhật ngày 16/10/2026. Dùng các giới hạn này làm tiêu chí khi thiết kế, triển khai và đánh giá giải pháp; đây không phải chứng nhận mã nguồn hiện tại đã đáp ứng.
 
-- Nếu dùng LLM để trả lời, phải hỗ trợ model `qwen/qwen3-7-flash` qua OpenRouter theo đề thi.
+- Model trong hướng dẫn nộp bài là `qwen/qwen3.7-flash`; dùng model và base URL do BTC truyền qua CLI, ưu tiên trên ENV/config. Cách viết `qwen/qwen3-7-flash` trong tài liệu cũ được thay bằng tên chính thức này.
 - Cấu hình thông tin truy cập API từ bên ngoài; không hard-code hoặc commit khóa API.
 - Tổng chi phí LLM không vượt quá 0.10 USD/câu hỏi cho mỗi lần chấm, bao gồm retry; BTC xác định theo mức sử dụng API ghi nhận.
 - Tối đa 40 phút cho 20 câu hỏi, từ khi bắt đầu chạy đến khi tạo xong `submission.csv`, bao gồm xử lý dữ liệu và gọi API. Đây là giới hạn tổng thời gian, không phải hạn cứng 2 phút cho từng câu.

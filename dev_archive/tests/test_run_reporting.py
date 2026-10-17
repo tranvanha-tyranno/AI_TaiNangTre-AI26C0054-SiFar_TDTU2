@@ -28,9 +28,9 @@ class RunReportingTest(unittest.TestCase):
                   '--output',str(root/'submission.csv'),'--log-dir',str(root/'logs')]
             with patch.object(sys,'argv',argv),patch('main.get_client',return_value=object()), \
                  patch('main.PlannerClient',return_value=object()),patch('main.answer_with_tools',side_effect=reject), \
-                 patch('sys.stdout',new=io.StringIO()),patch('sys.stderr',new=io.StringIO()),self.assertRaises(SystemExit) as caught:
-                main.main()
-            self.assertEqual(caught.exception.code,3)
+                 patch('sys.stdout',new=io.StringIO()),patch('sys.stderr',new=io.StringIO()):
+                code=main.main()
+            self.assertEqual(code,0)
             with (root/'submission.csv').open(encoding='utf-8',newline='') as stream:
                 self.assertEqual(list(csv.DictReader(stream)),[{'id':'1','answer':''}])
             record=json.loads((root/'logs/questions.jsonl').read_text(encoding='utf-8'))

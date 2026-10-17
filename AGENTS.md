@@ -130,7 +130,7 @@ Các ô dưới đây là tiêu chí cần xác minh trên bản nộp cuối; k
 
 ## 9. Bộ kiểm thử trong `Test/` (thêm)
 
-Tại thời điểm cập nhật, `Test/README.md` ghi **22 suite, 512 câu**. Mỗi suite có `xlsx_files/`, `queries.json`, `expected_submission.csv` và README. Nhóm đầu:
+At the current update, `Test/README.md` lists **28 suites and 662 questions**; suites 23-27 are compact (about 14,821 physical rows total), and `Test/28_long_multilingual_combined/` combines 150 questions across five workbooks. Each suite has `xlsx_files/`, `queries.json`, `expected_submission.csv`, and a README.
 
 | Suite | Nội dung kiểm tra |
 |-------|-------------------|
@@ -227,3 +227,35 @@ Trên Bao_LMMv3, `--mode llm-v3` hiện dispatch sang `src/lmmv3/lite.py`, versi
 Trên nhánh thử nghiệm `codex/llmv3-reliability` mới: cờ `v3_reliability: true` bật version `lmmv3-v2-reliability-v1`, sửa so sánh số text/boolean, báo count boolean, chuẩn hóa lag khai báo rõ, bổ sung section provenance và hướng dẫn cú pháp. Baseline nguyên trạng ở `codex/llmv3-restored-25` commit `e07698f`. Không đổi RAG ranking hoặc tăng ngân sách; chưa benchmark API, không tuyên bố đã sửa hết sáu câu. Xem `docs/LMMv3_RELIABILITY.md`. Mô tả dưới đây áp dụng khi cờ tắt hoặc trên baseline.
 
 Mục 15 là mốc nền; hiện mặc định `--mode llm-v3` dùng version `lmmv3-v2-dedup-v1`, cùng pipeline/cấu hình LLMv2 và chỉ thêm `src/context_dedup.py` tại ranh giới gửi request. Tắt bằng `v3_deduplicate_context: false` để khôi phục `lmmv3-v2-baseline-v1`. Không đổi lựa chọn bảng, kế hoạch, phép tính hay chính sách review trong lần này. Xem docs/LMMv3_CONTEXT_DEDUP.md. Số đo offline là ký tự; chưa chứng minh tiết kiệm token thực hoặc giữ điểm. Tiếp tục phát triển từng thay đổi có đối chứng.
+## RAG từ log lỗi — nhánh improve/error-memory-rag
+
+`llm-v3` có thêm `v3_error_memory`, version `lmmv3-v2-error-memory-v1`; `llm`/`llm-v2` giữ baseline. Catalog `src/error_lessons.py` chỉ chứa hướng dẫn tổng quát, snapshot `config/error_memory.json` chỉ chứa lesson ID/support. `scripts/learn_error_memory.py` phân tích offline log, giữ report chứa reference ở outputs, không đưa đáp án/ID câu hỏi/tên file/raw reviewer vào memory. Runtime chỉ đọc snapshot, truy xuất tối đa theo config cho plan/review/repair, ghi hash và bài học đã dùng. Tắt `v3_error_memory` để đối chứng. Chỉ kích hoạt family đã phân tích; lỗi mới cần đọc trace và bổ sung catalog, không tự coi mọi mismatch hay reviewer là nguyên nhân đã xác nhận. Xem [thiết kế và phân tích](docs/ERROR_MEMORY_RAG.md). Kiểm thử offline/client giả không chứng minh điểm API, tiết kiệm token hoặc đạt tài nguyên. Không merge main nếu chưa được yêu cầu.
+
+Bản hiện tại trên nhánh là `lmmv3-v2-error-memory-v2`: thêm bài học complete read scope, record input tường minh, section argmax; preview hiển thị profile mã/năm từ workbook và guard scan thiếu cho đếm mã/annual rows không giới hạn. Record(input) chiếu từng dòng; record không input giữ scalar-only, không gắn ngầm dataset. Giữ nhãn từ ô Excel, không fuzzy match theo đáp án. Bốn câu sai của run v1 đã chạy API riêng đạt 4/4, là kiểm tra hồi quy trên bộ dùng sửa; chưa chứng minh tập ẩn. Xem cập nhật v2 trong tài liệu liên kết.
+
+Kiểm chứng v2: run đầy đủ `20261017-final-rag-v2` 29/30 strict exact match, bốn câu 7/12/17/19 đúng. Sau sửa metadata sheet (record chấp nhận literal trùng chính xác tên sheet thực, nguồn `sheet!_sheet`), câu 23 chạy riêng đúng; bốn câu mục tiêu chạy lại vẫn 4/4. 185 unittest qua; chưa chạy lại đủ 30 sau bản vá cuối, không ghép điểm run con thành 30/30.
+
+Học bổ sung offline từ run `20261017-005400-c32298` (50 câu hai public, strict 48/50): đọc hai câu lỗi cuối và 28 câu phục hồi lỗi, đối chiếu workbook/trace; reviewer có phản đối mâu thuẫn hoặc bỏ sót numeric filter. Snapshot ở mốc đó 19 family, thêm ngưỡng so sánh, header/missing, đối chiếu review với trace và binding output. Không tự coi reviewer là ground truth, không bỏ review gate, không chép reference/ID/file-specific rule vào memory. Xem phần cập nhật mới nhất ở `docs/ERROR_MEMORY_RAG.md`.
+
+Mốc hiện tại: run đầy đủ `20261017-015942-public2goal` đạt **30/30 strict exact match Public_data_2**. Snapshot 21 family; v3 RAG tối đa 8 API/4 repair trong ledger cũ, thêm chuẩn hóa cú pháp predicate/literal, guard nhầm nhãn header với cột số và tách hướng dẫn execution khỏi review. Không có resolver theo ID/file, không đổi review revise thành accept. 100% là kết quả trên bộ public đã dùng sửa, không chứng nhận tập ẩn hay tính ổn định mọi lần chạy. Không merge main nếu chưa được yêu cầu. Chi tiết/hash/cost/artifacts ở tài liệu RAG.
+
+Đánh giá holdout mới đã dừng do bằng chứng overfit: suite 23 26/30 baseline nhưng 22/30 sau học; suite 24 10/30, suite 25 13/30, suite 26 6/30. Bộ gộp 150 câu bị timeout sau 60 câu nên loại khỏi điểm. Không tiếp tục thêm bài học theo từng lỗi; cần thay đổi kiến trúc nếu muốn tăng tổng quát hóa.
+
+## Chạy theo hướng dẫn nộp bài — 17/10/2026
+
+Đã có `docker-build.ps1`, `docker-run.ps1`, `docker-test.ps1` ở gốc. Build Linux amd64, ENTRYPOINT Python nhận đủ sáu tham số BTC; model chính thức `qwen/qwen3.7-flash`, tham số CLI ưu tiên ENV/config. Run script đọc khóa từ ENV hoặc `.env` cục bộ, input mount readonly, output/log riêng, giới hạn 6 CPU/4 GB. Không tạo ZIP theo yêu cầu người dùng. Sau khi CSV đủ ID được ghi, kể cả answer rỗng cho câu lỗi, CLI thoát 0; lỗi input/setup/write vẫn khác 0. ID số sắp tăng dần ở mọi mode. Đã build image thật và kiểm tra CLI/SDK trong container bằng API giả lập local, mạng ngoài tắt; không phải benchmark OpenRouter thật. Xem README mục 8.
+
+README hiện đặt lệnh Docker một dòng ở đầu. `docker-run.ps1 -Concurrency 2` cho phép hai câu song song, mặc định vẫn 1. Đo cùng 6 câu/cùng image: nối tiếp 95,7s đúng 6/6; hai luồng 49,2s đúng 5/6. Không tuyên bố giữ điểm khi tăng concurrency hoặc quy nguyên nhân sai cho concurrency chỉ từ một cặp chạy; báo cáo `outputs/docker-speed-check/comparison.json`. Đã sửa đường dẫn mặc định PowerShell -File bằng cách resolve sau param block; test script kiểm tra cả cách gọi đó và sáu tham số.
+
+Theo yêu cầu làm rõ của người dùng, README hiện chỉ tập trung chạy trực tiếp bằng Docker theo sáu tham số BTC trên terminal: cấu trúc input/output, build, docker run và xem CSV. Không yêu cầu script hỗ trợ hay `.env`, không đặt key/tham số runtime trong Dockerfile. Hướng dẫn phát triển trước đó được giữ tại `docs/DEVELOPMENT_GUIDE.md`; các script cũ chỉ là tiện ích tùy chọn, không phải giao diện bắt buộc khi chấm.
+
+Chuẩn I/O duy nhất hiện tại: `input/queries.json`, `input/xlsx_files/`, `output/submission.csv`, `output/logs/`. main/config không mặc định dataset public; config được tìm tương đối mã nguồn, I/O tương đối cwd. Image đặt cwd `/`, entrypoint `python /app/main.py`, nên mặc định thành `/input/...`, `/output/...` đúng mount BTC. Script tùy chọn cũng dùng input/output này. Workspace đã có bản sao Public_data_1 trong input cho người dùng thử, thư mục này bị gitignore/dockerignore. Khi đổi dataset chỉ thay nội dung input; giữ nguyên đường dẫn trong lệnh Docker. README liệt kê toàn bộ file, sáu tham số và chỗ điền key trên terminal.
+
+## Bản CLI nộp bài sau dọn — thay hướng dẫn log/mode cũ
+
+Theo yêu cầu người dùng, main chỉ xuất CSV tại output; đã bỏ --log-dir và toàn bộ file JSON/JSONL/report/hashes. Chỉ CLI llm-v3 còn được quảng bá/nhận, giữ cùng pipeline và RAG hiện tại. Trace/evidence/ledger chỉ tồn tại trong bộ nhớ khi cần repair/review và kiểm soát chi phí, không lưu file. Các module src dashboard_analysis, diagnostics, run_context, qa_engine, excel_parser và thư mục lmmv3 cũ cùng dashboard/tests lịch sử được dời sang dev_archive, không đưa vào bài nộp. Runtime deps chỉ openpyxl/PyYAML/OpenAI SDK. Docker context dùng allowlist. Người dùng tự ZIP đúng Dockerfile, .dockerignore, README.md, requirements.txt, main.py, config/, src/; không tạo ZIP hay thư mục đóng gói. README là hướng dẫn chạy/nộp hiện tại. Không khôi phục logger/dashboard/mode cũ nếu không được yêu cầu.
+
+
+## Nâng cấp học từ lỗi và chạy lại hai public — 17/10/2026
+
+Theo yêu cầu mới của người dùng, tiếp tục học từ lỗi public. Bản `lmmv3-v2-error-memory-v3` ưu tiên bài học ánh xạ header khi cả câu hỏi và cấu trúc nhiều cấp phù hợp; loại tín hiệu đếm sai từ lượng chênh lệch “how many hours/more/percent/thousand”. Không thêm đáp án/ID/tên file/tọa độ mẫu vào memory, không tăng giới hạn API/repair/context. Snapshot vẫn 22 family. Lượt trước sửa run02 đạt 20/20 và 29/30; lượt đầy đủ sau sửa `outputs/public-goal/run03/` đạt **20/20 Public_data_1 và 30/30 Public_data_2 strict exact match**, lần lượt 132,5s/$0,017157 và 360,9s/$0,053837. Đã kiểm tra độc lập CSV đủ ID, đúng thứ tự số và khớp nguyên văn; 118 unittest offline qua. Không ghép điểm chạy con, không chứng nhận tập ẩn hay ổn định mọi lần chạy. CLI vẫn chỉ ghi CSV; không khôi phục logger/dashboard/mode cũ. Chi tiết: `docs/ERROR_MEMORY_RAG.md`, mục cập nhật mới nhất. Không merge main hay tạo ZIP.

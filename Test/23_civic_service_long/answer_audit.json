@@ -56,14 +56,14 @@
       "category": "mean_all_includes_totals",
       "sql": "SELECT all_sum,8 FROM scores WHERE id=?",
       "params": [
-        "DV-11999"
+        "DV-01199"
       ],
       "presentation": {
         "kind": "ratio",
         "digits": 2,
         "scale": 1
       },
-      "answer": "56.85"
+      "answer": "52.74"
     },
     {
       "id": 23005,
@@ -71,14 +71,14 @@
       "category": "mean_excludes_totals",
       "sql": "SELECT leaf_sum,6 FROM scores WHERE id=?",
       "params": [
-        "DV-11999"
+        "DV-01199"
       ],
       "presentation": {
         "kind": "ratio",
         "digits": 2,
         "scale": 1
       },
-      "answer": "57.50"
+      "answer": "53.63"
     },
     {
       "id": 23006,
@@ -86,7 +86,7 @@
       "category": "sum_no_double_count",
       "sql": "SELECT basic+advanced+special+residential+commercial+public FROM counts WHERE id=?",
       "params": [
-        "DV-11999"
+        "DV-01199"
       ],
       "presentation": {
         "kind": "scalar",
@@ -94,34 +94,38 @@
           "int"
         ]
       },
-      "answer": "2987"
+      "answer": "3146"
     },
     {
       "id": 23007,
       "language": "vi",
       "category": "weighted_pool",
-      "sql": "SELECT s.basic*c.basic+s.advanced*c.advanced+s.special*c.special+s.residential*c.residential+s.commercial*c.commercial+s.public*c.public,c.basic+c.advanced+c.special+c.residential+c.commercial+c.public FROM civic s JOIN counts c USING(id) WHERE id='DV-11999'",
-      "params": [],
+      "sql": "SELECT s.basic*c.basic+s.advanced*c.advanced+s.special*c.special+s.residential*c.residential+s.commercial*c.commercial+s.public*c.public,c.basic+c.advanced+c.special+c.residential+c.commercial+c.public FROM civic s JOIN counts c USING(id) WHERE id=?",
+      "params": [
+        "DV-01199"
+      ],
       "presentation": {
         "kind": "ratio",
         "digits": 2,
         "scale": 1
       },
-      "answer": "56.88"
+      "answer": "49.94"
     },
     {
       "id": 23008,
       "language": "vi",
       "category": "tail_lookup",
-      "sql": "SELECT ward FROM civic WHERE id='DV-12000'",
-      "params": [],
+      "sql": "SELECT ward FROM civic WHERE id=?",
+      "params": [
+        "DV-01200"
+      ],
       "presentation": {
         "kind": "scalar",
         "formats": [
           "text"
         ]
       },
-      "answer": "P0500"
+      "answer": "P0050"
     },
     {
       "id": 23009,
@@ -135,7 +139,7 @@
           "int"
         ]
       },
-      "answer": "306"
+      "answer": "31"
     },
     {
       "id": 23010,
@@ -149,7 +153,7 @@
           "text"
         ]
       },
-      "answer": "P0348"
+      "answer": "P0006"
     },
     {
       "id": 23011,
@@ -163,7 +167,7 @@
           "int"
         ]
       },
-      "answer": "838665"
+      "answer": "77856"
     },
     {
       "id": 23012,
@@ -176,26 +180,28 @@
         "digits": 2,
         "scale": 100
       },
-      "answer": "1.03"
+      "answer": "1.00"
     },
     {
       "id": 23013,
       "language": "vi",
       "category": "paired_metric",
-      "sql": "SELECT a.all_sum-b.all_sum,8 FROM scores a JOIN scores b ON a.ward=b.ward AND a.period=b.period WHERE a.ward='P0499' AND a.period='2028-12' AND a.metric='Hài lòng' AND b.metric='Đúng hạn'",
-      "params": [],
+      "sql": "SELECT a.all_sum-b.all_sum,8 FROM scores a JOIN scores b ON a.ward=b.ward AND a.period=b.period WHERE a.ward=? AND a.period='2028-12' AND a.metric='Hài lòng' AND b.metric='Đúng hạn'",
+      "params": [
+        "P0050"
+      ],
       "presentation": {
         "kind": "ratio",
         "digits": 2,
         "scale": 1
       },
-      "answer": "-1.05"
+      "answer": "10.60"
     },
     {
       "id": 23014,
       "language": "vi",
       "category": "cross_sheet_archive",
-      "sql": "SELECT score FROM archive WHERE id='OLD-02400'",
+      "sql": "SELECT score FROM archive WHERE id='OLD-00200'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -203,7 +209,7 @@
           "int"
         ]
       },
-      "answer": "18"
+      "answer": "21"
     },
     {
       "id": 23015,
@@ -220,15 +226,17 @@
       "id": 23016,
       "language": "en",
       "category": "all_vs_leaf_gap",
-      "sql": "SELECT all_sum/8.0-leaf_sum/6.0 FROM scores WHERE id='DV-11999'",
-      "params": [],
+      "sql": "SELECT all_sum/8.0-leaf_sum/6.0 FROM scores WHERE id=?",
+      "params": [
+        "DV-01199"
+      ],
       "presentation": {
         "kind": "scalar",
         "formats": [
           2
         ]
       },
-      "answer": "-0.65"
+      "answer": "-0.90"
     },
     {
       "id": 23017,
@@ -242,7 +250,7 @@
           "text"
         ]
       },
-      "answer": "DV-11848, DV-11995, DV-11827"
+      "answer": "DV-01185, DV-01156, DV-01153"
     },
     {
       "id": 23018,
@@ -256,7 +264,7 @@
           "int"
         ]
       },
-      "answer": "1067"
+      "answer": "101"
     },
     {
       "id": 23019,
@@ -270,21 +278,24 @@
           "int"
         ]
       },
-      "answer": "500"
+      "answer": "50"
     },
     {
       "id": 23020,
       "language": "en",
       "category": "minimum_tail",
-      "sql": "SELECT id FROM civic WHERE id BETWEEN 'DV-11001' AND 'DV-12000' ORDER BY waste_total,id LIMIT 1",
-      "params": [],
+      "sql": "SELECT id FROM civic WHERE id BETWEEN ? AND ? ORDER BY waste_total,id LIMIT 1",
+      "params": [
+        "DV-00701",
+        "DV-01200"
+      ],
       "presentation": {
         "kind": "scalar",
         "formats": [
           "text"
         ]
       },
-      "answer": "DV-11557"
+      "answer": "DV-01173"
     },
     {
       "id": 23021,
@@ -298,7 +309,7 @@
           "int"
         ]
       },
-      "answer": "1200"
+      "answer": "120"
     },
     {
       "id": 23022,
@@ -311,21 +322,23 @@
         "digits": 2,
         "scale": 1
       },
-      "answer": "61.33"
+      "answer": "63.16"
     },
     {
       "id": 23023,
       "language": "zh",
       "category": "difference",
-      "sql": "SELECT water_total-waste_total FROM civic WHERE id='DV-12000'",
-      "params": [],
+      "sql": "SELECT water_total-waste_total FROM civic WHERE id=?",
+      "params": [
+        "DV-01200"
+      ],
       "presentation": {
         "kind": "scalar",
         "formats": [
           2
         ]
       },
-      "answer": "1.80"
+      "answer": "-7.40"
     },
     {
       "id": 23024,
@@ -345,27 +358,31 @@
       "id": 23025,
       "language": "fr",
       "category": "mean_all_scope",
-      "sql": "SELECT all_sum,8 FROM scores WHERE id='DV-06001'",
-      "params": [],
+      "sql": "SELECT all_sum,8 FROM scores WHERE id=?",
+      "params": [
+        "DV-00601"
+      ],
       "presentation": {
         "kind": "ratio",
         "digits": 2,
         "scale": 1
       },
-      "answer": "69.05"
+      "answer": "58.43"
     },
     {
       "id": 23026,
       "language": "fr",
       "category": "leaf_scope",
-      "sql": "SELECT leaf_sum,6 FROM scores WHERE id='DV-06001'",
-      "params": [],
+      "sql": "SELECT leaf_sum,6 FROM scores WHERE id=?",
+      "params": [
+        "DV-00601"
+      ],
       "presentation": {
         "kind": "ratio",
         "digits": 2,
         "scale": 1
       },
-      "answer": "68.10"
+      "answer": "57.45"
     },
     {
       "id": 23027,
@@ -379,49 +396,56 @@
           "int"
         ]
       },
-      "answer": "495"
+      "answer": "49"
     },
     {
       "id": 23028,
       "language": "ko",
       "category": "cross_column_max",
-      "sql": "SELECT max(basic,advanced,special,residential,commercial,public) FROM civic WHERE id='DV-12000'",
-      "params": [],
+      "sql": "SELECT max(basic,advanced,special,residential,commercial,public) FROM civic WHERE id=?",
+      "params": [
+        "DV-01200"
+      ],
       "presentation": {
         "kind": "scalar",
         "formats": [
           2
         ]
       },
-      "answer": "81.60"
+      "answer": "81.80"
     },
     {
       "id": 23029,
       "language": "ko",
       "category": "sum_tail",
-      "sql": "SELECT sum(respondents) FROM civic WHERE id BETWEEN 'DV-11501' AND 'DV-12000'",
-      "params": [],
+      "sql": "SELECT sum(respondents) FROM civic WHERE id BETWEEN ? AND ?",
+      "params": [
+        "DV-00701",
+        "DV-01200"
+      ],
       "presentation": {
         "kind": "scalar",
         "formats": [
           "int"
         ]
       },
-      "answer": "1350170"
+      "answer": "1386973"
     },
     {
       "id": 23030,
       "language": "ko",
       "category": "header_position",
-      "sql": "SELECT waste_total FROM civic WHERE id='DV-12000'",
-      "params": [],
+      "sql": "SELECT waste_total FROM civic WHERE id=?",
+      "params": [
+        "DV-01200"
+      ],
       "presentation": {
         "kind": "scalar",
         "formats": [
           2
         ]
       },
-      "answer": "59.50"
+      "answer": "72.50"
     }
   ]
 }

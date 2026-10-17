@@ -11,7 +11,7 @@ UNARY={'abs','number','date','lower','trim','length','is_null','is_number','not'
 PREDICATES={'eq','ne','gt','ge','lt','le','contains','starts_with','is_null','is_number','not','and','or'}
 
 
-def normalize_plan(plan, regions, contract=None):
+def normalize_plan(plan, regions, contract=None, repair_split_literals=False):
     if not isinstance(plan,dict) or not isinstance(plan.get('steps'),list): return plan,[]
     cloned=deepcopy(plan); changes=[]; schemas={}; scalars=set(); output=[]
     if (contract or {}).get('decimals') is not None and isinstance(cloned.get('output'),dict) and cloned['output'].get('decimals') is None:
@@ -29,6 +29,22 @@ def normalize_plan(plan, regions, contract=None):
                 changes.append({'step':step_id,'kind':'explicit_literal'})
                 return {'value':value}
             return value
+        # Qwen occasionally emits {"lt":[{"col":"I"}],"value":2000}
+        # instead of {"lt":[{"col":"I"},{"value":2000}]}. Preserve the
+        # operator and literal, changing only the unambiguous container shape.
+        if repair_split_literals and len(value)==2 and 'value' in value and (value['value'] is None or isinstance(value['value'],(str,int,float,bool))):
+            operators=[key for key in value if key in {'sub','div','eq','ne','gt','ge','lt','le','contains','starts_with'}]
+            if len(operators)==1:
+                op=operators[0]; raw=value[op]
+                if isinstance(raw,list) and len(raw)==1 and op not in UNARY:
+                    changes.append({'step':step_id,'kind':'operator_literal_moved_into_args','operator':op})
+                    return {op: [expr(raw[0],columns,step_id,depth+1), {'value':value['value']}]}
+        if repair_split_literals and len(value)>1 and all(key in {'and','or','eq','ne','gt','ge','lt','le','contains','starts_with','is_null','is_number','not'} for key in value):
+            # A common provider shape for a conjunction is
+            # {"contains": [...], "is_number": [...]}; turn it into the
+            # declared boolean operator without changing any predicate.
+            changes.append({'step':step_id,'kind':'split_boolean_operator_keys','operators':list(value)})
+            return {'and':[expr({key:arg},columns,step_id,depth+1) for key,arg in value.items()]}
         if len(value)!=1: return value
         op,arg=next(iter(value.items()))
         if op=='ref':
@@ -50,9 +66,12 @@ def normalize_plan(plan, regions, contract=None):
         if not isinstance(step,dict): output.append(step);continue
         ident=step.get('id');op=step.get('op');columns=schemas.get(step.get('input'),set())
         for key in ['expr','where']:
-            if key in step: step[key]=expr(step[key],columns,ident)
+            if key in step:
+                step[key]=expr(step[key],columns,ident)
+        if repair_split_literals and op=='filter' and 'missing' in step:
+            step.pop('missing');changes.append({'step':ident,'kind':'drop_filter_missing_field'})
         if op=='record' and isinstance(step.get('fields'),dict):
-            step['fields']={key:expr(value,set(),ident) if not isinstance(value,str) else value
+            step['fields']={key:expr(value,columns,ident) if not isinstance(value,str) else value
                             for key,value in step['fields'].items()}
         if (op=='derive' and step.get('input') in scalars and cloned.get('output',{}).get('step')==ident
                 and '"col"' not in json.dumps(step.get('expr',{}))):

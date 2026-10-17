@@ -35,12 +35,23 @@ def normalize(plan):
         step.pop('expr')
         step.update(op='lag', **lag)
         changes.append({'step':step.get('id'), 'kind':'explicit_lag_expression_to_step'})
+    # An explicitly declared one-field record has one possible projection.
+    # Supplying its sole column changes no source, calculation or ordering.
+    final=cloned.get('output',{})
+    source=next((s for s in cloned.get('steps',[]) if isinstance(s,dict) and s.get('id')==final.get('step')),None)
+    if (isinstance(source,dict) and source.get('op')=='record' and
+            isinstance(source.get('fields'),dict) and len(source['fields'])==1 and
+            not final.get('columns')):
+        final['columns']=list(source['fields'])
+        changes.append({'step':source.get('id'),'kind':'sole_record_output_column'})
     return cloned, changes
 
 
 def preview(region, question, limit):
     """Expose existing section provenance alongside sampled detail rows."""
     result = region.preview(question, limit)
+    from .read_scope import profiles
+    result.update(profiles(region))
     anchors = iter(region.section_labels())
     upcoming = next(anchors, None)
     current = None

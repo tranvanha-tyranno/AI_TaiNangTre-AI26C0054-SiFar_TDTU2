@@ -2,7 +2,7 @@
 
 Khảo sát dịch vụ đô thị: header 3 cấp, Total đổi vị trí, mean across all và mean loại Total, tỷ lệ có trọng số, lưu trữ gây nhiễu.
 
-`Khảo sát 2028`: 12,000 bản ghi / 12,003 dòng vật lý; `Cỡ mẫu`: 12,000 bản ghi / 12,001 dòng vật lý; `Lưu trữ 2027`: 2,400 bản ghi / 2,401 dòng vật lý.
+`Khảo sát 2028`: 1,200 bản ghi / 1,203 dòng vật lý; `Cỡ mẫu`: 1,200 bản ghi / 1,201 dòng vật lý; `Lưu trữ 2027`: 200 bản ghi / 201 dòng vật lý.
 
 30 câu: **15 Việt, 5 Anh, 4 Trung, 3 Pháp, 3 Hàn**. ID là số tự nhiên; câu hỏi cố ý xáo trộn. CSV chuẩn dùng UTF-8 và sắp ID theo giá trị số tăng dần. Một câu thiếu trường dữ liệu có đáp án chuỗi rỗng. Câu đó không tính là lỗi fixture; không tự đổi đáp án thành N/A.
 

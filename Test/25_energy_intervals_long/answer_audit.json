@@ -19,7 +19,7 @@
           "int"
         ]
       },
-      "answer": "1743660"
+      "answer": "84667"
     },
     {
       "id": 25002,
@@ -35,7 +35,7 @@
           "int"
         ]
       },
-      "answer": "3866170567"
+      "answer": "190909280"
     },
     {
       "id": 25003,
@@ -51,7 +51,7 @@
           "int"
         ]
       },
-      "answer": "1736907"
+      "answer": "82754"
     },
     {
       "id": 25004,
@@ -67,7 +67,7 @@
           "int"
         ]
       },
-      "answer": "3846039003"
+      "answer": "184290988"
     },
     {
       "id": 25005,
@@ -83,7 +83,7 @@
           "int"
         ]
       },
-      "answer": "1725664"
+      "answer": "88723"
     },
     {
       "id": 25006,
@@ -99,7 +99,7 @@
           "int"
         ]
       },
-      "answer": "3831706892"
+      "answer": "189185775"
     },
     {
       "id": 25007,
@@ -112,7 +112,7 @@
         "digits": 2,
         "scale": 1
       },
-      "answer": "2210.40"
+      "answer": "2212.02"
     },
     {
       "id": 25008,
@@ -126,7 +126,7 @@
           "int"
         ]
       },
-      "answer": "938"
+      "answer": "933"
     },
     {
       "id": 25009,
@@ -140,7 +140,7 @@
           "int"
         ]
       },
-      "answer": "2056"
+      "answer": "94"
     },
     {
       "id": 25010,
@@ -154,21 +154,23 @@
           "int"
         ]
       },
-      "answer": "2950944"
+      "answer": "173627"
     },
     {
       "id": 25011,
       "language": "vi",
       "category": "tail_lookup",
-      "sql": "SELECT export_kwh FROM readings WHERE id='ĐĐ-20000'",
-      "params": [],
+      "sql": "SELECT export_kwh FROM readings WHERE id=?",
+      "params": [
+        "ĐĐ-01000"
+      ],
       "presentation": {
         "kind": "scalar",
         "formats": [
           "int"
         ]
       },
-      "answer": "85"
+      "answer": "34"
     },
     {
       "id": 25012,
@@ -182,7 +184,7 @@
           "int"
         ]
       },
-      "answer": "94"
+      "answer": "4"
     },
     {
       "id": 25013,
@@ -195,7 +197,7 @@
         "digits": 2,
         "scale": 100
       },
-      "answer": "42.98"
+      "answer": "44.18"
     },
     {
       "id": 25014,
@@ -209,7 +211,7 @@
           "text"
         ]
       },
-      "answer": "NM-035"
+      "answer": "NM-005"
     },
     {
       "id": 25015,
@@ -234,7 +236,7 @@
           "int"
         ]
       },
-      "answer": "2188"
+      "answer": "2141"
     },
     {
       "id": 25017,
@@ -248,7 +250,7 @@
           "int"
         ]
       },
-      "answer": "145"
+      "answer": "7"
     },
     {
       "id": 25018,
@@ -261,7 +263,7 @@
         "digits": 2,
         "scale": 1
       },
-      "answer": "3204258.81"
+      "answer": "156329.43"
     },
     {
       "id": 25019,
@@ -275,13 +277,13 @@
           "int"
         ]
       },
-      "answer": "-7054"
+      "answer": "-1501"
     },
     {
       "id": 25020,
       "language": "en",
       "category": "tail_region",
-      "sql": "SELECT p.region FROM readings r JOIN plants p USING(plant) WHERE id='ĐĐ-19999'",
+      "sql": "SELECT p.region FROM readings r JOIN plants p USING(plant) WHERE id='ĐĐ-00999'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -303,7 +305,7 @@
           "int"
         ]
       },
-      "answer": "1738272"
+      "answer": "80838"
     },
     {
       "id": 25022,
@@ -317,7 +319,7 @@
           "int"
         ]
       },
-      "answer": "1727"
+      "answer": "94"
     },
     {
       "id": 25023,
@@ -331,7 +333,7 @@
           "int"
         ]
       },
-      "answer": "24"
+      "answer": "1"
     },
     {
       "id": 25024,
@@ -345,13 +347,13 @@
           "text"
         ]
       },
-      "answer": "2028-02-05 12:00:00"
+      "answer": "2028-02-12 00:00:00"
     },
     {
       "id": 25025,
       "language": "fr",
       "category": "sum_tail",
-      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE id BETWEEN 'ĐĐ-19001' AND 'ĐĐ-20000'",
+      "sql": "SELECT sum(net_kwh) FROM valid_energy WHERE id BETWEEN '??-00001' AND 'ĐĐ-01000'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -359,7 +361,7 @@
           "int"
         ]
       },
-      "answer": "353698"
+      "answer": "336982"
     },
     {
       "id": 25026,
@@ -378,16 +380,15 @@
     {
       "id": 25027,
       "language": "fr",
-      "category": "side_by_side_table",
-      "sql": "SELECT divisor FROM units WHERE quantity='Carbon'",
+      "category": "average_peak",
+      "sql": "SELECT sum(peak_kw),count(*) FROM readings WHERE plant='NM-040'",
       "params": [],
       "presentation": {
-        "kind": "scalar",
-        "formats": [
-          "int"
-        ]
+        "kind": "ratio",
+        "digits": 2,
+        "scale": 1
       },
-      "answer": "1000"
+      "answer": "498.20"
     },
     {
       "id": 25028,
@@ -401,7 +402,7 @@
           "int"
         ]
       },
-      "answer": "500"
+      "answer": "25"
     },
     {
       "id": 25029,
@@ -415,7 +416,7 @@
           "text"
         ]
       },
-      "answer": "NM-011, NM-026, NM-024"
+      "answer": "NM-006, NM-029, NM-005"
     },
     {
       "id": 25030,
@@ -429,7 +430,7 @@
           "int"
         ]
       },
-      "answer": "94950"
+      "answer": "95310"
     }
   ]
 }

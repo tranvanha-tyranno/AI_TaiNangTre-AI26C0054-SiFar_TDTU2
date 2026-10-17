@@ -7,16 +7,16 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# Install the declared runtime dependencies before copying source for better
-# Docker layer caching. The lock file was generated on Windows and contains
-# platform-specific wheels, so the portable requirements file is used here.
-# No API key or dataset is baked into the image.
+# Install only the pinned runtime dependencies; no developer tools or datasets.
 COPY requirements.txt ./
 RUN python -m pip install --no-cache-dir --requirement requirements.txt
 
-COPY main.py README.md COMPETITION_CONSTRAINTS.md ./
+COPY main.py README.md ./
 COPY config ./config
 COPY src ./src
 
-# The judge appends its six required command-line arguments to this entrypoint.
-ENTRYPOINT ["python", "main.py"]
+# Runtime arguments belong after the image name in docker run, not here.
+# The judge supplies all six arguments, including its API key and input/output paths.
+# ./input and ./output now resolve to /input and /output, matching the judge.
+WORKDIR /
+ENTRYPOINT ["python", "/app/main.py"]

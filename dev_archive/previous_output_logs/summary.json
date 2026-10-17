@@ -1,0 +1,26 @@
+{
+  "questions": 20,
+  "answered": 19,
+  "elapsed_seconds": 157.3099355469999,
+  "mode": "llm-v3",
+  "model": "qwen/qwen3.7-flash",
+  "cost_verified": true,
+  "memory_verified": true,
+  "peak_memory_mb": 89.66796875,
+  "pipeline_version": "lmmv3-v2-error-memory-v2",
+  "memory_measurement_scope": "main_process_peak_only",
+  "resource_compliance_verified": false,
+  "disk_verified": false,
+  "usage": {
+    "api_calls": 43,
+    "input_plus_reasoning_tokens": 713320,
+    "prompt_tokens": 713320,
+    "completion_tokens": 7216,
+    "total_tokens": 720536,
+    "actual_cost_usd": 0.019575952,
+    "estimated_cost_usd": 0.1484368,
+    "unknown_cost_calls": 0,
+    "cost_complete": true,
+    "tokens_complete": true
+  }
+}

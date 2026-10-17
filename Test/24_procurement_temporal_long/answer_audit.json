@@ -18,7 +18,7 @@
           "int"
         ]
       },
-      "answer": "25031212786965"
+      "answer": "1567052732625"
     },
     {
       "id": 24002,
@@ -34,7 +34,7 @@
           "int"
         ]
       },
-      "answer": "3442"
+      "answer": "215"
     },
     {
       "id": 24003,
@@ -50,7 +50,7 @@
           "int"
         ]
       },
-      "answer": "24950133381285"
+      "answer": "1660586692285"
     },
     {
       "id": 24004,
@@ -66,7 +66,7 @@
           "int"
         ]
       },
-      "answer": "3418"
+      "answer": "207"
     },
     {
       "id": 24005,
@@ -82,7 +82,7 @@
           "int"
         ]
       },
-      "answer": "25614654463450"
+      "answer": "1769791420465"
     },
     {
       "id": 24006,
@@ -98,13 +98,13 @@
           "int"
         ]
       },
-      "answer": "3401"
+      "answer": "222"
     },
     {
       "id": 24007,
       "language": "vi",
       "category": "asof_contract",
-      "sql": "SELECT c.contract FROM lines l JOIN contracts c ON l.vendor=c.vendor AND l.day>=c.start AND l.day<c.end WHERE l.id='CT-15999'",
+      "sql": "SELECT c.contract FROM lines l JOIN contracts c ON l.vendor=c.vendor AND l.day>=c.start AND l.day<c.end WHERE l.id='CT-00999'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -112,13 +112,13 @@
           "text"
         ]
       },
-      "answer": "NCC-0233-Q3"
+      "answer": "NCC-0175-Q1"
     },
     {
       "id": 24008,
       "language": "vi",
       "category": "tail_fx",
-      "sql": "SELECT f.rate FROM lines l JOIN fx f ON l.day=f.day AND l.currency=f.currency WHERE id='CT-16000'",
+      "sql": "SELECT f.rate FROM lines l JOIN fx f ON l.day=f.day AND l.currency=f.currency WHERE id='CT-01000'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -126,7 +126,7 @@
           "int"
         ]
       },
-      "answer": "24900"
+      "answer": "24510"
     },
     {
       "id": 24009,
@@ -139,7 +139,7 @@
         "digits": 2,
         "scale": 1
       },
-      "answer": "2637863895351.75"
+      "answer": "187222018156.20"
     },
     {
       "id": 24010,
@@ -153,7 +153,7 @@
           "text"
         ]
       },
-      "answer": "NCC-0262"
+      "answer": "NCC-0158"
     },
     {
       "id": 24011,
@@ -167,7 +167,7 @@
           "int"
         ]
       },
-      "answer": "313942833875"
+      "answer": "312500495860"
     },
     {
       "id": 24012,
@@ -181,7 +181,7 @@
           "int"
         ]
       },
-      "answer": "18"
+      "answer": "0"
     },
     {
       "id": 24013,
@@ -194,13 +194,13 @@
         "digits": 2,
         "scale": 1
       },
-      "answer": "7.43"
+      "answer": "7.15"
     },
     {
       "id": 24014,
       "language": "vi",
       "category": "quoted_unicode_name",
-      "sql": "SELECT v.name FROM lines l JOIN vendors v USING(vendor) WHERE id='CT-16000'",
+      "sql": "SELECT v.name FROM lines l JOIN vendors v USING(vendor) WHERE id='CT-01000'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -208,7 +208,7 @@
           "text"
         ]
       },
-      "answer": "Công ty \"Sông Xanh\", chi nhánh 0155"
+      "answer": "Công ty \"Sông Xanh\", chi nhánh 0040"
     },
     {
       "id": 24015,
@@ -232,7 +232,7 @@
         "digits": 2,
         "scale": 100
       },
-      "answer": "0.41"
+      "answer": "4.47"
     },
     {
       "id": 24017,
@@ -246,7 +246,7 @@
           "int"
         ]
       },
-      "answer": "8195572988805"
+      "answer": "513740334445"
     },
     {
       "id": 24018,
@@ -260,7 +260,7 @@
           "int"
         ]
       },
-      "answer": "16962495000"
+      "answer": "2399976000"
     },
     {
       "id": 24019,
@@ -287,7 +287,7 @@
         "digits": 2,
         "scale": 1
       },
-      "answer": "12679331417.10"
+      "answer": "12786471437.31"
     },
     {
       "id": 24021,
@@ -301,7 +301,7 @@
           "int"
         ]
       },
-      "answer": "25838650705095"
+      "answer": "1395804873280"
     },
     {
       "id": 24022,
@@ -315,7 +315,7 @@
           "int"
         ]
       },
-      "answer": "673"
+      "answer": "42"
     },
     {
       "id": 24023,
@@ -328,13 +328,13 @@
         "digits": 2,
         "scale": 100
       },
-      "answer": "14.87"
+      "answer": "11.25"
     },
     {
       "id": 24024,
       "language": "zh",
       "category": "tail_contract_rebate",
-      "sql": "SELECT c.rebate FROM lines l JOIN contracts c ON l.vendor=c.vendor AND l.day>=c.start AND l.day<c.end WHERE id='CT-15999'",
+      "sql": "SELECT c.rebate FROM lines l JOIN contracts c ON l.vendor=c.vendor AND l.day>=c.start AND l.day<c.end WHERE id='CT-00999'",
       "params": [],
       "presentation": {
         "kind": "scalar",
@@ -342,7 +342,7 @@
           "int"
         ]
       },
-      "answer": "14"
+      "answer": "13"
     },
     {
       "id": 24025,
@@ -356,7 +356,7 @@
           "int"
         ]
       },
-      "answer": "53778394755000"
+      "answer": "3269518302650"
     },
     {
       "id": 24026,
@@ -370,7 +370,7 @@
           "int"
         ]
       },
-      "answer": "2395"
+      "answer": "200"
     },
     {
       "id": 24027,
@@ -384,7 +384,7 @@
           "int"
         ]
       },
-      "answer": "39"
+      "answer": "4"
     },
     {
       "id": 24028,
@@ -398,20 +398,20 @@
           "int"
         ]
       },
-      "answer": "210505994635"
+      "answer": "38286455115"
     },
     {
       "id": 24029,
       "language": "ko",
       "category": "amount_ratio",
-      "sql": "SELECT amount,units FROM lines WHERE id='CT-16000'",
+      "sql": "SELECT amount,units FROM lines WHERE id='CT-01000'",
       "params": [],
       "presentation": {
         "kind": "ratio",
         "digits": 2,
         "scale": 1
       },
-      "answer": "16413.79"
+      "answer": "24690.00"
     },
     {
       "id": 24030,
@@ -425,7 +425,7 @@
           "text"
         ]
       },
-      "answer": "NCC-0262, NCC-0731, NCC-1846"
+      "answer": "NCC-0158, NCC-0152, NCC-0014"
     }
   ]
 }

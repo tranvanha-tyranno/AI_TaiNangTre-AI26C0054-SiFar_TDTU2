@@ -1,8 +1,8 @@
 # 27_lab_units_censoring_long
 
-30000 phép kiểm nghiệm, 27 cột tới AA: đổi mg/L–µg/L, kiểm duyệt '<', ô thiếu, tiêu đề lặp, trung vị, phân vị, điều kiện đủ cả ba chất.
+1500 phép kiểm nghiệm, 27 cột tới AA: đổi mg/L–µg/L, kiểm duyệt '<', ô thiếu, tiêu đề lặp, trung vị, phân vị, điều kiện đủ cả ba chất.
 
-`Điểm quan trắc`: 1,500 bản ghi / 1,501 dòng vật lý; `Ngưỡng nội bộ`: 12 bản ghi / 13 dòng vật lý; `Résultats dài`: 30,000 bản ghi / 30,030 dòng vật lý.
+`Điểm quan trắc`: 300 bản ghi / 301 dòng vật lý; `Ngưỡng nội bộ`: 12 bản ghi / 13 dòng vật lý; `Résultats dài`: 1,500 bản ghi / 1,502 dòng vật lý.
 
 30 câu: **15 Việt, 5 Anh, 4 Trung, 3 Pháp, 3 Hàn**. ID là số tự nhiên; câu hỏi cố ý xáo trộn. CSV chuẩn dùng UTF-8 và sắp ID theo giá trị số tăng dần. Một câu thiếu trường dữ liệu có đáp án chuỗi rỗng. Câu đó không tính là lỗi fixture; không tự đổi đáp án thành N/A.
 

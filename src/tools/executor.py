@@ -301,7 +301,7 @@ def _execute(plan, regions):
         allowed={
             'read':{'table','start_row','end_row'},'cell':{'table','row','column'},
             'sum_columns':{'table','row','columns'},
-            'concat':{'inputs'},'collect':{'inputs'},'record':{'fields'},'unpivot':{'input','columns','label_table','label_row','keep_columns'},
+            'concat':{'inputs'},'collect':{'inputs'},'record':{'fields','input'},'unpivot':{'input','columns','label_table','label_row','keep_columns'},
             'lag':{'input','column','source','offset'},'fill_down':{'input','columns'},
             'filter':{'input','where'},'derive':{'input','column','expr'},'sort':{'input','by'},
             'take':{'input','offset','limit'},'select':{'input','columns'},
@@ -391,21 +391,30 @@ def _execute(plan, regions):
         elif op=='record':
             fields=step.get('fields')
             if not isinstance(fields,dict) or not fields or len(fields)>20: raise PlanError('record requires named scalar step IDs in fields')
-            row={'__sources':{}}
-            for column,expr in fields.items():
-                if not isinstance(column,str) or column.startswith('_'): raise PlanError('Invalid record column')
-                if isinstance(expr,str): expr={'ref':expr}
-                scalar=expression(expr,{},results)
-                if not scalar.sources and isinstance(scalar.value,str) and scalar.value.strip():
-                    # A literal label is acceptable only if tools can resolve
-                    # it to real cells. Numeric literals cannot become answers.
-                    label=' '.join(scalar.value.split())
-                    scalar.sources={f'{r.sheet}!{get_column_letter(c)}{row}' for r in regions
-                                    for (row,c),v in r.cells.items()
-                                    if isinstance(v,str) and ' '.join(v.split())==label}
-                if not scalar.sources: raise PlanError('record fields must depend on spreadsheet scalars; labels can be cells or conditionals on cells')
-                row[column]=scalar.value; row['__sources'][column]=sorted(scalar.sources)
-            result=Result([row],set())
+            source_rows=rows_of(results,step['input']) if 'input' in step else [None]
+            value=[]
+            for source_row in source_rows:
+                row={'__sources':{}}
+                for column,expr in fields.items():
+                    if not isinstance(column,str) or column.startswith('_'): raise PlanError('Invalid record column')
+                    if isinstance(expr,str): expr={'ref':expr}
+                    scalar=expression(expr,source_row or {},results)
+                    if not scalar.sources and isinstance(scalar.value,str) and scalar.value.strip():
+                        label=' '.join(scalar.value.split())
+                        scalar.sources={f'{r.sheet}!{get_column_letter(c)}{cell_row}' for r in regions
+                                        for (cell_row,c),v in r.cells.items()
+                                        if isinstance(v,str) and ' '.join(v.split())==label}
+                        if not scalar.sources and label in {r.sheet for r in regions}:
+                            # Sheet names are workbook metadata, not cell
+                            # values. Permit an exact observed sheet name as
+                            # a grounded identity; arbitrary literals remain
+                            # rejected. This supports sheet-and-value tuples
+                            # without a file-specific resolver.
+                            scalar.sources={f'{label}!_sheet'}
+                    if not scalar.sources: raise PlanError('record fields must depend on spreadsheet scalars; labels can be cells or conditionals on cells')
+                    row[column]=scalar.value; row['__sources'][column]=sorted(scalar.sources)
+                value.append(row)
+            result=Result(value,set())
         elif op in {'lag','fill_down'}:
             rows=rows_of(results,step.get('input')); value=[]
             if op=='lag':

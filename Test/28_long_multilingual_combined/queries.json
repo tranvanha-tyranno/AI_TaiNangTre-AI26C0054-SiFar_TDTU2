@@ -1,0 +1,752 @@
+[
+  {
+    "id": 23001,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Ở Khảo sát 2028, mã DV-00001, trung bình across all nhóm dịch vụ là bao nhiêu? Theo quy ước đề thi, lấy cả 8 cột dữ liệu, gồm hai cột Total; không dùng trọng số. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23002,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Với DV-00001, trung bình chỉ 6 nhóm con (subcategories only, excluding totals) của hai dịch vụ là bao nhiêu? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23003,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Trong Cỡ mẫu, mã DV-00001, tổng số người ở 6 nhóm con là bao nhiêu? Không cộng thêm hai cột tổng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 23004,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Ở Khảo sát 2028, mã DV-01199, trung bình across all nhóm dịch vụ là bao nhiêu? Theo quy ước đề thi, lấy cả 8 cột dữ liệu, gồm hai cột Total; không dùng trọng số. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23005,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Với DV-01199, trung bình chỉ 6 nhóm con (subcategories only, excluding totals) của hai dịch vụ là bao nhiêu? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23006,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Trong Cỡ mẫu, mã DV-01199, tổng số người ở 6 nhóm con là bao nhiêu? Không cộng thêm hai cột tổng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 23007,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Với DV-01199, tính tỷ lệ gộp có trọng số theo cỡ mẫu của 6 nhóm con: sum(tỷ lệ*cỡ mẫu)/sum(cỡ mẫu). Không dùng hai Total. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23008,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Mã DV-01200 thuộc phường nào? Chỉ trả đúng mã phường."
+  },
+  {
+    "id": 23009,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Có bao nhiêu khảo sát Hài lòng tại Huế có trạng thái Đã xác nhận và tỷ lệ Cơ bản >= 80? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 23010,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Trong tháng 2028-12, chỉ tiêu Hài lòng, phường nào có trung bình 8 cột cao nhất (kể cả Total)? Nếu bằng nhau, chọn mã tăng dần. Chỉ trả mã."
+  },
+  {
+    "id": 23011,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Tổng mẫu của các khảo sát Đúng hạn tại Cần Thơ trong quý 4/2028 là bao nhiêu? Chỉ cộng trường Tổng mẫu mỗi dòng một lần. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 23012,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Trong tất cả 1200 khảo sát, bao nhiêu phần trăm có trạng thái Tạm tính? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23013,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Ở phường P0050 tháng 2028-12, trung bình 8 cột của Hài lòng trừ trung bình 8 cột của Đúng hạn là bao nhiêu điểm phần trăm? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 23014,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Trong Lưu trữ 2027, Điểm của OLD-00200 là bao nhiêu? Không lấy giá trị ở Khảo sát 2028."
+  },
+  {
+    "id": 23015,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Trong workbook này, mã chứng nhận ISO của đơn vị thu thập khảo sát DV-01200 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
+  },
+  {
+    "id": 23016,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "For DV-01199, what is the unweighted 8-column mean including both Total columns minus the 6-leaf mean? Return exactly 2 decimals."
+  },
+  {
+    "id": 23017,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Among confirmed Hài lòng records in December 2028, list the top 3 survey IDs by the 6-leaf mean descending, ties by ID ascending. Separate IDs with comma and one space."
+  },
+  {
+    "id": 23018,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "How many confirmed Đúng hạn records have the displayed Cấp nước Total strictly above 75.0? Return an integer."
+  },
+  {
+    "id": 23019,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "How many distinct wards appear in Khảo sát 2028, across both metrics and all months? Return an integer."
+  },
+  {
+    "id": 23020,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Among DV-00701 through DV-01200 inclusive, which ID has the lowest displayed Chất thải Total? Break ties by ID ascending. Return only the ID."
+  },
+  {
+    "id": 23021,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "在 Khảo sát 2028 中，城市为海港且指标为 Hài lòng 的记录有多少条？只回答整数。"
+  },
+  {
+    "id": 23022,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "在2028年12月的 Hài lòng 记录中，海港的 Cấp nước Total 按每行 Tổng mẫu 加权的平均值是多少？保留两位小数。"
+  },
+  {
+    "id": 23023,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "DV-01200 的 Cấp nước Total 减去 Chất thải Total 是多少个百分点？保留两位小数。"
+  },
+  {
+    "id": 23024,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "有多少条记录的 Tổng mẫu 为0？只回答整数，不要把没有匹配项当作缺失答案。"
+  },
+  {
+    "id": 23025,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Pour DV-00601, quelle est la moyenne non pondérée de toutes les 8 colonnes de taux, y compris les deux Total ? Deux décimales uniquement."
+  },
+  {
+    "id": 23026,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Pour DV-00601, quelle est la moyenne des six sous-catégories seulement, sans Total ? Deux décimales uniquement."
+  },
+  {
+    "id": 23027,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "Combien de lignes Hài lòng confirmées sont présentes en 2028-12 ? Répondez par un entier."
+  },
+  {
+    "id": 23028,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "DV-01200의 6개 하위 항목 중 최대 비율을 소수점 둘째 자리까지 답하십시오. Total은 제외합니다."
+  },
+  {
+    "id": 23029,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "DV-00701부터 DV-01200까지의 Tổng mẫu 합계를 정수로 답하십시오. 각 행은 한 번만 더합니다."
+  },
+  {
+    "id": 23030,
+    "file_name": "23_civic_service_long.xlsx",
+    "query": "DV-01200의 Chất thải Total 값은 얼마입니까? 다른 그룹의 Total과 구분하여 소수점 둘째 자리까지 답하십시오."
+  },
+  {
+    "id": 24001,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Tổng giá trị mua ròng của vùng Bắc, chỉ Đã duyệt, quy đổi tỷ giá đúng ngày, trừ chiết khấu và tính âm dòng ghi có, là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24002,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Có bao nhiêu hóa đơn khác nhau có ít nhất một dòng Đã duyệt của NCC vùng Bắc? Không đếm số dòng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24003,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Tổng giá trị mua ròng của vùng Trung, chỉ Đã duyệt, quy đổi tỷ giá đúng ngày, trừ chiết khấu và tính âm dòng ghi có, là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24004,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Có bao nhiêu hóa đơn khác nhau có ít nhất một dòng Đã duyệt của NCC vùng Trung? Không đếm số dòng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24005,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Tổng giá trị mua ròng của vùng Nam, chỉ Đã duyệt, quy đổi tỷ giá đúng ngày, trừ chiết khấu và tính âm dòng ghi có, là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24006,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Có bao nhiêu hóa đơn khác nhau có ít nhất một dòng Đã duyệt của NCC vùng Nam? Không đếm số dòng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24007,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Dòng CT-00999 áp dụng mã hợp đồng nào? Dùng ngày bắt đầu có gồm và ngày kết thúc không gồm; không lấy hợp đồng mới nhất toàn bộ. Chỉ trả mã hợp đồng."
+  },
+  {
+    "id": 24008,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Tỷ giá VND cho 1 đơn vị tiền của dòng CT-01000 tại đúng ngày chứng từ là bao nhiêu? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24009,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Tổng hoàn tiền hợp đồng cho các dòng Đã duyệt, không phải ghi có, trong quý 4/2028 là bao nhiêu VND? Tính net_vnd*rebate/100, cộng trước rồi làm tròn. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 24010,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "NCC nào có giá trị mua ròng VND Đã duyệt cao nhất? Nếu bằng nhau, chọn mã tăng dần. Chỉ trả mã."
+  },
+  {
+    "id": 24011,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Giá trị mua ròng Đã duyệt quý 4 trừ quý 3/2028 là bao nhiêu VND? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24012,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Có bao nhiêu dòng EUR Đã duyệt có ngày 29/02/2028? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 24013,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Chiết khấu trung bình gia quyền theo Giá trị gốc của các dòng USD Đã duyệt, sign=1, là bao nhiêu phần trăm? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 24014,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Tên NCC của dòng CT-01000 là gì? Giữ nguyên dấu ngoặc kép và dấu phẩy trong tên; chỉ trả tên."
+  },
+  {
+    "id": 24015,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Trong workbook này, số tài khoản ngân hàng của nhà cung cấp trên dòng CT-01000 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
+  },
+  {
+    "id": 24016,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "What percent of total approved net VND spend belongs to the three suppliers with largest net spend? Include signed credits, ties by supplier ID. Return exactly 2 decimals without %."
+  },
+  {
+    "id": 24017,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "For all approved lines, what is gross signed VND before discounts minus approved net VND? Return an integer."
+  },
+  {
+    "id": 24018,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "What is the signed net VND amount of cancelled line CT-00031, using its daily FX and discount? Include this line despite its cancellation for this question only. Return an integer."
+  },
+  {
+    "id": 24019,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Which contract applies to NCC-0001 on 2028-04-01, with start inclusive and end exclusive? Return only the contract ID."
+  },
+  {
+    "id": 24020,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "What is mean approved net VND per distinct invoice with an approved line? Sum all approved lines including credits before dividing by distinct invoice count. Return exactly 2 decimals."
+  },
+  {
+    "id": 24021,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "只计已批准（Đã duyệt）的行，海外供应商的净采购总额是多少VND？按当天汇率、折扣及贷项负号计算。只回答整数。"
+  },
+  {
+    "id": 24022,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "已批准行中有多少个贷项行（sign=-1）？只回答整数。"
+  },
+  {
+    "id": 24023,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "已批准的正向行中，Ưu tiên 供应商的净VND金额占多少百分比？保留两位小数，不加%。"
+  },
+  {
+    "id": 24024,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "CT-00999 对应生效合同的返利率是多少？只回答整数，不加%。"
+  },
+  {
+    "id": 24025,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Quel est le montant net total en VND des lignes EUR approuvées, crédits négatifs inclus, au taux du jour ? Un entier uniquement."
+  },
+  {
+    "id": 24026,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Combien de fournisseurs distincts ont au moins une ligne approuvée ? Un entier uniquement."
+  },
+  {
+    "id": 24027,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "Combien de fournisseurs ont un total net approuvé en VND strictement négatif ? Un entier uniquement."
+  },
+  {
+    "id": 24028,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "2028-12-31에 승인된 행의 순 VND 합계를 정수로 답하십시오. 할인과 대변 음수를 포함합니다."
+  },
+  {
+    "id": 24029,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "CT-01000의 원래 Giá trị gốc을 Số lượng로 나눈 값을 소수점 둘째 자리까지 답하십시오. 환산하지 않습니다."
+  },
+  {
+    "id": 24030,
+    "file_name": "24_procurement_temporal_long.xlsx",
+    "query": "순 VND 합계가 높은 상위 3개 공급업체 코드를 내림차순으로 답하십시오. 동률이면 코드 오름차순, 쉼표와 공백으로 구분합니다."
+  },
+  {
+    "id": 25001,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Với vùng Miền Bắc, tổng điện nhập ròng (nhập-xuất) của các dòng Đo thật và không thiếu điện nhập là bao nhiêu kWh? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25002,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Tổng tiền VND của Miền Bắc theo net_kWh*giá hiệu lực đúng đầu khoảng là bao nhiêu? Chỉ Đo thật và không thiếu điện nhập; số âm được giữ nguyên. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25003,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Với vùng Miền Trung, tổng điện nhập ròng (nhập-xuất) của các dòng Đo thật và không thiếu điện nhập là bao nhiêu kWh? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25004,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Tổng tiền VND của Miền Trung theo net_kWh*giá hiệu lực đúng đầu khoảng là bao nhiêu? Chỉ Đo thật và không thiếu điện nhập; số âm được giữ nguyên. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25005,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Với vùng Miền Nam, tổng điện nhập ròng (nhập-xuất) của các dòng Đo thật và không thiếu điện nhập là bao nhiêu kWh? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25006,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Tổng tiền VND của Miền Nam theo net_kWh*giá hiệu lực đúng đầu khoảng là bao nhiêu? Chỉ Đo thật và không thiếu điện nhập; số âm được giữ nguyên. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25007,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Đơn giá bình quân gia quyền theo điện nhập ròng của các dòng hợp lệ có net_kwh>0 là bao nhiêu VND/kWh? Tính sum(net_cost)/sum(net_kwh). Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 25008,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Trong toàn bộ bảng Điện năng 1 giờ, công suất đỉnh kW lớn nhất là bao nhiêu? Không cộng điện năng để trả lời. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25009,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Có bao nhiêu khoảng đo 1 giờ giao với ít nhất một sự cố Đã xác minh? Hai khoảng [bắt đầu,kết thúc) giao nhau khi đầu này nhỏ hơn cuối kia; mỗi mã đo chỉ đếm một lần dù nhiều sự cố. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25010,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Tổng net_kwh hợp lệ trong tháng 02/2028 là bao nhiêu? Dùng thời điểm bắt đầu UTC, không tính các giờ tháng 01. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25011,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Điện xuất kWh của mã ĐĐ-01000 là bao nhiêu? Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25012,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Có bao nhiêu dòng thiếu Điện nhập kWh? Không tính các giá trị 0 là thiếu. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 25013,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Trong các dòng hợp lệ, tỷ lệ điện Mặt trời trong tổng Mặt trời+Gió là bao nhiêu phần trăm? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 25014,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Nhà máy nào có tổng net_cost hợp lệ lớn nhất? Nếu bằng nhau, chọn mã tăng dần. Chỉ trả mã."
+  },
+  {
+    "id": 25015,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Trong workbook này, mã số thuế của đơn vị sở hữu nhà máy NM-040 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
+  },
+  {
+    "id": 25016,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "What tariff in VND/kWh applies to NM-040 at exactly 2028-01-20 10:00:00 UTC? Validity is start-inclusive, end-exclusive. Return an integer."
+  },
+  {
+    "id": 25017,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "How many readings have quality Ước tính? Return an integer."
+  },
+  {
+    "id": 25018,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "For valid readings with positive net_kwh, what is total implied carbon in kgCO2? Use each plant's gCO2/kWh times net_kwh, divide by 1000; exactly 2 decimals."
+  },
+  {
+    "id": 25019,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Across all valid readings, what is total battery discharge minus charge in kWh? Return an integer."
+  },
+  {
+    "id": 25020,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Which region contains the plant of reading ĐĐ-00999? Return the exact region label."
+  },
+  {
+    "id": 25021,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "東部区域的有效记录中，电网净输入总量是多少kWh？有效指Đo thật且输入值不缺失。只回答整数。"
+  },
+  {
+    "id": 25022,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "有效记录中，电网净输入严格小于0的记录有多少条？只回答整数。"
+  },
+  {
+    "id": 25023,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "全部记录中，电力输入恰好为0的记录有多少条？不把空白当作0。只回答整数。"
+  },
+  {
+    "id": 25024,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "NM-040 的最大功率 peak_kw 首次出现于哪个UTC时刻？并列取最早时间。只回答 YYYY-MM-DD HH:MM:SS。"
+  },
+  {
+    "id": 25025,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Quelle est la somme de net_kwh valide pour les identifiants ??-00001 ? ĐĐ-01000 inclus ? Un entier uniquement."
+  },
+  {
+    "id": 25026,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Combien de centrales distinctes ont au moins un incident Đã xác minh ? Un entier uniquement."
+  },
+  {
+    "id": 25027,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "Quelle est la moyenne simple des puissances peak_kw de NM-040, toutes qualités incluses ? Deux décimales uniquement."
+  },
+  {
+    "id": 25028,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "NM-040의 전체 측정 구간 수를 정수로 답하십시오. 품질이나 결측으로 제외하지 않습니다."
+  },
+  {
+    "id": 25029,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "유효 순전력량 합계가 높은 상위 3개 발전소 코드를 답하십시오. 내림차순, 동률은 코드 오름차순, 쉼표와 공백으로 구분합니다."
+  },
+  {
+    "id": 25030,
+    "file_name": "25_energy_intervals_long.xlsx",
+    "query": "검증된 모든 사고의 개별 지속 시간 합계를 분으로 답하십시오. 사고 간 겹침은 이 질문에서는 각각 더합니다."
+  },
+  {
+    "id": 26001,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Vùng Bắc có bao nhiêu vận đơn có trạng thái cuối là Đã giao? Với sự kiện trùng mã, giữ phiên bản lớn nhất rồi thời điểm ghi nhận mới nhất trước khi chọn sự kiện cuối. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 26002,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Tại vùng Bắc, tỷ lệ giao đúng hẹn trong các vận đơn có trạng thái cuối Đã giao là bao nhiêu phần trăm? Đúng hẹn gồm thời điểm giao bằng hẹn; khử trùng sự kiện theo phiên bản lớn nhất. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 26003,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Vùng Trung có bao nhiêu vận đơn có trạng thái cuối là Đã giao? Với sự kiện trùng mã, giữ phiên bản lớn nhất rồi thời điểm ghi nhận mới nhất trước khi chọn sự kiện cuối. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 26004,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Tại vùng Trung, tỷ lệ giao đúng hẹn trong các vận đơn có trạng thái cuối Đã giao là bao nhiêu phần trăm? Đúng hẹn gồm thời điểm giao bằng hẹn; khử trùng sự kiện theo phiên bản lớn nhất. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 26005,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Vùng Nam có bao nhiêu vận đơn có trạng thái cuối là Đã giao? Với sự kiện trùng mã, giữ phiên bản lớn nhất rồi thời điểm ghi nhận mới nhất trước khi chọn sự kiện cuối. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 26006,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Tại vùng Nam, tỷ lệ giao đúng hẹn trong các vận đơn có trạng thái cuối Đã giao là bao nhiêu phần trăm? Đúng hẹn gồm thời điểm giao bằng hẹn; khử trùng sự kiện theo phiên bản lớn nhất. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 26007,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Trạng thái cuối của VD-000500 sau khi giữ phiên bản lớn nhất cho từng mã sự kiện là gì? Chỉ trả đúng nhãn trạng thái."
+  },
+  {
+    "id": 26008,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Số dòng thừa do nhiều phiên bản cùng mã sự kiện là bao nhiêu? Tính số dòng lịch sử trừ số mã sự kiện khác nhau. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 26009,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Trung bình thời gian từ Tạo UTC đến sự kiện giao cuối của các vận đơn Nhanh đã giao là bao nhiêu giờ? Dùng giờ thực trôi qua, không dùng ngày lịch. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 26010,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Có bao nhiêu vận đơn đã giao thành công nhưng có sự kiện Giao thất bại trước đó, sau khử trùng phiên bản? Mỗi vận đơn chỉ đếm một lần. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 26011,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Tổng Thu hộ VND của các vận đơn có trạng thái cuối Hoàn trả là bao nhiêu? Không cộng nhiều lần theo lịch sử sự kiện. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 26012,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Tổng khối lượng các vận đơn Đã giao đúng hẹn là bao nhiêu kg? Khối lượng g phải chia 1000. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 26013,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Vận đơn Đã giao nào trễ hẹn nhiều giờ nhất? So thời điểm cuối trừ hẹn UTC. Nếu bằng nhau, chọn mã tăng dần. Chỉ trả mã."
+  },
+  {
+    "id": 26014,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Có bao nhiêu vận đơn được tạo trong tháng 02/2028 nhưng sự kiện cuối nằm trong tháng 03/2028? Dùng UTC và sự kiện đã khử trùng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 26015,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Trong workbook này, số điện thoại người nhận của vận đơn VD-000500 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
+  },
+  {
+    "id": 26016,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "For event E-000500-4, what is the retained revision under largest revision then latest ingestion time? Return an integer, regardless of physical row order."
+  },
+  {
+    "id": 26017,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "How many shipments have final status Đã hủy after event deduplication? Return an integer."
+  },
+  {
+    "id": 26018,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Among delivered shipments, what is the 95th percentile of elapsed_hours using nearest-rank: sort ascending, select position ceil(0.95*N), 1-based? Return an integer."
+  },
+  {
+    "id": 26019,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "How many delivered shipments arrived at exactly the promised UTC time? Count equality as on-time. Return an integer."
+  },
+  {
+    "id": 26020,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Among VD-000001 through VD-000500 inclusive, how many have final status Đang giao? Return an integer."
+  },
+  {
+    "id": 26021,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "港口区域最终状态为Đã giao的运单有多少个？先对相同事件编号保留最高版本。只回答整数。"
+  },
+  {
+    "id": 26022,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "在港口区域所有运单中，最终状态为Hoàn trả的运单占多少百分比？保留两位小数，不加%。"
+  },
+  {
+    "id": 26023,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "VD-000500 的重量是多少克？只回答整数。"
+  },
+  {
+    "id": 26024,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "已成功交付的Nhanh运单中，迟于约定时间的有多少个？等于约定时间不算迟到。只回答整数。"
+  },
+  {
+    "id": 26025,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Après conservation de la plus grande version par code événement, combien d'événements uniques restent-ils ? Un entier uniquement."
+  },
+  {
+    "id": 26026,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Parmi les livraisons Đã giao strictement en retard, quel est le retard moyen en heures ? Deux décimales uniquement."
+  },
+  {
+    "id": 26027,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "Quel dépôt a le plus de livraisons finales Đã giao ? En cas d'égalité, code dépôt croissant. Répondez uniquement par le code."
+  },
+  {
+    "id": 26028,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "VD-000500의 최종 이벤트 UTC 시각을 YYYY-MM-DD HH:MM:SS 형식으로 답하십시오. 최고 버전으로 중복을 제거합니다."
+  },
+  {
+    "id": 26029,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "지연된 배송 완료 운송장 중 지연 시간이 큰 상위 3개 코드를 답하십시오. 동률은 코드 오름차순, 쉼표와 공백으로 구분합니다."
+  },
+  {
+    "id": 26030,
+    "file_name": "26_logistics_event_versions.xlsx",
+    "query": "전체 운송장의 생성 UTC 날짜는 몇 종류입니까? 시각 부분은 제외하고 정수로 답하십시오."
+  },
+  {
+    "id": 27001,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Nồng độ trung bình cộng của Chì, chỉ kết quả Valide và định lượng '=', là bao nhiêu µg/L? Đổi mg/L sang µg/L nhân 1000, bỏ '<' và ô thiếu. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 27002,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Có bao nhiêu kết quả Chì Valide, định lượng '=', vượt nghiêm ngặt Ngưỡng nội bộ theo đúng nền mẫu? Không coi bằng ngưỡng là vượt; không tính kết quả '<'. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 27003,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Nồng độ trung bình cộng của Đồng, chỉ kết quả Valide và định lượng '=', là bao nhiêu µg/L? Đổi mg/L sang µg/L nhân 1000, bỏ '<' và ô thiếu. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 27004,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Có bao nhiêu kết quả Đồng Valide, định lượng '=', vượt nghiêm ngặt Ngưỡng nội bộ theo đúng nền mẫu? Không coi bằng ngưỡng là vượt; không tính kết quả '<'. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 27005,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Nồng độ trung bình cộng của Nitrat, chỉ kết quả Valide và định lượng '=', là bao nhiêu µg/L? Đổi mg/L sang µg/L nhân 1000, bỏ '<' và ô thiếu. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 27006,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Có bao nhiêu kết quả Nitrat Valide, định lượng '=', vượt nghiêm ngặt Ngưỡng nội bộ theo đúng nền mẫu? Không coi bằng ngưỡng là vượt; không tính kết quả '<'. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 27007,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Nồng độ Chì trung bình gia quyền theo Thể tích mL trong các kết quả định lượng hợp lệ là bao nhiêu µg/L? Tính sum(ug*volume)/sum(volume). Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 27008,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Có bao nhiêu kết quả được ghi dưới giới hạn phát hiện bằng dấu '<', bất kể trạng thái duyệt? Không coi '<' là số 0. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 27009,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Có bao nhiêu dòng thật sự thiếu Kết quả? Không tính các chuỗi bắt đầu '<' là ô thiếu. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 27010,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Giá trị Thu hồi % ở cột AA của KQ-01500 là bao nhiêu? Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 27011,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Phân vị 95% nồng độ Đồng (µg/L) trong các kết quả định lượng hợp lệ là bao nhiêu? Dùng nearest-rank: vị trí ceil(0.95*N) sau khi sắp tăng dần, 1-based; không nội suy. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 27012,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Trung vị nồng độ Nitrat (µg/L) trong kết quả định lượng hợp lệ là bao nhiêu? Nếu N chẵn, lấy trung bình hai phần tử giữa. Chỉ trả số với đúng 2 chữ số thập phân, không đơn vị hay ký hiệu %."
+  },
+  {
+    "id": 27013,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Có bao nhiêu mã mẫu khác nhau có ít nhất một kết quả định lượng hợp lệ vượt Ngưỡng nội bộ? Mỗi mẫu chỉ đếm một lần dù nhiều chất vượt. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 27014,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Bảng Résultats dài có bao nhiêu bản ghi kết quả thật? Không tính tiêu đề đầu hoặc các dòng tiêu đề lặp giữa bảng. Chỉ trả số nguyên, không dấu phân cách hàng nghìn hay đơn vị."
+  },
+  {
+    "id": 27015,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Trong workbook này, tọa độ GPS của điểm quan trắc QT-0300 là gì? Nếu workbook không cung cấp trường đó, trả chuỗi rỗng; không ghi N/A hay lời giải thích."
+  },
+  {
+    "id": 27016,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Among valid quantified Chì results in matrix Sông, which site has the highest mean concentration in µg/L? Break ties by site code ascending. Return only the site code."
+  },
+  {
+    "id": 27017,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "How many valid quantified results have concentration exactly zero after unit conversion? Exclude censored and missing results. Return an integer."
+  },
+  {
+    "id": 27018,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "What is the sum of quantified valid concentrations in µg/L for KQ-00501 through KQ-01500 inclusive? This is a requested diagnostic sum, not a concentration of a pooled sample. Return an integer."
+  },
+  {
+    "id": 27019,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "How many sample IDs have all three analytes valid, quantified and strictly below their respective internal limits? Samples missing any eligible analyte do not qualify. Return an integer."
+  },
+  {
+    "id": 27020,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "What percent of all real result records use mg/L, including censored and rejected records? Ignore repeated header rows. Return exactly 2 decimals without %."
+  },
+  {
+    "id": 27021,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "河口基质中，有多少个已批准且定量的结果严格超过内部阈值？先统一为µg/L，不包括小于检出限及缺失值。只回答整数。"
+  },
+  {
+    "id": 27022,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "KQ-01499 在AA列的回收率是多少？保留两位小数，不加%。"
+  },
+  {
+    "id": 27023,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "真实结果记录中，Duyệt 为 Rejeté 的有多少条？不要计入重复表头。只回答整数。"
+  },
+  {
+    "id": 27024,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "已批准且定量的Chì结果中，哪个结果编号的µg/L浓度最高？相同则编号升序，回答编号。"
+  },
+  {
+    "id": 27025,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Quelle est la moyenne simple du Nitrat quantifié et Valide dans la matrice Hồ, en µg/L après conversion ? Deux décimales uniquement."
+  },
+  {
+    "id": 27026,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Quel pourcentage des résultats Valide de Chì porte le qualificatif '<' ? Inclure les résultats manquants dans le dénominateur Valide. Deux décimales sans %."
+  },
+  {
+    "id": 27027,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "Quel lot contient le plus de résultats quantifiés Valide dépassant leur seuil interne ? Égalité : code lot croissant. Répondez uniquement par le code."
+  },
+  {
+    "id": 27028,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "유효 정량 Đồng 결과 중 내부 기준과 정확히 같은 농도의 수를 정수로 답하십시오. '<' 결과는 제외합니다."
+  },
+  {
+    "id": 27029,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "KQ-00750의 Thiết bị 값을 표에 나온 그대로 답하십시오."
+  },
+  {
+    "id": 27030,
+    "file_name": "27_lab_units_censoring_long.xlsx",
+    "query": "유효 정량 결과의 기준 초과 건수가 많은 상위 3개 지점 코드를 답하십시오. 동률은 코드 오름차순, 쉼표와 공백으로 구분합니다."
+  }
+]

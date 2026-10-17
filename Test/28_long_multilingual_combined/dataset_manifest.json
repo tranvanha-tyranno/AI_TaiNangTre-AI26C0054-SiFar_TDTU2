@@ -1,0 +1,1012 @@
+{
+  "suite": "28_long_multilingual_combined",
+  "questions": 150,
+  "workbook_count": 5,
+  "row_budget": "14,821 physical worksheet rows across five workbooks",
+  "suites": [
+    {
+      "name": "23_civic_service_long",
+      "workbook": "23_civic_service_long.xlsx",
+      "questions": 30,
+      "tables": [
+        {
+          "table": "civic",
+          "sheet": "Khảo sát 2028",
+          "first_row": 4,
+          "last_row": 1203,
+          "record_count": 1200,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "id",
+              "label": "Mã khảo sát",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "ward",
+              "label": "Phường",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "city",
+              "label": "Tỉnh / thành",
+              "type": "TEXT",
+              "column": 3
+            },
+            {
+              "key": "period",
+              "label": "Kỳ",
+              "type": "TEXT",
+              "column": 4
+            },
+            {
+              "key": "metric",
+              "label": "Chỉ tiêu",
+              "type": "TEXT",
+              "column": 5
+            },
+            {
+              "key": "water_total",
+              "label": "Total",
+              "type": "REAL",
+              "column": 6
+            },
+            {
+              "key": "basic",
+              "label": "Cơ bản",
+              "type": "REAL",
+              "column": 7
+            },
+            {
+              "key": "advanced",
+              "label": "Nâng cao",
+              "type": "REAL",
+              "column": 8
+            },
+            {
+              "key": "special",
+              "label": "Đặc biệt",
+              "type": "REAL",
+              "column": 9
+            },
+            {
+              "key": "residential",
+              "label": "Dân cư",
+              "type": "REAL",
+              "column": 10
+            },
+            {
+              "key": "commercial",
+              "label": "Thương mại",
+              "type": "REAL",
+              "column": 11
+            },
+            {
+              "key": "public",
+              "label": "Công cộng",
+              "type": "REAL",
+              "column": 12
+            },
+            {
+              "key": "waste_total",
+              "label": "Total",
+              "type": "REAL",
+              "column": 13
+            },
+            {
+              "key": "respondents",
+              "label": "Tổng mẫu",
+              "type": "INTEGER",
+              "column": 14
+            },
+            {
+              "key": "status",
+              "label": "Trạng thái",
+              "type": "TEXT",
+              "column": 15
+            }
+          ]
+        },
+        {
+          "table": "counts",
+          "sheet": "Cỡ mẫu",
+          "first_row": 2,
+          "last_row": 1201,
+          "record_count": 1200,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "id",
+              "label": "Mã khảo sát",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "water_total",
+              "label": "water_total",
+              "type": "INTEGER",
+              "column": 2
+            },
+            {
+              "key": "basic",
+              "label": "basic",
+              "type": "INTEGER",
+              "column": 3
+            },
+            {
+              "key": "advanced",
+              "label": "advanced",
+              "type": "INTEGER",
+              "column": 4
+            },
+            {
+              "key": "special",
+              "label": "special",
+              "type": "INTEGER",
+              "column": 5
+            },
+            {
+              "key": "residential",
+              "label": "residential",
+              "type": "INTEGER",
+              "column": 6
+            },
+            {
+              "key": "commercial",
+              "label": "commercial",
+              "type": "INTEGER",
+              "column": 7
+            },
+            {
+              "key": "public",
+              "label": "public",
+              "type": "INTEGER",
+              "column": 8
+            },
+            {
+              "key": "waste_total",
+              "label": "waste_total",
+              "type": "INTEGER",
+              "column": 9
+            }
+          ]
+        },
+        {
+          "table": "archive",
+          "sheet": "Lưu trữ 2027",
+          "first_row": 2,
+          "last_row": 201,
+          "record_count": 200,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "id",
+              "label": "Mã cũ",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "ward",
+              "label": "Phường",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "city",
+              "label": "Tỉnh / thành",
+              "type": "TEXT",
+              "column": 3
+            },
+            {
+              "key": "period",
+              "label": "Kỳ",
+              "type": "TEXT",
+              "column": 4
+            },
+            {
+              "key": "metric",
+              "label": "Chỉ tiêu",
+              "type": "TEXT",
+              "column": 5
+            },
+            {
+              "key": "score",
+              "label": "Điểm",
+              "type": "INTEGER",
+              "column": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "24_procurement_temporal_long",
+      "workbook": "24_procurement_temporal_long.xlsx",
+      "questions": 30,
+      "tables": [
+        {
+          "table": "vendors",
+          "sheet": "Nhà cung cấp",
+          "first_row": 2,
+          "last_row": 201,
+          "record_count": 200,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "vendor",
+              "label": "Mã NCC",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "name",
+              "label": "Tên NCC",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "region",
+              "label": "Vùng",
+              "type": "TEXT",
+              "column": 3
+            },
+            {
+              "key": "tier",
+              "label": "Hạng",
+              "type": "TEXT",
+              "column": 4
+            }
+          ]
+        },
+        {
+          "table": "fx",
+          "sheet": "Tỷ giá ngày",
+          "first_row": 2,
+          "last_row": 1099,
+          "record_count": 1098,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "day",
+              "label": "Ngày",
+              "type": "TEXT",
+              "column": 1,
+              "temporal": "date"
+            },
+            {
+              "key": "currency",
+              "label": "Tiền tệ",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "rate",
+              "label": "VND / 1 đơn vị",
+              "type": "INTEGER",
+              "column": 3
+            }
+          ]
+        },
+        {
+          "table": "contracts",
+          "sheet": "Hợp đồng hiệu lực",
+          "first_row": 2,
+          "last_row": 801,
+          "record_count": 800,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "contract",
+              "label": "Hợp đồng",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "vendor",
+              "label": "Mã NCC",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "start",
+              "label": "Từ ngày (gồm)",
+              "type": "TEXT",
+              "column": 3,
+              "temporal": "date"
+            },
+            {
+              "key": "end",
+              "label": "Đến ngày (không gồm)",
+              "type": "TEXT",
+              "column": 4,
+              "temporal": "date"
+            },
+            {
+              "key": "rebate",
+              "label": "Hoàn tiền (%)",
+              "type": "INTEGER",
+              "column": 5
+            },
+            {
+              "key": "cap",
+              "label": "Hạn mức VND",
+              "type": "INTEGER",
+              "column": 6
+            }
+          ]
+        },
+        {
+          "table": "lines",
+          "sheet": "Chi tiết mua sắm",
+          "first_row": 2,
+          "last_row": 1001,
+          "record_count": 1000,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "id",
+              "label": "Mã dòng",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "invoice",
+              "label": "Số hóa đơn",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "day",
+              "label": "Ngày chứng từ",
+              "type": "TEXT",
+              "column": 3,
+              "temporal": "date"
+            },
+            {
+              "key": "vendor",
+              "label": "Mã NCC",
+              "type": "TEXT",
+              "column": 4
+            },
+            {
+              "key": "currency",
+              "label": "Tiền tệ",
+              "type": "TEXT",
+              "column": 5
+            },
+            {
+              "key": "amount",
+              "label": "Giá trị gốc",
+              "type": "INTEGER",
+              "column": 6
+            },
+            {
+              "key": "discount",
+              "label": "Chiết khấu (%)",
+              "type": "INTEGER",
+              "column": 7
+            },
+            {
+              "key": "sign",
+              "label": "Dấu (ghi có=-1)",
+              "type": "INTEGER",
+              "column": 8
+            },
+            {
+              "key": "status",
+              "label": "Trạng thái",
+              "type": "TEXT",
+              "column": 9
+            },
+            {
+              "key": "category",
+              "label": "Nhóm hàng",
+              "type": "TEXT",
+              "column": 10
+            },
+            {
+              "key": "units",
+              "label": "Số lượng",
+              "type": "INTEGER",
+              "column": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "25_energy_intervals_long",
+      "workbook": "25_energy_intervals_long.xlsx",
+      "questions": 30,
+      "tables": [
+        {
+          "table": "plants",
+          "sheet": "Nhà máy",
+          "first_row": 2,
+          "last_row": 41,
+          "record_count": 40,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "plant",
+              "label": "Mã nhà máy",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "region",
+              "label": "Vùng",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "name",
+              "label": "Tên",
+              "type": "TEXT",
+              "column": 3
+            },
+            {
+              "key": "carbon",
+              "label": "gCO2 / kWh",
+              "type": "INTEGER",
+              "column": 4
+            }
+          ]
+        },
+        {
+          "table": "tariffs",
+          "sheet": "Giá theo hiệu lực",
+          "first_row": 2,
+          "last_row": 2401,
+          "record_count": 2400,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "plant",
+              "label": "Mã nhà máy",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "start",
+              "label": "Từ (UTC, gồm)",
+              "type": "TEXT",
+              "column": 2,
+              "temporal": "datetime"
+            },
+            {
+              "key": "end",
+              "label": "Đến (UTC, không gồm)",
+              "type": "TEXT",
+              "column": 3,
+              "temporal": "datetime"
+            },
+            {
+              "key": "tariff",
+              "label": "VND/kWh nhập ròng",
+              "type": "INTEGER",
+              "column": 4
+            }
+          ]
+        },
+        {
+          "table": "readings",
+          "sheet": "Điện năng 1 giờ",
+          "first_row": 3,
+          "last_row": 1002,
+          "record_count": 1000,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "id",
+              "label": "Mã đo",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "plant",
+              "label": "Nhà máy",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "at",
+              "label": "Bắt đầu UTC",
+              "type": "TEXT",
+              "column": 3,
+              "temporal": "datetime"
+            },
+            {
+              "key": "import_kwh",
+              "label": "Điện nhập kWh",
+              "type": "INTEGER",
+              "column": 4
+            },
+            {
+              "key": "export_kwh",
+              "label": "Điện xuất kWh",
+              "type": "INTEGER",
+              "column": 5
+            },
+            {
+              "key": "solar_kwh",
+              "label": "Mặt trời kWh",
+              "type": "INTEGER",
+              "column": 6
+            },
+            {
+              "key": "wind_kwh",
+              "label": "Gió kWh",
+              "type": "INTEGER",
+              "column": 7
+            },
+            {
+              "key": "charge",
+              "label": "Nạp pin kWh",
+              "type": "INTEGER",
+              "column": 8
+            },
+            {
+              "key": "discharge",
+              "label": "Xả pin kWh",
+              "type": "INTEGER",
+              "column": 9
+            },
+            {
+              "key": "peak_kw",
+              "label": "Công suất đỉnh kW",
+              "type": "INTEGER",
+              "column": 10
+            },
+            {
+              "key": "quality",
+              "label": "Chất lượng",
+              "type": "TEXT",
+              "column": 11
+            },
+            {
+              "key": "minutes",
+              "label": "Độ dài phút",
+              "type": "INTEGER",
+              "column": 12
+            }
+          ]
+        },
+        {
+          "table": "outages",
+          "sheet": "Sự cố",
+          "first_row": 2,
+          "last_row": 1201,
+          "record_count": 1200,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "event",
+              "label": "Mã sự cố",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "plant",
+              "label": "Nhà máy",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "start",
+              "label": "Bắt đầu UTC",
+              "type": "TEXT",
+              "column": 3,
+              "temporal": "datetime"
+            },
+            {
+              "key": "end",
+              "label": "Kết thúc UTC",
+              "type": "TEXT",
+              "column": 4,
+              "temporal": "datetime"
+            },
+            {
+              "key": "status",
+              "label": "Trạng thái",
+              "type": "TEXT",
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "26_logistics_event_versions",
+      "workbook": "26_logistics_event_versions.xlsx",
+      "questions": 30,
+      "tables": [
+        {
+          "table": "depots",
+          "sheet": "Danh mục kho",
+          "first_row": 2,
+          "last_row": 101,
+          "record_count": 100,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "depot",
+              "label": "Mã kho",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "region",
+              "label": "Vùng",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "name",
+              "label": "Tên kho",
+              "type": "TEXT",
+              "column": 3
+            }
+          ]
+        },
+        {
+          "table": "shipments",
+          "sheet": "Vận đơn",
+          "first_row": 2,
+          "last_row": 501,
+          "record_count": 500,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "shipment",
+              "label": "Mã vận đơn",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "depot",
+              "label": "Mã kho",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "service",
+              "label": "Dịch vụ",
+              "type": "TEXT",
+              "column": 3
+            },
+            {
+              "key": "created",
+              "label": "Tạo UTC",
+              "type": "TEXT",
+              "column": 4,
+              "temporal": "datetime"
+            },
+            {
+              "key": "due",
+              "label": "Hẹn giao UTC",
+              "type": "TEXT",
+              "column": 5,
+              "temporal": "datetime"
+            },
+            {
+              "key": "grams",
+              "label": "Khối lượng g",
+              "type": "INTEGER",
+              "column": 6
+            },
+            {
+              "key": "cod",
+              "label": "Thu hộ VND",
+              "type": "INTEGER",
+              "column": 7
+            }
+          ]
+        },
+        {
+          "table": "events",
+          "sheet": "Lịch sử sự kiện",
+          "first_row": 2,
+          "last_row": 2051,
+          "record_count": 2050,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "event",
+              "label": "Mã sự kiện",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "shipment",
+              "label": "Mã vận đơn",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "at",
+              "label": "Thời điểm UTC",
+              "type": "TEXT",
+              "column": 3,
+              "temporal": "datetime"
+            },
+            {
+              "key": "status",
+              "label": "Trạng thái",
+              "type": "TEXT",
+              "column": 4
+            },
+            {
+              "key": "revision",
+              "label": "Phiên bản",
+              "type": "INTEGER",
+              "column": 5
+            },
+            {
+              "key": "ingested",
+              "label": "Ghi nhận UTC",
+              "type": "TEXT",
+              "column": 6,
+              "temporal": "datetime"
+            },
+            {
+              "key": "note",
+              "label": "Ghi chú",
+              "type": "TEXT",
+              "column": 7
+            },
+            {
+              "key": "timezone",
+              "label": "Múi giờ",
+              "type": "TEXT",
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "27_lab_units_censoring_long",
+      "workbook": "27_lab_units_censoring_long.xlsx",
+      "questions": 30,
+      "tables": [
+        {
+          "table": "sites",
+          "sheet": "Điểm quan trắc",
+          "first_row": 2,
+          "last_row": 301,
+          "record_count": 300,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "site",
+              "label": "Mã điểm",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "matrix",
+              "label": "Nền mẫu",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "name",
+              "label": "Tên điểm",
+              "type": "TEXT",
+              "column": 3
+            }
+          ]
+        },
+        {
+          "table": "limits",
+          "sheet": "Ngưỡng nội bộ",
+          "first_row": 2,
+          "last_row": 13,
+          "record_count": 12,
+          "skip_rows": [],
+          "columns": [
+            {
+              "key": "analyte",
+              "label": "Chất",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "matrix",
+              "label": "Nền mẫu",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "limit_ug",
+              "label": "Ngưỡng µg/L",
+              "type": "INTEGER",
+              "column": 3
+            }
+          ]
+        },
+        {
+          "table": "results",
+          "sheet": "Résultats dài",
+          "first_row": 2,
+          "last_row": 1502,
+          "record_count": 1500,
+          "skip_rows": [
+            1002
+          ],
+          "columns": [
+            {
+              "key": "id",
+              "label": "Mã kết quả",
+              "type": "TEXT",
+              "column": 1
+            },
+            {
+              "key": "sample",
+              "label": "Mã mẫu",
+              "type": "TEXT",
+              "column": 2
+            },
+            {
+              "key": "site",
+              "label": "Mã điểm",
+              "type": "TEXT",
+              "column": 3
+            },
+            {
+              "key": "day",
+              "label": "Ngày lấy mẫu",
+              "type": "TEXT",
+              "column": 4,
+              "temporal": "date"
+            },
+            {
+              "key": "analyte",
+              "label": "Chất",
+              "type": "TEXT",
+              "column": 5
+            },
+            {
+              "key": "unit",
+              "label": "Đơn vị",
+              "type": "TEXT",
+              "column": 6
+            },
+            {
+              "key": "result",
+              "label": "Kết quả",
+              "type": "",
+              "column": 7
+            },
+            {
+              "key": "qualifier",
+              "label": "Định lượng",
+              "type": "TEXT",
+              "column": 8
+            },
+            {
+              "key": "quality",
+              "label": "Duyệt",
+              "type": "TEXT",
+              "column": 9
+            },
+            {
+              "key": "volume",
+              "label": "Thể tích mL",
+              "type": "INTEGER",
+              "column": 10
+            },
+            {
+              "key": "batch",
+              "label": "Lô",
+              "type": "TEXT",
+              "column": 11
+            },
+            {
+              "key": "instrument",
+              "label": "Thiết bị",
+              "type": "TEXT",
+              "column": 12
+            },
+            {
+              "key": "temperature",
+              "label": "Nhiệt độ °C",
+              "type": "REAL",
+              "column": 13
+            },
+            {
+              "key": "humidity",
+              "label": "Độ ẩm %",
+              "type": "INTEGER",
+              "column": 14
+            },
+            {
+              "key": "runtime",
+              "label": "Phút chạy",
+              "type": "INTEGER",
+              "column": 15
+            },
+            {
+              "key": "signal",
+              "label": "Tín hiệu thô",
+              "type": "INTEGER",
+              "column": 16
+            },
+            {
+              "key": "blank",
+              "label": "Mẫu trắng",
+              "type": "INTEGER",
+              "column": 17
+            },
+            {
+              "key": "calibration",
+              "label": "Hệ số chuẩn",
+              "type": "REAL",
+              "column": 18
+            },
+            {
+              "key": "pressure",
+              "label": "Áp suất kPa",
+              "type": "INTEGER",
+              "column": 19
+            },
+            {
+              "key": "method",
+              "label": "Phương pháp",
+              "type": "TEXT",
+              "column": 20
+            },
+            {
+              "key": "lod_ug",
+              "label": "LOD µg/L",
+              "type": "INTEGER",
+              "column": 21
+            },
+            {
+              "key": "dilution",
+              "label": "Pha loãng",
+              "type": "INTEGER",
+              "column": 22
+            },
+            {
+              "key": "operator",
+              "label": "Kỹ thuật viên",
+              "type": "TEXT",
+              "column": 23
+            },
+            {
+              "key": "channel",
+              "label": "Kênh",
+              "type": "TEXT",
+              "column": 24
+            },
+            {
+              "key": "reference",
+              "label": "Chuẩn thu hồi %",
+              "type": "REAL",
+              "column": 25
+            },
+            {
+              "key": "uncertainty",
+              "label": "Độ không đảm bảo",
+              "type": "REAL",
+              "column": 26
+            },
+            {
+              "key": "recovery",
+              "label": "Thu hồi %",
+              "type": "REAL",
+              "column": 27
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "gold_order": "ascending numeric ID",
+  "unknown_answer": "",
+  "data_kind": "new fictional records; compact regeneration of suites 23-27"
+}
