@@ -19,13 +19,16 @@ import sys
 import threading
 import time
 from urllib.parse import parse_qs, urlparse
-from src.usage import summarize_usage
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+import src
+src.__path__.append(str(Path(__file__).resolve().parent / 'src'))
+from dashboard_usage import summarize_usage
 from src.diagnostics import diagnose, summarize as summarize_diagnostics, identity, history
 from src.dashboard_analysis import decorate, summarize, compare_states, safe_context, cohort
 
-ROOT = Path(__file__).resolve().parent
 PROJECT_VERSION = "2.0.0"
-STATIC = ROOT / "dashboard" / "dist"
+STATIC = Path(__file__).resolve().parent / "dashboard" / "dist"
 OUTPUTS = ROOT / "outputs"
 TEST_ROOT = ROOT / "Test"
 EXTRA_DATASET_DIRS = []
@@ -239,6 +242,8 @@ def run_dirs():
 
 def records(path):
     result = {}
+    if path is None:
+        return result
     try:
         for line in (path / "questions.jsonl").read_text(encoding="utf-8").splitlines():
             try:
@@ -248,6 +253,12 @@ def records(path):
                 continue  # Last line may still be being written.
     except OSError:
         pass
+    if not result and (path / 'submission.csv').is_file():
+        with (path / 'submission.csv').open(encoding='utf-8-sig', newline='') as stream:
+            for row in csv.DictReader(stream):
+                result[str(row['id'])] = {**row,
+                    'status':'ok' if row['answer'] else 'unanswered',
+                    'mode':'llm-v3'}
     return result
 
 
@@ -259,7 +270,7 @@ def safe_config():
     except ImportError:
         local = {}
     return {"app_version": PROJECT_VERSION,
-            "model": os.environ.get("MODEL_NAME") or local.get("MODEL_NAME") or "qwen/qwen3-7-flash",
+            "model": os.environ.get("MODEL_NAME") or local.get("MODEL_NAME") or "qwen/qwen3.7-flash",
             "key_configured": bool(os.environ.get("OPENROUTER_API_KEY") or local.get("OPENROUTER_API_KEY")),
             "base_url": "https://openrouter.ai/api/v1"}
 
@@ -378,7 +389,8 @@ def diagnostics_report(selected=None, dataset_id=None):
                  'status':record.get('status','pending')}
             row['match']=row.get('answer','')==row['reference'] if row['reference'] is not None else None
             row['diagnostics']=diagnose(row)
-            entries.append({'run':run,'row':row,'timestamp':(path/'questions.jsonl').stat().st_mtime,
+            source = path/'questions.jsonl' if (path/'questions.jsonl').is_file() else path/'submission.csv'
+            entries.append({'run':run,'row':row,'timestamp':source.stat().st_mtime,
                 'pipeline_version':summary.get('pipeline_version'), 'model':summary.get('model'),
                 'code_fingerprint':meta.get('code_fingerprint'),
                 'reference_basis':'snapshot' if 'reference' in meta else 'current'})
@@ -394,7 +406,7 @@ def diagnostics_report(selected=None, dataset_id=None):
 
 
 def start_run(mode, ids, dataset_id: str | None = None):
-    if mode not in {"llm", "llm-v2", "llm-v3"}:
+    if mode != "llm-v3":
         raise ValueError("Chế độ không hợp lệ")
     ds_list = datasets_for(dataset_id)
     combined_id = ",".join(d["id"] for d in ds_list)
@@ -455,7 +467,7 @@ def start_run(mode, ids, dataset_id: str | None = None):
                 "--mode", mode, "--concurrency", "1",
                 "--queries", str(directory / "queries.json"),
                 "--xlsx_dir", xlsx_dir_for_run,
-                "--output", str(directory / "submission.csv"), "--log-dir", str(directory)],
+                "--output", str(directory / "submission.csv")],
                 cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                 encoding="utf-8", errors="replace", creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
             with process.stdout:
@@ -595,6 +607,10 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main():
+    from dotenv import dotenv_values
+    for key, value in dotenv_values(ROOT / '.env').items():
+        if value is not None:
+            os.environ.setdefault(key, value)
     for stream in (sys.stdout,sys.stderr):
         try: stream.reconfigure(encoding='utf-8',errors='replace')
         except AttributeError: pass

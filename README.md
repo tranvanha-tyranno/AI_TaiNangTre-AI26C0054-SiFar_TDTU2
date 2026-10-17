@@ -6,6 +6,8 @@ Bạn thực hiện theo thứ tự: **chuẩn bị dữ liệu → build Docker
 
 ## 1. Chuẩn bị trước khi chạy
 
+**Điều kiện bắt buộc:** phải có thư mục `input/` tại thư mục gốc của bài làm **trước khi build và chạy Docker**. Thư mục này phải chứa `input/queries.json` và thư mục `input/xlsx_files/` có các file Excel tương ứng. Nếu chưa có, hãy tạo đúng cấu trúc và chép dữ liệu vào đó trước khi chuyển sang bước 2.
+
 Cài và mở **Docker Desktop**, chọn chế độ **Linux containers**, chờ Docker Engine sẵn sàng. Không cần cài Python trên máy để chạy bằng Docker.
 
 Mở thư mục bài làm có `Dockerfile` bằng File Explorer. Gõ `powershell` vào thanh địa chỉ của File Explorer rồi nhấn Enter. Các lệnh bên dưới phải chạy trong cửa sổ PowerShell đó.
@@ -150,6 +152,7 @@ Khi chấm, BTC tự gắn thư mục dữ liệu/kết quả và truyền sáu 
 |---|---|
 | Không kết nối được Docker Engine | Mở Docker Desktop, chờ Engine sẵn sàng rồi chạy lại. |
 | Không tìm thấy `Dockerfile` khi build | Mở PowerShell tại đúng thư mục bài làm có Dockerfile. |
+| Chưa có thư mục `input/` | Tạo `input/` tại thư mục gốc, thêm `queries.json` và thư mục `xlsx_files/` có các file Excel, rồi mới build/chạy Docker. |
 | Không tìm thấy `/input/queries.json` | Kiểm tra `input/queries.json` có tồn tại và giữ nguyên hai dòng mount ở bước 3. |
 | Không tìm thấy file Excel | Kiểm tra `file_name` trong câu hỏi trùng tên file trong `input/xlsx_files/`, kể cả chữ hoa/thường trên Linux. |
 | HTTP 401 hoặc 403 | Kiểm tra API key và quyền truy cập. |
